@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 회원 가입 -->
+<insert id="join">
+	insert into users(email, password) values(#{email}, #{password})
+</insert>
