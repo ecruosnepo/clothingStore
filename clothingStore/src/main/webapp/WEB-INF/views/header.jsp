@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,7 +11,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>메인</title>
 
     <style>        
         .container{
@@ -39,7 +40,7 @@
             width: 68px;
             height: 44px;
             display: block;
-            background-image: url("./loghnm.png");
+            background-image: url("/images/loghnm.png");
             content: '';
             background-size: contain;
             background-position: center;
@@ -107,8 +108,8 @@
           border: 0;
           background-color: unset;
         }
-        .searchbtn:before{
-          background-image: url("search.png");
+        .searchbtn:before{          
+          background-image: url("/images/search.png");
           background-position: center center;
           background-repeat: no-repeat;
           background-size: 24px;
@@ -146,7 +147,7 @@
         .btn-group > .cart:before{
           width: 20px;
           height: 20px;
-          background-image: url("./bag.png");
+          background-image: url("/images/bag.png");
           background-size: 24px;
           content: '';
           display: block;
@@ -159,7 +160,7 @@
         .btn-group > .login:before{
           width: 20px;
           height: 20px;
-          background-image: url("./user.png");
+          background-image: url("/images/user.png");
           background-size: 24px;
           content: '';
           display: block;
@@ -256,7 +257,7 @@
                         여성
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">셔츠&블라우스</a>
+                        <a class="dropdown-item" href="/men/">셔츠&블라우스</a>
                         <a class="dropdown-item" href="#">드레스</a>                        
                         <a class="dropdown-item" href="#">탑&티셔츠</a>
                       </div>
@@ -293,9 +294,8 @@
               </nav>
           </div>  
       </header>
-    </div>
+    </div>    
 
-    아이콘 제작자 <a href="https://www.flaticon.com/kr/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/kr/" title="Flaticon"> www.flaticon.com</a>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

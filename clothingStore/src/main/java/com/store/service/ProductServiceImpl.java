@@ -16,31 +16,31 @@ public class ProductServiceImpl implements ProductService {
 	
 	//상품 목록
 	@Override
-	public List<ProductDto> list() {
+	public List<ProductDto> listProduct(int catId) {
 		System.out.println("상품 목록");
 		return dao.listProductDao();
 	}
 
 	@Override
-	public ProductDto view(String id) {
+	public ProductDto viewProduct(int id) {
 		System.out.println("상품 상세");
 		return dao.viewProductDao(id);
 	}
 
 	@Override
-	public int registry(Map<String, String> map) {
+	public int regProduct(Map<String, String> map) {
 		System.out.println("상품 등록");
 		return dao.regProductDao(map);
 	}
 
 	@Override
-	public int delete(String id) {
+	public int deleteProduct(String id) {
 		System.out.println("상품 제거");
 		return dao.deleteProductDao(id);
 	}
 
 	@Override
-	public int update(Map<String, String> map) {
+	public int updateProduct(Map<String, String> map) {
 		System.out.println("상품 정보 수정");
 		return dao.updateProductDao(map);
 	}

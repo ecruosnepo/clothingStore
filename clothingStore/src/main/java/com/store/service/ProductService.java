@@ -7,9 +7,9 @@ import com.store.dto.ProductDto;
 
 public interface ProductService {
 	//상품 목록
-	List<ProductDto> list();
-	ProductDto view(String id);
-	int registry(Map<String, String> map);
-	int delete(String id);
-	int update(Map<String, String> map);	
+	List<ProductDto> listProduct(int catId);
+	ProductDto viewProduct(int id);
+	int regProduct(Map<String, String> map);
+	int deleteProduct(String id);
+	int updateProduct(Map<String, String> map);	
 }

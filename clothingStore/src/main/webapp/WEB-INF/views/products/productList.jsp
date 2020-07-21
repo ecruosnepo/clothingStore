@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="root" value="${pageContext.request.contextPath}"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%-- <%@taglib  prefix="spring" uri="http://www.springframework.org/tags" %> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +46,7 @@
             padding: 0;           
             padding-right: 32px;
         }
-        #products>*{
+        #products > *{
             padding: 0;
         }
         .container{
@@ -56,8 +56,10 @@
         .productImg > img{
             width: 100%;
         }
+        
         #sideNav{
             grid-area: aside;
+            padding: 25px;
         }
         .card-header{
             padding: 0;
@@ -269,62 +271,19 @@
                 </li>
             </ul>
         </div>
-        <div class="container">
+        <div class="product-container">
             <div id="products" class="row row-cols-4">
+        	<c:forEach items="${pd_list }" var="dto">
                 <div class="productInfo col">
-                    <a class="productImg" href="">
-                        <img src="${root }/topImg/test.jpg" alt="">
+                    <a class="productImg" href="/productpage/${pd_dto.pd_id }">
+                        <img src="<spring:url value='resources/images/${pd_dto.pd_id }/main.jpg'/>" alt="">
                     </a>
                     <div>
-                        <p><a href="">name</a></p>
+                        <p><a href="/productpage/${pd_dto.pd_id }">${pd_dto.pd_name }</a></p>
                         <p>20000</p>
                     </div>
-                </div>
-                <div class="productInfo col">
-                    <div class="productImg">
-                        <img src="../topImg/test.jpg" alt="">
-                    </div>
-                    <div>
-                        <p><a href="">name</a></p>
-                        <p>20000</p>
-                    </div>
-                </div>
-                <div class="productInfo col">
-                    <div class="productImg">
-                        <img src="<%=request.getContextPath()%>/topImg/test.jpg" alt="">
-                    </div>
-                    <div>
-                        <p><a href="">name</a></p>
-                        <p>20000</p>
-                    </div>
-                </div>
-                <div class="productInfo col">
-                    <div class="productImg">
-                        <img src="/topImg/test.jpg" alt="">
-                    </div>
-                    <div>
-                        <p><a href="">name</a></p>
-                        <p>20000</p>
-                    </div>
-                </div>
-                <div class="productInfo col">
-                    <div class="productImg">
-                        <img src="/topImg/test.jpg" alt="">
-                    </div>
-                    <div>
-                        <p><a href="">name</a></p>
-                        <p>20000</p>
-                    </div>
-                </div>
-                <div class="productInfo col">
-                    <div class="productImg">
-                        <img src="/topImg/test.jpg" alt="">
-                    </div>
-                    <div>
-                        <p><a href="">name</a></p>
-                        <p>20000</p>
-                    </div>
-                </div>
+                </div>        		
+        	</c:forEach>            
             </div>
         </div>
     </article>

@@ -7,14 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
-	@GetMapping("/product/list")
-	public String productsList() throws Exception {
-		return "products/productsList";
-	}
-	
-	@RequestMapping("/productPage")
-	public String productView() {
-		return "products/productPage";
-	}
+//	@GetMapping("/")
+//	public String navbar() throws Exception {
+//		return "index";
+//	}
 	
 }
