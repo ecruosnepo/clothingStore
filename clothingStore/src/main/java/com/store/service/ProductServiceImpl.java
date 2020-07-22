@@ -28,9 +28,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int regProduct(Map<String, String> map) {
+	public int regProduct(ProductDto pDto) {
 		System.out.println("상품 등록");
-		return dao.regProductDao(map);
+		return dao.regProductDao(pDto);
 	}
 
 	@Override

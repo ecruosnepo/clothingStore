@@ -16,8 +16,7 @@
 	
 	<!-- 상품 등록 -->
 	<insert id="regProductDao" parameterType="hashMap">
-		insert into users (pd_model, pd_name, pd_price, pd_size, pd_color, pd_desc, cat_id, pd_regdate, discount, pd_img, pd_stock) 
-			values (#{pd_model}, #{pd_name}, #{pd_price}, #{pd_size}, #{pd_color}, #{pd_desc}, #{cat_id}, #{pd_regdate}, #{discount}, #{pd_img}, #{pd_stock});
+		insert into products (pd_name, pd_price, pd_color, pd_desc, cat_id, discount, pd_img) values (#{pd_name}, #{pd_price}, #{pd_color}, #{pd_desc}, #{cat_id}, #{discount}, #{pd_img});
 	</insert>
 	
 	<!-- 상품 제거 -->

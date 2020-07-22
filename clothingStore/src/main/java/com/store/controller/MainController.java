@@ -1,15 +1,18 @@
 package com.store.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
-
-//	@GetMapping("/")
-//	public String navbar() throws Exception {
-//		return "index";
-//	}
+	/*
+	 * @Autowired ProductService productSerivce;
+	 * 
+	 * @GetMapping("/regProduct") public String regProduct(HttpServletRequest req,
+	 * ProductDto pDto) throws Exception { productService.
+	 * 
+	 * String referer = req.getHeader("Referer");
+	 * 
+	 * return "redirect:"+referer; }
+	 */
 	
 }
