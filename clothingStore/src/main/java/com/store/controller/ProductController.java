@@ -71,7 +71,8 @@ public class ProductController {
 	@PostMapping("/regProduct")
 	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("file") MultipartFile[] file) throws Exception {
 		System.out.println("상품 등록");
-		String uploadPath = "C:/Study/Images";
+		String uploadPath = req.getRealPath("/").concat("resources\\images");
+		System.out.println(uploadPath);
 	    String fileOriginName = "";
 	    String fileMultiName = "";
 	    for(int i=0; i<file.length; i++) {
@@ -97,6 +98,7 @@ public class ProductController {
 	    
 	    productService.regProduct(pDto);
 	    
-	    return "forward:admin/regProduct";
+	    String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer;	    
 	}
 }
