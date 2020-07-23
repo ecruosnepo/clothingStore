@@ -40,7 +40,7 @@
             width: 68px;
             height: 44px;
             display: block;
-            background-image: url("/images/loghnm.png");
+            background-image: url("/Images/headerlogo.png");
             content: '';
             background-size: contain;
             background-position: center;
@@ -109,7 +109,7 @@
           background-color: unset;
         }
         .searchbtn:before{          
-          background-image: url("/images/search.png");
+          background-image: url("/Images/icon_search.png");
           background-position: center center;
           background-repeat: no-repeat;
           background-size: 24px;
@@ -147,7 +147,7 @@
         .btn-group > .cart:before{
           width: 20px;
           height: 20px;
-          background-image: url("/images/bag.png");
+          background-image: url("/Images/icon_bag.png");
           background-size: 24px;
           content: '';
           display: block;
@@ -160,7 +160,7 @@
         .btn-group > .login:before{
           width: 20px;
           height: 20px;
-          background-image: url("/images/user.png");
+          background-image: url("Images/icon_user.png");
           background-size: 24px;
           content: '';
           display: block;

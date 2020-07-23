@@ -1,6 +1,9 @@
 package com.store.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -15,4 +18,5 @@ public class ProductDto {
 	private Date pd_regDate;
 	private int discount;
 	private String pd_img;
+	private List<MultipartFile> file;
 }

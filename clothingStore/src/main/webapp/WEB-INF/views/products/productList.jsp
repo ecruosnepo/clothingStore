@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@taglib  prefix="spring" uri="http://www.springframework.org/tags" %> --%>
+<%@taglib  prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -273,7 +273,10 @@
         </div>
         <div class="product-container">
             <div id="products" class="row row-cols-4">
-        	<c:forEach items="${pd_list }" var="dto">
+            <%
+            	
+            %>
+        	<%-- <c:forEach items="${pd_list }" var="dto">
                 <div class="productInfo col">
                     <a class="productImg" href="/productpage/${pd_dto.pd_id }">
                         <img src="<spring:url value='resources/images/${pd_dto.pd_id }/main.jpg'/>" alt="">
@@ -283,7 +286,16 @@
                         <p>20000</p>
                     </div>
                 </div>        		
-        	</c:forEach>            
+        	</c:forEach> --%>
+	        	<div class="productInfo col">
+                    <a class="productImg" href="/productpage">
+                        <img src="/images/202007205_1207236_2.jpg" alt="">
+                    </a>
+                    <div>
+                        <p><a href="/productpage">후드</a></p>
+                        <p>20000</p>
+                    </div>
+	            </div>            
             </div>
         </div>
     </article>

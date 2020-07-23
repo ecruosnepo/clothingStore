@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<form action="/regProduct" method="post">
+<form action="/regProduct" method="post" enctype="multipart/form-data">
 	상품명 <input type="text" name="pd_name"/><br/>
 	가격 <input type="number" name="pd_price"/><br/>
 	색상 <input type="text" name="pd_color"/><br/>
@@ -35,8 +35,8 @@
 	</select>
 	<br/>
 	
-	할인율 <input type="number" name="discount"/><br/>
-	이미지 <input type="file" name="pd_img"/><br/>
+	할인율 <input type="number" name="discount"/><br/>	
+	이미지 <input multiple="multiple" type="file" name="file"/><br/>
 	
 	<input type="submit" value="등록">
 </form>
