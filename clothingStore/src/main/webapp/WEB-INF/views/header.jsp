@@ -14,10 +14,10 @@
     <title>메인</title>
 
     <style>        
-        .container{
+        .header-wrap{
           max-width: 100%;
           background-color: #FAF9F8;
-          padding: 0;
+          padding: 0;          
         }
         .header_global{
           padding-top: 34px;
@@ -47,34 +47,33 @@
             background-repeat: no-repeat;
             background-color: unset;
         }
-        .dropdown:hover > .dropdown-menu {
+        .header-wrap .dropdown:hover > .dropdown-menu {
             display: block;
         }
-        .dropdown > .dropdown-toggle:active {
-            /*Without this, clicking will make it sticky*/
+        .header-wrap .dropdown > .dropdown-toggle:active {            
             pointer-events: none;
         }
         .navbar{
           background-color: #FAF9F8;
           padding: 25px 0 0 0;          
         }
-        .nav-link:hover{
+        .header-wrap .nav-link:hover{
           text-decoration: underline;
         }
         .navbar-light .navbar-nav .nav-link {
             color: rgb(0, 0, 0);
         }
-        .nav-item > .dropdown-menu{
+        .header-wrap .nav-item > .dropdown-menu{
           width: 100%;
           text-align: center;
           padding-top:38px;
           border: 0;
           background-color: #FAF9F8;
         }
-        .dropdown-item,.nav-link{
+        .header-wrap .dropdown-item,.nav-link{
           font-weight: bold;
         }
-        .dropdown-toggle::after {
+        .header-wrap .dropdown-toggle::after {
             display:none;
         }
         .searchbox{
@@ -170,20 +169,20 @@
           background-repeat: no-repeat;
           margin: 0 5px;
         }
-        .nav-item:hover > .dropdown-menu{
+        .header-wrap .nav-item:hover > .dropdown-menu{
           display:block;
         }
-        .btn-group:hover > .dropdown-menu{
+        .header-wrap .btn-group:hover > .dropdown-menu{
           display: block;
         }
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container header-wrap">
       <header class="header_global">
           <div class="menu">
               <!-- 로고 -->
-              <a class="header_logo" href="./loghnm.png"></a>
+              <a class="header_logo" href="/"></a>
               <!-- 로그인 / 장바구니 -->
               <div class="menu_login_cart">
                 <div class="btn-group">
@@ -267,7 +266,7 @@
                         남성
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/productList/110/112">티셔츠&탱크탑</a>
+                        <a class="dropdown-item" href="/productList/200/202">티셔츠&탱크탑</a>
                         <a class="dropdown-item" href="#">후디&스웨트셔츠</a>
                         <a class="dropdown-item" href="#">셔츠</a>
                       </div>

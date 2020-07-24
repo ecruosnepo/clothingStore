@@ -35,8 +35,9 @@
 	</select>
 	<br/>
 	
-	할인율 <input type="number" name="discount"/><br/>	
-	이미지 <input multiple="multiple" type="file" name="file"/><br/>
+	할인율 <input type="number" name="discount"/><br/>
+	메인 <input type="file" name="mainImg">
+	서브이미지 <input multiple="multiple" type="file" name="subImg"/><br/>
 	
 	<input type="submit" value="등록">
 </form>

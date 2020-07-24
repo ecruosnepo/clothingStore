@@ -39,8 +39,11 @@ public class ProductController {
 	@GetMapping("/productpage/{pdId}")
 	public String productView(@PathVariable("pdId") int pd_id, HttpServletRequest req, Model model){
 		System.out.println("상세 페이지");
-		model.addAttribute("pd_dto", productService.viewProduct(pd_id));
-		return "products/productPage/";
+		ProductDto pDto = productService.viewProduct(pd_id);
+		model.addAttribute("pd_dto", pDto);		
+		model.addAttribute("colorList",productService.getColorList(pDto.getPd_name()));
+		
+		return "products/productPage";
 	}
 	
 	@GetMapping("/productList/{catRefId}/{catId}")
@@ -61,14 +64,14 @@ public class ProductController {
 	}
 	
 	@PostMapping("/regProduct")
-	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("file") MultipartFile[] file) throws Exception {
+	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("mainImg") MultipartFile main, @RequestParam("subImg") MultipartFile[] sub) throws Exception {
 		System.out.println("상품 등록");
 		String uploadPath = req.getRealPath("/").concat("resources\\images");
 		System.out.println(uploadPath);
 	    String fileOriginName = "";
 	    String fileMultiName = "";
-	    for(int i=0; i<file.length; i++) {
-	        fileOriginName = file[i].getOriginalFilename();
+	    for(int i=0; i<sub.length; i++) {
+	        fileOriginName = sub[i].getOriginalFilename();
 	        System.out.println("기존 파일명 : "+fileOriginName);
 	        SimpleDateFormat formatter = new SimpleDateFormat("YYYYMMDD_HHMMSS_"+i);
 	        Calendar now = Calendar.getInstance();
@@ -81,8 +84,8 @@ public class ProductController {
 	        System.out.println("변경된 파일명 : "+fileOriginName);
 	        
 	        File f = new File(uploadPath+"/"+fileOriginName);
-	        file[i].transferTo(f);
-	        if(i==0) { fileMultiName += fileOriginName+"_main"; }
+	        sub[i].transferTo(f);
+	        if(i==0) { fileMultiName += fileOriginName; }
 	        else{ fileMultiName += ","+fileOriginName; }
 	    }
 	    System.out.println("*"+fileMultiName);
@@ -91,6 +94,6 @@ public class ProductController {
 	    productService.regProduct(pDto);
 	    
 	    String referer = req.getHeader("Referer");
-	    return "redirect:"+ referer;	    
+	    return "redirect:"+ referer;
 	}
 }

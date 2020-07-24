@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="../header.jsp" flush ="true"/>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
@@ -8,19 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <title>Hello, world!</title>
     <style>
-        .container{
+        .pd-page-wrap{
             margin: 0;            
             height: auto;
             padding: 32px;
             max-width: none;
             width: 100%;
-        }
-        div{
-            border: 1px solid black;            
+            background-color: #FAF9F8;
         }
         .row{
             margin: 0;
@@ -31,7 +29,7 @@
             height: 100%;
         }
         .pd-top{
-            height: 77%;            
+            height: 74%;            
         }
         .img1, .img2{
             margin: 0;
@@ -46,6 +44,9 @@
         .pd-option{
             padding: 0 28px 60px 60px;
             position: relative;
+        }
+        .option-box{
+        	top:40px;
         }
         .color-select{
             margin: 30px 0;
@@ -73,7 +74,6 @@
             height: 45px; 
         }
         
-
         .pd-desc{
             margin: 0;
             height:20%;
@@ -81,10 +81,10 @@
 
         /* 상품 정보 푸터 */
         .pd-footer{
-            height: 3%;            
+            height: 60px;            
             position: sticky;
             bottom: 0;
-            background-color: white;
+            background-color: #FAF9F8;
         }
         .footer1-box{
             max-width: calc(100vw - 505px);
@@ -93,8 +93,7 @@
             margin: auto 0;
         }
         .footer1-nav a{            
-            color: black;
-            
+            color: black;            
         }
         .footer1-nav a:hover{
             text-decoration: none;                  
@@ -150,12 +149,12 @@
             width: 296px;
             height: 506px;
         }
-        .carousel-control-prev {
+        .carousel-recommand .carousel-control-prev {
             margin-left: -100px;
             background-color: black;
         }
 
-        .carousel-control-next {
+        .carousel-recommand .carousel-control-next {
             margin-right: -100px;
             background-color: black;
         }
@@ -168,8 +167,8 @@
             <div class="col-md-8 img-group">
                 <!-- 상품 설명 사진1 -->
                 <div class="row img1">
-                	<c:forTokens items="${pd_dto.pd_img }" var="img" delims="," end="0">
-                        <img src="/images/${img}" alt="">
+                	<c:forTokens items="${pd_dto.pd_img }" var="img" delims=",">
+                        <img class="pd-img main-img" src="/images/${img}" alt="">
                     </c:forTokens>
                     <!-- <img class="pd-img main-img" src="./hmgoepprod1.jpg" alt=""> -->
                 </div>
@@ -185,39 +184,28 @@
             <!-- 상품 옵션 -->
             <div class="col-md-4 pd-option">
                 <div class="option-box sticky-top">
-                    <form action="">
-                        <h1>상품명</h1>
-                        <h1>가격</h1>
+                    <form action="/addCart">
+                        <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
+                        <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
                         <div class="color-select">
                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                   <div class="carousel-item active color-carousel-item">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1"><img src="./color-1.png" class="color-img" alt="..."></label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2"><img src="./color-1.png" class="color-img" alt="..."></label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                                        <label class="form-check-label" for="inlineRadio3"><img src="./color-1.png" class="color-img" alt="..."></label>
-                                    </div>
+                                  	<c:forEach items="${colorList }" var="colors">
+                                  		<div class="form-check form-check-inline">
+                                        	<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="${colors.pd_color }">
+                                        	<label class="form-check-label" for="inlineRadio1">
+						                    <a href="/productpage/${colors.pd_id }">
+                                        	<c:forTokens items="${colors.pd_img }" var="img" delims="," end="0">
+                                        		<img class="color-img" src="/images/${img}" alt="">
+						                    </c:forTokens>
+						                    </a>
+                                        	</label>
+                                    	</div>
+                                  	</c:forEach>
                                   </div>
                                   <div class="carousel-item color-carousel-item">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1"><img src="./color-1.png" class="color-img" alt="..."></label>
-                                      </div>
-                                      <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2"><img src="./color-1.png" class="color-img" alt="..."></label>
-                                      </div>
-                                      <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                                        <label class="form-check-label" for="inlineRadio3"><img src="./color-1.png" class="color-img" alt="..."></label>
-                                    </div>                              
+                                                     
                                   </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -304,11 +292,6 @@
     </div>
     
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
     <script>
         $('#exampleModal').appendTo("body") 
     </script>

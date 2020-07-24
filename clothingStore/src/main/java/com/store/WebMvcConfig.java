@@ -11,5 +11,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //이미지 업로드를 위한 경로
         registry.addResourceHandler("/images/**")
         		.addResourceLocations("/resources/images/");
-    } 
+    }
 }

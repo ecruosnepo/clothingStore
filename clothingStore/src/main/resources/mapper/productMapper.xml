@@ -11,7 +11,12 @@
 	
 	<!-- 상품 상세 -->
 	<select id="viewProductDao" resultType="com.store.dto.ProductDto">
-		select * from products where pd_id={0};
+		select * from products where pd_id=#{0};
+	</select>
+	
+	<!-- 색상 목록 -->
+	<select id="getColorListDao" resultType="com.store.dto.ProductDto">
+		select pd_id, pd_name, pd_img, pd_color from products where pd_name=#{0};
 	</select>
 	
 	<!-- 상품 등록 -->
@@ -21,7 +26,7 @@
 	
 	<!-- 상품 제거 -->
 	<delete id="deleteProductDao">
-		delete from products where id={0};
+		delete from products where id=#{0};
 	</delete>
 	
 	<!-- 상품 수정 -->
