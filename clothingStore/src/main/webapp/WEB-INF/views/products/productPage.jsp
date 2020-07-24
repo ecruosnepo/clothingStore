@@ -168,7 +168,10 @@
             <div class="col-md-8 img-group">
                 <!-- 상품 설명 사진1 -->
                 <div class="row img1">
-                    <img class="pd-img main-img" src="./hmgoepprod1.jpg" alt="">
+                	<c:forTokens items="${pd_dto.pd_img }" var="img" delims="," end="0">
+                        <img src="/images/${img}" alt="">
+                    </c:forTokens>
+                    <!-- <img class="pd-img main-img" src="./hmgoepprod1.jpg" alt=""> -->
                 </div>
                 <!-- 상품 설명 글 -->
                 <div class="row pd-desc">

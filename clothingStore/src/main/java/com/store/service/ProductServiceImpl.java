@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductDto> listProduct(int catId) {
 		System.out.println("상품 목록");
-		return dao.listProductDao();
+		return dao.listProductDao(catId);
 	}
 
 	@Override

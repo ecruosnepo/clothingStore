@@ -6,12 +6,12 @@
 <mapper namespace="com.store.dao.ProductDao">
 	<!-- 상품 목록 -->
 	<select id="listProductDao" resultType="com.store.dto.ProductDto">
-		select pd_id, pd_name, cat_id, pd_price, pd_img1, pd_regdate from products where cat_id=#{cat_id} order by pd_id desc;
+		select pd_id, pd_name, cat_id, pd_price, pd_img, pd_regdate from products where cat_id=#{0} order by pd_id desc;
 	</select>
 	
 	<!-- 상품 상세 -->
 	<select id="viewProductDao" resultType="com.store.dto.ProductDto">
-		select * from products where id={0};
+		select * from products where pd_id={0};
 	</select>
 	
 	<!-- 상품 등록 -->

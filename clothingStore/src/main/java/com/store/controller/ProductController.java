@@ -40,22 +40,14 @@ public class ProductController {
 	public String productView(@PathVariable("pdId") int pd_id, HttpServletRequest req, Model model){
 		System.out.println("상세 페이지");
 		model.addAttribute("pd_dto", productService.viewProduct(pd_id));
-		return "products/productPage/"+pd_id;
+		return "products/productPage/";
 	}
 	
-	@GetMapping("/{genderId}/{catRefId}/{catId}")
-    public String productListView(@PathVariable("genderId") int gender, @PathVariable("catId") int cat, @PathVariable("catRefId") int catRef, Model model) throws Exception {
-        		
-		if(gender==1) {
-        	model.addAttribute("pd_list", productService.listProduct(cat));
-        	return "products/productList";
-        }else if(gender==2) {
-        	model.addAttribute("pd_list", productService.listProduct(cat));
-        	return "products/productList";
-        }else {
-        	model.addAttribute("pd_list", productService.listProduct(cat));
-        	return "products/productList";
-        }
+	@GetMapping("/productList/{catRefId}/{catId}")
+    public String productListView(@PathVariable("catId") int cat, @PathVariable("catRefId") int catRef, Model model) throws Exception {
+        model.addAttribute("pd_list", productService.listProduct(cat));
+        
+        return "products/productList";
 	}
 		
 	@RequestMapping("/regProductForm")

@@ -272,21 +272,20 @@
             </ul>
         </div>
         <div class="product-container">
-            <div id="products" class="row row-cols-4">
-            <%
-            	
-            %>
-        	<%-- <c:forEach items="${pd_list }" var="dto">
+            <div id="products" class="row row-cols-4">            
+        	<c:forEach items="${pd_list }" var="pd_dto">
                 <div class="productInfo col">
                     <a class="productImg" href="/productpage/${pd_dto.pd_id }">
-                        <img src="<spring:url value='resources/images/${pd_dto.pd_id }/main.jpg'/>" alt="">
+                    <c:forTokens items="${pd_dto.pd_img }" var="img" delims="," end="0">                        
+                        <img src="/images/${img}" alt="">
+                    </c:forTokens>              
                     </a>
                     <div>
                         <p><a href="/productpage/${pd_dto.pd_id }">${pd_dto.pd_name }</a></p>
                         <p>20000</p>
                     </div>
                 </div>        		
-        	</c:forEach> --%>
+        	</c:forEach>
 	        	<div class="productInfo col">
                     <a class="productImg" href="/productpage">
                         <img src="/images/202007205_1207236_2.jpg" alt="">
@@ -295,7 +294,7 @@
                         <p><a href="/productpage">후드</a></p>
                         <p>20000</p>
                     </div>
-	            </div>            
+	            </div>          
             </div>
         </div>
     </article>

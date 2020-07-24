@@ -267,7 +267,7 @@
                         남성
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">티셔츠&탱크탑</a>
+                        <a class="dropdown-item" href="/productList/110/112">티셔츠&탱크탑</a>
                         <a class="dropdown-item" href="#">후디&스웨트셔츠</a>
                         <a class="dropdown-item" href="#">셔츠</a>
                       </div>
