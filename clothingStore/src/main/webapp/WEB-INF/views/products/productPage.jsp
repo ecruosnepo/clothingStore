@@ -8,7 +8,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- Slick Slide CSS -->
+	<link rel="stylesheet" type="text/css" href="/css/slick.css">
+  	<link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
 
     <title>Hello, world!</title>
     <style>
@@ -22,6 +24,7 @@
         }
         .row{
             margin: 0;
+            width: 100%;
         }
         /* 상품 이미지 */
         .img-group{
@@ -143,21 +146,20 @@
 
         /* 추천 */
         .recommand-box{
-            margin: 0 auto;
+        	width:100%;
         }
-        .recommand-item{
-            width: 296px;
-            height: 506px;
+        .recommand-slide{
+        	width:70%;
+        	margin:0 auto;
         }
-        .carousel-recommand .carousel-control-prev {
-            margin-left: -100px;
-            background-color: black;
-        }
-
-        .carousel-recommand .carousel-control-next {
-            margin-right: -100px;
-            background-color: black;
-        }
+        
+    </style>
+    <style>
+    	/* slick  */
+    	.slick-prev:before,
+	    .slick-next:before {
+	      color: black;
+	    }
     </style>
   </head>
   <body>
@@ -187,37 +189,35 @@
                     <form action="/addCart">
                         <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
                         <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
-                        <div class="color-select">
-                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                  <div class="carousel-item active color-carousel-item">
-                                  	<c:forEach items="${colorList }" var="colors">
-                                  		<div class="form-check form-check-inline">
-                                        	<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="${colors.pd_color }">
-                                        	<label class="form-check-label" for="inlineRadio1">
-						                    <a href="/productpage/${colors.pd_id }">
-                                        	<c:forTokens items="${colors.pd_img }" var="img" delims="," end="0">
-                                        		<img class="color-img" src="/images/${img}" alt="">
-						                    </c:forTokens>
-						                    </a>
-                                        	</label>
-                                    	</div>
-                                  	</c:forEach>
-                                  </div>
-                                  <div class="carousel-item color-carousel-item">
-                                                     
-                                  </div>
-                                </div>
-                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-                        </div>
+                        <%-- <div class="color-select reponsive">
+                           	<c:forEach items="${colorList }" var="colors">
+                           		<div class="form-check form-check-inline">
+                                 	<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="${colors.pd_color }">
+                                 	<label class="form-check-label" for="inlineRadio1">
+					                   <a href="/productpage/${colors.pd_id }">
+					                                 	<c:forTokens items="${colors.pd_img }" var="img" delims="," end="0">
+					                                 		<img class="color-img" src="/images/${img}" alt="">
+					                   </c:forTokens>
+					                   </a>
+                                 	</label>
+                             	</div>
+                           	</c:forEach>                            
+                        </div> --%>
+                        <div class="">
+						  <ul class="regular">
+						  <c:forEach items="${colorList }" var="colors">
+                           		<li class="">
+                                 	<a href="/productpage/${colors.pd_id }">	                                 	
+				                   		<c:forTokens items="${colors.pd_img }" var="img" delims="," varStatus="status">
+						                    <c:if test="${status.last == true}">
+						                        <img class="color-img" src="/images/${img}" alt="">
+						                    </c:if>
+					                    </c:forTokens>  
+					                </a>                                 	
+                             	</li>
+                          </c:forEach>
+						  </ul>
+						</div>
                         <div class="pd-select-buttons">
                             <select class="form-control form-control-lg size-list">
                                 <option>S</option>
@@ -248,35 +248,21 @@
                 </ul>                
             </div>
             <div class="col-xs-6 footer2-box"></div>
-        </div>
+        </div>    
         <!-- 상품 추천 -->
-        <div class="row pd-recommand">
-            <div class="col-xs-12 recommand-box">
-                <div id="carousel-recommand" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                        <img class="recommand-item" src="http://placehold.it/296x506" class="" alt="...">
-                      </div>                      
-                    </div>
-                    <a class="carousel-control-prev" href="#carousel-recommand" role="button" data-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carousel-recommand" role="button" data-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
+        <div class="row">
+	        <div class="recommand-box">
+	        	<div class="recommand-slide">
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>        	
+	        	</div>        
+	        </div>
         </div>
 
         <div id="mySidepanel" class="sidepanel">
@@ -286,11 +272,31 @@
 패션 리사이클러가 되세요!
 여러분도 환경 보호를 돕고 더욱 지속 가능한 패션을 만들 수 있습니다. 불필요한 옷이나 가정용 직물을 H&M 매장에 가지고 오면 다시 입을 수 있는 옷을 만드는 데 사용되거나 재사용 또는 재활용됩니다.
             </span>
-        </div>       
+        </div>
         
         <div class="overlay"></div>
     </div>
     
+    <!-- Slick Slide JS -->
+    <script src="/css/slick.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	 $(function() {      
+	   $(".regular").slick({
+	     dots: false,
+	     infinite: false,
+	     slidesToShow: 5,
+	     slidesToScroll: 5
+	   });
+
+	   $(".recommand-slide").slick({
+		     dots: false,
+		     infinite: true,
+		     slidesToShow: 4,
+		     slidesToScroll: 4
+	   });	   
+	 });
+	 </script>
+
     <!-- Optional JavaScript -->
     <script>
         $('#exampleModal').appendTo("body") 
@@ -303,11 +309,7 @@
 
         function closeNav() {
             document.getElementById("mySidepanel").style.width = "0";
-        }
-
-        $('.carousel').carousel({
-          interval: false
-        })
+        }        
     </script>
   </body>
 </html>

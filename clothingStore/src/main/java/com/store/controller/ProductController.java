@@ -19,10 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
+import com.store.FilenameSorting;
 import com.store.dao.CategoryDao;
 import com.store.dto.CategoryDto;
 import com.store.dto.ProductDto;
 import com.store.service.ProductService;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 public class ProductController {
@@ -33,7 +36,7 @@ public class ProductController {
 	
 	@GetMapping("/test")
 	public String test() {
-		return "products/productList";
+		return "login";
 	}
 	
 	@GetMapping("/productpage/{pdId}")
@@ -64,30 +67,41 @@ public class ProductController {
 	}
 	
 	@PostMapping("/regProduct")
-	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("mainImg") MultipartFile main, @RequestParam("subImg") MultipartFile[] sub) throws Exception {
+	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("img") MultipartFile[] file) throws Exception {
 		System.out.println("상품 등록");
-		String uploadPath = req.getRealPath("/").concat("resources\\images");
+		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\images");	
 		System.out.println(uploadPath);
-	    String fileOriginName = "";
+		SimpleDateFormat formatter;
+		String extension;
+		Calendar now;
+		File f;
+		String[] fileToString = new String[file.length];	    
 	    String fileMultiName = "";
-	    for(int i=0; i<sub.length; i++) {
-	        fileOriginName = sub[i].getOriginalFilename();
-	        System.out.println("기존 파일명 : "+fileOriginName);
-	        SimpleDateFormat formatter = new SimpleDateFormat("YYYYMMDD_HHMMSS_"+i);
-	        Calendar now = Calendar.getInstance();
+	    	    
+	    //멀티파트파일
+	    for(int i=0; i<file.length; i++) {
+	    	fileToString[i] = file[i].getOriginalFilename();
+	    }
+	    
+	    fileToString = FilenameSorting.solution(fileToString);
+	    
+	    for(int i=0; i<file.length; i++) {
+	        formatter = new SimpleDateFormat("YYYYMMDD_HHMMSS_"+i);
+	        now = Calendar.getInstance();
 	        
 	        //확장자명
-	        String extension = fileOriginName.split("\\.")[1];
+	        extension = fileToString[i].split("\\.")[1];
 	        
 	        //fileOriginName에 날짜+.+확장자명으로 저장시킴.
-	        fileOriginName = formatter.format(now.getTime())+"."+extension;
-	        System.out.println("변경된 파일명 : "+fileOriginName);
+	        fileToString[i] = formatter.format(now.getTime())+"."+extension;
+	        System.out.println("변경된 파일명 : "+fileToString[i]);
 	        
-	        File f = new File(uploadPath+"/"+fileOriginName);
-	        sub[i].transferTo(f);
-	        if(i==0) { fileMultiName += fileOriginName; }
-	        else{ fileMultiName += ","+fileOriginName; }
+	        f = new File(uploadPath+"/"+fileToString[i]);
+	        file[i].transferTo(f);
+	        if(i==0) { fileMultiName += fileToString[i]; }
+	        else{ fileMultiName += ","+fileToString[i]; }
 	    }
+	    
 	    System.out.println("*"+fileMultiName);
 	    pDto.setPd_img(fileMultiName);
 	    

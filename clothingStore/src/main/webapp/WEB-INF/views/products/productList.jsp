@@ -276,8 +276,10 @@
 	        	<c:forEach items="${pd_list }" var="pd_dto">
 	                <div class="productInfo col">
 	                    <a class="productImg" href="/productpage/${pd_dto.pd_id }">
-	                    <c:forTokens items="${pd_dto.pd_img }" var="img" delims="," end="0">
-	                        <img src="/images/${img}" alt="">
+	                    <c:forTokens items="${pd_dto.pd_img }" var="img" delims="," varStatus="status">
+		                    <c:if test="${status.last == true}">
+		                        <img src="/images/${img}" alt="">
+		                    </c:if>
 	                    </c:forTokens>              
 	                    </a>
 	                    <div>
