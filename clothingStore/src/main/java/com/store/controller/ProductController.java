@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.google.gson.Gson;
 import com.store.FilenameSorting;
 import com.store.dao.CategoryDao;
+import com.store.dto.CartDto;
 import com.store.dto.CategoryDto;
 import com.store.dto.ProductDto;
+import com.store.service.CartService;
 import com.store.service.ProductService;
-
-import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 public class ProductController {
@@ -33,6 +34,8 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private CategoryDao categoryDao;
+	@Autowired
+	private CartService cartService;
 	
 	@GetMapping("/test")
 	public String test() {
@@ -109,5 +112,25 @@ public class ProductController {
 	    
 	    String referer = req.getHeader("Referer");
 	    return "redirect:"+ referer;
+	}
+	
+	@RequestMapping(value="/carttest")
+	public String addCart() throws Exception{				
+		return "products/cart";
+	}
+	
+	@PostMapping("/addCart")
+	public void addCart(HttpSession session, CartDto cDto) throws Exception{		
+		String email = (String)session.getAttribute("email");
+		System.out.println(email);
+		cDto.setEmail(email);
+		cartService.addCart(cDto);
+	}
+	
+	@GetMapping("/cart")
+    public String cartView(HttpSession session, Model model) throws Exception {
+        String email = (String)session.getAttribute("email");
+		model.addAttribute("cart_list", cartService.CartListView(email));		
+        return "products/cart";
 	}
 }

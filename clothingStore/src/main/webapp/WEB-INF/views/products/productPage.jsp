@@ -172,7 +172,6 @@
                 	<c:forTokens items="${pd_dto.pd_img }" var="img" delims=",">
                         <img class="pd-img main-img" src="/images/${img}" alt="">
                     </c:forTokens>
-                    <!-- <img class="pd-img main-img" src="./hmgoepprod1.jpg" alt=""> -->
                 </div>
                 <!-- 상품 설명 글 -->
                 <div class="row pd-desc">
@@ -186,23 +185,10 @@
             <!-- 상품 옵션 -->
             <div class="col-md-4 pd-option">
                 <div class="option-box sticky-top">
-                    <form action="/addCart">
+                    <form action="/addCart" method="post">
+                    	<input type="hidden" name="pd_id" value="${pd_dto.pd_id }" />
                         <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
                         <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
-                        <%-- <div class="color-select reponsive">
-                           	<c:forEach items="${colorList }" var="colors">
-                           		<div class="form-check form-check-inline">
-                                 	<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="${colors.pd_color }">
-                                 	<label class="form-check-label" for="inlineRadio1">
-					                   <a href="/productpage/${colors.pd_id }">
-					                                 	<c:forTokens items="${colors.pd_img }" var="img" delims="," end="0">
-					                                 		<img class="color-img" src="/images/${img}" alt="">
-					                   </c:forTokens>
-					                   </a>
-                                 	</label>
-                             	</div>
-                           	</c:forEach>                            
-                        </div> --%>
                         <div class="">
 						  <ul class="regular">
 						  <c:forEach items="${colorList }" var="colors">
@@ -219,10 +205,10 @@
 						  </ul>
 						</div>
                         <div class="pd-select-buttons">
-                            <select class="form-control form-control-lg size-list">
-                                <option>S</option>
-                                <option>M</option>
-                                <option>L</option>                                
+                            <select name="pd_size" class="form-control form-control-lg size-list">
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>                                
                             </select>
                             <button class="add-cart" type="submit">
                                 <span>담기</span>
@@ -248,7 +234,7 @@
                 </ul>                
             </div>
             <div class="col-xs-6 footer2-box"></div>
-        </div>    
+        </div>
         <!-- 상품 추천 -->
         <div class="row">
 	        <div class="recommand-box">

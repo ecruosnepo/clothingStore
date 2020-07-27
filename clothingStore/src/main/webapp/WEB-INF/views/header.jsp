@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% session.setAttribute("email", "test"); %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -215,7 +216,7 @@
                     <a class="dropdown-item" href="#">Forgot password?</a>
                   </div>
   
-                  <a type="button" class="btn dropdown-toggle cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <a type="button" class="btn cart" href="/cart">
                     장바구니
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
@@ -301,5 +302,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<!-- 카트 버튼 -->
+	<script type="text/javascript">
+		$(.cart).click(function(e){
+	
+	        e.target
+	
+		})
+	</script>
   </body>
 </html>
