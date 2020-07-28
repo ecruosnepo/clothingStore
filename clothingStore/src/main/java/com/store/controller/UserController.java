@@ -90,7 +90,7 @@ public class UserController {
 	public String updateForm()throws Exception {
 		return "/myPage/updateForm";
 	}
-	@PostMapping("/UpdateForm")
+	@PostMapping("/Update")
 	public String updateForm(@RequestParam("user_name")String name, 
 			                 @RequestParam("user_birth")String birth,
 			                 @RequestParam("user_phone")String phone, 
