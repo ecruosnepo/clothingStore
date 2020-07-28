@@ -46,7 +46,9 @@
 		<div class="row">
 			<aside class="sidenav">
 			  <a href="/manager"><h3>관리자 페이지</h3></a><br>
+			  <a href="/mgProductList"><h5>상품 목록</h5></a><br>
 			  <a href="/mgProduct"><h5>상품 등록</h5></a><br>
+			  <a href="/regProductStock"><h5>재고 입력</h5></a><br>
 			  <a href="/mgQna"><h5>고객 문의 관리</h5></a><br>
 			  <a href="/mgMember"><h5>고객관리</h5></a><br>
 		 	</aside>
