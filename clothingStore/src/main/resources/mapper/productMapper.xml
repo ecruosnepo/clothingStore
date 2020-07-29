@@ -28,6 +28,11 @@
 		select pd_id, pd_name, pd_img, pd_color from products where pd_name=#{0};
 	</select>
 	
+	<!-- 상품 번호 가져오기 -->
+	<select id="getProductIdDao" resultType="int">
+		select pd_id from products where pd_name=#{param1} and pd_color=#{param2};
+	</select>
+	
 	<!-- 상품 등록 -->
 	<insert id="regProductDao" parameterType="hashMap">
 		insert into products (pd_name, pd_price, pd_color, pd_desc, cat_id, discount, pd_img) values (#{pd_name}, #{pd_price}, #{pd_color}, #{pd_desc}, #{cat_id}, #{discount}, #{pd_img});

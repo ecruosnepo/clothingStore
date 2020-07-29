@@ -78,7 +78,7 @@
 					    사이즈: ${cList.pd_size } <br/>
 					    컬러: ${cList.pd_color }
 					    합계: <br/>
-					    <select name="pd_quantity">
+					    <select name="pd_quantity" id="quantity">
 	          				<%
 	          					for(int i=1; i<=20; i++){
 	          				%>
@@ -105,8 +105,7 @@
             <div class="form-group">
               <input type="text" class="form-control" id="exampleInputcard">
             </div>
-          </form>
-          
+          </form>          
           
           <br/>
           <br/>
@@ -126,18 +125,16 @@
            </label>
           </div>
          <br/>
-         <button class="btn btn-default" type="submit">추가</button> 
-
-
-          
-
+         <button class="btn btn-default" type="submit">추가</button>
          
-         <br/><br/><br/>
-         
-         
+         <br/><br/><br/>         
         </div>
     </div>
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script>
+	    $('#quantity').on('change', function() {
+	        location.href= this.value;
+	    });
+	    $('#quantity').val(location.href);
+    </script>
   </body>
 </html> 

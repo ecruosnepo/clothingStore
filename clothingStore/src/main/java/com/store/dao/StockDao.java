@@ -7,4 +7,5 @@ import com.store.dto.StockDto;
 @Mapper
 public interface StockDao {
 	public StockDto getStockDao(int pId);
+	public int addStockDao(StockDto sDto);
 }
