@@ -130,11 +130,20 @@
          <br/><br/><br/>         
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-	    $('#quantity').on('change', function() {
-	        location.href= this.value;
-	    });
-	    $('#quantity').val(location.href);
+		var cart_id = new FormData("#cart_dto");
+		var pd_quantity = new FormData($("#quantity"));
+    	
+	    $ajax({
+			url:'/updateCartQuantity',
+			data:(cart_id,pd_quantity),
+			type:'POST',
+			success:function(){
+				$()
+			}
+				
+		})
     </script>
   </body>
 </html> 

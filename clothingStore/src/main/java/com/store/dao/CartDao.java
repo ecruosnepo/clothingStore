@@ -13,5 +13,5 @@ public interface CartDao {
 	public int addCartDao(CartDto cDto);
 	public int deleteCartDao(int cart_id);
 	public int updateSizeCartDao(String pd_size);
-	public int updateQuantityCartDao(int pd_quantity);
+	public int updateQuantityCartDao(int cart_id, int pd_quantity);
 }

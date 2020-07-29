@@ -150,4 +150,9 @@ public class ProductController {
 		model.addAttribute("cart_list", cartService.CartListView(email));		
         return "products/cart";
 	}
+	
+	@PostMapping("/updateCartQuantity")
+	public void updateCartQuantity(HttpServletRequest req, CartDto cDto) throws Exception {
+		cartService.updateQuantityCart(cDto.getCart_id(), cDto.getPd_quantity());
+	}
 }
