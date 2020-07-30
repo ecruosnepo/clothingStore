@@ -4,8 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import com.store.dto.UserDto;
 
-
-
 public interface UserServiceImpl {
 	public UserDto sUserList(String email);
 	 
@@ -17,4 +15,7 @@ public interface UserServiceImpl {
 	
 	public void sLogout(HttpSession session);
 	
+	public void sUpdateMainAddress(String user_email, String main_address1, String main_address2, String main_address3, String main_address4) throws Exception;
+
+	public void sUpdateOderUserInfo(String user_email, String user_name, String main_address1, String main_address2, String main_address3, String main_address4, String user_phone) throws Exception;
 }

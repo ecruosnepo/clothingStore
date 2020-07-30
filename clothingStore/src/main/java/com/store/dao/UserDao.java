@@ -18,4 +18,19 @@ public interface UserDao {
      
      public int UserUpdate(@Param("user_name")String name,@Param("user_birth")String birth, 
     		               @Param("user_phone")String phone, @Param("user_gender")String gender) throws Exception;
+     
+     public int updateMainAddress(@Param("user_email")String user_email,
+    		 						@Param("main_address1")String main_address1, 
+    		 						@Param("main_address2")String main_address2,
+    		 						@Param("main_address3")String main_address3, 
+    		 						@Param("main_address4")String main_address4) throws Exception;
+     
+     public int updateOderUserInfo(@Param("user_email")String user_email,
+    		 @Param("user_name")String user_name,
+    		 @Param("main_address1")String main_address1, 
+    		 @Param("main_address2")String main_address2,
+    		 @Param("main_address3")String main_address3, 
+    		 @Param("main_address4")String main_address4,
+    		 @Param("user_phone")String user_phone) throws Exception;
+     
 }

@@ -1,5 +1,6 @@
 package com.store.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.store.dto.AddressDto;
+import com.store.dto.UserDto;
+import com.store.service.AddressServiceImpl;
 import com.store.service.UserServiceImpl;
 
 @Controller
@@ -19,6 +23,9 @@ public class UserController {
 	 
 	@Autowired
 	private UserServiceImpl service;
+	
+	@Autowired
+	private AddressServiceImpl AddressService;
 
 	// 메인 페이지 초기 루트 지정	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
@@ -47,6 +54,7 @@ public class UserController {
 	public String login() {
 		return "login";
 	}	
+	
 	@PostMapping("/LoginForm")
 	public String UserLogin(@RequestParam("user_email") String email, 
 			                @RequestParam("user_password") String password,
@@ -90,20 +98,51 @@ public class UserController {
 	public String updateForm()throws Exception {
 		return "/myPage/updateForm";
 	}
+	
 	@PostMapping("/Update")
 	public String updateForm(@RequestParam("user_name")String name, 
 			                 @RequestParam("user_birth")String birth,
 			                 @RequestParam("user_phone")String phone, 
-			                 @RequestParam("user_gender")String gender) throws Exception {
+			                 @RequestParam("user_gender")String gender, HttpServletRequest req) throws Exception {
 		service.sUserUpdate(name, birth, phone, gender);
        
-	   return "redirect:index";
+		String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer;		
 	}
 	
 	// 회원 주소록
 	@RequestMapping(value="/address", method = RequestMethod.GET)
 	public String address() throws Exception {
 	   return "/myPage/address";
+	}
+	
+	// 청구 주소 수정
+	@PostMapping("/updateMainAddress")
+	public void updateMainAddress(UserDto uDto) throws Exception{
+		service.sUpdateMainAddress(uDto.getUser_email(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4());
+	}
+	
+	// 주문페이지 유저 정보 수정
+	@PostMapping("/updateOrderUserInfo")
+	public String updateOrderUserInfo(HttpServletRequest req, UserDto uDto) throws Exception{
+		System.out.println(uDto.getMain_address1());
+		System.out.println(uDto.getMain_address2());
+		System.out.println(uDto.getMain_address3());
+		System.out.println(uDto.getMain_address4());
+		System.out.println(uDto.getUser_email());
+		System.out.println(uDto.getUser_name());
+		
+		
+		service.sUpdateOderUserInfo(uDto.getUser_email(), uDto.getUser_name(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4(), uDto.getUser_phone());
+		
+		String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer;
+	}
+	
+	// 배송 주소 수정
+	@PostMapping("/updateDeliveryAddress")
+	public void updateDeliveryAddress(AddressDto aDto) throws Exception{
+		AddressService.sUpdateAddress(aDto.getEmail(), aDto.getR_name(), aDto.getAddress1(), aDto.getAddress2(), aDto.getAddress3(), aDto.getAddress4());
 	}
 	
 	// 회원 주소록 등록
