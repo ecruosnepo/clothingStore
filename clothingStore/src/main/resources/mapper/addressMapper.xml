@@ -4,35 +4,35 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.store.dao.AddressDao"> 
-<!-- USER ADDRESS  -->
-	<update id="updateAddress">
-	   UPDATE
-	   address
-	   SET
-	   r_name = #{r_name},
-	   address1 = #{address1},
-	   address2 = #{address2},
-	   address3 = #{address3},
-	   address4 = #{address4}
-	   WHERE
-	   email = #{email};
-	</update>
-	
-	<insert id="InsertAddress">
-	 INSERT INTO
-	 address
-	 ( email, r_name, address1, address2, address3, address4 ) VALUES
-	 ( #{email}, #{r_name}, #{address1}, #{address2}, #{address3}, #{address4})
-	</insert>
-	
-    <select id="getAddress" parameterType="String" resultType="com.store.dto.AddressDto">
-	 	SELECT * FROM address WHERE email = #{email}
-	</select>
+			
+			<!-- USER ADDRESS  -->
+			<update id="UpDateAddress">
+			   UPDATE
+			   address
+			   SET
+			   address1 = #{address1},
+			   address2 = #{address2},
+			   address3 = #{address3},
+			   address4 = #{address4}
+			   WHERE
+			   email = #{email}
+			</update>
+			
+			<insert id="InsertAddress">
+			 INSERT INTO
+			 address
+			 ( email, r_name, address1, address2, address3, address4 ) VALUES
+			 ( #{email}, #{r_name}, #{address1}, #{address2}, #{address3}, #{address4})
+			</insert>
+			
+		    <select id="getAddressList" parameterType="String" resultType="com.store.dto.AddressDto">
+			 	SELECT * FROM address WHERE email = #{email}
+			</select>
 
 <!-- 			<select id="SelectMainAddress" parameterType="String" resultType="com.store.dto.AddressDto">
- 	SELECT * FROM address WHERE email = #{email} and main_address = 1
-</select> -->
-<!-- mainAddress 
-  subAddress
-  query 따로 짜서 나뉘게 나오게 하기.  -->
+			 	SELECT * FROM address WHERE email = #{email} and main_address = 1
+			</select> -->
+			<!-- mainAddress 
+			     subAddress
+			     query 따로 짜서 나뉘게 나오게 하기.  -->
 </mapper>

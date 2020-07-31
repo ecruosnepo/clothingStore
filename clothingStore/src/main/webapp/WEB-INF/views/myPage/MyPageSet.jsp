@@ -56,27 +56,27 @@
     <br/>
      <label class="headName">이메일</label>
      <br/>
-     <label class="subName">${u.user_email}</label>
+     <label class="subName">${user.user_email}</label>
      <br/>
      <br/>
      <label class="headName">이름</label>
      <br/>
-     <label class="subName">${u.user_name}</label>
+     <label class="subName">${user.user_name}</label>
      <br/>
      <br/>
      <label class="headName">생년월일</label>
      <br/>
-     <label class="subName">${u.user_birth}</label>
+     <label class="subName">${user.user_birth}</label>
      <br/>
      <br/>
      <label class="headName">전화번호</label>
      <br/>
-     <label class="subName">${u.user_phone}</label>
+     <label class="subName">${user.user_phone}</label>
      <br/>
      <br/>
      <label class="headName">성별</label>
      <br/>
-     <label class="subName">${u.user_gender}</label>
+     <label class="subName">${user.user_gender}</label>
      <br/>
      <br/>
      <br/>
@@ -98,13 +98,18 @@
       <label class="headName">청구지 주소</label> 
      <br/>
      <br/>
-     <label class="subName">04177</label>
+    
+   
+     <label class="subName">${user.address1}</label>
      <br/>
-     <label class="subName">포천시 학동로47</label>
+     <label class="subName">${user.address2}</label>
      <br/>
-     <label class="subName">한신아파트 101동 1403호</label>
+     <label class="subName">${user.address3}</label>
     <br/>
+       <label class="subName">${user.address4}</label>
+     
     <br/>
+  
     <br/>
     <a href="address"><button type="submit" class="btn btn-primary btn-lg" style="color: aqua; background-color: black;">수정</button></a>
    </div>

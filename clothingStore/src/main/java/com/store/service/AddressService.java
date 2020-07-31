@@ -9,5 +9,5 @@ public interface AddressService {
 	   
 	public void sInsertAddress(String r_name, String address1, String address2, String address3, String address4, String email) throws Exception;  
     
-	public List<AddressDto> sGetAddressList(String email) ;
+	public List<AddressDto> sGetAddressList(String email);
 }

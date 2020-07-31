@@ -7,8 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.store.dto.AddressDto;
 
-
-
 @Mapper
 public interface AddressDao {
 	 public void updateDeliveryAddress(@Param("email")String email, @Param("r_name")String r_name,

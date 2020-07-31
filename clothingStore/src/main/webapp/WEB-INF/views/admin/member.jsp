@@ -1,47 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="../header.jsp" flush="false" />
+<jsp:include page="sideNav.jsp" flush="false" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.customerManage{
+		min-height:500px;
+	}
+     a{
+     color: black;
+     }
+	section{
+		 min-height:400px;
+	     margin-left: 200px;
+	 }
+     section h1{
+         text-align: center;
+     }
+     section p{
+     	float: right;
+     }
+     #title{
+          overflow: hidden;
+          text-overflow: ellipsis;
+     }
+	.btn-secondary {
+	    color: black;
+	    border: none;
+	    background: none;
+	}
+     .btn-toolbar{
+     	justify-content: center;
+     }
+     #sectDiv{
+		margin: 50px;
+		margin-left: 10%;
+		max-width:70%;
+	}
+	#titleHd{
+	width: 40%;
+	}
+	#titleN{
+		width: 10%
+	}
+</style>
 </head>
 <body>
-<jsp:include page="../header.jsp" flush="false" />
-<style>
-        a{
-        color: black;
-        }
-        .row{
-          width: 980px;
-          margin: 0 auto;
-          }
-          section{
-            margin-left: 20%;
-           }
-        section h1{
-            text-align: center;
-        }
-        section p{
-        	float: right;
-        }
-        
-		.btn-secondary {
-		    color: black;
-		    border: none;
-		    background: none;
-		}
-        .btn-toolbar{
-        	justify-content: center;
-        }
-        
-        @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
-        }
-        </style>
-        <jsp:include page="sideNav.jsp" flush="false" />
-      <section>
+   <section class="customerManage">
+   		<div id="sectDiv">
           <h1>고객 관리</h1><br><br>
 			
           <form class="form-inline">
@@ -86,11 +97,8 @@
                    </c:if>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary btn-lg" onclick="location.href='/customerQnaWriteForm' ">글쓰기</button>
-        </section>
-    </div>
-    </div>
-    </div>
-    <jsp:include page="../footer.jsp" flush="false" />
+    	</div>
+    </section>
 </body>
 </html>
+<jsp:include page="../footer.jsp" flush="false" />

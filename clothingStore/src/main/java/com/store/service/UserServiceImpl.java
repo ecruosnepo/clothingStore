@@ -11,7 +11,7 @@ public interface UserServiceImpl {
 	
 	public int sUserEmail(String email, String password) throws Exception;
 	
-	public void sUserUpdate(String name, String birth, String phone, String gender) throws Exception;
+	public void sUserUpdate(String name, String birth, String phone, String gender, String email) throws Exception;
 	
 	public void sLogout(HttpSession session);
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.store.dto.AddressDto;
 import com.store.dto.UserDto;
+
 import com.store.service.AddressServiceImpl;
 import com.store.service.UserServiceImpl;
 
@@ -22,7 +23,7 @@ public class UserController {
 	private int result; 
 	 
 	@Autowired
-	private UserServiceImpl service;
+	private UserServiceImpl userService;
 	
 	@Autowired
 	private AddressServiceImpl AddressService;
@@ -43,8 +44,7 @@ public class UserController {
 			@RequestParam("user_email") String email,
 			@RequestParam("user_password") String password, 
 			@RequestParam(value = "check", required = false, defaultValue = "")String check ) throws Exception {
-	
-			result = service.sUserSignUp(email, password, check);	
+			result = userService.sUserSignUp(email, password, check);	
 			model.addAttribute("result", result);
 			return "/user/userSignUpAction";	
 	}
@@ -60,7 +60,7 @@ public class UserController {
 			                @RequestParam("user_password") String password,
 			                Model model, HttpSession session) {
 		try {
-			result = service.sUserEmail(email, password);
+			result = userService.sUserEmail(email, password);
 		} catch(Exception e) {
 			e.printStackTrace();
 			result = 0;
@@ -74,7 +74,7 @@ public class UserController {
 	// 로그아웃
 	@RequestMapping(value="/Logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		service.sLogout(session);
+		userService.sLogout(session);
 		return "logout";
 	}
 	
@@ -89,37 +89,44 @@ public class UserController {
 	@RequestMapping(value="/MyPageSet", method = RequestMethod.GET)
 	public String MyPageSet(Model model, HttpSession session) throws Exception {
 		String email = (String) session.getAttribute("email");
-		model.addAttribute("u", service.sUserList(email));
+		model.addAttribute("user", userService.sUserList(email));
 		return "/myPage/MyPageSet";
 	}
 	
 	// 회원 상세정보 편집
 	@RequestMapping(value="/updateForm", method = RequestMethod.GET)
-	public String updateForm()throws Exception {
+	public String updateForm(Model model, HttpSession session)throws Exception {
+		String email = (String) session.getAttribute("email");
+		model.addAttribute("u", userService.sUserList(email));
 		return "/myPage/updateForm";
 	}
-	
-	@PostMapping("/Update")
-	public String updateForm(@RequestParam("user_name")String name, 
-			                 @RequestParam("user_birth")String birth,
-			                 @RequestParam("user_phone")String phone, 
-			                 @RequestParam("user_gender")String gender, HttpServletRequest req) throws Exception {
-		service.sUserUpdate(name, birth, phone, gender);
-       
-		String referer = req.getHeader("Referer");
-	    return "redirect:"+ referer;		
+
+	@PostMapping("/userUpdate")
+	public String updateForm(HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		String name = request.getParameter("user_name");
+		String birth = request.getParameter("user_birth");
+		String phone = request.getParameter("user_phone");
+		String gender = request.getParameter("user_gender");
+		String emails = (String)session.getAttribute("email");
+		if ( null != session.getAttribute("email")) {
+			userService.sUserUpdate(name, birth, phone, gender, emails);
+        	return "/myPage/updateFormAction";
+		}
+		return "forward:/myPage/MyPageSet";
 	}
 	
 	// 회원 주소록
 	@RequestMapping(value="/address", method = RequestMethod.GET)
-	public String address() throws Exception {
-	   return "/myPage/address";
+	public String address(Model model, HttpSession session) throws Exception {
+		String email = (String)session.getAttribute("email");
+		model.addAttribute("address", AddressService.sGetAddressList(email));
+		return "/myPage/address";
 	}
 	
 	// 청구 주소 수정
 	@PostMapping("/updateMainAddress")
 	public void updateMainAddress(UserDto uDto) throws Exception{
-		service.sUpdateMainAddress(uDto.getUser_email(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4());
+		userService.sUpdateMainAddress(uDto.getUser_email(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4());
 	}
 	
 	// 주문페이지 유저 정보 수정
@@ -133,7 +140,7 @@ public class UserController {
 		System.out.println(uDto.getUser_name());
 		
 		
-		service.sUpdateOderUserInfo(uDto.getUser_email(), uDto.getUser_name(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4(), uDto.getUser_phone());
+		userService.sUpdateOderUserInfo(uDto.getUser_email(), uDto.getUser_name(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4(), uDto.getUser_phone());
 		
 		String referer = req.getHeader("Referer");
 	    return "redirect:"+ referer;
@@ -150,11 +157,42 @@ public class UserController {
 	public String newAddress() throws Exception {
 	   return "/myPage/newAddress";
 	}
+	@PostMapping("/NewAddress") // update
+	public String NewAddress(@RequestParam("user_email")String user_email,
+							@RequestParam("r_name")String r_name,
+							@RequestParam("address1")String address1,
+			                 @RequestParam("address2")String address2,
+			                 @RequestParam("address3")String address3,
+			                 @RequestParam("address4")String address4,
+			                 HttpSession session ) throws Exception{
+		String emails = (String)session.getAttribute("email");
+		if ( null != emails ) {
+			AddressService.sUpdateAddress(emails, r_name,address1, address2, address3, address4);
+		    return "/myPage/newAddressAction";
+		}
+		 return "/myPage/newAddressAction";
+	}
+	
 	
 	// 회원 주소록 새 주소 추가
 	@RequestMapping(value="/subAddress", method = RequestMethod.GET)
 	public String subAddress() throws Exception {
 	   return "/myPage/subAddress";
+	}
+	@PostMapping("/SubAddress") // insert
+	public String SubAddress(@RequestParam("r_name")String name,
+			                 @RequestParam("address1")String address1,
+			                 @RequestParam("address2")String address2,
+			                 @RequestParam("address3")String address3,
+			                 @RequestParam("address4")String address4,
+			                 String email, HttpSession session) throws Exception{
+		String emails = (String)session.getAttribute("email");
+		
+		if ( null != emails ) {
+			AddressService.sInsertAddress(emails, name, address1, address2, address3, address4);
+			return "/myPage/SubAddressAction";
+		}
+		 return "/myPage/SubAddressAction";
 	}
 	
 	// 회원 비밀번호 찾기

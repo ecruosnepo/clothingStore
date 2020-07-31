@@ -17,8 +17,9 @@ public interface UserDao {
      public int UserPassword(@Param("user_password")String user_password) throws Exception;
      
      public int UserUpdate(@Param("user_name")String name,@Param("user_birth")String birth, 
-    		               @Param("user_phone")String phone, @Param("user_gender")String gender) throws Exception;
-     
+    		               @Param("user_phone")String phone, @Param("user_gender")String gender, 
+    		               @Param("user_email")String email) throws Exception;
+
      public int updateMainAddress(@Param("user_email")String user_email,
     		 						@Param("main_address1")String main_address1, 
     		 						@Param("main_address2")String main_address2,
@@ -32,5 +33,4 @@ public interface UserDao {
     		 @Param("main_address3")String main_address3, 
     		 @Param("main_address4")String main_address4,
     		 @Param("user_phone")String user_phone) throws Exception;
-     
 }

@@ -15,7 +15,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		.addResourceLocations("/resources/css/");
         
         // 메인 페이지 
-		registry.addResourceHandler("/mainImages/**").addResourceLocations("/images/main/");
-		registry.addResourceHandler("/questionFile/**").addResourceLocations("/images/questionFile/");
+		registry.addResourceHandler("/mainImages/**").addResourceLocations("/resources/main/");
+		// qna 첨부파일
+		registry.addResourceHandler("/questionFile/**").addResourceLocations("/resources/questionFile/");
     }
 }

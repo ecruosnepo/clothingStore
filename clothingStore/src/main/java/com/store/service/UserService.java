@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.store.dao.AddressDao;
 import com.store.dao.UserDao;
 import com.store.dto.UserDto;
 
@@ -12,7 +13,7 @@ import com.store.dto.UserDto;
 public class UserService implements UserServiceImpl {
 	
 	@Autowired
-	UserDao dao;
+	private UserDao dao;
 	
 	// 이용자 리스트
 	@Override
@@ -40,7 +41,7 @@ public class UserService implements UserServiceImpl {
 		    	return 4;  	
 			}
 		    else{
-				dao.UserSignUp(email, password);
+		    	dao.UserSignUp(email, password);
 				return 1;	
 		    } 
 }                 	
@@ -72,14 +73,11 @@ public class UserService implements UserServiceImpl {
 		}
 		 return 1;
 	}
-
+	
+	// 내 상세정보 편집
 	@Override
-	public void sUserUpdate( String name, String birth, String phone, String gender) throws Exception {
-		String email = null ;
-		int result = dao.UserEmail(email);
-		if ( 1 == result ) {
-			dao.UserUpdate(email, name, birth, gender);	
-		}
+	public void sUserUpdate( String name, String birth, String phone, String gender, String email) throws Exception {
+		dao.UserUpdate(name, birth, phone, gender, email);		
 	}
 
 	// 로그아웃
@@ -87,7 +85,7 @@ public class UserService implements UserServiceImpl {
 	public void sLogout(HttpSession session) {
 		 session.invalidate();	
 	}
-
+	
 	@Override
 	public void sUpdateMainAddress(String user_email, String main_address1, String main_address2, String main_address3,
 			String main_address4) throws Exception {
@@ -99,8 +97,6 @@ public class UserService implements UserServiceImpl {
 			String main_address4, String user_phone) throws Exception {
 		dao.updateOderUserInfo(user_email, user_name, main_address1, main_address2, main_address3, main_address4, user_phone);		
 	}
-
-
 }		   
 
 //String button = null;

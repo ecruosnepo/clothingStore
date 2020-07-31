@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +32,9 @@
   </style>
 </head>
   <body>
+  <%
+     session.getAttribute("email"); 
+  %>
    <jsp:include page="../header.jsp" flush="false" />   
   <div class="container"> 
       <div class="row ">
@@ -45,35 +49,41 @@
         <div class="box">
             <label class="size">내 세부정보</label>
             <br/><br/><br/>
-            <form action="UpdateForm" method="post">
-         <div class="form-group has-success">	
+            <form action="userUpdate" method="post">
+         		<div class="form-group has-success">	
             <label class="control-label" for="inputSuccess1" style="color: black; ">이메일</label>         
-            <input class="form-control" id="user_email">
+            <br/>
+            <label style="font-size: 20px; color: green;">${email}</label>
+            <br/>
             <br/>
             <label class="control-label" for="inputSuccess1" style="color: black; ">이름</label>
-            <input type="text" class="form-control" id="user_name">
+            <input type="text" class="form-control" id="inputSuccess1" name="user_name" value="${u.user_name}" onfocus="this.value='${u.user_name}';"/>
             <br/>
             <label class="control-label" for="inputSuccess1" style="color: black; ">생년월일</label>
-            <input type="date" class="form-control" id="user_birth">
+            <input type="date" class="form-control" id="inputSuccess1" name="user_birth" value="${u.user_birth}" onfocus="this.value='${u.user_birth}';"/>
             <br/>
             <label class="control-label" for="inputSuccess1" style="color: black; ">전화번호</label>
-            <input type="text" class="form-control" id="user_phone">
-          
-         </div>
-        <label>성별</label> 
-         <br/>
-         <select class="form-control">
-             <option value="">성별을 선택하십시오.</option>
-             <option value="남자">남성</option>
-             <option value="여성">여성</option>
-         </select>
-         <br/>
-         <br/>
-        <label>옷가게의 <a href="#" style="color: black; text-decoration: underline;">개인정보 고지사항</a>에 따라 고객의 데이터를 처리합니다.</label>
-        <br/>
-        <br/>
-        <button type="submit" class="btn btn-primary btn-lg btn-block" style="color: white; background-color: black;">저장</button>
-        <button type="button" class="btn btn-default btn-lg btn-block">취소</button>
+            <input type="text" class="form-control" id="inputSuccess1" name="user_phone" value="${u.user_phone}" ; onfocus="this.value='${u.user_phone}';this.style.color='red';"/>
+
+         	</div>
+	        <label>성별</label> 
+	         <br/>
+	         <select class="form-control" name="user_gender" >
+	             <option value="">${u.user_gender}</option>
+	            <c:if test="${'여성' eq u.user_gender}">
+	              <option value="남성">남성</option>
+	            </c:if>
+	            <c:if test="${'남성' eq u.user_gender }">
+	              <option value="여성">여성</option>
+	            </c:if>
+	         </select>
+	         <br/>
+	         <br/>
+	        <label>옷가게의 <a href="#" style="color: black; text-decoration: underline;">개인정보 고지사항</a>에 따라 고객의 데이터를 처리합니다.</label>
+	        <br/>
+	        <br/>
+	        <button type="submit" class="btn btn-primary btn-lg btn-block" style="color: white; background-color: black;">저장</button>
+	       	<a href="MyPageSet"> <button type="button" class="btn btn-default btn-lg btn-block">취소</button></a>
         </form>
        </div>
       </div>

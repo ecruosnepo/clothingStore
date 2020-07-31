@@ -50,30 +50,28 @@ public class CustController {
 	@RequestMapping("/customerQna")
 	public String qnaMain(@RequestParam(name="userId", defaultValue="1")String userId, @RequestParam(defaultValue="1") int page, Model model) {
 		
+		int checkLogin=0;
+		
 		//로그인 유무 확인
-		if(defaultservice.check(userId)) {
-			return "redirect:nonMember"; 
+		if(!defaultservice.check(userId)) {
+			//로그인된 회원일 경우 QnA페이지 이동
+			Map<String, Object> map=service.boardListService(userId,page);
+			model.addAttribute("list", map.get("dto"));
+			model.addAttribute("startIdx", map.get("startIdx"));
+			model.addAttribute("endIdx", map.get("endIdx"));
+			model.addAttribute("thisPage", page);
+			model.addAttribute("totalPage",map.get("totalPage"));
+			model.addAttribute("startPageIdx", map.get("startPageIdx"));
+			model.addAttribute("endPageIdx", map.get("endPageIdx"));
+		
+			checkLogin=1;
 		}
 		
-		//로그인된 회원일 경우 QnA페이지 이동
-		Map<String, Object> map=service.boardListService(userId,page);
-		model.addAttribute("list", map.get("dto"));
-		model.addAttribute("startIdx", map.get("startIdx"));
-		model.addAttribute("endIdx", map.get("endIdx"));
-		model.addAttribute("thisPage", page);
-		model.addAttribute("totalPage",map.get("totalPage"));
-		model.addAttribute("startPageIdx", map.get("startPageIdx"));
-		model.addAttribute("endPageIdx", map.get("endPageIdx"));
+		model.addAttribute("checkLogin", checkLogin);
 		
 		return "customerCenter/q_main"; 
 	}
 	
-	//비회원이 qna 접속시 안내 문구 출력
-	@RequestMapping("/nonMember")	
-	public @ResponseBody String nonMember(){
-		String message="<script>\r\n" + "alert('회원 가입 후 이용해 주세요.');\r\n" +"history.back();"+"</script>";
-		return message; 
-	}
 	
 	@RequestMapping("/customerQnaWriteForm")
 	public String qnaWrite(@RequestParam(name="userId", defaultValue="1")String userId, Model model) {
@@ -83,63 +81,65 @@ public class CustController {
 	}
 	
 	@RequestMapping("/customerWrite")
-	public @ResponseBody String qnaWriteOk(
-			@RequestParam(name="userId", defaultValue="1")String userId, @RequestParam(name="title", defaultValue="")String title,
-			@RequestParam("question")String question, @RequestParam(name="boardCat", defaultValue="")String boardCat,
-			@RequestParam(name="orderId", defaultValue="0")Integer orderId, HttpServletRequest req) {
+	public String qnaWriteOk( @RequestParam(name="userId", defaultValue="1")String userId, @RequestParam(name="title", defaultValue="")String title, 
+			@RequestParam("question")String question, @RequestParam(name="boardCat", defaultValue="")String boardCat, 
+			@RequestParam(name="orderId", defaultValue="0")Integer orderId, HttpServletRequest req, Model model) {
 		
+		//게시판 글쓰기 확인 값  1:제목미기재 2:분류미선택 10:글쓰기 성공
+		int result=10;
 		//제목을 입력 안했을 경우
 		if(defaultservice.check(title)) {
-			return "<script>\r\n" + "alert('제목을 입력해 주세요.'); history.back();\r\n </script>";
+			result=1;
+			model.addAttribute("result", result);
+			return "customerCenter/q_write";
 		}
-		
 		//게시판의 분류를 선택 안했을 경우
 		if(defaultservice.check(boardCat)) {
-			return "<script>\r\n" + "alert('분류를 선택해 주세요.');\r\n history.back();</script>";
+			result=2;
+			model.addAttribute("result", result);
+			return "customerCenter/q_write";
 		}
 		System.out.println("userId :"+userId+"title : " + title+"question : "+ question+"boardCat : "+ boardCat);
 		
+		//첨부파일 받기
 		Part filePart=null;
 		String realPath="";
-		
 		try {
 			filePart = req.getPart("file");
-			realPath=req.getServletContext().getRealPath("/images/questionFile");
+			realPath=req.getServletContext().getRealPath("/resources/questionFile");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}
 		
-		//입력 실행
 		int b_check=0;
 		String fileName=service.boardFileUploadService(filePart, realPath);
+		
+		//입력 실행
 		service.boardWriteService(b_check, userId, title, question, boardCat,fileName,orderId);
 		
-		return "<script>\r\n alert('문의 감사합니다.');\r\n" +"location.href='/customerQna'; </script>";
+		model.addAttribute("result", result);
+		
+		return "customerCenter/q_write";
 	}
 	
 	@RequestMapping(value="/boardListView")
-	public String listView(@RequestParam("id")String id, Model model) {
+	public String listView(@RequestParam("id")int id, Model model) {
 		BoardDto dto=service.boardListViewService(id);
 		
 		model.addAttribute("dto",dto);
 		return "customerCenter/q_view";
 	}
 	
-	@RequestMapping("/boardDeleteCnf")
-	public @ResponseBody String deleteCnf(@RequestParam("id")String id) {
-		String message="<script>\r\n" + "var del=confirm('해당 게시물을 삭제하시겠습니까?');\r\n" +
-				"if(del){location.href='/delete?id="+id+"'}else{history.back();};\r\n"+"</script>";
-		return message; 
-	}
 	@RequestMapping(value="/boardDelete", method = RequestMethod.GET)
-	public String delete(@RequestParam("id")String id) {
+	public String delete(@RequestParam("id")int id) {
+		System.out.println("문의 삭제");
 		service.boardDeleteService(id);
-		return "redirect:customerQna?userId=1"; 
+		return "redirect:customerQna"; 
 	}
 	@RequestMapping(value="/boardUpdateForm", method = RequestMethod.GET)
-	public String updateForm(@RequestParam("id")String id,
+	public String updateForm(@RequestParam("id")int id,
 			@RequestParam(name="userId", defaultValue="1")String userId, Model model) {
 		Map<String,Object> map=service.boardUpdateViewService(id);
 		model.addAttribute("dto", map.get("dto"));
@@ -149,29 +149,39 @@ public class CustController {
 	}
 	
 	@RequestMapping("/boardUpdate")
-	public @ResponseBody String update( @RequestParam("id")int id, @RequestParam("title")String title,
+	public String update( @RequestParam("id")int id, @RequestParam("title")String title,
 			@RequestParam("question")String question, @RequestParam("boardCat")String boardCat,
-			@RequestParam(name="orderId", defaultValue="0")Integer orderId, HttpServletRequest req) {
+			@RequestParam(name="orderId", defaultValue="0")Integer orderId, HttpServletRequest req,
+			Model model) {
+		
+		//게시판 글쓰기 확인 값  1:제목미기재 10:글쓰기 성공
+		int result=10;
 		
 		//제목을 입력 안했을 경우
 		if(defaultservice.check(title)) {
-			return "<script>\r\n" + "alert('제목을 입력해 주세요.'); history.back();\r\n </script>";
+			result=1;
+			model.addAttribute("result", result);
+			return "customerCenter/q_update";
 		}
+		
+		//첨부 파일 받기
 		Part filePart=null;
 		String realPath="";
 		
 		try {
 			filePart = req.getPart("file");
-			realPath=req.getServletContext().getRealPath("/images/questionFile");
+			realPath=req.getServletContext().getRealPath("/resources/questionFile");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}
 		String fileName=service.boardFileUploadService(filePart, realPath);
-		service.boardUpdateService(id, title, question, boardCat,fileName);
-		String message="<script>\r\n" + "alert('해당 게시물이 수정되었습니다.');\r\n" +"location.href='/listView?id="+id+"';"+"</script>";
-		return message; 
+		service.boardUpdateService(id, title, question, boardCat,fileName,orderId);
+		
+		model.addAttribute("result", result);
+		
+		return "customerCenter/q_update"; 
 	}
 	
 }
