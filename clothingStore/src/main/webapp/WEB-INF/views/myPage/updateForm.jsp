@@ -32,9 +32,7 @@
   </style>
 </head>
   <body>
-  <%
-     session.getAttribute("email"); 
-  %>
+
    <jsp:include page="../header.jsp" flush="false" />   
   <div class="container"> 
       <div class="row ">
@@ -64,16 +62,15 @@
             <br/>
             <label class="control-label" for="inputSuccess1" style="color: black; ">전화번호</label>
             <input type="text" class="form-control" id="inputSuccess1" name="user_phone" value="${u.user_phone}" ; onfocus="this.value='${u.user_phone}';this.style.color='red';"/>
-
          	</div>
 	        <label>성별</label> 
 	         <br/>
 	         <select class="form-control" name="user_gender" >
-	             <option value="">${u.user_gender}</option>
-	            <c:if test="${'여성' eq u.user_gender}">
+	             <option value="${u.user_gender}">${u.user_gender}</option>
+	            <c:if test="${ u.user_gender eq'여성'}">
 	              <option value="남성">남성</option>
 	            </c:if>
-	            <c:if test="${'남성' eq u.user_gender }">
+	            <c:if test="${ u.user_gender eq '남성' }">
 	              <option value="여성">여성</option>
 	            </c:if>
 	         </select>
@@ -88,8 +85,9 @@
        </div>
       </div>
     </div>
+     <jsp:include page="../footer.jsp" flush="false" />
   </div>
- <jsp:include page="../footer.jsp" flush="false" />
+
  
   </body>
 </html>

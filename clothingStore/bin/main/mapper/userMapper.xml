@@ -4,63 +4,64 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.store.dao.UserDao"> 
-    <!-- USER 정보  -->
-	<select id="UserList" parameterType="String" resultType="com.store.dto.UserDto">
-	 	SELECT * FROM users WHERE user_email = #{user_email}
-	</select>
-	
-	<!--USER UPDATE  -->
-	<update id="UserUpdate">
-	  UPDATE 
-	  users 
-	  SET 
-	  user_name = #{user_name},
-	  user_birth = #{user_birth},
-	  user_phone = #{user_phone},
-	  user_gender = #{user_gender}
-	  WHERE
-	  user_email = #{user_email}
-	</update>
-	
-	<!-- 사용자 청구 주소 수정 -->
-	<update id="updateMainAddress">
-	  UPDATE 
-	  users 
-	  SET 
-	  main_address1 = #{main_address1},
-	  main_address2 = #{main_address2},
-	  main_address3 = #{main_address3},
-	  main_address4 = #{main_address4}
-	  WHERE
-	  user_email = #{user_email}
-	</update>
-	
-	<!-- 주문서 정보 수정 -->
-	<update id="updateOderUserInfo">
-	  UPDATE 
-	  users 
-	  SET 
-	  user_name = #{user_name},
-	  main_address1 = #{main_address1},
-	  main_address2 = #{main_address2},
-	  main_address3 = #{main_address3},
-	  main_address4 = #{main_address4},
-	  user_phone = #{user_phone}
-	  WHERE
-	  user_email = #{user_email}
-	</update>
-	
-	
-	<!-- 회원가입 Query  -->
-	<insert id="UserSignUp"> 
-		INSERT INTO users ( user_email, user_password ) VALUES (#{user_email} ,#{user_password}) 
-	</insert> 
-	
-	<select id="UserEmail" parameterType="String" resultType="int"> 
-	     SELECT COUNT(*) FROM users WHERE user_email = #{user_email}      	
-	</select>
 
-	<select id="UserPassword" parameterType="String" resultType="int">
-		 SELECT COUNT(*) FROM users WHERE user_password = #{user_password}  	
-	</select>
+			<!-- 회원가입 Query  -->
+			<insert id="UserSignUp"> 
+				INSERT INTO 
+				users 
+				( user_email, user_password ) VALUES 
+				(#{user_email} ,#{user_password}) 
+			</insert> 
+			
+			<!-- USER EMAIL -->
+			<select id="UserEmail" parameterType="String" resultType="int"> 
+			     SELECT COUNT(*) FROM users WHERE user_email = #{user_email}      	
+			</select>
+			
+	    	<!-- USER PASSWORD  -->
+			<select id="UserPassword" parameterType="String" resultType="int">
+				 SELECT COUNT(*) FROM users WHERE user_password = #{user_password}  	
+			</select>
+			
+		    <!-- USER 정보  -->
+			<select id="UserList" parameterType="String" resultType="com.store.dto.UserDto">
+			 	SELECT * FROM users WHERE user_email = #{user_email}
+			</select>
+
+			<!--USER INFO UPDATE  -->
+			<update id="UserUpdate">
+			  UPDATE 
+			  users 
+			  SET 
+			  user_name = #{user_name},
+			  user_birth = #{user_birth},
+			  user_phone = #{user_phone},
+			  user_gender = #{user_gender}
+			  WHERE
+			  user_email = #{user_email}
+			</update>
+			
+			<!-- USER UPDATE ADDRESS  -->
+			<update id="updateMainAddress">
+			   UPDATE
+			   users
+			   SET
+			   main_address1 = #{main_address1},
+			   main_address2 = #{main_address2},
+			   main_address3 = #{main_address3},
+			   main_address4 = #{main_address4}
+			   WHERE
+			   user_email = #{user_email}
+			</update>
+			
+			<!-- DELETE INFO USER -->
+			<delete id="deleteInfoUser">
+			  DELETE
+			  FROM
+			  users
+			  WHERE
+			  user_email = #{user_email}
+			</delete>
+	
+			
 </mapper>

@@ -30,9 +30,7 @@
     </style>
     </head>
   <body>
-  <%
-   session.getAttribute("email");
-  %>
+
  
   <jsp:include page="../header.jsp" flush="false" />
     <br/>  
@@ -100,13 +98,13 @@
      <br/>
     
    
-     <label class="subName">${user.address1}</label>
+     <label class="subName">${user.main_address1}</label>
      <br/>
-     <label class="subName">${user.address2}</label>
+     <label class="subName">${user.main_address2}</label>
      <br/>
-     <label class="subName">${user.address3}</label>
+     <label class="subName">${user.main_address3}</label>
     <br/>
-       <label class="subName">${user.address4}</label>
+       <label class="subName">${user.main_address4}</label>
      
     <br/>
   
@@ -121,10 +119,13 @@
     <br/>
     <br/>
     <br/>
-    <a href="getpass.html" style="color: black; text-decoration: underline;">비밀번호 변경</a>
+  
+   <button><a href="getpass.html" class="btn btn-primary">비밀번호 변경</a></button>
     <br/>
     <br/>
-    <a href="#" style="color: black; text-decoration: underline;">계정 삭제</a>
+    <form action="deleteInfoUser" method="post">
+      <button type="submit" class="btn btn-primary">계정삭제</button>
+    </form>
   </div>
   <br/>
   <br/>

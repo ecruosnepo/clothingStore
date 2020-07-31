@@ -18,4 +18,8 @@ public interface UserServiceImpl {
 	public void sUpdateMainAddress(String user_email, String main_address1, String main_address2, String main_address3, String main_address4) throws Exception;
 
 	public void sUpdateOderUserInfo(String user_email, String user_name, String main_address1, String main_address2, String main_address3, String main_address4, String user_phone) throws Exception;
+   
+	public int sDeleteInfoUser(String email) throws Exception;
+	
+	public int sDeleteInfoAddress(String email) throws Exception;
 }

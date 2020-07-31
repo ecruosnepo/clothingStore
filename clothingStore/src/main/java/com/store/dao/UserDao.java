@@ -20,12 +20,16 @@ public interface UserDao {
     		               @Param("user_phone")String phone, @Param("user_gender")String gender, 
     		               @Param("user_email")String email) throws Exception;
 
-     public int updateMainAddress(@Param("user_email")String user_email,
-    		 						@Param("main_address1")String main_address1, 
-    		 						@Param("main_address2")String main_address2,
-    		 						@Param("main_address3")String main_address3, 
-    		 						@Param("main_address4")String main_address4) throws Exception;
+     public int updateMainAddress(@Param("main_address1")String main_address1, 
+    		 					  @Param("main_address2")String main_address2,
+    		 					  @Param("main_address3")String main_address3, 
+    		 					  @Param("main_address4")String main_address4,
+    		 					  @Param("user_email")String user_email) throws Exception;
      
+     // 계정 삭제
+     public int deleteInfoUser(@Param("user_email")String email) throws Exception; 
+     
+     // 
      public int updateOderUserInfo(@Param("user_email")String user_email,
     		 @Param("user_name")String user_name,
     		 @Param("main_address1")String main_address1, 
@@ -33,4 +37,6 @@ public interface UserDao {
     		 @Param("main_address3")String main_address3, 
     		 @Param("main_address4")String main_address4,
     		 @Param("user_phone")String user_phone) throws Exception;
+     
+     
 }
