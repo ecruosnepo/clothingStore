@@ -17,7 +17,7 @@
 	<!-- slick -->
     <title>메인</title>
 
-    <style>        
+    <style>
         .header-wrap{
           max-width: 100%;
           background-color: #FAF9F8;
@@ -243,7 +243,7 @@
               </div>
               <!-- 고객센터 -->
               <div class="menu_service">
-                <a href="">고객 서비스</a>
+                <a href="/customer">고객 서비스</a>
               </div>
               <!-- 네비게이션 바 -->
               <nav class="navbar navbar-expand-lg navbar-light bg-light">                

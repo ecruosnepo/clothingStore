@@ -1,64 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:include page="../header.jsp" flush="false" />
+<jsp:include page="sideNav.jsp" flush="false" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
-<jsp:include page="../header.jsp" flush="false" />
-	 <style>
-.row{
-      width: 980px;
-      margin: 0 auto;
-}
+<style>
 section{
      margin-left: 20%;
     }
- section h1{
-     text-align: center;
- }
- .sidenav {
- height: 100%;
- width: 300px;
- position: fixed;
- z-index: 1;
- top: 30%;
- left: 0;
- overflow-x: hidden;
- padding-top: 20px;
- }
-.sidenav a {
-padding-left: 50px;
-text-decoration: none;
-font-size: 25px;
-display: block;
-color: black;
-}
-
-.sidenav a:hover {
-color: #f1f1f1;
-}
-
-@media screen and (max-height: 450px) {
-.sidenav {padding-top: 15px;}
-.sidenav a {font-size: 18px;}
-}
 
 </style>
-
-<div class="row">
-    <aside class="sidenav">
-        <a href="/customer"><h3>고객센터</h3></a><br>
-        <a href="/customerContact"><h5>회사정보</h5></a><br>
-        <a href="/customerInfo"><h5>배송/결제/반품</h5></a><br>
-        <a href="/customerQna"><h5>Q&A</h5></a><br>
-    </aside>
-        <section>
-            <h1>배송</h1>
-            <p>
-                <b>배송 방법</b><br>
+</head>
+<body>
+<section>
+    <h1>배송</h1>
+    <p>
+        <b>배송 방법</b><br>
 고객님께서 주문 확인서를 받은 후, 1-2일 (영업일 기준) 이내에 상품을 배송합니다.
 <br>
 공휴일을 제외한 월요일-토요일에 배송합니다.
@@ -180,9 +140,8 @@ color: #f1f1f1;
 <br><br>
 반품하실 경우 환불이 이루어집니다.
 <br>
-            </div>
-    </section>
-</div>
+	</div>
+</section>
 <jsp:include page="../footer.jsp" flush="false" />
 </body>
 </html>

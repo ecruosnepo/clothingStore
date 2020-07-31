@@ -19,7 +19,7 @@
     section h1{
         text-align: center;
     }
-    section button{
+    .btn{
         float: right;
         margin: 10px;
     }
@@ -40,15 +40,14 @@
     #sectDiv{
 		margin: 50px;
 		margin-left: 10%;
-		max-width:70%;
+		max-width:60%;
 	}
 </style>
 </head>
 <body>
 	<section>
 		<div id="sectDiv">
-			<div id="sectDiv">
-		    <h1>문의하기</h1><br><br>
+		    <h1>문의 내용</h1><br><br>
 		
 		   <nav id="navbar-example2" class="navbar navbar-light bg-light">
 		     <h2>제목 : ${dto.title}</h2>
@@ -63,36 +62,45 @@
 		     </c:if>
 		     <p>${dto.question}</p>
 		     <h4 id="fat">답변내용</h4>
-		     <p>${dto.answer}</p>
-		     <c:if test="${dto.b_check == '0'}">
+		     <form action="/adminQnaUpdate?id=${dto.id}" method="post" >
+			     <div class="form-group">
+	                  <textarea class="form-control" name="answer" id="exampleFormControlTextarea1" rows="10" placeholder="답변 작성">${dto.answer}</textarea>
+	             </div>
 		         <button type="button" class="btn btn-danger" onclick="deleteClick();">삭제</button>
-		         <button type="button" class="btn btn-info" onclick="location.href='/boardUpdateForm?id=${dto.id}' ">수정</button>
-		     </c:if>
+		         <input type="submit" class="btn btn-info">
+		   		</form>
 		   </div>
-		</div>
 		</div>
 	</section>
 	<jsp:include page="../footer.jsp" flush="false" />
-
-    <script>
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }	
-    
+	
+<c:if test="${result==1 }">
+	<script>alert('내용을 입력해주세요.'); history.back(); </script>
+</c:if>
+<c:if test="${result==10 }">
+	<script>
+	alert('답변이 등록 되었습니다.'); 
+	location.href='/adminQna';
+	</script>
+</c:if>
+<script>
+	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	            results = regex.exec(location.search);
+	    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}	
+	
 	var boardId=getParameterByName('id');
 	console.log(boardId);
 	/* 삭제버튼 클릭시 */
 	function deleteClick(){
 		var del=confirm('해당 게시물을 삭제하시겠습니까?');
 		if(del){
-			location.href="/boardDelete?id="+boardId;
-		}else{
-			history.back();
-		};
+			location.href="/adminQnaDelete?id="+boardId;
+		}
 	}
-	</script>
+</script>
+
 </body>
 </html>

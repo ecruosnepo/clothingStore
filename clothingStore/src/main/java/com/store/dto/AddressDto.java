@@ -11,5 +11,4 @@ public class AddressDto {
 	private String address2;
 	private String address3;
 	private String address4;
-	private boolean main_address;
 }
