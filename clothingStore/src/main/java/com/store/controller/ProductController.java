@@ -72,7 +72,7 @@ public class ProductController {
 	@PostMapping("/regProduct")
 	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("img") MultipartFile[] file) throws Exception {
 		System.out.println("상품 등록");
-		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\images");	
+		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\pdImages");	
 		System.out.println(uploadPath);
 		SimpleDateFormat formatter;
 		String extension;

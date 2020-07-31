@@ -15,7 +15,6 @@ import javax.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.store.CustConfig;
 import com.store.bean.PagingBean;
 import com.store.dao.BoardDao;
 import com.store.dao.OrderDao;
@@ -30,8 +29,6 @@ public class BoardServiceImpl implements BoardService{
 	BoardDao dao;
 	@Autowired
 	OrderDao orderDao;
-	@Autowired
-	CustConfig config;
 	@Autowired
 	PagingBean pageBean;
 
@@ -63,18 +60,18 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardDto boardListViewService(String id) {
+	public BoardDto boardListViewService(int id) {
 		BoardDto dto=dao.boardViewDao(id);
 		return dto;
 	}
 
 	@Override
-	public void boardDeleteService(String id) {
+	public void boardDeleteService(int id) {
 		dao.boardDeleteListDao(id);
 	}
 
 	@Override
-	public Map<String,Object> boardUpdateViewService(String id) {
+	public Map<String,Object> boardUpdateViewService(int id) {
 		Map<String,Object> map=new HashMap<String,Object>();
 		BoardDto dto=dao.boardViewDao(id);
 		List<OrderDto> order=orderDao.userOrderListDao(dto.getUser_email());
@@ -99,9 +96,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void boardUpdateService(int id, String title, String question, String boardCat, String fileName) {
+	public void boardUpdateService(int id, String title, String question, String boardCat, String fileName, int orderId) {
 		
-		dao.boardUpdateDao(id, title, question, boardCat,fileName);
+		dao.boardUpdateDao(id, title, question, boardCat,fileName,orderId);
 	}
 
 	//파일 올려주고 filename 리턴 메소드

@@ -13,9 +13,9 @@ public interface BoardService {
 	public Map<String, Object> boardListService(String userId,int page);
 	public void boardWriteService(int b_check, String userId, String title, String question, String boardCat, String fileName, int orderId);
 	public List<OrderDto> boardOrderViewService(String userId);
-	public BoardDto boardListViewService(String id); 
-	public void boardDeleteService(String id);
-	public Map<String,Object> boardUpdateViewService(String id);
-	public void boardUpdateService(int id, String title, String question, String boardCat, String fileName);
+	public BoardDto boardListViewService(int id); 
+	public void boardDeleteService(int id);
+	public Map<String,Object> boardUpdateViewService(int id);
+	public void boardUpdateService(int id, String title, String question, String boardCat, String fileName, int orderId);
 	public String boardFileUploadService(Part filePart, String realPath);
 }

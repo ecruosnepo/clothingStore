@@ -12,58 +12,59 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <title>옷가게</title>
 <style>
-    section a{text-decoration: none; color: black; margin: 5px;}
-    #adv h4{text-align: center;}
-    #goods{
-        width: 980px;
-        margin: 0 auto;
-        font-family: sans-serif;
-    }
-    #goods div{
-        width: 80%;
-        margin: 0 auto;
-    }
-    .text-center{
-        height: 700px;
-        background-color: blue;
-    }
-    .card-body{
-      bottom: 20%;
-    }
-    .cs2{
-        background-color: bisque
-    }
-    .item{
-        background-color: aquamarine;
-        height: 400px;
-        width: 300px;
-        margin: 10px;
-        border: 1px solid black;
-    }
-    #adv{ 
-        width:100%;
-        background-color: bisque;
-    }
-    .row{
-        width: 980px;
-        margin: 0 auto;
-    }
-    .image{
-        margin: 10px;
-        width: 90%;
-    }
-    .main1{
-        /* 배경이미지 넣기 */
-    }
-    .main2{
-        /* 배경이미지 넣기 */
-    }
-    .main3{
-        /* 배경이미지 넣기 */
-    }
-    .main4{
-        /* 배경이미지 넣기 */
-    }
+      section a{text-decoration: none; color: black; margin: 5px;}
+      #adv h4{text-align: center;}
+      #goods{
+          width: 980px;
+          margin: 0 auto;
+          font-family: sans-serif;
+      }
+      #goods div{
+          width: 900px;
+          margin: 20px;
+      }
+      .text-center{
+          height: 700px;
+          position: relative
+      }
+      .card-body{
+          position: absolute;
+       bottom: 20%;
+      }
+      .cs2{
+          background-color: bisque
+      }
+      .item{
+          background-color: aquamarine;
+          height: 400px;
+          width: 300px;
+          margin: 10px;
+          border: 1px solid black;
+      }
+      #adv{ 
+          width:100%;
+          background-color: bisque;
+      }
+      .row{
+          width: 980px;
+          margin: 0 auto;
+      }
+      .image{
+          margin: 10px;
+          width: 90%;
+      }
+      #main1{
+         background-image: url('/mainImages/main_women.jpg');
+      }
+      #main2{
+         background-image: url('/mainImages/main_man.jpg');
+      }
+      #main3{
+         background-image: url('/mainImages/main_kids.jpg');
+      }
+      #main4{
+         background-image: url('/mainImages/main_story.jpg');
+      }
     
 </style>
 </head>
@@ -72,69 +73,69 @@
 <jsp:include page="header.jsp" flush="false" />
 <%if (session.getAttribute("email") == null ){%>
 <section id="goods">
-       <label><a href="login">로그인</a></label>
-      <br/>
-      <label><a href="userSignUp">회원가입</a></label>
-      <br/>
-       <a>
-    <div id="main1" class="card text-center">
-        <div class="card-body">
-        </div>
-    </div>
-    </a>
-    <a>
-        <div id="main2" class="card text-center">
-            <div class="card-body">
-            </div>
-        </div>
-    </a>
-    <a>
-    <div id="main3" class="card text-center">
-        <div class="card-body">
-        </div>
-    </div>
-    </a>
-    <a>
-    <div id="main4" class="card text-center">
-        <div class="card-body">
-        </div>
-    </div>
-    </a>
+     <div id="main1" class="card text-center">
+         <div class="card-body">
+             <h5 class="card-title">여성 의류</h5>
+             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+             <a href="#" class="btn btn-primary">Go somewhere</a>
+         </div>
+     </div>
+         <div id="main2" class="card text-center">
+             <div class="card-body">
+                 <h5 class="card-title">남성 의류</h5>
+                 <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+                 <a href="#" class="btn btn-primary">Go somewhere</a>
+             </div>
+         </div>
+     <div id="main3" class="card text-center">
+         <div class="card-body">
+             <h5 class="card-title">아동복</h5>
+             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+             <a href="#" class="btn btn-primary">Go somewhere</a>
+         </div>
+     </div>
+     <div id="main4" class="card text-center">
+         <div class="card-body">
+             <h5 class="card-title">친환경 제품</h5>
+             <p class="card-text">환경을 생각하는 친환경 의류복</p>
+             <a href="#" class="btn btn-primary">Go somewhere</a>
+         </div>
+     </div>
 </section>
 <section id="adv">
-    <br><br><br>
-    <h4><a href=#>지속가능성</a></h4>
-    <div class="row">
-        <div class="col-xs-6 col-md-4">
-          <a href="#" class="thumbnail">
-            <img class="image" src="image/logo.png">
-            <br>
-            <p style="margin: 10px">
-            <b>제목</b><br>
-            Read The Story</p>
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <a href="#" class="thumbnail">
-              <img class="image" src="image/logo.png">
-              <br>
-              <p style="margin: 10px">
-              <b>제목</b><br>
-              Read The Story</p>
-            </a>
+        <br><br><br>
+        <h4><a href=#>지속가능성</a></h4>
+        <div class="row">
+            <div class="col-xs-6 col-md-4">
+              <a href="#" class="thumbnail">
+                <img class="image" src="/mainImages/story(1).jpg" >
+                <br>
+                <p style="margin: 10px">
+                <b>제목</b><br>
+                Read The Story</p>
+              </a>
+            </div>
+            <div class="col-xs-6 col-md-4">
+                <a href="#" class="thumbnail">
+                  <img class="image" src="/mainImages/story(2).jpg">
+                  <br>
+                  <p style="margin: 10px">
+                  <b>제목</b><br>
+                  Read The Story</p>
+                </a>
+              </div>
+              <div class="col-xs-6 col-md-4">
+                <a href="#" class="thumbnail">
+                  <img class="image" src="/mainImages/story(3).jpg">
+                  <br>
+                  <p style="margin: 10px">
+                  <b>제목</b><br>
+                  Read The Story</p>
+                </a>
+              </div>
           </div>
-          <div class="col-xs-6 col-md-4">
-            <a href="#" class="thumbnail">
-              <img class="image" src="image/logo.png">
-              <br>
-              <p style="margin: 10px">
-              <b>제목</b><br>
-              Read The Story</p>
-            </a>
-          </div>
-      </div>
-    <br><br>
-</section>
+        <br><br>
+    </section>
  <%}else {%>    
  <section id="goods"> 
 ${email}님 환영합니다.
@@ -142,70 +143,6 @@ ${email}님 환영합니다.
 <form action="Logout" method="get">
    <input type="submit" value="로그아웃"> 
 </form>
-<%-- <%
- 	session.invalidate();
- 	out.println("<script>alert('로그아웃되었습니다'); history.back();</script>");
- 	response.sendRedirect("index.jsp");
- %> --%>
-    <a>
-    <div id="main1" class="card text-center">
-        <div class="card-body">
-        </div>
-    </div>
-    </a>
-    <a>
-        <div id="main2" class="card text-center">
-            <div class="card-body">
-            </div>
-        </div>
-    </a>
-    <a>
-    <div id="main3" class="card text-center">
-        <div class="card-body">
-        </div>
-    </div>
-    </a>
-    <a>
-    <div id="main4" class="card text-center">
-        <div class="card-body">
-        </div>
-    </div>
-    </a>
-</section>
-<section id="adv">
-    <br><br><br>
-    <h4><a href=#>지속가능성</a></h4>
-    <div class="row">
-        <div class="col-xs-6 col-md-4">
-          <a href="#" class="thumbnail">
-            <img class="image" src="image/logo.png">
-            <br>
-            <p style="margin: 10px">
-            <b>제목</b><br>
-            Read The Story</p>
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-4">
-            <a href="#" class="thumbnail">
-              <img class="image" src="image/logo.png">
-              <br>
-              <p style="margin: 10px">
-              <b>제목</b><br>
-              Read The Story</p>
-            </a>
-          </div>
-          <div class="col-xs-6 col-md-4">
-            <a href="#" class="thumbnail">
-              <img class="image" src="image/logo.png">
-              <br>
-              <p style="margin: 10px">
-              <b>제목</b><br>
-              Read The Story</p>
-            </a>
-          </div>
-      </div>
-    <br><br>
-</section>
 
     <%} %> 
 <jsp:include page="footer.jsp" flush="false" />   
