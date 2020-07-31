@@ -15,6 +15,9 @@ public class UserService implements UserServiceImpl {
 	@Autowired
 	private UserDao dao;
 	
+	@Autowired
+	private AddressDao Adao;
+	
 	// 이용자 리스트
 	@Override
 	public UserDto sUserList(String email) {
@@ -45,8 +48,7 @@ public class UserService implements UserServiceImpl {
 				return 1;	
 		    } 
 }                 	
-	
-	
+
 	// 로그인
 	@Override
 	public int sUserEmail(String email, String password) throws Exception {
@@ -87,8 +89,11 @@ public class UserService implements UserServiceImpl {
 	}
 	
 	@Override
-	public void sUpdateMainAddress(String user_email, String main_address1, String main_address2, String main_address3,
-			String main_address4) throws Exception {
+	public void sUpdateMainAddress(String user_email, 
+								   String main_address1, 
+								   String main_address2, 
+								   String main_address3,
+								   String main_address4) throws Exception {
 		dao.updateMainAddress(user_email, main_address1, main_address2, main_address3, main_address4);		
 	}
 	
@@ -96,6 +101,19 @@ public class UserService implements UserServiceImpl {
 	public void sUpdateOderUserInfo(String user_email,String user_name, String main_address1, String main_address2, String main_address3,
 			String main_address4, String user_phone) throws Exception {
 		dao.updateOderUserInfo(user_email, user_name, main_address1, main_address2, main_address3, main_address4, user_phone);		
+	}
+
+	// 계정 삭제
+	@Override
+	public int sDeleteInfoUser(String email) throws Exception {
+		int result = dao.deleteInfoUser(email);
+		return result;
+	}
+	// 계정 삭제
+	@Override
+	public int sDeleteInfoAddress(String email) throws Exception {
+		int results = Adao.deleteInfoAddress(email);
+		return results;
 	}
 }		   
 

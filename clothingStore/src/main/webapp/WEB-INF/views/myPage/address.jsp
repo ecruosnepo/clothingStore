@@ -47,40 +47,56 @@ font-size: 20px;
     <br/>
     <div class="box">
     <label class="size">청구지 주소</label>
-    <br/>
-    <br/>
-    <br/>
-    <c:forEach items="address" var="add">
-     <label class="head">우편번호</label>
-    <br/>
-    <label class="sub"></label>
-    <br/>
-    <br/>
-    <label class="head">도/시, 도로명 주소</label>
-    <br/> 
-    <label class="sub">경기도 @@시 학동로@@</label>
-    <br/>
-    <label class="head">도/시, 도로명 주소</label>
-    <br/> 
-    <label class="sub">경기도 @@시 학동로@@</label>
-    <br/>
-    <br/>
-    <label class="head">상세 주소</label>
-    <br/>
-    <label class="sub">@@아파트 @@@동 ####호</label>
-    </c:forEach>
-    <br/>
-    <br/>
-    <br/>
-    <a href="newAddress"><button type="button" class="btn btn-primary btn-lg" style="color: white; background-color: black;">주소 편집</button></a>
+      <br/><br/><br/>
+    <label class="head">우편번호</label>
+      <br/>
+    <label class="sub">${address.main_address1}</label>
+      <br/>
+    <label class="head">주소</label>
+      <br/> 
+    <label class="sub">${address.main_address2}</label>
+      <br/>
+    <label class="head">아파트 명/건물 명</label>
+      <br/> 
+    <label class="sub">${address.main_address3}</label>
+      <br/>
+    <label class="head">동 호수/층 수</label>
+      <br/>
+    <label class="sub">${address.main_address4}</label>
+      <br/><br/><br/>
+    <a href="setMainAddress"><button type="button" class="btn btn-primary btn-lg" style="color: white; background-color: black;">주소 편집</button></a>
     <a href="subAddress"><button type="button" class="btn btn-primary btn-lg" style="color: white; background-color: brown;">새 주소 추가</button></a>    
-     </div>  
+    </div> 
+                      <c:forEach begin="1" end="3" items="address">  
+                      
+ <div class="box">
+    <label class="size">청구지 주소</label>
+    <br/><br/><br/>
+   <label class="head">우편번호</label>
+     <br/>
+   <label class="sub">${address.address1}</label>
+     <br/>
+   <label class="head">주소</label>
+     <br/> 
+   <label class="sub">${address.address2}</label>
+     <br/>
+   <label class="head">아파트 명/건물 명</label>
+     <br/> 
+   <label class="sub">${address.address3}</label>
+     <br/>
+   <label class="head">동 호수/층 수</label>
+     <br/>
+   <label class="sub">${address.address4}</label>
+     <br/><br/><br/>
+    <a href="setMainAddress"><button type="button" class="btn btn-primary btn-lg" style="color: white; background-color: black;">주소 편집</button></a>
+    <a href="subAddress"><button type="button" class="btn btn-primary btn-lg" style="color: white; background-color: brown;">새 주소 추가</button></a>    
+     </div>
+                            </c:forEach> 
+                             
+      </div>
+     </div> 
     </div>
   </div>
- </div>
-    
-    
-    
  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

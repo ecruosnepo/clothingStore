@@ -26,13 +26,6 @@ public class AdminController {
 		return "admin/product";
 	}
 	
-	@PostMapping("/updateProduct")
-	public String updateProduct(Model model) {
-		model.addAttribute("pDto", attributeValue)
-		
-		return "admin/updateProduct";
-	}
-	
 	@RequestMapping("/adminQna")
 	public String adminQna(@RequestParam(defaultValue="1") int page, Model model) {
 		

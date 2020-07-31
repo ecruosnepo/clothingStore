@@ -13,7 +13,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>옷가게</title>
   <style>
-    
     .firstCenter{
       text-align: center;
     }
@@ -39,6 +38,8 @@
     </style>
     </head>
   <body>
+
+  <jsp:include page="../header.jsp" flush="false" />
     <div class="container"> 
       <div class="row ">
         <div class="center-block" style="width: 55%;">
@@ -52,7 +53,7 @@
                    <div class="box" >
                     <label class="size">청구지 주소</label>
                      <br/><br/><br/>
-                     <form action="NewAddress" method="post">
+                     <form action="setMainAddressForm" method="post">
 			          <div class="form-group has-success">
 			            <button type="button" onclick="DaumPostcode();" class="btn btn-primary btn-lg" style="color: white; background-color: black;">주소 검색</button> 
 							 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -107,18 +108,18 @@
 							</script>
 			              <br/><br/>
                         <label class="control-label" for="inputSuccess1" style="color: black;">우편번호</label>
-			            <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="address1">
+			            <input type="text" class="form-control" id="postcode" name="main_address1"value="${address.main_address1}" onfocus="this.value='${address.main_address1}';">
 			            <label class="sub">ex) 우편 번호를 입력합니다. 예:04177 이나135-606</label> 
 			            <br/><br/>
 			            <label class="control-label" for="inputSuccess1" style="color: black;">주소</label>
-			            <input type="text" class="form-control" id="address" placeholder="주소" name="address2">
+			            <input type="text" class="form-control" id="address" name="main_address2"value="${address.main_address2}" onfocus="this.value='${address.main_address2}';">
 			            <label class="sub">ex) 경기도 또는 서울 특별시</label>
 			            <br/><br/>
 			            <label class="control-label" for="inputSuccess1" style="color: black;">아파트 명/건물 명</label>
-			            <input type="text" class="form-control" id="address-name" placeholder="아파트 명/건물 명" name="address3">
-			            <br/></br>
-			            <label class="control-label" for="inputSuccess1" style="color: black; ">동 호수/층 수</label>
-			            <input type="text" class="form-control" id="address-dong" placeholder="동 호수/층 수" name="address4">
+			            <input type="text" class="form-control" id="address-name" name="main_address3"value="${address.main_address3}" onfocus="this.value='${address.main_address3}';">
+			            <br/>
+			            <label class="control-label" for="inputSuccess1" style="color: black;">동 호수/층 수</label>
+			            <input type="text" class="form-control" id="address-dong" name="main_address4" value="${address.main_address4}" onfocus="this.value='${address.main_address4}';">
 			            <label class="sub">ex) 목록에서 해당 구를 찾을 수 없는 경우, '기타'를 선택하고 주소1 입력 칸에 직접 써넣으십시오.</label>
 			            <br/><br/>
 		
@@ -127,7 +128,6 @@
 		   			 <button type="submit" class="btn btn-primary btn-lg" style="color: darkturquoise; background-color: black;">취소</button>
 		          </form>  
 		           </div>
-		            
 			    	<br/>
 			    	<br/>
 			    	<br/>
@@ -135,9 +135,8 @@
 			    	<br/>
 		       </div>
 		      </div>
+		      <jsp:include page="../footer.jsp" flush="false" />
 		     </div>
-		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		    <script src="js/bootstrap.min.js"></script>
 		  </body>
 		</html>
  

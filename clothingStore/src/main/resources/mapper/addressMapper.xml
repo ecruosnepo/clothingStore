@@ -18,16 +18,29 @@
 			   email = #{email}
 			</update>
 			
-			<insert id="InsertAddress">
+			<insert id="insertSubAddress">
 			 INSERT INTO
 			 address
-			 ( email, r_name, address1, address2, address3, address4 ) VALUES
+			 ( email, r_name, address1, address2, address3, address4 ) 
+			 VALUES
 			 ( #{email}, #{r_name}, #{address1}, #{address2}, #{address3}, #{address4})
 			</insert>
 			
 		    <select id="getAddressList" parameterType="String" resultType="com.store.dto.AddressDto">
-			 	SELECT * FROM address WHERE email = #{email}
+			 	SELECT * 
+			 	FROM 
+			 	address 
+			 	WHERE 
+			 	email = #{email}
 			</select>
+			
+			<delete id="deleteInfoAddress">
+			  DELETE
+			  FROM
+			  address
+			  WHERE
+			  email = #{email}
+			</delete>
 
 <!-- 			<select id="SelectMainAddress" parameterType="String" resultType="com.store.dto.AddressDto">
 			 	SELECT * FROM address WHERE email = #{email} and main_address = 1
