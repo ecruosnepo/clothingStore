@@ -10,5 +10,5 @@ public interface CartService {
 	public int addCart(CartDto cDto);
 	public int deleteCart(int cart_id);
 	public int updateSizeCart(String pd_size);
-	public int updateQuantityCart(int pd_quantity);
+	public int updateQuantityCart(int cart_id, int pd_quantity);
 }

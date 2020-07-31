@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,10 +50,15 @@ font-size: 20px;
     <br/>
     <br/>
     <br/>
+    <c:forEach items="address" var="add">
      <label class="head">우편번호</label>
     <br/>
-    <label class="sub">04117</label>
+    <label class="sub"></label>
     <br/>
+    <br/>
+    <label class="head">도/시, 도로명 주소</label>
+    <br/> 
+    <label class="sub">경기도 @@시 학동로@@</label>
     <br/>
     <label class="head">도/시, 도로명 주소</label>
     <br/> 
@@ -62,6 +68,7 @@ font-size: 20px;
     <label class="head">상세 주소</label>
     <br/>
     <label class="sub">@@아파트 @@@동 ####호</label>
+    </c:forEach>
     <br/>
     <br/>
     <br/>

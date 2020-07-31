@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<form action="/regProduct" method="post" enctype="multipart/form-data">
+<form action="/regProduct" method="post" enctype="multipart/form-data" onsubmit="_submit(this);">
 	상품명 <input type="text" name="pd_name"/><br/>
 	가격 <input type="number" name="pd_price"/><br/>
 	색상 <input type="text" name="pd_color"/><br/>
@@ -35,8 +35,20 @@
 	</select>
 	<br/>
 	
+	<input type="checkbox" name="size" id="size_s" class="size_check" value="S"/>
+	<label for="size_s">S</label>
+	<input type="text" name="stock" class="input_s" disabled><br/>
+	<input type="checkbox" name="size" id="size_m" class="size_check" value="M"/>
+	<label for="size_m">M</label>
+	<input type="text" name="stock" class="input_m" disabled><br/>
+	<input type="checkbox" name="size" id="size_l" class="size_check" value="L"/>
+	<label for="size_l">L</label>
+	<input type="text" name="stock" class="input_l" disabled><br/>
+	
 	할인율 <input type="number" name="discount" value="NULL"/><br/>
 	이미지 <input multiple="multiple" type="file" name="img"/><br/>
+	
+	<input type="hidden" name="size_stock" value="" />
 	
 	<input type="submit" value="등록">
 </form>
@@ -51,7 +63,7 @@
 	// 1차 분류 셀렉트 박스에 삽입할 데이터 준비
 	for(var i = 0; i < jsonData.length; i++) {
 		
-		if(jsonData[i].cat_id%10 == "0") {  // 레벨이 1인 데이터가 있다면 
+		if(jsonData[i].cat_id%10 == "0") {
 			cate1Obj = new Object();  // 초기화
 			
 			// cate1Obj에 cat_id와 cat_name를 저장
@@ -122,6 +134,31 @@
 			}		
 		});		
 	});
+</script>
+<script>
+$(function(){	
+	$("#size_s").change(function() {
+		if($("#size_s").prop("checked")){
+			$(".input_s").attr("disabled",false);
+		}else{
+			$(".input_s").attr("disabled",true);
+		}    	
+	});
+	$("#size_m").change(function() {
+		if($("#size_m").prop("checked")){
+			$(".input_m").attr("disabled",false);
+		}else{
+			$(".input_m").attr("disabled",true);
+		}    	
+	});	
+	$("#size_l").change(function() {
+		if($("#size_l").prop("checked")){
+			$(".input_l").attr("disabled",false);
+		}else{
+			$(".input_l").attr("disabled",true);
+		}    	
+	});	
+});
 </script>
 </body>
 </html>
