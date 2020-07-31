@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.store.dto.AddressDto;
+import com.store.dto.UserDto;
+
 import com.store.service.AddressServiceImpl;
 import com.store.service.UserServiceImpl;
 
@@ -20,7 +23,7 @@ public class UserController {
 	private int result; 
 	 
 	@Autowired
-	private UserServiceImpl UserService;
+	private UserServiceImpl userService;
 	
 	@Autowired
 	private AddressServiceImpl AddressService;
@@ -41,7 +44,7 @@ public class UserController {
 			@RequestParam("user_email") String email,
 			@RequestParam("user_password") String password, 
 			@RequestParam(value = "check", required = false, defaultValue = "")String check ) throws Exception {
-			result = UserService.sUserSignUp(email, password, check);	
+			result = userService.sUserSignUp(email, password, check);	
 			model.addAttribute("result", result);
 			return "/user/userSignUpAction";	
 	}
@@ -51,12 +54,13 @@ public class UserController {
 	public String login() {
 		return "login";
 	}	
+	
 	@PostMapping("/LoginForm")
 	public String UserLogin(@RequestParam("user_email") String email, 
 			                @RequestParam("user_password") String password,
 			                Model model, HttpSession session) {
 		try {
-			result = UserService.sUserEmail(email, password);
+			result = userService.sUserEmail(email, password);
 		} catch(Exception e) {
 			e.printStackTrace();
 			result = 0;
@@ -70,7 +74,7 @@ public class UserController {
 	// 로그아웃
 	@RequestMapping(value="/Logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		UserService.sLogout(session);
+		userService.sLogout(session);
 		return "logout";
 	}
 	
@@ -85,7 +89,7 @@ public class UserController {
 	@RequestMapping(value="/MyPageSet", method = RequestMethod.GET)
 	public String MyPageSet(Model model, HttpSession session) throws Exception {
 		String email = (String) session.getAttribute("email");
-		model.addAttribute("user", UserService.sUserList(email));
+		model.addAttribute("user", userService.sUserList(email));
 		return "/myPage/MyPageSet";
 	}
 	
@@ -93,9 +97,10 @@ public class UserController {
 	@RequestMapping(value="/updateForm", method = RequestMethod.GET)
 	public String updateForm(Model model, HttpSession session)throws Exception {
 		String email = (String) session.getAttribute("email");
-		model.addAttribute("u", UserService.sUserList(email));
+		model.addAttribute("u", userService.sUserList(email));
 		return "/myPage/updateForm";
 	}
+
 	@PostMapping("/userUpdate")
 	public String updateForm(HttpServletRequest request, HttpSession session, Model model) throws Exception {
 		String name = request.getParameter("user_name");
@@ -104,7 +109,7 @@ public class UserController {
 		String gender = request.getParameter("user_gender");
 		String emails = (String)session.getAttribute("email");
 		if ( null != session.getAttribute("email")) {
-			UserService.sUserUpdate(name, birth, phone, gender, emails);
+			userService.sUserUpdate(name, birth, phone, gender, emails);
         	return "/myPage/updateFormAction";
 		}
 		return "forward:/myPage/MyPageSet";
@@ -118,20 +123,51 @@ public class UserController {
 		return "/myPage/address";
 	}
 	
+	// 청구 주소 수정
+	@PostMapping("/updateMainAddress")
+	public void updateMainAddress(UserDto uDto) throws Exception{
+		userService.sUpdateMainAddress(uDto.getUser_email(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4());
+	}
+	
+	// 주문페이지 유저 정보 수정
+	@PostMapping("/updateOrderUserInfo")
+	public String updateOrderUserInfo(HttpServletRequest req, UserDto uDto) throws Exception{
+		System.out.println(uDto.getMain_address1());
+		System.out.println(uDto.getMain_address2());
+		System.out.println(uDto.getMain_address3());
+		System.out.println(uDto.getMain_address4());
+		System.out.println(uDto.getUser_email());
+		System.out.println(uDto.getUser_name());
+		
+		
+		userService.sUpdateOderUserInfo(uDto.getUser_email(), uDto.getUser_name(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4(), uDto.getUser_phone());
+		
+		String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer;
+	}
+	
+	// 배송 주소 수정
+	@PostMapping("/updateDeliveryAddress")
+	public void updateDeliveryAddress(AddressDto aDto) throws Exception{
+		AddressService.sUpdateAddress(aDto.getEmail(), aDto.getR_name(), aDto.getAddress1(), aDto.getAddress2(), aDto.getAddress3(), aDto.getAddress4());
+	}
+	
 	// 회원 주소록 등록
 	@RequestMapping(value="/newAddress", method = RequestMethod.GET)
 	public String newAddress() throws Exception {
 	   return "/myPage/newAddress";
 	}
 	@PostMapping("/NewAddress") // update
-	public String NewAddress(@RequestParam("address1")String address1,
+	public String NewAddress(@RequestParam("user_email")String user_email,
+							@RequestParam("r_name")String r_name,
+							@RequestParam("address1")String address1,
 			                 @RequestParam("address2")String address2,
 			                 @RequestParam("address3")String address3,
 			                 @RequestParam("address4")String address4,
 			                 HttpSession session ) throws Exception{
 		String emails = (String)session.getAttribute("email");
 		if ( null != emails ) {
-			AddressService.sUpDateAddress(address1, address2, address3, address4, emails);
+			AddressService.sUpdateAddress(emails, r_name,address1, address2, address3, address4);
 		    return "/myPage/newAddressAction";
 		}
 		 return "/myPage/newAddressAction";

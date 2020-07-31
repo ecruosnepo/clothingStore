@@ -25,8 +25,10 @@ import com.store.dao.CategoryDao;
 import com.store.dto.CartDto;
 import com.store.dto.CategoryDto;
 import com.store.dto.ProductDto;
+import com.store.dto.StockDto;
 import com.store.service.CartService;
 import com.store.service.ProductService;
+import com.store.service.StockService;
 
 @Controller
 public class ProductController {
@@ -36,6 +38,8 @@ public class ProductController {
 	private CategoryDao categoryDao;
 	@Autowired
 	private CartService cartService;
+	@Autowired
+	private StockService stockService;
 	
 	@GetMapping("/test")
 	public String test() {
@@ -70,9 +74,9 @@ public class ProductController {
 	}
 	
 	@PostMapping("/regProduct")
-	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("img") MultipartFile[] file) throws Exception {
+	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, @RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
 		System.out.println("상품 등록");
-		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\images");	
+		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\pdImages");	
 		System.out.println(uploadPath);
 		SimpleDateFormat formatter;
 		String extension;
@@ -80,7 +84,7 @@ public class ProductController {
 		File f;
 		String[] fileToString = new String[file.length];	    
 	    String fileMultiName = "";
-	    	    
+	    
 	    //멀티파트파일
 	    for(int i=0; i<file.length; i++) {
 	    	fileToString[i] = file[i].getOriginalFilename();
@@ -110,6 +114,19 @@ public class ProductController {
 	    
 	    productService.regProduct(pDto);
 	    
+	    System.out.println(pDto.getPd_name());
+	    System.out.println(pDto.getPd_color());
+	    
+	    int pId = productService.getProductId(pDto.getPd_name(), pDto.getPd_color());
+	    
+	    for(int i = 0; i < stock.length; i++) {
+	    	StockDto sDto = new StockDto();
+	    	sDto.setPd_id(pId);
+	    	sDto.setPd_size(size[i]);
+	    	sDto.setPd_stock(stock[i]);
+	    	stockService.addStock(sDto);
+	    }
+	    
 	    String referer = req.getHeader("Referer");
 	    return "redirect:"+ referer;
 	}
@@ -132,5 +149,10 @@ public class ProductController {
         String email = (String)session.getAttribute("email");
 		model.addAttribute("cart_list", cartService.CartListView(email));		
         return "products/cart";
+	}
+	
+	@PostMapping("/updateCartQuantity")
+	public void updateCartQuantity(HttpServletRequest req, CartDto cDto) throws Exception {
+		cartService.updateQuantityCart(cDto.getCart_id(), cDto.getPd_quantity());
 	}
 }

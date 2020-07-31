@@ -1,5 +1,4 @@
- package com.store.service;
-
+package com.store.service;
 
 import javax.servlet.http.HttpSession;
 
@@ -86,8 +85,19 @@ public class UserService implements UserServiceImpl {
 	public void sLogout(HttpSession session) {
 		 session.invalidate();	
 	}
+	
+	@Override
+	public void sUpdateMainAddress(String user_email, String main_address1, String main_address2, String main_address3,
+			String main_address4) throws Exception {
+		dao.updateMainAddress(user_email, main_address1, main_address2, main_address3, main_address4);		
+	}
+	
+	@Override
+	public void sUpdateOderUserInfo(String user_email,String user_name, String main_address1, String main_address2, String main_address3,
+			String main_address4, String user_phone) throws Exception {
+		dao.updateOderUserInfo(user_email, user_name, main_address1, main_address2, main_address3, main_address4, user_phone);		
+	}
 }		   
-     
 
 //String button = null;
 //if( null != button || "on".equals(button)){
@@ -100,7 +110,3 @@ public class UserService implements UserServiceImpl {
 //    	return 5;
 //	}
 //}
-	
-
-
-

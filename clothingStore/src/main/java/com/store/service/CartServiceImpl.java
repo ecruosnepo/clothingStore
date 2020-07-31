@@ -34,9 +34,9 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public int updateQuantityCart(int pd_quantity) {
+	public int updateQuantityCart(int cart_id, int pd_quantity) {
 		System.out.println("카트 수량 수정");
-		return cDao.updateQuantityCartDao(pd_quantity);
+		return cDao.updateQuantityCartDao(cart_id, pd_quantity);
 	}
 
 	@Override

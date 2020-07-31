@@ -34,6 +34,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public int getProductId(String pd_name, String pd_color) {
+		System.out.println("상품 번호");
+		return dao.getProductIdDao(pd_name, pd_color);
+	}
+	
+	@Override
 	public int regProduct(ProductDto pDto) {
 		System.out.println("상품 등록");
 		return dao.regProductDao(pDto);
