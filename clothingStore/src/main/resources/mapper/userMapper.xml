@@ -29,19 +29,6 @@
 			   WHERE
 			   email = #{email}
 			</update>
-			
-			<!-- USER ADDRESS  -->
-			<update id="UpDateAddress">
-			   UPDATE
-			   address
-			   SET
-			   address1 = #{address1},
-			   address2 = #{address2},
-			   address3 = #{address3},
-			   address4 = #{address4}
-			   WHERE
-			   email = #{email}
-			</update>
 					
 		    <!-- USER 정보  -->
 			<select id="UserList" parameterType="String" resultType="com.store.dto.UserDto">

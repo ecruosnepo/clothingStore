@@ -67,7 +67,7 @@ public class UserController {
 		}
 		// 세션생성
 		session.setAttribute("email", email);
-		model.addAttribute("result", result);
+		model.addAttribute("result", result);		
 		return "loginAction";
 	}
 	

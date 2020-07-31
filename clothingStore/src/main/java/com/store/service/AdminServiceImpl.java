@@ -50,11 +50,12 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Map<String, Object> adminQnaSearchService(int page, String search) {
+	public Map<String, Object> adminQnaSearchService(int page, String keyword) {
 		Map<String, Object> map=new HashMap<String, Object>(); 
-		pageBean=new PagingBean(page,boardDao.boardListCountDao(search),5,3);
+		pageBean=new PagingBean(page,boardDao.boardListCountDao(keyword),5,3,keyword);
 		
-		map.put("dto", boardDao.boardListAllDao("%"+search+"%"));
+		map.put("dto", boardDao.boardListAllDao("%"+keyword+"%"));
+		map.put("keyword", pageBean.getKeyword());
 		map.put("startIdx", pageBean.getStartIdx());
 		map.put("endIdx", pageBean.getEndIdx());
 		map.put("totalPage", pageBean.getTotalPage());

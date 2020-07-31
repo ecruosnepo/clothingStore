@@ -87,10 +87,7 @@
 	          					}
 	          				%>
           				</select>
-          			</div>
-          			
-          			
-          			
+          			</div>     			
           			<button class="delete-btn">&#10006;</button>
           		</div>
           	</c:forEach>

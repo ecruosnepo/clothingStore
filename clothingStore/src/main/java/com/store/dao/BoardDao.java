@@ -28,7 +28,7 @@ public interface BoardDao {
 	//모든 게시물 리스트
 	public List<BoardDto> boardListAllDao();
 	//user_email로 검색한 게시물 리스트
-	public List<BoardDto> boardListAllDao(@Param("search") String search);
+	public List<BoardDto> boardListAllDao(@Param("keyword") String keyword);
 	//user_email로 검색한 게시물 개수
 	public int boardListCountDao(@Param("search") String search);
 }

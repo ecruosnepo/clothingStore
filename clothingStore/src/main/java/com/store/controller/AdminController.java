@@ -5,10 +5,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.store.dto.BoardDto;
 import com.store.service.AdminService;
 
 @Controller
@@ -25,6 +25,14 @@ public class AdminController {
 	public String adminProduct() {
 		return "admin/product";
 	}
+	
+	@PostMapping("/updateProduct")
+	public String updateProduct(Model model) {
+		model.addAttribute("pDto", attributeValue)
+		
+		return "admin/updateProduct";
+	}
+	
 	@RequestMapping("/adminQna")
 	public String adminQna(@RequestParam(defaultValue="1") int page, Model model) {
 		
@@ -63,10 +71,10 @@ public class AdminController {
 		return "redirect:adminQna";
 	}
 	@RequestMapping("/adminQnaSearch")
-	public String adminQnaSearch(@RequestParam(defaultValue="1") int page, @RequestParam("search")String search,
+	public String adminQnaSearch(@RequestParam(defaultValue="1") int page, @RequestParam("keyword")String keyword,
 			Model model) {
-		
-		Map<String, Object> map=service.adminQnaSearchService(page, search);
+		System.out.println("qna 검색 컨트롤러");
+		Map<String, Object> map = service.adminQnaSearchService(page, keyword);
 		model.addAttribute("list", map.get("dto"));
 		model.addAttribute("startIdx", map.get("startIdx"));
 		model.addAttribute("endIdx", map.get("endIdx"));
@@ -74,6 +82,8 @@ public class AdminController {
 		model.addAttribute("totalPage",map.get("totalPage"));
 		model.addAttribute("startPageIdx", map.get("startPageIdx"));
 		model.addAttribute("endPageIdx", map.get("endPageIdx"));
+		model.addAttribute("keyword", map.get("keyword"));
+		System.out.println(map.get("keyword"));
 		
 		return "admin/qna_search";
 	}

@@ -110,7 +110,7 @@
               <a href="#" class="thumbnail">
                 <img class="image" src="/mainImages/story(1).jpg" >
                 <br>
-                <p style="margin: 10px">
+                <p style="margin: 10px"></p>
                 <b>제목</b><br>
                 Read The Story</p>
               </a>
@@ -138,7 +138,7 @@
     </section>
  <%}else {%>    
  <section id="goods"> 
-${email}님 환영합니다.
+${user_name}님 환영합니다.
  <label><a href="MyPage">MyPage</a></label>  
 <form action="Logout" method="get">
    <input type="submit" value="로그아웃"> 
