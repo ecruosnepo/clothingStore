@@ -16,6 +16,7 @@ public interface UserDao {
      
      public int UserPassword(@Param("user_password")String user_password) throws Exception;
      
-     public int UserUpdate(@Param("user_name")String name,@Param("user_birth")String birth, 
-    		               @Param("user_phone")String phone, @Param("user_gender")String gender) throws Exception;
+     public void UserUpdate(@Param("user_name")String name,@Param("user_birth")String birth, 
+    		               @Param("user_phone")String phone, @Param("user_gender")String gender, 
+    		               @Param("user_email")String email) throws Exception;
 }
