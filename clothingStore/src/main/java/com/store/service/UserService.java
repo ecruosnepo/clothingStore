@@ -100,7 +100,7 @@ public class UserService implements UserServiceImpl {
 	@Override
 	public void sUpdateOderUserInfo(String user_email,String user_name, String main_address1, String main_address2, String main_address3,
 			String main_address4, String user_phone) throws Exception {
-		dao.updateOderUserInfo(user_email, user_name, main_address1, main_address2, main_address3, main_address4, user_phone);		
+		dao.updateOrderUserInfo(user_email, user_name, main_address1, main_address2, main_address3, main_address4, user_phone);		
 	}
 
 	// 계정 삭제

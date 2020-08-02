@@ -53,6 +53,21 @@
 			   user_email = #{user_email}
 			</update>
 			
+			<!-- USER UPDATE ADDRESS  -->
+			<update id="updateOrderUserInfo">
+			   UPDATE
+			   users
+			   SET
+			   user_name = #{user_name},
+			   main_address1 = #{main_address1},
+			   main_address2 = #{main_address2},
+			   main_address3 = #{main_address3},
+			   main_address4 = #{main_address4},
+			   user_phone = #{user_phone}
+			   WHERE
+			   user_email = #{user_email}
+			</update>
+			
 			<!-- DELETE INFO USER -->
 			<delete id="deleteInfoUser">
 			  DELETE

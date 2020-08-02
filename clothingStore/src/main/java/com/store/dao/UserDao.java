@@ -30,7 +30,7 @@ public interface UserDao {
      public int deleteInfoUser(@Param("user_email")String email) throws Exception; 
      
      // 
-     public int updateOderUserInfo(@Param("user_email")String user_email,
+     public int updateOrderUserInfo(@Param("user_email")String user_email,
     		 @Param("user_name")String user_name,
     		 @Param("main_address1")String main_address1, 
     		 @Param("main_address2")String main_address2,

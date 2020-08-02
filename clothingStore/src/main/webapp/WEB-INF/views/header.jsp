@@ -190,40 +190,18 @@
               <!-- 로그인 / 장바구니 -->
               <div class="menu_login_cart">
                 <div class="btn-group">
-                  <a type="button" class="btn dropdown-toggle login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     로그인
                   </a>
-                  <form class="px-4 py-3" action="LoginFor" method="post">
                   <div class="dropdown-menu dropdown-menu-right">
-                    
-                      <div class="form-group"> 
+                    <form class="px-4 py-3" action="/LoginForm" method="post">
+                      <div class="form-group">
                         <label for="exampleDropdownFormEmail1">Email address</label>
                         <input type="email" name="user_email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
                       </div>
                       <div class="form-group">
                         <label for="exampleDropdownFormPassword1">Password</label>
-                        <input type="password"  name="user_password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Sign in</button>
-                  
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">New around here? Sign up</a>
-                    <a class="dropdown-item" href="#">Forgot password?</a>
-                  </div>
-                    </form>
-  
-                  <a type="button" class="btn cart" href="/cart">
-                    장바구니
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <form class="px-4 py-3">
-                      <div class="form-group">
-                        <label for="exampleDropdownFormEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleDropdownFormPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+                        <input type="password" name="user_password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
                       </div>
                       <div class="form-group">
                         <div class="form-check">
@@ -238,7 +216,12 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">New around here? Sign up</a>
                     <a class="dropdown-item" href="#">Forgot password?</a>
-                  </div>
+                  </div>  
+                </div>
+                <div class="btn-group">
+	                <a type="button" class="btn cart" href="/cart">
+	                  장바구니
+	                </a>                
                 </div>
               </div>
               <!-- 고객센터 -->
@@ -299,12 +282,5 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<!-- 카트 버튼 -->
-	<script type="text/javascript">
-		$(.cart).click(function(e){
-	
-	        e.target
-	
-		})
-	</script>
   </body>
 </html>

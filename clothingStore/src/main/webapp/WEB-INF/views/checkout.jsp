@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% session.setAttribute("email", "123@123"); %>
 <!Doctype html>
 <html lang="en">
@@ -13,17 +14,48 @@
 
     <title>Hello, world!</title>
     <style>
+    	body{
+    		background-color:#FAF9F8;
+    	}
+    	
+    	header{
+    		height:72px;
+    	}
+    	
+    	.header_logo{
+          display: block;
+          width: 68px;
+          height: 44px;
+          margin: 20px auto 0;
+          overflow: hidden;
+        }
+        .header_logo:before{
+            width: 68px;
+            height: 44px;
+            display: block;
+            background-image: url("/icons/headerlogo.png");
+            content: '';
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: unset;
+        }
+    	
+    	.inputContents{
+    		background-color:white;
+    	}
+    	
         .container{
           height: 100vh;
         }
         p{
           margin:0;
         }
-        .info, .sidebar{
-          border: 1px solid black;            
+        .info, .sidebar{         
           width: 100%;
           padding: 0;
           margin: 0;
+          background-color:white;
         }
 
         .container > .row {
@@ -52,26 +84,91 @@
         .info *{
           width: 100%;
         }
-
-        .payment-list{
-          text-align: center;
+        
+        .address-order-form {
+        	
         }
+        
+        .deliveryMethodSelect{
+        	height:160px;
+        }
+        
+        .radioBox{
+        	height:50%;
+        	display:flex;
+        	align-items: center;
+        	padding: 20px 10px;
+        }
+        
+        .radioBox *{
+        	width: auto;        	
+        }
+        
+        .radioBox:hover{
+        	background-color:#F4EDDD;
+        }
+        
+        .selectedAddress{
+        	height:60px;
+        }
+        
+        .addressList:hover{
+        	background-color:#F4EDDD;
+        }
+        
+        button{
+        	border:none;
+        	background:none;
+        }
+        
+        button:focus { 
+		    outline: none; 
+		}
 
         .address-box{
           width: 100%;
         }
+        
+        .submitBtn{
+        	background-color:black;
+        	color:white;
+        	height:50px;
+        	width:200px;
+        	margin:20px 0;
+        }
+        
+        .payment-list{
+          text-align: center;
+        }
+
+		.card-body{
+			border:none;
+		}
+		
+		.orderDetail{
+			text-align:left;
+			padding:0;
+		}
+		
+		.orderDetail:hover{
+			color:#D6001C;
+		}
+
     </style>
   </head>
   <body>
     <!-- Stack the columns on mobile by making one full-width and the other half-width -->
     <div class="container">
+    <header>
+    	<a class="header_logo" href="/"></a>
+    </header>
       <div class="row">
         <div class="col-md-8 info-group">
           <div class="row user-info info">
             <header>
               <h4>내 정보</h4>
             </header>
-            <div class="readonly">
+            <div class="user-readonly">
               <p>이메일</p>
               <p>test@test.com</p>
             </div>
@@ -98,11 +195,11 @@
               <div class="form-row">
                 <div class="col-md-6 mb-3">
                   <label for="validationDefault03">아파트 명/건물 명</label>
-                  <input name="main_address3" type="text" class="form-control" id="address-name" required>
+                  <input name="main_address3" type="text" class="form-control" id="address-name">
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="validationDefault03">동 호수/층수</label>
-                  <input name="main_address4"  type="text" class="form-control" id="address-dong" required>
+                  <input name="main_address4"  type="text" class="form-control" id="address-dong">
                 </div>                
               </div>
               <div class="form-row">                
@@ -112,31 +209,81 @@
                 </div>                
               </div>
               <input type="button" class="btn" onclick="DaumPostcode()" value="주소 검색" />
-              <button class="btn" type="submit">배송 단계로 넘어가기</button>
+              <button  class="submitBtn" type="submit">배송 단계로 넘어가기</button>
             </form>
-            <button class="user-info-btn btn" click="">수정</button>
+            <button class="user-info-btn btn" onclick="editUserInfo(this)">수정</button>
           </div>
+          
           <div class="row address-info info">
-            <h4>배송</h4>
-            <div class="readonly">
-
-            </div>
+            <h4>배송</h4>            
+            <div class="address-readonly">
+				<p>배송 종류</p>
+				<p>일반 배송</p>
+				
+				<p>배송 주소</p>
+				<p>이름 우편번호 시 도로명 상세주소</p>
+				
+				<p>배송 업데이트를 위한 전화번호</p>
+				<p>01022223333</p>
+            </div>            
             <form class="address-order-form">
-
+            	<h5>배송 방법</h5>
+				<div class="deliveryMethodSelect inputContents">
+					<div class="radioBox">
+						<input type="radio" id="basicMethod" name="deliveryMethod" checked="checked"/>
+						<label for="basicMethod">일반 배송</label>
+					</div>
+					<div class="radioBox">
+						<input type="radio" id="fastMethod" name="deliveryMethod"/>
+						<label for="fastMethod">특급 익일 배송</label>
+					</div>
+				</div>
+				<h5>배송 주소</h5>
+				<div class="addressSelectBox">
+					<!-- Button trigger modal -->
+					<button type="button" data-toggle="modal" data-target="#exampleModal" class="selectedAddress inputContents">
+					  테스트 테스트주소 123
+					</button>
+					
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">					      
+					      <div class="modal-body">
+					        <c:forEach var="x" begin="0" end="3" step="1">
+       						 	<div class="addressList">
+					        		<button class="addressBtn">테스트, 테스트주소1, 2 ,3, 4</button>
+					        	</div>   
+						    </c:forEach>
+					      </div>					      
+					    </div>
+					  </div>
+					</div>
+				</div>
+				<h6>필수 전화번호</h6>
+				<div class="phoneBox">
+					<input type="text" name="user_phone" style="height:50px;">
+				</div>
+				<h6>배송업체에 전하는 메세지</h6>
+				<div class="message">
+					<input type="text" name="message" style="height:50px;">
+				</div>
+				<button type="submit" class="submitBtn">결제 단계로 넘어가기</button>
             </form>
-            <button class="address-info-btn btn" value="수정" click="">
+            <button class="address-info-btn btn" value="수정" onclick="editAddressInfo(this)">
               수정
             </button>
           </div>
+          
           <div class="row payment-info info">
             <h4>결제</h4>
-            <div class="readonly">
+            <div class="payment-readonly">
 
             </div>
             <form class="payment-order-form">
 
             </form>
-            <button class="payment-info-btn btn" value="수정" click="">
+            <button class="payment-info-btn btn" value="수정" onclick="">
               수정
             </button>
           </div>
@@ -144,8 +291,43 @@
   
           </div>
         </div>
-        <div class="col-md-4 sidebar" style="height: 600px;">
-          
+        <div class="col-md-4 sidebar info" style="height: 600px;">
+         	<h4>고객님의 주문</h4>
+         	
+         	<div>
+         		<table class="orderTotal">
+         			<tr>
+         				<th>주문 가격</th>
+         				<td><span>20000</span></td>
+         			</tr>
+         			<tr>
+         				<th>배송</th>
+         				<td><span>20000</span></td>
+         			</tr>
+         			<tr>
+         				<th>합계</th>
+         				<td><span>20000</span></td>
+         			</tr>
+         		</table>
+         	</div>
+	         
+	       	<p>
+			  <button class="orderDetail" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+			    주문 세부 정보 보기
+			  </button>
+			</p>
+			<div class="collapse" id="collapseExample">
+			  <div class="card card-body">
+		    	<div class="orderProductList">
+		          	<c:forEach var="x" begin="0" end="3" step="1">
+					 	<div class="orderProduct">
+					 		<img alt="" src="">
+			        		<span class="addressBtn">테스트 상품</span>
+			        	</div>   
+				    </c:forEach>                 
+	          	</div>
+			  </div>
+			</div>         
         </div>
       </div>
     </div>
@@ -205,13 +387,23 @@
         }
     </script>
     <script>
-      $(function(){
-        $('.user-info-btn').on("click",function(){
-          $(this).hide();
-          $('.readonly').hide();
+      function editUserInfo(obj){
+    	  $(obj).hide();
+          $('.user-readonly').hide();
           $('.user-order-form').show();
-        })
-      });
+      };
+
+      function editAddressInfo(obj){
+    	  $(obj).hide();
+          $('.address-readonly').hide();
+          $('.address-order-form').show();
+      };
+
+      function editPaymentInfo(obj){
+    	  $(obj).hide();
+          $('.payment-readonly').hide();
+          $('.payment-order-form').show();
+      };
     </script>
   </body>
 </html>

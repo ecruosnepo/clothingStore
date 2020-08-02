@@ -5,7 +5,7 @@
     
 <mapper namespace="com.store.dao.CartDao">
 	<select id="CartListDao" resultType="com.store.dto.CartListDto">
-		select c.cart_id, c.pd_size, p.pd_name, p.pd_price, p.pd_id, p.pd_color, p.pd_price, p.pd_img from cart c join products p on c.pd_id=p.pd_id where c.email=#{email} order by cart_id desc;
+		select c.cart_id, c.pd_size, c.pd_quantity, p.pd_name, p.pd_price, p.pd_id, p.pd_color, p.pd_price, p.pd_img from cart c join products p on c.pd_id=p.pd_id where c.email=#{email} order by cart_id desc;
 	</select>
 
 	<insert id="addCartDao" parameterType="hashMap">
@@ -20,7 +20,7 @@
 		update cart set pd_size=#{pd_size} where cart_id=#{cart_id};
 	</update>
 	
-	<update id="updateCartQuantityDao">
-		update cart set pd_quantity=#{pd_quantity} where cart_id=#{cart_id}; 
+	<update id="updateQuantityCartDao">
+		update cart set pd_quantity=#{param2} where cart_id=#{param1}; 
 	</update>
 </mapper>

@@ -63,7 +63,7 @@
         <div class="row">
           <div class="col-xs-5 col-sm-7">
           	<c:forEach items="${cart_list }" var="cList">
-          		<div class="cart-item">
+          		<div class="cart-item ${cList.cart_id}">
           			<c:forTokens items="${cList.pd_img }" var="img" delims="," varStatus="status">
           				<c:if test="${status.last == true }">
           				<div class="cart-img-box">
@@ -72,23 +72,27 @@
           				</c:if>
           			</c:forTokens>
           			<div class="cart-desc">
-	          			상품명: ${cList.pd_name } <br/>
-	          			가격: ${cList.pd_price } <br/>
-	       			    상품 번호: ${cList.pd_id }
-					    사이즈: ${cList.pd_size } <br/>
-					    컬러: ${cList.pd_color }
-					    합계: <br/>
-					    <select name="pd_quantity" id="quantity">
-	          				<%
-	          					for(int i=1; i<=20; i++){
-	          				%>
-	          					<option value=<%=i %>><%=i %></option>
-	          				<%
-	          					}
-	          				%>
+          				<input type="hidden" value="${cList.cart_id }" name="cart_id" class="cart_id"/>
+	          			<span class="pd_id">상품명: ${cList.pd_name }</span><br/>
+	          			<span class="pd_price">가격: ${cList.pd_price }</span><br/>
+	       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
+					    <span class="pd_size">사이즈: ${cList.pd_size }</span> <br/>
+					    <span class="pd_color">컬러: ${cList.pd_color }</span>
+					    <span class="total_price">합계:</span><br/>
+					    <select name="pd_quantity" id="quantity" onchange="updateQuantity(this);">
+						    <c:forEach var="x" begin="0" end="20" step="1">
+	          					<c:choose>
+	          						<c:when test="${cList.pd_quantity eq x}">
+	          							<option value=${x } selected>${x }</option>
+	          						</c:when>
+	          						<c:otherwise>
+		          						<option value=${x }>${x }</option>
+	          						</c:otherwise>
+	          					</c:choose>					    
+						    </c:forEach>
           				</select>
           			</div>     			
-          			<button class="delete-btn">&#10006;</button>
+          			<button class="delete-btn" onclick="deleteCart(this)">&#10006;</button>
           		</div>
           	</c:forEach>
             <!-- <b style="font-size: 27px;">고객님의 쇼핑백이 비어 있습니다.</b><br/>
@@ -129,18 +133,36 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-		var cart_id = new FormData("#cart_dto");
-		var pd_quantity = new FormData($("#quantity"));
-    	
-	    $ajax({
-			url:'/updateCartQuantity',
-			data:(cart_id,pd_quantity),
-			type:'POST',
-			success:function(){
-				$()
-			}
-				
-		})
-    </script>
+    	function updateQuantity(obj){        	
+	    	var form = {
+	                cart_id: $(obj).parent('.cart-desc').children('.cart_id').val(),
+	                pd_quantity: $(obj,'option:selected').val()
+	        };		
+	        
+	        $.ajax({
+	            url: "updateCartQuantity",
+	            type: "POST",
+	            dataType: "json",
+	            data: form,
+	            success: function(data){
+			            console.log("성공");		            
+	            }
+	        });
+		};
+	</script>
+	<script type="text/javascript">
+		function deleteCart(obj){
+			$.ajax({
+				url:"deleteCart",
+				type:"POST",
+				data: {
+						cart_id: $(obj).siblings('.cart-desc').children('.cart_id').val()
+					},				
+				success:function(data){
+					$(obj).parent().remove();
+				}
+			});
+		};
+	</script>
   </body>
 </html> 
