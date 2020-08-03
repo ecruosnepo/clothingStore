@@ -28,6 +28,7 @@ public class AdminController {
 	public String adminProduct() {
 		return "admin/addProduct";
 	}
+	
 	@RequestMapping("/adminQna")
 	public String adminQna(@RequestParam(defaultValue="1") int page, Model model) {
 		

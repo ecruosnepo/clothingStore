@@ -62,32 +62,32 @@
             <br/>
             <label class="control-label" for="inputSuccess1" style="color: black; ">전화번호</label>
             <input type="text" class="form-control" id="inputSuccess1" name="user_phone" value="${u.user_phone}" ; onfocus="this.value='${u.user_phone}';this.style.color='red';"/>
-            </div>
-           <label>성별</label> 
-            <br/>
-            <select class="form-control" name="user_gender" >
-               <c:choose>
-                  <c:when test="${ u.user_gender eq'여성'}">
-                    <option value="여성" selected>여성</option>
-                    <option value="남성">남성</option>
-                  </c:when>
-                  <c:when test="${ u.user_gender eq '남성' }">
-                    <option value="여성">여성</option>
-                    <option value="남성" selected>남성</option>
-                  </c:when>
-                 <c:otherwise>
-                   <option value="남성">남성</option>
-                   <option value="여성">여성</option>
-                 </c:otherwise>
-               </c:choose>
-            </select>
-            <br/>
-            <br/>
-           <label>옷가게의 <a href="#" style="color: black; text-decoration: underline;">개인정보 고지사항</a>에 따라 고객의 데이터를 처리합니다.</label>
-           <br/>
-           <br/>
-           <button type="submit" class="btn btn-primary btn-lg btn-block" style="color: white; background-color: black;">저장</button>
-             <a href="MyPageSet"> <button type="button" class="btn btn-default btn-lg btn-block">취소</button></a>
+         	</div>
+	        <label>성별</label> 
+	         <br/>
+	         <select class="form-control" name="user_gender" >
+	            <c:choose>
+		            <c:when test="${ u.user_gender eq'여성'}">
+		              <option value="여성" selected>여성</option>
+		              <option value="남성">남성</option>
+		            </c:when>
+		            <c:when test="${ u.user_gender eq '남성' }">
+		              <option value="여성">여성</option>
+		              <option value="남성" selected>남성</option>
+		            </c:when>
+		           <c:otherwise>
+		             <option value="남성">남성</option>
+		             <option value="여성">여성</option>
+		           </c:otherwise>
+	            </c:choose>
+	         </select>
+	         <br/>
+	         <br/>
+	        <label>옷가게의 <a href="#" style="color: black; text-decoration: underline;">개인정보 고지사항</a>에 따라 고객의 데이터를 처리합니다.</label>
+	        <br/>
+	        <br/>
+	        <button type="submit" class="btn btn-primary btn-lg btn-block" style="color: white; background-color: black;">저장</button>
+	       	<a href="MyPageSet"> <button type="button" class="btn btn-default btn-lg btn-block">취소</button></a>
         </form>
        </div>
       </div>

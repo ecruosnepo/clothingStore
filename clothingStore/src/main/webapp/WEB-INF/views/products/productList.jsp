@@ -278,7 +278,7 @@
 	                    <a class="productImg" href="/productpage/${pd_dto.pd_id }">
 	                    <c:forTokens items="${pd_dto.pd_img }" var="img" delims="," varStatus="status">
 		                    <c:if test="${status.last == true}">
-		                        <img src="/images/${img}" alt="">
+		                        <img src="/images/${img}" alt="">		                        
 		                    </c:if>
 	                    </c:forTokens>              
 	                    </a>

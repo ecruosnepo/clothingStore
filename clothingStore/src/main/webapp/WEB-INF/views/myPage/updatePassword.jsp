@@ -50,28 +50,30 @@
         <label class="head"><a href="#"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="MyPageSet"  style="color: black; ">내 설정</a></label>
     <br/>
     <br/><br/><br/>
-        <label style="font-size: 26px;">비밀번호 찾기</label>
-    
+        <label style="font-size: 26px;">비밀번호 변경</label>
     </div>
     <br/><br/><br/><br/><br/>
     <div class="box" >
       <label class="size"></label>
-      
         <div class="form-group has-success">
-            <label class="control-label" for="inputSuccess1" style="color: black;">귀하의 계정을 만드는 데 사용한 이메일 주소를 입력하십시오. 
-                <br/><br/>귀하의 비밀번호를 재설정할 수 있는 링크를 보내드립니다.
+            <label class="control-label" for="inputSuccess1" style="color: black;">
+                 변경하실 비밀번호를 입력 해주세요.
+                <br/><br/>
             </label>
             <br/><br/>
-            <label style="font-size: 24px;">이메일<label style="color: red; size: 5px;">*</label></label>
-          <form action="#" method="POST">
-            <input type="text" class="form-control" id="inputSuccess1">
-            <br/>
-         </div>
-    <button type="submit" class="btn btn-primary btn-lg" style="color: white; background-color: black;">비밀번호 찾기</button> 
-</form>
-    </div>  
-  </div>
-  </div>
+            <form action="updatePasswordForm" method="post">
+            <label style="font-size: 21px;">변경 비밀번호</label>
+            <input type="password" class="form-control" id="inputSuccess1" name="updatePassword1">
+            <br/><br/>
+            <label style="font-size: 21px;">변경 비밀번호 확인</label>
+           <input type="password" class="form-control" id="inputSuccess1" name="updatePassword2">
+           <br/><br/>
+           <button type="submit" class="btn btn-primary btn-lg" style="color: white; background-color: black;">비밀번호 변경</button> 
+          </form> 
+           </div>  
+         </div>  
+	   </div>
+     </div>
   </div>
  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

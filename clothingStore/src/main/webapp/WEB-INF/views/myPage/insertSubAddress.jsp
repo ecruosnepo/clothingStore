@@ -12,51 +12,52 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>옷가게</title>
-  <style>
+    <style>
+  .firstCenter{
+    text-align: center;
+  }
+   .box{
+    background-color:whitesmoke;
+    text-align: left;
+    padding: 5%;
     
-    .firstCenter{
-      text-align: center;
-    }
-
-     .box{
-      background-color:whitesmoke;
-      text-align: left;
-      padding: 5%;
-     }
-     .size{
-       font-size: 24px;
-       text-align: center;
-     }
-     .sub{
-       font-size: 12px;
-       color: red;
-     }
-     .head{
-       font-size: 12px;
-     }
-    
-   
-    </style>
-    </head>
-  <body>
-    <div class="container"> 
-      <div class="row ">
-        <div class="center-block" style="width: 55%;">
-	      <div class="firstCenter">
-           <br/>
-           <label class="head"><a href="#" style="color: black; ">HM.com</a>/<a href="MyPage.html"  style="color: black; ">나의 계정</a>/<a href="newAddress.html"  style="color: black; ">주소록</a></label>
-			 <br/>
+   }
+   .size{
+     font-size: 24px;
+     text-align: center;
+   }
+   .sub{
+     font-size: 12px;
+     color: red;
+   }
+   .head{
+     font-size: 12px;
+   }
+  </style>
+  </head>
+<body>
+<jsp:include page="../header.jsp" flush="false" />
+  <div class="container"> 
+    <div class="row ">
+      <div class="center-block" style="width: 55%;">
+	    <div class="firstCenter">
 			  <br/>
-            	<label style="font-size: 26px;">주소록</label>
-              	 </div>
-                   <div class="box" >
-                    <label class="size">청구지 주소</label>
-                     <br/><br/><br/>
-                     <form action="NewAddress" method="post">
-			          <div class="form-group has-success">
-			            <button type="button" onclick="DaumPostcode();" class="btn btn-primary btn-lg" style="color: white; background-color: black;">주소 검색</button> 
-							 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-			                   <script>
+			<label class="head"><a href="#"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="subAddress"  style="color: black; ">주소록</a></label>
+		  	 <br/><br/>
+			    <label style="font-size: 26px;">주소록</label>
+			  </div>
+			  <div class="box" >
+			    <label class="size">새 주소 추가</label>
+			      <br/><br/><br/>
+			       <form action="insertSubAddressForm" method="post">
+			         <div class="form-group has-success">
+			           <label class="control-label" for="inputSuccess1" style="color: black;">이름</label>
+			             <input type="text" class="form-control" id="inputSuccess1" name="r_name">
+			              <br/>
+			              <button type="button" onclick="DaumPostcode();" class="btn btn-primary btn-lg" style="color: white; background-color: black;">주소 검색</button> 
+	    				  <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+						   <script>
+						   //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 						        function DaumPostcode() {
 						            new daum.Postcode({
 						                oncomplete: function(data) {
@@ -105,41 +106,32 @@
 						            }).open();
 						        }
 							</script>
-			              <br/><br/>
-                        <label class="control-label" for="inputSuccess1" style="color: black;">우편번호</label>
-			            <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="address1">
-			            <label class="sub">ex) 우편 번호를 입력합니다. 예:04177 이나135-606</label> 
-			            <br/><br/>
-			            <label class="control-label" for="inputSuccess1" style="color: black;">주소</label>
-			            <input type="text" class="form-control" id="address" placeholder="주소" name="address2">
-			            <label class="sub">ex) 경기도 또는 서울 특별시</label>
-			            <br/><br/>
-			            <label class="control-label" for="inputSuccess1" style="color: black;">아파트 명/건물 명</label>
-			            <input type="text" class="form-control" id="address-name" placeholder="아파트 명/건물 명" name="address3">
-			            <br/></br>
-			            <label class="control-label" for="inputSuccess1" style="color: black; ">동 호수/층 수</label>
-			            <input type="text" class="form-control" id="address-dong" placeholder="동 호수/층 수" name="address4">
-			            <label class="sub">ex) 목록에서 해당 구를 찾을 수 없는 경우, '기타'를 선택하고 주소1 입력 칸에 직접 써넣으십시오.</label>
-			            <br/><br/>
-		
-		            </div>
-		   			 <button type="submit" class="btn btn-primary btn-lg" style="color: white; background-color: black;">세부 정보 저장</button>
-		   			 <button type="submit" class="btn btn-primary btn-lg" style="color: darkturquoise; background-color: black;">취소</button>
-		          </form>  
-		           </div>
-		            
-			    	<br/>
-			    	<br/>
-			    	<br/>
-			    	<br/>
-			    	<br/>
-		       </div>
-		      </div>
-		     </div>
-		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		    <script src="js/bootstrap.min.js"></script>
-		  </body>
-		</html>
- 
-            
-           
+                       <br/><br/>
+                      <label class="control-label" for="inputSuccess1" style="color: black;">우편번호</label>
+		            <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="address1">
+		            <label class="sub">ex) 우편 번호를 입력합니다. 예:04177 이나135-606</label> 
+		            <br/><br/>
+		            <label class="control-label" for="inputSuccess1" style="color: black;">주소</label>
+		            <input type="text" class="form-control" id="address" placeholder="도로명 주소" name="address2">
+		            <label class="sub">ex) 경기도 또는 서울 특별시</label>
+		            <br/><br/>
+		            <label class="control-label" for="inputSuccess1" style="color: black;">아파트 명/건물 명</label>
+		            <input type="text" class="form-control" id="address-name" placeholder="지번 주소" name="address3">
+		            <br/></br>
+		            <label class="control-label" for="inputSuccess1" style="color: black; ">동 호수/층 수</label>
+		            <input type="text" class="form-control" id="address-dong" placeholder="상세 주소"  name="address4">
+		            <label class="sub">ex) 목록에서 해당 구를 찾을 수 없는 경우, '기타'를 선택하고 주소1 입력 칸에 직접 써넣으십시오.</label>
+	              <br/><br/>
+                 </div>
+               <button type="submit" class="btn btn-primary btn-lg" style="color: white; background-color: black;">세부 정보 저장</button> 
+             </form>
+            </div>  
+          <br/><br/><br/><br/><br/>
+ 		</div>
+	 </div>
+   </div>
+  <jsp:include page="../footer.jsp" flush="false" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

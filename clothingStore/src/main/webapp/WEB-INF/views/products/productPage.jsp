@@ -184,37 +184,35 @@
             </div>
             <!-- 상품 옵션 -->
             <div class="col-md-4 pd-option">
-                <div class="option-box sticky-top">
-                    <form action="/addCart" method="post">
-                    	<input type="hidden" name="pd_id" value="${pd_dto.pd_id }" />
-                        <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
-                        <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
-                        <div class="">
-						  <ul class="regular">
-						  <c:forEach items="${colorList }" var="colors">
-                           		<li class="">
-                                 	<a href="/productpage/${colors.pd_id }">	                                 	
-				                   		<c:forTokens items="${colors.pd_img }" var="img" delims="," varStatus="status">
-						                    <c:if test="${status.last == true}">
-						                        <img class="color-img" src="/images/${img}" alt="">
-						                    </c:if>
-					                    </c:forTokens>  
-					                </a>                                 	
-                             	</li>
-                          </c:forEach>
-						  </ul>
-						</div>
-                        <div class="pd-select-buttons">
-                            <select name="pd_size" class="form-control form-control-lg size-list">
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>                                
-                            </select>
-                            <button class="add-cart" type="submit">
-                                <span>담기</span>
-                            </button>
-                        </div>
-                    </form>
+                <div class="option-box sticky-top">                    
+                   	<input type="hidden" name="pd_id" class="pd_id" value="${pd_dto.pd_id }" />
+                       <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
+                       <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
+                       <div class="">
+					  <ul class="regular">
+					  <c:forEach items="${colorList }" var="colors">
+                          		<li class="">
+                                	<a href="/productpage/${colors.pd_id }">	                                 	
+			                   		<c:forTokens items="${colors.pd_img }" var="img" delims="," varStatus="status">
+					                    <c:if test="${status.last == true}">
+					                        <img class="color-img" src="/images/${img}" alt="">
+					                    </c:if>
+				                    </c:forTokens>  
+				                	</a>                                 	
+                            	</li>
+                         </c:forEach>
+					  </ul>
+					</div>
+                    <div class="pd-select-buttons">
+                        <select name="pd_size" class="form-control form-control-lg size-list">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>                                
+                        </select>
+                        <button class="add-cart" onclick="addCart()">
+                            <span>담기</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -263,6 +261,7 @@
         <div class="overlay"></div>
     </div>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Slick Slide JS -->
     <script src="/css/slick.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
@@ -297,5 +296,27 @@
             document.getElementById("mySidepanel").style.width = "0";
         }        
     </script>
+    <!-- 장바구니 추가 -->
+    <script type="text/javascript">
+		function addCart(){
+			var pId = $('.pd_id').val();
+			var pSize = $('.size-list option:selected').val();
+
+			console.log(pId);
+			console.log(pSize);
+			
+			$.ajax({
+				url:"/addCart",
+				type:"post",
+				data: {
+						pd_id: pId,
+						pd_size: pSize
+					},
+				success:function(data){
+					console.log("성공");
+				}
+			});
+		};
+	</script>
   </body>
 </html>

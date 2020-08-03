@@ -22,19 +22,44 @@ public class PagingBean {
    private int startPageIdx;
    //페이지의 끝나는 번호
    private int endPageIdx;
+   //검색어
+   private String keyword;
    
    public PagingBean() {}
    
    public PagingBean(int thisPage, int totalList ,int listSize ,int pagePerPaging) {
-      this.thisPage=thisPage;
+	      //현재 페이지
+		  this.thisPage=thisPage;
+	      //페이지당 글 갯수
+	      this.listSize=listSize;
+	      //페이지 번호 표시 갯수
+	      this.pagePerPaging=pagePerPaging;
+	      //전체 글 갯수
+	      this.totalList=totalList;
+	      
+	      setStartIdx();
+	      setEndIdx();
+	      setTotalPage();
+	      setStartPageIdx();
+	      setEndPageIdx();
+   }
+   
+   public PagingBean(int thisPage, int totalList ,int listSize ,int pagePerPaging, String keyword) {
+      //현재 페이지
+	  this.thisPage=thisPage;
+      //페이지당 글 갯수
       this.listSize=listSize;
+      //페이지 번호 표시 갯수
       this.pagePerPaging=pagePerPaging;
+      //전체 글 갯수
       this.totalList=totalList;
+      
       setStartIdx();
       setEndIdx();
       setTotalPage();
       setStartPageIdx();
       setEndPageIdx();
+      setKeyword(keyword);
    }
 
    public int getThisPage() {
@@ -106,6 +131,14 @@ public class PagingBean {
 
    public void setEndIdx() {
       this.endIdx = this.startIdx+this.listSize-1;
+   }
+   
+   public String getKeyword() {
+	   return keyword;
+   }
+   
+   public void setKeyword(String keyword) {
+	   this.keyword = keyword;
    }
 
 }

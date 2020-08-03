@@ -43,7 +43,6 @@
 </style>
   </head>
 <body>
-
     <div id="login">
         <p><a href="index">Home</a>/<a href="login">로그인/등록</a></p>
         <br>
@@ -53,7 +52,7 @@
             <form action="LoginForm" method="post">
                 <div class="form-group">
                     <h4>이메일</h4><h4 style="color: red;">*</h4><br>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="user_email">
+                    <input required type="text" class="form-control" id="exampleInputEmail1" name="user_email" >
                 </div>
                 <div class="form-group">
                     <h4>비밀번호</h4><h4 style="color: red;">*</h4><br>
@@ -62,7 +61,7 @@
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1" name="saveInfo">
                     <label class="form-check-label" for="exampleCheck1" style="font-size: small;">로그인 상태 유지!</label>
-                    <a id="findPass" href="updatePass" style="font-size: small; margin-left: 60px;">비밀번호를 잊으셨습니까?</a>
+                    <a id="findPass" href="sendEmail" style="font-size: small; margin-left: 60px;">비밀번호를 잊으셨습니까?</a>
                 </div>
                 <br><br>
                 <input type="submit" value="로그인">
