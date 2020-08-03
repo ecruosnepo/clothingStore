@@ -9,6 +9,7 @@ public interface CartService {
 	public List<CartListDto> CartListView(String email);
 	public int addCart(CartDto cDto);
 	public int deleteCart(int cart_id);
-	public int updateSizeCart(String pd_size);
-	public int updateQuantityCart(int cart_id, int pd_quantity);
+	public int updateQuantityCart(int cart_id, int pd_quantity); // 입력값 만큼 증가
+	public int updateDuplicateCart(int cart_id); // 1개 증가	
+	public CartDto cartDuplicateCheck(String email, int pd_id, String pd_size);
 }

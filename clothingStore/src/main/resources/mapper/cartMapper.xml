@@ -7,20 +7,24 @@
 	<select id="CartListDao" resultType="com.store.dto.CartListDto">
 		select c.cart_id, c.pd_size, c.pd_quantity, p.pd_name, p.pd_price, p.pd_id, p.pd_color, p.pd_price, p.pd_img from cart c join products p on c.pd_id=p.pd_id where c.email=#{email} order by cart_id desc;
 	</select>
+	
+	<select id="cartDuplicateCheckDao" resultType="com.store.dto.CartDto">
+		select * from cart where email=#{email} and pd_id=#{pd_id} and pd_size=#{pd_size};
+	</select>
 
 	<insert id="addCartDao" parameterType="hashMap">
-		insert into cart (email,pd_id,pd_size) values (#{email}, #{pd_id}, #{pd_size});
+		insert into cart (email,pd_id,pd_size,pd_quantity) values (#{email}, #{pd_id}, #{pd_size}, #{pd_quantity});
 	</insert>
 	
 	<delete id="deleteCartDao">
 		delete from cart where cart_id=#{cart_id};
 	</delete>
 	
-	<update id="updateCartSizeDao">
-		update cart set pd_size=#{pd_size} where cart_id=#{cart_id};
+	<update id="updateQuantityCartDao">	
+		update cart set pd_quantity=#{param2} where cart_id=#{param1}; 
 	</update>
 	
-	<update id="updateQuantityCartDao">
-		update cart set pd_quantity=#{param2} where cart_id=#{param1}; 
+	<update id="updateDuplicateCartDao">	
+		update cart set pd_quantity=pd_quantity+1 where cart_id=#{param1}; 
 	</update>
 </mapper>

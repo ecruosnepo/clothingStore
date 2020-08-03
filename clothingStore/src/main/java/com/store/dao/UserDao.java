@@ -8,7 +8,7 @@ import com.store.dto.UserDto;
 @Mapper
 public interface UserDao {
 	
-	 public UserDto UserList(@Param("user_email")String email);
+	 public UserDto getUserInfo(@Param("user_email")String user_email);
 	 
 	 public int UserSignUp(@Param("user_email")String user_email, @Param("user_password")String user_password) throws Exception;
 
@@ -37,6 +37,4 @@ public interface UserDao {
     		 @Param("main_address3")String main_address3, 
     		 @Param("main_address4")String main_address4,
     		 @Param("user_phone")String user_phone) throws Exception;
-     
-     
 }

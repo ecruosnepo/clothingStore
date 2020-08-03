@@ -8,7 +8,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-		 
+		body{
+			background-color:#FAF9F8;
+		}
+	 	button{
+		 	border:none;
+		 	background:none;
+		 	font-size:20px;
+		}
 		.hi{
 		    text-align: center;
 		}
@@ -92,7 +99,7 @@
 						    </c:forEach>
           				</select>
           			</div>     			
-          			<button class="delete-btn" onclick="deleteCart(this)">&#10006;</button>
+          			<button class="delete-btn" onclick="deleteCart(this)">&#10005;</button>
           		</div>
           	</c:forEach>
             <!-- <b style="font-size: 27px;">고객님의 쇼핑백이 비어 있습니다.</b><br/>
@@ -112,9 +119,8 @@
           <br/>
           <label>합계  </label><br/><br/>
           
-          <form action="/orderForm" method="post">
-          	<%-- <input type="hidden" value="${ }" > --%>
-          	<button type="button" class="btn btn-primary btn-lg">결제 계속하기</button>          
+          <form action="/checkout" method="post">          	
+          	<button type="submit" class="btn btn-primary btn-lg" onclick="">결제 계속하기</button>          
           </form>
            
            

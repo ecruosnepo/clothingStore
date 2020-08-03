@@ -35,7 +35,6 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public BoardDto adminQnaViewService(int id) {
-		
 		return boardDao.boardViewDao(id);
 	}
 

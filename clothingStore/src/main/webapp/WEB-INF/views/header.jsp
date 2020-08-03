@@ -190,10 +190,13 @@
               <!-- 로그인 / 장바구니 -->
               <div class="menu_login_cart">
                 <div class="btn-group">
-                  <a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    로그인
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right">
+               	<%
+					if (session.getAttribute("email") == null ){
+				%>
+					<a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    	로그인
+                  	</a>
+                  	<div class="dropdown-menu dropdown-menu-right">
                     <form class="px-4 py-3" action="/LoginForm" method="post">
                       <div class="form-group">
                         <label for="exampleDropdownFormEmail1">Email address</label>
@@ -218,6 +221,21 @@
                     <a class="dropdown-item" href="#">Forgot password?</a>
                   </div>  
                 </div>
+				<%
+					}else {
+				%>    
+					<a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    	내 계정
+                  	</a>
+                  	<div class="dropdown-menu dropdown-menu-right">             
+                    <a class="dropdown-item" href="/myPage">내 계정</a>
+                    <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
+                    <a class="dropdown-item" href="/Logout">로그아웃</a>
+                  </div>  
+                </div>
+				<%
+					} 
+				%> 
                 <div class="btn-group">
 	                <a type="button" class="btn cart" href="/cart">
 	                  장바구니

@@ -18,10 +18,10 @@ public class UserService implements UserServiceImpl {
 	@Autowired
 	private AddressDao Adao;
 	
-	// 이용자 리스트
+	// 이용자 정보
 	@Override
-	public UserDto sUserList(String email) {
-		return dao.UserList(email);
+	public UserDto sGetUserInfo(String user_email) {
+		return dao.getUserInfo(user_email);
 	}
 
 	// 화원가입

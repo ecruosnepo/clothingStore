@@ -23,7 +23,7 @@
 			</select>
 			
 		    <!-- USER 정보  -->
-			<select id="UserList" parameterType="String" resultType="com.store.dto.UserDto">
+			<select id="getUserInfo" parameterType="String" resultType="com.store.dto.UserDto">
 			 	SELECT * FROM users WHERE user_email = #{user_email}
 			</select>
 

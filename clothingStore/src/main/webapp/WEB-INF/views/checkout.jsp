@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% session.setAttribute("email", "123@123"); %>
-<!Doctype html>
+<%-- <% session.setAttribute("email", "123@123"); %> --%>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -29,6 +29,7 @@
           margin: 20px auto 0;
           overflow: hidden;
         }
+        
         .header_logo:before{
             width: 68px;
             height: 44px;
@@ -48,9 +49,11 @@
         .container{
           height: 100vh;
         }
+        
         p{
           margin:0;
         }
+        
         .info, .sidebar{         
           width: 100%;
           padding: 0;
@@ -83,6 +86,10 @@
 
         .info *{
           width: 100%;
+        }
+        
+        .selectedAddress{
+        	text-align:left;
         }
         
         .address-order-form {
@@ -170,46 +177,46 @@
             </header>
             <div class="user-readonly">
               <p>이메일</p>
-              <p>test@test.com</p>
+              <p>${user.user_email }</p>
             </div>
-            <form class="user-order-form" action="/updateOrderUserInfo" method="post">
-              <input name="user_email" type="hidden" value="<%=session.getAttribute("email")%>"/>
+            <form class="user-order-form" method="post">
+              <input name="user_email" type="hidden" value="${user.user_email }"/>
               <div class="form-row">
                 <div class="col-md-12 mb-3">
                   <label for="validationDefault01">이름</label>
-                  <input name="user_name" type="text" class="form-control" id="validationDefault01" value="" required>
+                  <input name="user_name" type="text" class="form-control" id="validationDefault01" value="${user.user_name }" required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="col-md-3 mb-3">
                   <label for="validationDefault03">우편번호</label>
-                  <input name="main_address1" type="text" class="form-control" id="postcode" required>
+                  <input name="main_address1" type="text" class="form-control" id="postcode" value="${user.main_address1 }" required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="col-md-12 mb-3">
                   <label for="validationDefault03">주소</label>
-                  <input name="main_address2" type="text" class="form-control" id="address" required>
+                  <input name="main_address2" type="text" class="form-control" id="address" value="${user.main_address2 }" required>
                 </div>                
               </div>
               <div class="form-row">
                 <div class="col-md-6 mb-3">
                   <label for="validationDefault03">아파트 명/건물 명</label>
-                  <input name="main_address3" type="text" class="form-control" id="address-name">
+                  <input name="main_address3" type="text" class="form-control" id="address-name" value="${user.main_address3 }">
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="validationDefault03">동 호수/층수</label>
-                  <input name="main_address4"  type="text" class="form-control" id="address-dong">
+                  <input name="main_address4"  type="text" class="form-control" id="address-dong" value="${user.main_address4 }">
                 </div>                
               </div>
               <div class="form-row">                
                 <div class="col-md-12 mb-3">
                   <label for="validationDefault03">전화번호</label>
-                  <input name="user_phone"  type="text" class="form-control" id="address-dong" required>
+                  <input name="user_phone"  type="text" class="form-control" id="address-dong" value="${user.user_phone }" required>
                 </div>                
               </div>
               <input type="button" class="btn" onclick="DaumPostcode()" value="주소 검색" />
-              <button  class="submitBtn" type="submit">배송 단계로 넘어가기</button>
+              <button  class="submitBtn" onclick="editUserInfoBtn(this)">배송 단계로 넘어가기</button>
             </form>
             <button class="user-info-btn btn" onclick="editUserInfo(this)">수정</button>
           </div>
@@ -240,9 +247,14 @@
 				</div>
 				<h5>배송 주소</h5>
 				<div class="addressSelectBox">
+					<input type="hidden" value="${user.user_name }" name="dv_address1"/>
+					<input type="hidden" value="${user.main_address1 }" name="dv_address1"/>
+					<input type="hidden" value="${user.main_address2 }" name="dv_address2"/>
+					<input type="hidden" value="${user.main_address3 }" name="dv_address3"/>
+					<input type="hidden" value="${user.main_address4 }" name="dv_address4"/>
 					<!-- Button trigger modal -->
 					<button type="button" data-toggle="modal" data-target="#exampleModal" class="selectedAddress inputContents">
-					  테스트 테스트주소 123
+					  ${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }
 					</button>
 					
 					<!-- Modal -->
@@ -268,7 +280,7 @@
 				<div class="message">
 					<input type="text" name="message" style="height:50px;">
 				</div>
-				<button type="submit" class="submitBtn">결제 단계로 넘어가기</button>
+				<button class="submitBtn" onclick="editAddressInfoBtn(this)">결제 단계로 넘어가기</button>
             </form>
             <button class="address-info-btn btn" value="수정" onclick="editAddressInfo(this)">
               수정
@@ -318,14 +330,28 @@
 			</p>
 			<div class="collapse" id="collapseExample">
 			  <div class="card card-body">
-		    	<div class="orderProductList">
-		          	<c:forEach var="x" begin="0" end="3" step="1">
-					 	<div class="orderProduct">
-					 		<img alt="" src="">
-			        		<span class="addressBtn">테스트 상품</span>
-			        	</div>   
-				    </c:forEach>                 
-	          	</div>
+		    	<!-- <div class="orderProductList"> -->
+		    	<c:forEach items="${cart_list }" var="cList">
+			    	<div class="cart-item ${cList.cart_id}">
+	          			<c:forTokens items="${cList.pd_img }" var="img" delims="," varStatus="status">
+	          				<c:if test="${status.last == true }">
+		          				<div class="cart-img-box">
+		          					<a class="cart-img-link" href="/productpage/${cList.pd_id }"><img class="cart-img" alt="" src="/images/${img}"></a>          				
+		          				</div>
+	          				</c:if>
+	          			</c:forTokens>
+				 		<div class="orderProduct">
+	          				<input type="hidden" value="${cList.cart_id }" name="cart_id" class="cart_id"/>
+		          			<span class="pd_id">상품명: ${cList.pd_name }</span><br/>
+		          			<span class="pd_price">가격: ${cList.pd_price }</span><br/>
+		       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
+						    <span class="pd_size">사이즈: ${cList.pd_size }</span><br/>
+						    <span class="pd_color">컬러: ${cList.pd_color }</span>
+						    <span class="total_price">합계:</span><br/>						    
+	          			</div>
+			    	</div>					                
+          		</c:forEach>
+          		<!-- </div> -->
 			  </div>
 			</div>         
         </div>
@@ -337,6 +363,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         function DaumPostcode() {
             new daum.Postcode({
@@ -404,6 +431,32 @@
           $('.payment-readonly').hide();
           $('.payment-order-form').show();
       };
+      
+      function editUserInfoBtn(){
+		var userForm = $(".user-order-form").serialize();
+   	  
+   		$.ajax({
+			url:"updateOrderUserInfo",
+			type:"POST",
+			data: userForm,
+			success:function(data){
+				console.log("성공");
+			}
+		});
+	  };
+	  
+	  function editAddressInfoBtn(){
+		var addressForm = $(".address-order-form").serialize();
+   	  
+   		$.ajax({
+			url:"updateSubAddress",
+			type:"POST",
+			data: addressForm,
+			success:function(data){
+				console.log("성공");
+			}
+		});
+	  };
     </script>
   </body>
 </html>
