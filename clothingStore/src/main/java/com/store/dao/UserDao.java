@@ -8,7 +8,7 @@ import com.store.dto.UserDto;
 @Mapper
 public interface UserDao {
 	
-	 public UserDto UserList(@Param("user_email")String email);
+	 public UserDto getUserInfo(@Param("user_email")String user_email);
 	 
 	 public int UserSignUp(@Param("user_email")String user_email, @Param("user_password")String user_password) throws Exception;
 
@@ -30,7 +30,7 @@ public interface UserDao {
      public int deleteInfoUser(@Param("user_email")String email) throws Exception; 
      
      // 
-     public int updateOderUserInfo(@Param("user_email")String user_email,
+     public int updateOrderUserInfo(@Param("user_email")String user_email,
     		 @Param("user_name")String user_name,
     		 @Param("main_address1")String main_address1, 
     		 @Param("main_address2")String main_address2,
@@ -41,5 +41,4 @@ public interface UserDao {
      // UPDATE USER_PASSWORD 
      public int updatePassword(@Param("user_password")String user_password,
                                @Param("user_email")String user_email) throws Exception;
-     
 }

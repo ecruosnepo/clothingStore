@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -129,18 +132,27 @@ public class ProductController {
 	    String referer = req.getHeader("Referer");
 	    return "redirect:"+ referer;
 	}
-	
-	@RequestMapping(value="/carttest")
-	public String addCart() throws Exception{				
-		return "products/cart";
-	}
-	
+		
 	@PostMapping("/addCart")
-	public void addCart(HttpSession session, CartDto cDto) throws Exception{		
+	@ResponseBody
+	public void addCart(HttpSession session, @RequestParam("pd_id") int pd_id, @RequestParam("pd_size") String pd_size) throws Exception{		
 		String email = (String)session.getAttribute("email");
-		System.out.println(email);
-		cDto.setEmail(email);
-		cartService.addCart(cDto);
+		CartDto checkDto = cartService.cartDuplicateCheck(email, pd_id, pd_size);
+		
+		if(checkDto != null) {
+			System.out.println("중복");
+			cartService.updateDuplicateCart(checkDto.getCart_id());
+		}else {
+			CartDto cDto = new CartDto();
+			System.out.println(email);
+			System.out.println(pd_id);
+			System.out.println(pd_size);
+			cDto.setEmail(email);
+			cDto.setPd_id(pd_id);
+			cDto.setPd_size(pd_size);
+			cDto.setPd_quantity(1);
+			cartService.addCart(cDto);
+		}
 	}
 	
 	@GetMapping("/cart")
@@ -151,7 +163,18 @@ public class ProductController {
 	}
 	
 	@PostMapping("/updateCartQuantity")
-	public void updateCartQuantity(HttpServletRequest req, CartDto cDto) throws Exception {
-		cartService.updateQuantityCart(cDto.getCart_id(), cDto.getPd_quantity());
+	@ResponseBody
+	public void updateCartQuantity(HttpServletRequest req, @Param("cart_id") int cart_id, @Param("pd_quantity") int pd_quantity) throws Exception {
+		System.out.println("카트 수량 수정");
+		System.out.println(cart_id + "," + pd_quantity);
+		cartService.updateQuantityCart(cart_id,pd_quantity);
+	}
+	
+	@PostMapping("/deleteCart")
+	@ResponseBody
+	public void deleteCart(HttpServletRequest req, @Param("cart_id") String cart_id) throws Exception{
+		System.out.println("카트 삭제");
+		System.out.println(cart_id);
+		cartService.deleteCart(Integer.parseInt(cart_id));		
 	}
 }

@@ -43,7 +43,6 @@
 </style>
   </head>
 <body>
-
     <div id="login">
         <p><a href="index">Home</a>/<a href="login">로그인/등록</a></p>
         <br>

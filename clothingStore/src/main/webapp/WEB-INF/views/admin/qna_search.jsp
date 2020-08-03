@@ -56,10 +56,10 @@
           <h1>문의 관리</h1><br><br>
           <form action="/adminQnaSearch" method="post" class="form-inline" style="float:left;">
               <div class="input-group mb-2 mr-sm-2">
-                <input type="text" class="form-control" name="search" id="inlineFormInputGroupUsername2" placeholder="Email or Name">
+                <input type="text" class="form-control" name="keyword" id="inlineFormInputGroupUsername2" placeholder="Email or Name">
               </div>
               <input type="submit" class="btn btn-primary mb-2" value="검색">
-           </form>
+          </form>
             <div class="form-check mb-2 mr-sm-2" style="float:right;">
               <select id="inputState" name="boardCat" class="form-control" style="width: 200px;">
                 <option selected>== 분류 ==</option>
@@ -103,14 +103,14 @@
             <div> <p>${ thisPage }/${ totalPage } pages</p> </div><br>
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                		<c:if test="${startPageIdx > 1}">
-                   			<button type="button" class="btn btn-secondary" onclick="location.href='/adminQnaSearch?page=${thisPage-1}' ">prev</button>
-                   		</c:if>
+               		<c:if test="${startPageIdx > 1}">
+               			<button type="button" class="btn btn-secondary" onclick="location.href='/adminQnaSearch?page=${thisPage-1}&keyword=${keyword }' ">prev</button>
+               		</c:if>
                 	<c:forEach varStatus="page" begin="${startPageIdx}" end="${ endPageIdx }" >
-                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminQnaSearch?page=${page.index}' ">${page.index}</button>
-                   </c:forEach>
+                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminQnaSearch?page=${page.index}&keyword=${keyword }'">${page.index}</button>
+                   	</c:forEach>
                    <c:if test="${totalPage > endPageIdx}">
-                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminQnaSearch?page=${thisPage+1}' ">next</button>
+                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminQnaSearch?page=${thisPage+1}&keyword=${keyword }' ">next</button>
                    </c:if>
                 </div>
             </div>

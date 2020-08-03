@@ -56,7 +56,7 @@
           <h1>문의 관리</h1><br><br>
           <form action="/adminQnaSearch" method="get" class="form-inline" style="float:left;">
               <div class="input-group mb-2 mr-sm-2">
-                <input type="text" class="form-control" name="search" id="inlineFormInputGroupUsername2" placeholder="Email or Name">
+                <input type="text" class="form-control" name="keyword" id="inlineFormInputGroupUsername2" placeholder="Email or Name">
               </div>
               <input type="submit" class="btn btn-primary mb-2" value="검색">
            </form>

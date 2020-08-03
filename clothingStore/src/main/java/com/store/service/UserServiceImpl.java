@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 import com.store.dto.UserDto;
 
 public interface UserServiceImpl {
-	public UserDto sUserList(String email);
+	public UserDto sGetUserInfo(String user_email);
 	 
 	public int sUserSignUp(String user_email, String user_password, String check) throws Exception ;
 	
