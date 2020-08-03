@@ -33,12 +33,9 @@
      .head{
        font-size: 12px;
      }
-    
-   
     </style>
     </head>
   <body>
-
   <jsp:include page="../header.jsp" flush="false" />
     <div class="container"> 
       <div class="row ">

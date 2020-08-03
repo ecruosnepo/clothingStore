@@ -105,11 +105,9 @@
      <label class="subName">${user.main_address3}</label>
     <br/>
        <label class="subName">${user.main_address4}</label>
-     
-    <br/>
-  
-    <br/>
-    <a href="address"><button type="submit" class="btn btn-primary btn-lg" style="color: aqua; background-color: black;">수정</button></a>
+    <br/><br/>
+    <a href="address"><button type="submit" class="btn btn-primary btn-lg" style="color: aqua; background-color: black;">주소록 편집</button></a>
+          ${ message } 
    </div>
    <br/>
    <br/>
@@ -120,7 +118,7 @@
     <br/>
     <br/>
   
-   <button><a href="getpass.html" class="btn btn-primary">비밀번호 변경</a></button>
+   <button><a href="updatePassword" class="btn btn-primary">비밀번호 변경</a></button>
     <br/>
     <br/>
     <form action="deleteInfoUser" method="post">

@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-  <%
-   session.getAttribute("email");
-  %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -190,9 +187,19 @@
               <!-- 로그인 / 장바구니 -->
               <div class="menu_login_cart">
                 <div class="btn-group">
-                  <a type="button" class="btn dropdown-toggle login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    로그인
-                  </a>
+                 <% if( null == session.getAttribute("email")){ %>
+            	<!--  <a href="/login" type="button" class="btn dropdown-toggle login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a> -->
+                    <a href="login">로그인</a>
+                  
+                  <a href="userSignUp">회원가입</a>
+                <% }else{%>
+                ${email}님 환영합니다.
+                <form action="Logout" method="get">
+                   <input type="submit" value="로그아웃"> 
+                </form>
+                <label><a href="MyPage">MyPage</a></label>
+              <%} %>
+                 
                   <form class="px-4 py-3" action="LoginFor" method="post">
                   <div class="dropdown-menu dropdown-menu-right">
                     

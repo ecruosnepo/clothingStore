@@ -59,7 +59,6 @@ public class ProductController {
 	@GetMapping("/productList/{catRefId}/{catId}")
     public String productListView(@PathVariable("catId") int cat, @PathVariable("catRefId") int catRef, Model model) throws Exception {
         model.addAttribute("pd_list", productService.listProduct(cat));
-        
         return "products/productList";
 	}
 		

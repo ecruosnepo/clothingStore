@@ -15,23 +15,22 @@
 			   address3 = #{address3},
 			   address4 = #{address4}
 			   WHERE
-			   email = #{email}
+			   user_email = #{user_email}
 			</update>
 			
 			<insert id="insertSubAddress">
 			 INSERT INTO
 			 address
-			 ( email, r_name, address1, address2, address3, address4 ) 
+			 ( user_email, r_name, address1, address2, address3, address4 ) 
 			 VALUES
-			 ( #{email}, #{r_name}, #{address1}, #{address2}, #{address3}, #{address4})
+			 ( #{user_email}, #{r_name}, #{address1}, #{address2}, #{address3}, #{address4})
 			</insert>
 			
-		    <select id="getAddressList" parameterType="String" resultType="com.store.dto.AddressDto">
-			 	SELECT * 
-			 	FROM 
+		    <select id="getAddressList" resultType="com.store.dto.AddressDto">
+			 	SELECT * FROM
 			 	address 
 			 	WHERE 
-			 	email = #{email}
+			 	user_email = #{user_email}
 			</select>
 			
 			<delete id="deleteInfoAddress">
@@ -39,13 +38,46 @@
 			  FROM
 			  address
 			  WHERE
-			  email = #{email}
+			  user_email = #{user_email}
 			</delete>
+			
+			<select id="selectAddress" resultType="int">
+			    SELECT COUNT(*)
+			    FROM
+			 	address 
+			 	WHERE 
+			 	user_email = #{user_email}
+			</select>
+			
+			<update id="updateSubAddress">
+			UPDATE 
+			address
+			SET
+			r_name = #{r_name},
+			address1 = #{address1},
+			address2 = #{address2},
+			address3 = #{address3},
+			address4 = #{address4}
+			WHERE
+			user_email = #{user_email} AND address_index = #{address_index}
+			</update>
+			
+	       <select id="getAddressDto" resultType="com.store.dto.AddressDto">
+			    SELECT *
+			    FROM
+			 	address 
+			 	WHERE 
+			 	user_email = #{user_email} AND address_index = #{address_index}
+		   </select>
+		   
+		   <delete id="deleteSubAddress">
+			  DELETE
+			  FROM
+			  address
+			  WHERE
+			  user_email = #{user_email} AND address_index = #{address_index}
+		  </delete>
+			
 
-<!-- 			<select id="SelectMainAddress" parameterType="String" resultType="com.store.dto.AddressDto">
-			 	SELECT * FROM address WHERE email = #{email} and main_address = 1
-			</select> -->
-			<!-- mainAddress 
-			     subAddress
-			     query 따로 짜서 나뉘게 나오게 하기.  -->
+
 </mapper>

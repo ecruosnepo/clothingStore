@@ -49,7 +49,7 @@
 			  <div class="box" >
 			    <label class="size">새 주소 추가</label>
 			      <br/><br/><br/>
-			       <form action="SubAddress" method="post">
+			       <form action="insertSubAddressForm" method="post">
 			         <div class="form-group has-success">
 			           <label class="control-label" for="inputSuccess1" style="color: black;">이름</label>
 			             <input type="text" class="form-control" id="inputSuccess1" name="r_name">

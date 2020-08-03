@@ -37,6 +37,9 @@ public interface UserDao {
     		 @Param("main_address3")String main_address3, 
     		 @Param("main_address4")String main_address4,
     		 @Param("user_phone")String user_phone) throws Exception;
-     
+   
+     // UPDATE USER_PASSWORD 
+     public int updatePassword(@Param("user_password")String user_password,
+                               @Param("user_email")String user_email) throws Exception;
      
 }

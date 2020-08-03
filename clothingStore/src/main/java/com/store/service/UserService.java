@@ -15,9 +15,6 @@ public class UserService implements UserServiceImpl {
 	@Autowired
 	private UserDao dao;
 	
-	@Autowired
-	private AddressDao Adao;
-	
 	// 이용자 리스트
 	@Override
 	public UserDto sUserList(String email) {
@@ -109,14 +106,12 @@ public class UserService implements UserServiceImpl {
 		int result = dao.deleteInfoUser(email);
 		return result;
 	}
-	// 계정 삭제
-	@Override
-	public int sDeleteInfoAddress(String email) throws Exception {
-		int results = Adao.deleteInfoAddress(email);
-		return results;
-	}
-}		   
 
+	@Override
+	public int sUpdatePassword(String user_password, String user_email) throws Exception {
+		return dao.updatePassword(user_password, user_email);
+	}	   
+}
 //String button = null;
 //if( null != button || "on".equals(button)){
 //	// DB email 중복 체크

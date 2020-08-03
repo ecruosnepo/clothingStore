@@ -66,13 +66,20 @@
 	        <label>성별</label> 
 	         <br/>
 	         <select class="form-control" name="user_gender" >
-	             <option value="${u.user_gender}">${u.user_gender}</option>
-	            <c:if test="${ u.user_gender eq'여성'}">
-	              <option value="남성">남성</option>
-	            </c:if>
-	            <c:if test="${ u.user_gender eq '남성' }">
-	              <option value="여성">여성</option>
-	            </c:if>
+	            <c:choose>
+		            <c:when test="${ u.user_gender eq'여성'}">
+		              <option value="여성" selected>여성</option>
+		              <option value="남성">남성</option>
+		            </c:when>
+		            <c:when test="${ u.user_gender eq '남성' }">
+		              <option value="여성">여성</option>
+		              <option value="남성" selected>남성</option>
+		            </c:when>
+		           <c:otherwise>
+		             <option value="남성">남성</option>
+		             <option value="여성">여성</option>
+		           </c:otherwise>
+	            </c:choose>
 	         </select>
 	         <br/>
 	         <br/>

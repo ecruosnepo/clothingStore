@@ -21,5 +21,5 @@ public interface UserServiceImpl {
    
 	public int sDeleteInfoUser(String email) throws Exception;
 	
-	public int sDeleteInfoAddress(String email) throws Exception;
+	public int sUpdatePassword(String user_password, String user_email) throws Exception;
 }
