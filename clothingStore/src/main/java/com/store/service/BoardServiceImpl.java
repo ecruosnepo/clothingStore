@@ -31,19 +31,15 @@ public class BoardServiceImpl implements BoardService{
 	OrderDao orderDao;
 	@Autowired
 	PagingBean pageBean;
-
+	
 	@Override
 	public Map<String, Object> boardListService(String userId, int page) {
 		
 		Map<String, Object> map=new HashMap<String, Object>(); 
-		pageBean=new PagingBean(page,dao.boardListCountDao(),5,3);
+		pageBean=new PagingBean(page,dao.boardListCountDao(userId),5,3);
 		
 		map.put("dto", dao.boardListDao(userId));
-		map.put("startIdx", pageBean.getStartIdx());
-		map.put("endIdx", pageBean.getEndIdx());
-		map.put("totalPage", pageBean.getTotalPage());
-		map.put("startPageIdx", pageBean.getStartPageIdx());
-		map.put("endPageIdx", pageBean.getEndPageIdx());
+		map.put("page", pageBean);
 		
 		return map;
 	}
@@ -53,10 +49,9 @@ public class BoardServiceImpl implements BoardService{
 		return orderDto;
 	}
 	@Override
-	public void boardWriteService(int b_check, String userId, String title, String question, String boardCat, 
-			String fileName, int orderId) {
+	public void boardWriteService(int b_check, String user_email, BoardDto bDto, String fileName, int orderId) {
 		
-		dao.boardWriteDao(b_check, userId, title, question, boardCat,fileName,orderId);
+		dao.boardWriteDao(b_check, user_email, bDto.getTitle(), bDto.getQuestion(), bDto.getBoardCat(), fileName, orderId);
 	}
 
 	@Override
@@ -71,12 +66,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Map<String,Object> boardUpdateViewService(int id) {
+	public Map<String,Object> boardUpdateFormService(int id) {
 		Map<String,Object> map=new HashMap<String,Object>();
 		BoardDto dto=dao.boardViewDao(id);
 		List<OrderDto> order=orderDao.userOrderListDao(dto.getUser_email());
 		
-		ArrayList<String> list=new ArrayList<String>();
+		List<String> list=new ArrayList<String>();
 		list.add("배송");
 		list.add("결제");
 		list.add("반품");
@@ -88,6 +83,7 @@ public class BoardServiceImpl implements BoardService{
 				list.remove(i);
 			}
 		}
+		
 		map.put("dto",dto);
 		map.put("otherCatList", list);
 		map.put("orderList", order);
@@ -96,9 +92,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void boardUpdateService(int id, String title, String question, String boardCat, String fileName, int orderId) {
-		
-		dao.boardUpdateDao(id, title, question, boardCat,fileName,orderId);
+	public void boardUpdateService(BoardDto bDto) {
+		dao.boardUpdateDao(bDto);
 	}
 
 	//파일 올려주고 filename 리턴 메소드
@@ -144,6 +139,7 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return fileName;
 	}
+	
 	
 }
 

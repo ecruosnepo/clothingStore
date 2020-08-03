@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.store.dto.AddressDto;
 import com.store.dto.UserDto;
-
 import com.store.service.AddressServiceImpl;
 import com.store.service.UserServiceImpl;
 
@@ -21,12 +20,13 @@ import com.store.service.UserServiceImpl;
 public class UserController {
 	
 	private int result; 
+	private int results;
 	 
 	@Autowired
 	private UserServiceImpl userService;
 	
 	@Autowired
-	private AddressServiceImpl AddressService;
+	private AddressServiceImpl addressService;
 
 	// 메인 페이지 초기 루트 지정	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
@@ -119,15 +119,18 @@ public class UserController {
 	@RequestMapping(value="/address", method = RequestMethod.GET)
 	public String address(Model model, HttpSession session) throws Exception {
 		String email = (String)session.getAttribute("email");
-		model.addAttribute("address", AddressService.sGetAddressList(email));
+		model.addAttribute("address", userService.sUserList(email));
 		return "/myPage/address";
 	}
 	
-	// 청구 주소 수정
-	@PostMapping("/updateMainAddress")
-	public void updateMainAddress(UserDto uDto) throws Exception{
-		userService.sUpdateMainAddress(uDto.getUser_email(), uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(), uDto.getMain_address4());
-	}
+	/*
+	 * // 청구 주소 수정
+	 * 
+	 * @PostMapping("/updateMainAddress") public void updateMainAddress(UserDto
+	 * uDto) throws Exception{ userService.sUpdateMainAddress(uDto.getUser_email(),
+	 * uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(),
+	 * uDto.getMain_address4()); }
+	 */
 	
 	// 주문페이지 유저 정보 수정
 	@PostMapping("/updateOrderUserInfo")
@@ -149,51 +152,51 @@ public class UserController {
 	// 배송 주소 수정
 	@PostMapping("/updateDeliveryAddress")
 	public void updateDeliveryAddress(AddressDto aDto) throws Exception{
-		AddressService.sUpdateAddress(aDto.getEmail(), aDto.getR_name(), aDto.getAddress1(), aDto.getAddress2(), aDto.getAddress3(), aDto.getAddress4());
+		addressService.sUpdateAddress(aDto.getEmail(), aDto.getR_name(), aDto.getAddress1(), aDto.getAddress2(), aDto.getAddress3(), aDto.getAddress4());
 	}
+	
+	
 	
 	// 회원 주소록 등록
-	@RequestMapping(value="/newAddress", method = RequestMethod.GET)
-	public String newAddress() throws Exception {
-	   return "/myPage/newAddress";
+	@RequestMapping(value="/setMainAddress", method = RequestMethod.GET)
+	public String newAddress(HttpSession session, Model model) throws Exception {
+		String email = (String)session.getAttribute("email");
+		if ( null != email ) {
+			model.addAttribute("address", userService.sUserList(email));
+		}
+	   return "/myPage/setMainAddress";
 	}
-	@PostMapping("/NewAddress") // update
-	public String NewAddress(@RequestParam("user_email")String user_email,
-							@RequestParam("r_name")String r_name,
-							@RequestParam("address1")String address1,
-			                 @RequestParam("address2")String address2,
-			                 @RequestParam("address3")String address3,
-			                 @RequestParam("address4")String address4,
-			                 HttpSession session ) throws Exception{
+	@PostMapping("/setMainAddressForm") // update
+	public String NewAddress(@RequestParam("main_address1")String main_address1,
+			                 @RequestParam("main_address2")String main_address2,
+			                 @RequestParam("main_address3")String main_address3,
+			                 @RequestParam("main_address4")String main_address4,
+			                 HttpSession session, Model model ) throws Exception{
 		String emails = (String)session.getAttribute("email");
 		if ( null != emails ) {
-			AddressService.sUpdateAddress(emails, r_name,address1, address2, address3, address4);
-		    return "/myPage/newAddressAction";
+			userService.sUpdateMainAddress(main_address1, main_address2, main_address3, main_address4, emails);
+			model.addAttribute("address", userService.sUserList(emails));
+		    return "/myPage/setMainAddressAction";
 		}
-		 return "/myPage/newAddressAction";
+		 return "/myPage/setMainAddressAction";
+	}
+	
+	// 계정 삭제
+	@RequestMapping(value="/deleteInfoUser", method = RequestMethod.POST)
+	public String deleteInfoUser(HttpSession session, Model model) throws Exception{
+		String email = (String)session.getAttribute("email");
+		if ( null != email ) {
+			result = userService.sDeleteInfoUser(email);
+			results = userService.sDeleteInfoAddress(email);
+			model.addAttribute("result", result);
+			model.addAttribute("results", results);
+			userService.sLogout(session);
+			return "/myPage/deleteInfoUserAction";
+		}
+		return "/myPage/deleteInfoUserAction";
 	}
 	
 	
-	// 회원 주소록 새 주소 추가
-	@RequestMapping(value="/subAddress", method = RequestMethod.GET)
-	public String subAddress() throws Exception {
-	   return "/myPage/subAddress";
-	}
-	@PostMapping("/SubAddress") // insert
-	public String SubAddress(@RequestParam("r_name")String name,
-			                 @RequestParam("address1")String address1,
-			                 @RequestParam("address2")String address2,
-			                 @RequestParam("address3")String address3,
-			                 @RequestParam("address4")String address4,
-			                 String email, HttpSession session) throws Exception{
-		String emails = (String)session.getAttribute("email");
-		
-		if ( null != emails ) {
-			AddressService.sInsertAddress(emails, name, address1, address2, address3, address4);
-			return "/myPage/SubAddressAction";
-		}
-		 return "/myPage/SubAddressAction";
-	}
 	
 	// 회원 비밀번호 찾기
 	@RequestMapping(value="/getpass", method = RequestMethod.GET)

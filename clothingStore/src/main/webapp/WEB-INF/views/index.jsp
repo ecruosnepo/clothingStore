@@ -72,6 +72,17 @@
 
 <jsp:include page="header.jsp" flush="false" />
 <%if (session.getAttribute("email") == null ){%>
+<a href="login">로그인</a>
+<a href="userSignUp">회원가입</a>
+ <%}else {%>    
+ <section id="goods"> 
+${email}님 환영합니다.
+ <label><a href="MyPage">MyPage</a></label>  
+<form action="Logout" method="get">
+   <input type="submit" value="로그아웃"> 
+</form>
+
+    <%} %> 
 <section id="goods">
      <div id="main1" class="card text-center">
          <div class="card-body">
@@ -136,15 +147,7 @@
           </div>
         <br><br>
     </section>
- <%}else {%>    
- <section id="goods"> 
-${email}님 환영합니다.
- <label><a href="MyPage">MyPage</a></label>  
-<form action="Logout" method="get">
-   <input type="submit" value="로그아웃"> 
-</form>
 
-    <%} %> 
 <jsp:include page="footer.jsp" flush="false" />   
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

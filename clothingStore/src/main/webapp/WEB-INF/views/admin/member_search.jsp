@@ -52,11 +52,11 @@
 <body>
    <section class="customerManage">
    		<div id="sectDiv">
-          <h1>상품 관리</h1><br><br>
+          <h1>고객 관리</h1><br><br>
 			
           <form action="/adminMemSearch" method="get" class="form-inline">
               <div class="input-group mb-2 mr-sm-2">
-                <input type="text" name="search" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Product or Category ">
+                <input type="text" name="search" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Email or Name" value="${ search }">
               </div>
               <input type="submit" class="btn btn-primary mb-2" value="검색">
             </form>
@@ -65,21 +65,21 @@
                 <thead>
                 <tr>
                     <th scope="col" class="titleN"></th>
-                    <th scope="col" class="titleN">상품번호</th>
-                    <th scope="col">상품명</th>
-                    <th scope="col">색상</th>
-                    <th scope="col">사이즈</th>
-                    <th scope="col">재고</th>
+                    <th scope="col" class="titleN">번호</th>
+                    <th scope="col">이메일</th>
+                    <th scope="col">이름</th>
+                    <th scope="col">전화번호</th>
+                    <th scope="col">가입날짜</th>
                 </tr>
                 </thead>
-                <c:forEach items="${ pd_list }" var="dto" varStatus="idx" begin="${ page.startIdx }" end="${ page.endIdx }" >
+                <c:forEach items="${ list }" var="dto" varStatus="idx" begin="${ page.startIdx }" end="${ page.endIdx }" >
                     <tr>
-                    	<td><input type="checkbox" class="chBox" name="chBox" value="dto.user_email" data-cartNum="${ pList.pd_id }"></td>
-                        <td scope="row">${ pList.pd_id }</td>
-                        <td scope="row">${ pList.pd_name }</td>
-                        <td>${ pList.pd_color }</td>
-                        <td></td>
-                        <td></td>
+                    	<td><input type="checkbox" class="chBox" name="chBox" value="dto.user_email" data-cartNum="${ dto.user_email }"></td>
+                        <td scope="row">${ idx.count }</td>
+                        <td scope="row">${ dto.user_email }</td>
+                        <td>${ dto.user_name }</td>
+                        <td>${ dto.user_phone }</td>
+                        <td>${ dto.regDate }</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -88,13 +88,13 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group mr-2" role="group" aria-label="First group">
                 		<c:if test="${page.startPageIdx > 1}">
-                   			<button type="button" class="btn btn-secondary" onclick="location.href='/adminMember?page=${page.thisPage-1}' ">prev</button>
+                   			<button type="button" class="btn btn-secondary" onclick="location.href='/adminMemSearch?page=${page.thisPage-1}&search=${ search }' ">prev</button>
                    		</c:if>
                  <c:forEach varStatus="num" begin="${page.startPageIdx}" end="${ page.endPageIdx }" >
-		         	<button type="button" class="btn btn-secondary" onclick="location.href='/adminMember?page=${num.index}' ">${num.index}</button>
+		         	<button type="button" class="btn btn-secondary" onclick="location.href='/adminMemSearch?page=${num.index}&search=${ search }' ">${num.index}</button>
 		         </c:forEach>
                    <c:if test="${page.totalPage > page.endPageIdx}">
-                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminMember?page=${page.thisPage+1}' ">next</button>
+                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminMemSearch?page=${page.thisPage+1}&search=${ search }' ">next</button>
                    </c:if>
                 </div>
             </div>
@@ -103,7 +103,7 @@
     
 <script>
 	$(".selectDelete_btn").click(function(){
-	  var confirm_val = confirm("정말 삭제하시겠습니까?");
+	  var confirm_val = confirm("선택하신 회원을 삭제하시겠습니까?");
 	  
 	  if(confirm_val) {
 	   var checkArr = new Array();
@@ -123,7 +123,7 @@
 			    console.log("complete");
 			    console.log("result:"+result);
 		    	if(result > 0) {          
-		    	   alert(result+"개의 상품을 삭제했습니다.");
+		    	   alert(result+"명의 회원을 삭제했습니다.");
 		    	   document.location.href = "/adminMember";
 		    	} else {
 		    	   alert("삭제 실패했습니다.");

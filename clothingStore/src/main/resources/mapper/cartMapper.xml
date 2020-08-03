@@ -23,4 +23,8 @@
 	<update id="updateCartQuantityDao">
 		update cart set pd_quantity=#{pd_quantity} where cart_id=#{cart_id}; 
 	</update>
+	
+	<delete id="deleteUserCartDao">
+		delete from cart where email=#{email};
+	</delete>
 </mapper>

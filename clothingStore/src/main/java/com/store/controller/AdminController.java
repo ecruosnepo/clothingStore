@@ -1,14 +1,17 @@
 package com.store.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.store.dto.BoardDto;
 import com.store.service.AdminService;
 
 @Controller
@@ -23,19 +26,14 @@ public class AdminController {
 	}
 	@RequestMapping("/adminProduct")
 	public String adminProduct() {
-		return "admin/product";
+		return "admin/addProduct";
 	}
 	@RequestMapping("/adminQna")
 	public String adminQna(@RequestParam(defaultValue="1") int page, Model model) {
 		
 		Map<String, Object> map=service.adminQnaService(page);
 		model.addAttribute("list", map.get("dto"));
-		model.addAttribute("startIdx", map.get("startIdx"));
-		model.addAttribute("endIdx", map.get("endIdx"));
-		model.addAttribute("thisPage", page);
-		model.addAttribute("totalPage",map.get("totalPage"));
-		model.addAttribute("startPageIdx", map.get("startPageIdx"));
-		model.addAttribute("endPageIdx", map.get("endPageIdx"));
+		model.addAttribute("page", map.get("page"));
 	
 		return "admin/qna_main";
 	}
@@ -63,24 +61,51 @@ public class AdminController {
 		return "redirect:adminQna";
 	}
 	@RequestMapping("/adminQnaSearch")
-	public String adminQnaSearch(@RequestParam(defaultValue="1") int page, @RequestParam("search")String search,
-			Model model) {
+	public String adminQnaSearch(@RequestParam(defaultValue="1") int page, @RequestParam(name="search",defaultValue="")String search,
+			@RequestParam(name="boardCat",defaultValue="")String boardCat, Model model) {
 		
-		Map<String, Object> map=service.adminQnaSearchService(page, search);
-		model.addAttribute("list", map.get("dto"));
-		model.addAttribute("startIdx", map.get("startIdx"));
-		model.addAttribute("endIdx", map.get("endIdx"));
-		model.addAttribute("thisPage", page);
-		model.addAttribute("totalPage",map.get("totalPage"));
-		model.addAttribute("startPageIdx", map.get("startPageIdx"));
-		model.addAttribute("endPageIdx", map.get("endPageIdx"));
+		Map<String, Object> map = service.adminQnaSearchService(page, search, boardCat);
+		model.addAttribute("boardDto", map.get("boardDto"));
+		model.addAttribute("page", map.get("page"));
+		model.addAttribute("search", search);
+		model.addAttribute("boardCat", boardCat);
+		model.addAttribute("boardCatList", map.get("boardCatList"));
 		
 		return "admin/qna_search";
 	}
 	
 	@RequestMapping("/adminMember")
-	public String adminMember() {
+	public String adminMember(@RequestParam(defaultValue="1") int page, Model model) {
+		Map<String, Object> map=service.adminMemberListService(page);
+		model.addAttribute("list", map.get("dto"));
+		model.addAttribute("page", map.get("page"));
+		
 		return "admin/member";
 	}
 	
+	@CrossOrigin
+	@RequestMapping(value="/adminMemberDel", method=RequestMethod.POST)
+	public @ResponseBody int adminMemDel(@RequestParam(value = "chbox[]") List<String> chArr) throws Exception {
+		
+		System.out.println(chArr);
+		int result=service.adminMemDelService(chArr);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/adminMemSearch", method=RequestMethod.GET)
+	public String adminMemSearch(@RequestParam(defaultValue="1") int page, @RequestParam(name="search",defaultValue="")String search,
+			Model model) {
+		
+		Map<String, Object> map=service.adminMemSearch(page,search);
+		model.addAttribute("list", map.get("searchList"));
+		model.addAttribute("page", map.get("page"));
+		model.addAttribute("search", search);
+		
+		return "admin/member_search";
+	}
+	@RequestMapping("/adminProductList")
+	public String adminProductList(Model model) {
+		return "admin/adminProductList"; 
+	}
 }
