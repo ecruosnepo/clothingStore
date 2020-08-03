@@ -50,6 +50,7 @@
 		<div class="row">
 			<aside class="sidenav">
 			  <h3><a href="/admin">관리자 페이지</a></h3><br>
+			  <h5><a href="adminProductList">상품 관리</a></h5><br>
 			  <h5><a href="/adminProduct">상품 등록</a></h5><br>
 			  <h5><a href="/adminQna">고객 문의 관리</a></h5><br>
 			  <h5><a href="/adminMember">고객관리</a></h5><br>

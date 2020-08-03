@@ -34,7 +34,7 @@
     #sectionDiv{
     	border: 1px solid gray;
     }
-    section p{
+    #write{
     	height: 150px;
     }
     #sectDiv{
@@ -42,17 +42,26 @@
 		margin-left: 10%;
 		max-width:60%;
 	}
+	#disabledSelect{
+		margin: 10px;
+		width: 200px;
+		float: right;
+	}
 </style>
 </head>
 <body>
 	<section>
 		<div id="sectDiv">
 		    <h1>문의 내용</h1><br><br>
-		
+			
 		   <nav id="navbar-example2" class="navbar navbar-light bg-light">
 		     <h2>제목 : ${dto.title}</h2>
+		     <p><a href="#">${ dto.user_email }님</a>&nbsp; 문의</p>
 		   </nav>
 		   <div id="sectionDiv" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+		     <select id="disabledSelect" class="form-control" disabled>
+		         <option>${ dto.boardCat }</option>
+		     </select>
 		     <h4 id="fat">문의내용</h4>
 		     <c:if test="${ dto.file!='' || dto.file==null }">
 		     	<h6 style="float: right;">첨부파일 : <a href="/questionFile/${dto.file}">${dto.file}</a></h6><br>
@@ -60,7 +69,7 @@
 		     <c:if test="${ dto.orderId!=0 || dto.orderId==null }">
 		     	<h6 style="float: right;"><a href=#>주문번호 : ${dto.orderId}</a></h6>
 		     </c:if>
-		     <p>${dto.question}</p>
+		     <p id="write">${dto.question}</p>
 		     <h4 id="fat">답변내용</h4>
 		     <form action="/adminQnaUpdate?id=${dto.id}" method="post" >
 			     <div class="form-group">

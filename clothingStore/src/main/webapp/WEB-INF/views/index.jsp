@@ -13,7 +13,10 @@
 <title>옷가게</title>
 <style>
       section a{text-decoration: none; color: black; margin: 5px;}
-      #adv h4{text-align: center;}
+      #adv h4{
+      	text-align: center;
+      	margin-bottom: 30px;
+      }
       #goods{
           width: 980px;
           margin: 0 auto;
@@ -45,10 +48,22 @@
           width:100%;
           background-color: bisque;
       }
-      .row{
-          width: 980px;
-          margin: 0 auto;
+      
+      .bottom-con{
+      	width: 60%;
+      	margin:0 auto;
+      	text-align:center;
       }
+      
+      .bottom-img-group{
+          width: 980px;
+          margin: 0 auto;          
+      }
+      
+      .bottom-img-group .image{
+          margin:0 auto;          
+      }
+      
       .image{
           margin: 10px;
           width: 90%;
@@ -69,85 +84,73 @@
 </style>
 </head>
 <body>
-
 <jsp:include page="header.jsp" flush="false" />
-<%if (session.getAttribute("email") == null ){%>
-<section id="goods">
-     <div id="main1" class="card text-center">
-         <div class="card-body">
-             <h5 class="card-title">여성 의류</h5>
-             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
-             <a href="#" class="btn btn-primary">Go somewhere</a>
-         </div>
-     </div>
-         <div id="main2" class="card text-center">
-             <div class="card-body">
-                 <h5 class="card-title">남성 의류</h5>
-                 <p class="card-text">올 여름에 유행하는 필수 아이템</p>
-                 <a href="#" class="btn btn-primary">Go somewhere</a>
-             </div>
-         </div>
-     <div id="main3" class="card text-center">
-         <div class="card-body">
-             <h5 class="card-title">아동복</h5>
-             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
-             <a href="#" class="btn btn-primary">Go somewhere</a>
-         </div>
-     </div>
-     <div id="main4" class="card text-center">
-         <div class="card-body">
-             <h5 class="card-title">친환경 제품</h5>
-             <p class="card-text">환경을 생각하는 친환경 의류복</p>
-             <a href="#" class="btn btn-primary">Go somewhere</a>
-         </div>
-     </div>
-</section>
-<section id="adv">
-        <br><br><br>
-        <h4><a href=#>지속가능성</a></h4>
-        <div class="row">
-            <div class="col-xs-6 col-md-4">
-              <a href="#" class="thumbnail">
-                <img class="image" src="/mainImages/story(1).jpg" >
-                <br>
-                <p style="margin: 10px"></p>
-                <b>제목</b><br>
-                Read The Story</p>
-              </a>
-            </div>
-            <div class="col-xs-6 col-md-4">
-                <a href="#" class="thumbnail">
-                  <img class="image" src="/mainImages/story(2).jpg">
-                  <br>
-                  <p style="margin: 10px">
-                  <b>제목</b><br>
-                  Read The Story</p>
-                </a>
-              </div>
-              <div class="col-xs-6 col-md-4">
-                <a href="#" class="thumbnail">
-                  <img class="image" src="/mainImages/story(3).jpg">
-                  <br>
-                  <p style="margin: 10px">
-                  <b>제목</b><br>
-                  Read The Story</p>
-                </a>
-              </div>
-          </div>
-        <br><br>
+	<section id="goods">
+	     <div id="main1" class="card text-center">
+	         <div class="card-body">
+	             <h5 class="card-title">여성 의류</h5>
+	             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+	             <a href="#" class="btn btn-primary">Go somewhere</a>
+	         </div>
+	     </div>
+	         <div id="main2" class="card text-center">
+	             <div class="card-body">
+	                 <h5 class="card-title">남성 의류</h5>
+	                 <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+	                 <a href="#" class="btn btn-primary">Go somewhere</a>
+	             </div>
+	         </div>
+	     <div id="main3" class="card text-center">
+	         <div class="card-body">
+	             <h5 class="card-title">아동복</h5>
+	             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+	             <a href="#" class="btn btn-primary">Go somewhere</a>
+	         </div>
+	     </div>
+	     <div id="main4" class="card text-center">
+	         <div class="card-body">
+	             <h5 class="card-title">친환경 제품</h5>
+	             <p class="card-text">환경을 생각하는 친환경 의류복</p>
+	             <a href="#" class="btn btn-primary">Go somewhere</a>
+	         </div>
+	     </div>
+	</section>
+	<section id="adv">
+		<div class="bottom-con">
+	        <br><br><br>
+	        <h4><a href=#>지속가능성</a></h4>
+	        <div class="row mx-auto bottom-img-group">
+	            <div class="col-xs-4 col-md-4 img-box">
+	              <a href="#" class="thumbnail">
+	                <img class="image" src="/mainImages/story(1).jpg" >
+	                <br>
+	                <p style="margin: 10px"></p>
+	                <b>제목</b><br>
+	                Read The Story</p>
+	              </a>
+	            </div>
+	            <div class="col-xs-4 col-md-4 img-box">
+	               <a href="#" class="thumbnail">
+	                 <img class="image" src="/mainImages/story(2).jpg">
+	                 <br>
+	                 <p style="margin: 10px">
+	                 <b>제목</b><br>
+	                 Read The Story</p>
+	               </a>
+              	</div>
+              	<div class="col-xs-4 col-md-4 img-box">
+	                <a href="#" class="thumbnail">
+	                  <img class="image" src="/mainImages/story(3).jpg">
+	                  <br>
+	                  <p style="margin: 10px">
+	                  <b>제목</b><br>
+	                  Read The Story</p>
+	                </a>
+              	</div>
+	          </div>
+	        <br><br>
+		</div>
     </section>
- <%}else {%>    
- <section id="goods"> 
-${user_name}님 환영합니다.
- <label><a href="MyPage">MyPage</a></label>  
-<form action="Logout" method="get">
-   <input type="submit" value="로그아웃"> 
-</form>
-
-    <%} %> 
-<jsp:include page="footer.jsp" flush="false" />   
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<jsp:include page="footer.jsp" flush="false" />   
 </body>
 </html>

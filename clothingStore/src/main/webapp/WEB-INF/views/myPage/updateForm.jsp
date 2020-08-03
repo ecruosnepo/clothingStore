@@ -16,7 +16,7 @@
   <style>
      .firstCenter{
          text-align: center;
-     }		
+     }      
      .box{    
         background-color: whitesmoke;
         padding:5%;
@@ -48,7 +48,7 @@
             <label class="size">내 세부정보</label>
             <br/><br/><br/>
             <form action="userUpdate" method="post">
-         		<div class="form-group has-success">	
+               <div class="form-group has-success">   
             <label class="control-label" for="inputSuccess1" style="color: black; ">이메일</label>         
             <br/>
             <label style="font-size: 20px; color: green;">${email}</label>
@@ -66,13 +66,20 @@
 	        <label>성별</label> 
 	         <br/>
 	         <select class="form-control" name="user_gender" >
-	             <option value="${u.user_gender}">${u.user_gender}</option>
-	            <c:if test="${ u.user_gender eq'여성'}">
-	              <option value="남성">남성</option>
-	            </c:if>
-	            <c:if test="${ u.user_gender eq '남성' }">
-	              <option value="여성">여성</option>
-	            </c:if>
+	            <c:choose>
+		            <c:when test="${ u.user_gender eq'여성'}">
+		              <option value="여성" selected>여성</option>
+		              <option value="남성">남성</option>
+		            </c:when>
+		            <c:when test="${ u.user_gender eq '남성' }">
+		              <option value="여성">여성</option>
+		              <option value="남성" selected>남성</option>
+		            </c:when>
+		           <c:otherwise>
+		             <option value="남성">남성</option>
+		             <option value="여성">여성</option>
+		           </c:otherwise>
+	            </c:choose>
 	         </select>
 	         <br/>
 	         <br/>

@@ -62,7 +62,6 @@ public class ProductController {
 	@GetMapping("/productList/{catRefId}/{catId}")
     public String productListView(@PathVariable("catId") int cat, @PathVariable("catRefId") int catRef, Model model) throws Exception {
         model.addAttribute("pd_list", productService.listProduct(cat));
-        
         return "products/productList";
 	}
 		
@@ -137,15 +136,23 @@ public class ProductController {
 	@PostMapping("/addCart")
 	@ResponseBody
 	public void addCart(HttpSession session, @RequestParam("pd_id") int pd_id, @RequestParam("pd_size") String pd_size) throws Exception{		
-		CartDto cDto = new CartDto();
 		String email = (String)session.getAttribute("email");
-		System.out.println(email);
-		System.out.println(pd_id);
-		System.out.println(pd_size);
-		cDto.setEmail(email);
-		cDto.setPd_id(pd_id);
-		cDto.setPd_size(pd_size);
-		cartService.addCart(cDto);
+		CartDto checkDto = cartService.cartDuplicateCheck(email, pd_id, pd_size);
+		
+		if(checkDto != null) {
+			System.out.println("중복");
+			cartService.updateDuplicateCart(checkDto.getCart_id());
+		}else {
+			CartDto cDto = new CartDto();
+			System.out.println(email);
+			System.out.println(pd_id);
+			System.out.println(pd_size);
+			cDto.setEmail(email);
+			cDto.setPd_id(pd_id);
+			cDto.setPd_size(pd_size);
+			cDto.setPd_quantity(1);
+			cartService.addCart(cDto);
+		}
 	}
 	
 	@GetMapping("/cart")

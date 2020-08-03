@@ -23,7 +23,7 @@
 			</select>
 			
 		    <!-- USER 정보  -->
-			<select id="UserList" parameterType="String" resultType="com.store.dto.UserDto">
+			<select id="getUserInfo" parameterType="String" resultType="com.store.dto.UserDto">
 			 	SELECT * FROM users WHERE user_email = #{user_email}
 			</select>
 
@@ -75,5 +75,32 @@
 			  users
 			  WHERE
 			  user_email = #{user_email}
-			</delete>				
+			</delete>
+			
+			<update id="updatePassword">
+			 UPDATE
+			   users
+			   SET
+			   user_password = #{user_password}
+			   WHERE
+			  user_email = #{user_email}	
+			</update>
+			
+         <select id="userAllList" resultType="com.store.dto.UserDto"> 
+              SELECT user_email, user_name, user_phone, regDate FROM users order by regDate DESC
+         </select>
+         
+         <select id="userListCount" resultType="int"> 
+              SELECT COUNT(*) FROM users 
+         </select>
+         
+         <select id="userSearchList" resultType="com.store.dto.UserDto"> 
+              SELECT user_email, user_name, user_phone, regDate 
+              FROM users where user_email like #{search} OR user_name like #{search}
+              order by regDate DESC
+         </select>
+         
+         <select id="userSearchCount" resultType="int"> 
+              SELECT COUNT(*) FROM users where user_email like #{search} OR user_name like #{search}
+         </select>
 </mapper>
