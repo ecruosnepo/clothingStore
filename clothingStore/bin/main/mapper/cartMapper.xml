@@ -27,4 +27,8 @@
 	<update id="updateDuplicateCartDao">	
 		update cart set pd_quantity=pd_quantity+1 where cart_id=#{param1}; 
 	</update>
+	
+	<delete id="deleteUserCartDao">
+		delete from cart where email=#{email};
+	</delete>
 </mapper>

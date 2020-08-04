@@ -19,7 +19,6 @@ public class AddressController {
 	  @Autowired
 	  private AddressService addressService;
 	
-	
 	    // 회원 주소록 새 주소 추가
 		@RequestMapping(value="/insertSubAddress", method = RequestMethod.GET)
 		public String insertsubAddress() throws Exception {
@@ -80,6 +79,4 @@ public class AddressController {
         	}
 			return "/myPage/deleteSubAddressAction";
         }
-        
-        
 }

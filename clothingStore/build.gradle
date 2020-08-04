@@ -41,6 +41,9 @@ dependencies {
 	compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
     compile group: 'commons-io', name: 'commons-io', version: '2.7'
     compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
+    compile "org.springframework.boot:spring-boot-starter-mail"
+  	compile "org.springframework:spring-context-support"
+  	compile "com.sun.mail:javax.mail"
 }
 
 test {
