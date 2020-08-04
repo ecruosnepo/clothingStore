@@ -104,16 +104,14 @@
         .deliveryMethodSelect{
         	height:160px;
         }
-        
-        .radioBox{
-        	height:50%;
-        	display:flex;
-        	align-items: center;
-        	padding: 20px 10px;
-        }
-        
+
         .radioBox *{
         	width: auto;        	
+        }
+        
+        .radioBox {        	
+        	height:50%;
+        	vertical-align:bottom;
         }
         
         .radioBox:hover{
@@ -169,6 +167,10 @@
 		.orderDetail:hover{
 			color:#D6001C;
 		}
+		        
+        .paymentMethodSelect{
+        	height:160px;
+        }
 
     </style>
   </head>
@@ -258,7 +260,11 @@
 				<div class="addressSelectBox">					
 					<!-- Button trigger modal -->
 					<button type="button" data-toggle="modal" data-target="#exampleModal" class="selectedAddress inputContents">
-					  ${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }
+					  	<span class="dv_name">${user.user_name }</span>,
+	        			<span class="dv_address1">${user.main_address1 }</span>,
+	        			<span class="dv_address2">${user.main_address2 }</span>,
+	        			<span class="dv_address3">${user.main_address3 }</span>,
+	        			<span class="dv_address4">${user.main_address4 }</span>
 					</button>
 					
 					<!-- Modal -->
@@ -268,7 +274,13 @@
 					      <div class="modal-body">
 					        <c:forEach items="${address_list }" var="aList">
        						 	<div class="addressList">
-					        		<button class="addressBtn">${aList.r_name },${aList.address1 },${aList.address2 },${aList.address3 },${aList.address4 }</button>
+					        		<button class="addressBtn" onclick="selectAddress(this)">
+					        			<span class="selected_name">${aList.r_name }</span>,
+					        			<span class="selected_address1">${aList.address1 }</span>,
+					        			<span class="selected_address2">${aList.address2 }</span>,
+					        			<span class="selected_address3">${aList.address3 }</span>,
+					        			<span class="selected_address4">${aList.address4 }</span>
+					        		</button>
 					        	</div>   
 						    </c:forEach>
 					      </div>					      
@@ -278,11 +290,11 @@
 				</div>
 				<h6>필수 전화번호</h6>
 				<div class="phoneBox">
-					<input type="text" name="user_phone" value="${user.user_phone }" style="height:50px;">
+					<input type="text" class="dv_phone" name="dv_phone" value="${user.user_phone }" style="height:50px;">
 				</div>
 				<h6>배송업체에 전하는 메세지</h6>
 				<div class="message">
-					<input type="text" name="dv_message" style="height:50px;">
+					<input type="text" class="dv_message" name="dv_message" style="height:50px;">
 				</div>
 				<button class="submitBtn" type="button" onclick="editAddressInfoBtn()">결제 단계로 넘어가기</button>
             </form>
@@ -297,29 +309,23 @@
 
             </div>
             <form class="payment-order-form">
-
+            	<div class="paymentMethodSelect inputContents">
+					<div class="radioBox form-check align-middle">
+						<input class="form-check-input" type="radio" id="card" name="payment_method" value="card"/>
+						<label class="form-check-label" for="card">카드 결제</label>
+					</div>
+					<div class="radioBox form-check align-middle">
+						<input class="form-check-input" type="radio" id="kakao" name="payment_method" value="kakao" checked/>
+						<label class="form-check-label" for="kakao">카카오 페이</label>
+					</div>
+				</div>
             </form>
-            <button class="payment-info-btn btn" value="수정" onclick="">
+            <button class="payment-info-btn btn" value="수정" onclick="editPaymentInfo(this)">
               수정
             </button>
           </div>
           <div class="row submit-btn">
-          <form action="">
-          	<input type="text" value="${user.user_email }" name="user_email" id="user_email"/>
-          	<input type="text" value="${user.user_name }" name="user_name" id="user_name"/>
-          	<input type="text" value="${user.user_phone }" name="user_phone" id="user_phone"/>
-          	<input type="text" value="미정" name="dv_option" id="dv_option"/>
-			<input type="text" value="${user.main_address1 }" name="dv_address1" id="dv_address1"/>
-			<input type="text" value="${user.main_address2 }" name="dv_address2" id="dv_address2"/>
-			<input type="text" value="${user.main_address3 }" name="dv_address3" id="dv_address3"/>
-			<input type="text" value="${user.main_address4 }" name="dv_address4" id="dv_address4"/>
-			<input type="text" value="${user.user_phone }" name="dv_phone" id="dv_phone"/>
-			<input type="text" value="미정" name="dv_message" id="dv_message"/>
-			<input type="text" value="미정" name="pd_id" id="pd_id"/>
-			<input type="text" value="미정" name="pd_size" id="pd_size"/>
-			<input type="text" value="미정" name="pd_quantity" id="pd_quantity"/>
-			<input type="text" value="미정" name="price_sum" id="price_sum"/>
-          </form>
+          	<button class="btn" onclick="checkout()">결제</button>
           </div>
           
         </div>
@@ -366,7 +372,7 @@
 		       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
 						    <span class="pd_size">사이즈: ${cList.pd_size }</span><br/>
 						    <span class="pd_color">컬러: ${cList.pd_color }</span>
-						    <span class="total_price">합계:</span><br/>						    
+						    <span class="price_sum">합계:</span><br/>						    
 	          			</div>
 			    	</div>					                
           		</c:forEach>
@@ -435,66 +441,97 @@
     </script>
     
     <script>
-    $(function(){
+    function checkout(){
         var IMP = window.IMP; // 생략가능
         IMP.init('imp64616262'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
         var msg;
+
+		console.log($('.dv_name').text());
         
         IMP.request_pay({
-            pg : 'kakaopay',
+            pg : 'kakaopay', // version 1.1.0부터 지원.
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
-            name : '옷가게 테스트 결제',
-            amount : $(".total_price").text(),
-            buyer_email : ${user.user_email},
-            buyer_name : ${user.user_name},
-            buyer_tel : ${user.user_phone},
-            buyer_addr : ${user.main_address2}+${user.main_address3}+${user.main_address4},
-            buyer_postcode : ${user.main_address1},
-            //m_redirect_url : 'http://www.naver.com'
-        }, function(rsp) {
+            name : '주문명:결제테스트',
+            amount : 100,
+            buyer_email : '${user.user_email}',
+            buyer_name : '${user.user_name}',
+            buyer_tel : '${user.user_phone}',
+            buyer_addr : '${user.main_address2}${user.main_address3}${user.main_address4}',
+            buyer_postcode : '${user.main_address1}'
+        },function(rsp) {
             if ( rsp.success ) {
-                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-                jQuery.ajax({
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                $.ajax({
                     url: "/checkout", //cross-domain error가 발생하지 않도록 주의해주세요
                     type: 'POST',
                     dataType: 'json',
                     data: {
                         imp_uid : rsp.imp_uid,
-                        user_email : ${user.user_email},
-                        user_name : ${user.user_name},
-                        user_phone : ${user.user_phone},
-                        
-                        
-                    }
-                }).done(function(data) {
-                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-                    if ( everythings_fine ) {
-                        msg = '결제가 완료되었습니다.';
-                        msg += '\n고유ID : ' + rsp.imp_uid;
-                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                        msg += '\결제 금액 : ' + rsp.paid_amount;
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
-                        
-                        alert(msg);
-                    } else {
-                        //[3] 아직 제대로 결제가 되지 않았습니다.
-                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-                    }
+                        user_email : '${user.user_email}',
+                        dv_name : $('.dv_name').text(),
+                        dv_address1 : $('.dv_address1').text(),
+                        dv_address2 : $('.dv_address2').text(),
+                        dv_address3 : $('.dv_address3').text(),
+                        dv_address4 : $('.dv_address4').text(),
+                        dv_phone : $('.dv_phone').val(),
+                        dv_option : $('input:radio[name="dv_option"]:checked').val(),
+                        payment_method : $('input:radio[name="payment_method"]:checked').val(),
+                        dv_message : $('.dv_message').val(),
+                        total_price : $('.total_price').text()                
+                        //기타 필요한 데이터가 있으면 추가 전달
+                    },
+                    success:function(result){
+    					if(result==1){
+        					console.log("성공");
+        					alert(msg);
+        					window.location = "/compliteCheckout";
+    					}
+        			}
                 });
-                //성공시 이동할 페이지
-                location.href='/compliteCheckout;
             } else {
-                msg = '결제에 실패하였습니다.';
+                var msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
-                //실패시 이동할 페이지
-                location.href="<%=request.getContextPath()%>/order/payFail";
-                alert(msg);
+	            alert(msg);
             }
         });
-        
-    });
+    };
     </script>
+    
+    <!-- <script type="text/javascript">
+		function test(){
+			$.ajax({
+                url: "/checkout", //cross-domain error가 발생하지 않도록 주의해주세요
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    imp_uid : 214124214,
+                    user_email : '${user.user_email}',
+                    dv_name : $('.dv_name').text(),
+                    dv_address1 : $('.dv_address1').text(),
+                    dv_address2 : $('.dv_address2').text(),
+                    dv_address3 : $('.dv_address3').text(),
+                    dv_address4 : $('.dv_address4').text(),
+                    dv_phone : $('.dv_phone').val(),
+                    dv_option : $('input:radio[name="dv_option"]:checked').val(),
+                    payment_method : $('input:radio[name="payment_method"]:checked').val(),
+                    dv_message : $('.dv_message').val(),
+                    total_price : $('.total_price').text()                
+                    //기타 필요한 데이터가 있으면 추가 전달
+                },
+                success:function(result){
+					if(result==1){
+    					console.log("성공");
+					}
+    			}
+            });
+		};
+    </script> -->
     
     <script>
       function editUserInfo(obj){
@@ -544,7 +581,21 @@
         $('.address-info-btn').show();        
         $('.address-info').css("backgroundColor","white");
         $('.address-order-form').hide();
-	  };	  
+	  };
+
+	  function selectAddress(obj){
+		var name = $(this).children('.selected_name').text();
+		var address1 = $(this).children('.selected_address1').text();
+		var address2 = $(this).children('.selected_address2').text();
+		var address3 = $(this).children('.selected_address3').text();
+		var address4 = $(this).children('.selected_address4').text();
+
+		$('.r_name').text(name);
+		$('.dv_address1').text(address1);
+		$('.dv_address2').text(address2);
+		$('.dv_address3').text(address3);
+		$('.dv_address4').text(address4);
+      }
     </script>
   </body>
 </html>

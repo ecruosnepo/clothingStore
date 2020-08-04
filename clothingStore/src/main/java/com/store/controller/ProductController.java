@@ -135,7 +135,7 @@ public class ProductController {
 		
 	@PostMapping("/addCart")
 	@ResponseBody
-	public void addCart(HttpSession session, @RequestParam("pd_id") int pd_id, @RequestParam("pd_size") String pd_size) throws Exception{		
+	public void addCart(HttpSession session, @RequestParam("pd_id") int pd_id, @RequestParam("pd_size") String pd_size, @RequestParam("pd_price") int pd_price) throws Exception{		
 		String email = (String)session.getAttribute("email");
 		CartDto checkDto = cartService.cartDuplicateCheck(email, pd_id, pd_size);
 		
@@ -151,6 +151,7 @@ public class ProductController {
 			cDto.setPd_id(pd_id);
 			cDto.setPd_size(pd_size);
 			cDto.setPd_quantity(1);
+			cDto.setPd_price(pd_price);
 			cartService.addCart(cDto);
 		}
 	}
@@ -164,10 +165,13 @@ public class ProductController {
 	
 	@PostMapping("/updateCartQuantity")
 	@ResponseBody
-	public void updateCartQuantity(HttpServletRequest req, @Param("cart_id") int cart_id, @Param("pd_quantity") int pd_quantity) throws Exception {
+	public int updateCartQuantity(HttpServletRequest req, @Param("cart_id") int cart_id, @Param("pd_quantity") int pd_quantity) throws Exception {
 		System.out.println("카트 수량 수정");
 		System.out.println(cart_id + "," + pd_quantity);
 		cartService.updateQuantityCart(cart_id,pd_quantity);
+		int result = 1;
+		
+		return result;
 	}
 	
 	@PostMapping("/deleteCart")

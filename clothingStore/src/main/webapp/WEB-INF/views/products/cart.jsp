@@ -85,7 +85,7 @@
 	       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
 					    <span class="pd_size">사이즈: ${cList.pd_size }</span> <br/>
 					    <span class="pd_color">컬러: ${cList.pd_color }</span>
-					    <span class="total_price">합계:</span><br/>
+					    합계: <span class="total_price">${cList.pd_price * cList.pd_quantity }</span><br/>
 					    <select name="pd_quantity" id="quantity" onchange="updateQuantity(this);">
 						    <c:forEach var="x" begin="0" end="20" step="1">
 	          					<c:choose>
@@ -98,9 +98,10 @@
 	          					</c:choose>					    
 						    </c:forEach>
           				</select>
-          			</div>     			
+       				</div>     			
           			<button class="delete-btn" onclick="deleteCart(this)">&#10005;</button>
           		</div>
+          		<c:set var="sum" value="${sum + cList.pd_price*cList.pd_quantity }"/>
           	</c:forEach>
             <!-- <b style="font-size: 27px;">고객님의 쇼핑백이 비어 있습니다.</b><br/>
             고객님의 쇼핑백에 이미 저장된 아이템을 저장하거나 액세스하려면 로그인합니다.
@@ -117,7 +118,7 @@
           
           <br/>
           <br/>
-          <label>합계  </label><br/><br/>
+          <label>합계 ${sum }  </label><br/><br/>
           
           <form action="/checkoutForm" method="post">          	
           	<button type="submit" class="btn btn-primary btn-lg" onclick="">결제 계속하기</button>          
@@ -150,8 +151,11 @@
 	            type: "POST",
 	            dataType: "json",
 	            data: form,
-	            success: function(data){
-			            console.log("성공");		            
+	            success: function(result){
+		            if(result == 1){
+		            	console.log("성공");
+			            $(obj).parent('.cart-desc').children('.total_price').text('total');
+			        }			            			            
 	            }
 	        });
 		};

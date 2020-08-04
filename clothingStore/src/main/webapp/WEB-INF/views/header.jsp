@@ -227,9 +227,9 @@
 				<%
 					}else {
 				%>    
-		     	  <a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		     	  <button class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick = "location.href = '/myPage'">
                   	내 계정
-	              </a>
+	              </button>
            		  <div class="dropdown-menu dropdown-menu-right">             
                     <a class="dropdown-item" href="/myPage">내 계정</a>
                     <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>

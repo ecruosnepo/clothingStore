@@ -185,22 +185,22 @@
             <!-- 상품 옵션 -->
             <div class="col-md-4 pd-option">
                 <div class="option-box sticky-top">                    
-                   	<input type="hidden" name="pd_id" class="pd_id" value="${pd_dto.pd_id }" />
-                       <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
-                       <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
-                       <div class="">
-					  <ul class="regular">
-					  <c:forEach items="${colorList }" var="colors">
-                          		<li class="">
-                                	<a href="/productpage/${colors.pd_id }">	                                 	
-			                   		<c:forTokens items="${colors.pd_img }" var="img" delims="," varStatus="status">
-					                    <c:if test="${status.last == true}">
-					                        <img class="color-img" src="/images/${img}" alt="">
-					                    </c:if>
-				                    </c:forTokens>  
-				                	</a>                                 	
-                            	</li>
-                         </c:forEach>
+           			<input type="hidden" name="pd_id" class="pd_id" value="${pd_dto.pd_id }" />
+                    <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
+                    <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
+                    <div class="">
+						<ul class="regular">
+						<c:forEach items="${colorList }" var="colors">
+                   		<li class="">
+                       		<a href="/productpage/${colors.pd_id }">	                                 	
+                   			<c:forTokens items="${colors.pd_img }" var="img" delims="," varStatus="status">
+		                    	<c:if test="${status.last == true}">
+		                        	<img class="color-img" src="/images/${img}" alt="">
+		                    	</c:if>
+	                    	</c:forTokens>  
+	                		</a>                                 	
+                       	</li>
+                      </c:forEach>
 					  </ul>
 					</div>
                     <div class="pd-select-buttons">
@@ -310,7 +310,8 @@
 				type:"post",
 				data: {
 						pd_id: pId,
-						pd_size: pSize
+						pd_size: pSize,
+						pd_price: ${pd_dto.pd_price}	
 					},
 				success:function(data){
 					console.log("성공");
