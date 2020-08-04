@@ -2,11 +2,6 @@ package com.store.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-<<<<<<< HEAD
-=======
-import org.apache.ibatis.annotations.Param;
->>>>>>> 65991e0a8eb195f023ebe53009a565cdcd439121
 import org.springframework.stereotype.Service;
 
 import com.store.dto.AddressDto;

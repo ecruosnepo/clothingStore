@@ -27,8 +27,22 @@ public class MainController {
 	@Autowired
 	CartService cartService;
 	
+	@PostMapping("/checkoutForm")
+	public String checkoutForm(HttpSession session, HttpServletRequest req, Model model) throws Exception {
+		String email = (String)session.getAttribute("email");
+		UserDto uDto = userService.sGetUserInfo(email);		
+		List<AddressDto> aDto = addressService.sGetAddressList(email);
+		List<CartListDto> cDto = cartService.CartListView(email);
+		
+		model.addAttribute("cart_list", cDto);		
+		model.addAttribute("user", uDto);
+		model.addAttribute("address_list",aDto);
+		
+		return "/checkoutForm";
+	}
+	
 	@PostMapping("/checkout")
-	public String checkout(HttpSession session, HttpServletRequest req, Model model) {
+	public String checkout(HttpSession session, HttpServletRequest req, Model model) throws Exception {
 		String email = (String)session.getAttribute("email");
 		UserDto uDto = userService.sGetUserInfo(email);		
 		List<AddressDto> aDto = addressService.sGetAddressList(email);
@@ -39,6 +53,11 @@ public class MainController {
 		model.addAttribute("address_list",aDto);
 		
 		return "/checkout";
+	}
+	
+	@PostMapping("/compliteCheckout")
+	public String compliteCheckout() {
+		return "/compliteCheckout";
 	}
 	
 }

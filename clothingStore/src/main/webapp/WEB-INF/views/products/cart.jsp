@@ -119,7 +119,7 @@
           <br/>
           <label>합계  </label><br/><br/>
           
-          <form action="/checkout" method="post">          	
+          <form action="/checkoutForm" method="post">          	
           	<button type="submit" class="btn btn-primary btn-lg" onclick="">결제 계속하기</button>          
           </form>
            
