@@ -61,8 +61,9 @@
         
         .info, .sidebar{         
           width: 100%;
-          padding: 0;
-          margin: 0;
+          padding: 40px;
+          padding-bottom:0px;
+          margin: 30px 0;
           background-color:white;
         }
 
@@ -74,6 +75,14 @@
         .btn:hover{
           text-decoration: underline;
         }
+        
+        .btn:focus{
+        	box-shadow: none;
+        }
+        
+        .btn{
+        	padding: 20px 0;
+        }
 
         .user-order-form, .address-order-form, .payment-order-form{
           display:none;
@@ -83,9 +92,8 @@
           height: 1em;
         }
 
-        .info{
+        .result{
           margin-bottom: 30px;
-          padding: 30px;
           padding-bottom: 10px;
         }
 
@@ -118,7 +126,7 @@
         	background-color:#F4EDDD;
         }
         
-        input[type='radio']::checked {
+        input[type='radio']:checked {
         	background-color:#F4EDDD;
         }
         
@@ -159,9 +167,22 @@
 			border:none;
 		}
 		
+		.orderTotal{
+			margin: 30px 0;
+			width:100%;
+		}
+		
+		.orderTotal th, .orderTotal td{
+			font-size:13px;
+		}
+		
+		.orderTotal td{
+			text-align:right;
+		}
+		
 		.orderDetail{
 			text-align:left;
-			padding:0;
+			padding:20px 0;
 		}
 		
 		.orderDetail:hover{
@@ -171,6 +192,35 @@
         .paymentMethodSelect{
         	height:160px;
         }
+        
+        .card{
+        	padding:0;
+        }
+        
+        .cart-item{        	
+        	height: auto;
+        	padding: 10px 0;
+        	border-bottom: 1px solid lightGray;
+        }
+        
+        .cart-img-box {
+        	float:left;
+        	overflow:hidden;
+        	width:25.333%;
+			display:inline-block;
+			height:100%;					
+		}
+		
+		.cart-img{
+			height:auto;
+			width:100%;
+		}
+		
+		.orderProduct{
+			display:inline-block;
+			width:calc(100%-26%) !important;
+			padding:0 20px;
+		}
 
     </style>
   </head>
@@ -330,24 +380,26 @@
           
         </div>
         <div class="col-md-5">
-        <div class="sidebar info">
-         	<h4>고객님의 주문</h4>         	
-         	<div>
-         		<table class="orderTotal">
-         			<tr>
-         				<th>주문 가격</th>
-         				<td><span>20000</span></td>
-         			</tr>
-         			<tr>
-         				<th>배송</th>
-         				<td><span>20000</span></td>
-         			</tr>
-         			<tr>
-         				<th>합계</th>
-         				<td><span class="total_price">100</span></td>
-         			</tr>
-         		</table>
-         	</div>
+        <div class="sidebar result">
+        	<div class="">
+	         	<h4>고객님의 주문</h4>         	
+	         	<div>
+	         		<table class="orderTotal">
+	         			<tr>
+	         				<th>주문 가격</th>
+	         				<td><span class="pd_sum_price">${sum }</span></td>
+	         			</tr>
+	         			<tr>
+	         				<th>배송</th>
+	         				<td><span class="dv_price"></span></td>
+	         			</tr>
+	         			<tr>
+	         				<th>합계</th>
+	         				<td><span class="total_price"></span></td>
+	         			</tr>
+	         		</table>
+	         	</div>
+        	</div>
 	       	<p>
 			  <button class="orderDetail" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 			    주문 세부 정보 보기
@@ -366,19 +418,19 @@
 	          				</c:if>
 	          			</c:forTokens>
 				 		<div class="orderProduct">
-	          				<input type="hidden" value="${cList.cart_id }" name="cart_id" class="cart_id"/>
 		          			<span class="pd_id">상품명: ${cList.pd_name }</span><br/>
 		          			<span class="pd_price">가격: ${cList.pd_price }</span><br/>
 		       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
 						    <span class="pd_size">사이즈: ${cList.pd_size }</span><br/>
 						    <span class="pd_color">컬러: ${cList.pd_color }</span>
-						    <span class="price_sum">합계:</span><br/>						    
+						    <span class="price_sum">합계:${cList.pd_price*cList.pd_quantity }</span><br/>						    
 	          			</div>
-			    	</div>					                
+			    	</div>
+			    	<c:set var="sum" value="${sum + cList.pd_price * cList.pd_quantity }"/>
           		</c:forEach>
 			  </div>
 			</div>        
-        </div>
+          </div>
         </div>
       </div>
     </div>
@@ -446,8 +498,6 @@
         IMP.init('imp64616262'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
         var msg;
 
-		console.log($('.dv_name').text());
-        
         IMP.request_pay({
             pg : 'kakaopay', // version 1.1.0부터 지원.
             pay_method : 'card',
@@ -532,6 +582,34 @@
             });
 		};
     </script> -->
+    
+    <script>
+    	$(function(){
+    		var dv_price = $("input:radio[name='dv_option']:checked").val();
+    		var pd_sum = ${sum};
+    		var total_price = parseInt(dv_price)+pd_sum;
+    		$(".total_price").text(total_price);
+    		$(".dv_price").text(dv_price);
+    		$(".pd_sum_price").text(pd_sum);
+    		
+    		$("input:radio[name='dv_option']").change(function(){
+    			dv_price = $("input:radio[name='dv_option']:checked").val();
+    			total_price = parseInt(dv_price)+${sum};
+    			
+    			$(".dv_price").text(dv_price);
+    			$(".total_price").text(total_price);
+    		});
+    		
+    		$( ".orderDetail" ).click(function() {
+    			if($(".orderDetail").data('aria-expanded')=='true'){
+    			  $(".orderDetail").text("주문 상세 정보 숨기기");    				
+    			}else{
+				  $(".orderDetail").text("주문 상세 정보 보기");
+    			}
+   			});
+    		
+    	});
+    </script>
     
     <script>
       function editUserInfo(obj){
