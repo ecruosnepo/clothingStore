@@ -71,8 +71,13 @@
           width: 100%;
           text-align: center;
           padding-top:38px;
+          padding-bottom:20px;
           border: 0;
           background-color: #FAF9F8;
+          z-index: 1200;
+        }
+        .header-dropdown-title{
+        	padding-bottom:0;
         }
         .header-wrap .dropdown-item,.nav-link{
           font-weight: bold;
@@ -83,7 +88,7 @@
         .searchbox{
           position: absolute;
           right: 45px;
-          bottom: 10px;
+          bottom: 0px;
         }
         .searchbar{
           padding: 10px 20px 8px 30px;
@@ -227,15 +232,15 @@
 				<%
 					}else {
 				%>    
-		     	  <button class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick = "location.href = '/myPage'">
-                  	내 계정
-	              </button>
-           		  <div class="dropdown-menu dropdown-menu-right">             
-                    <a class="dropdown-item" href="/myPage">내 계정</a>
-                    <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
-                    <a class="dropdown-item" href="/Logout">로그아웃</a>
-                  </div>  
-                </div>
+			     	  <button class="btn dropdown-toggle login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick = "location.href = '/myPage'">
+	                  	내 계정
+		              </button>
+	           		  <div class="dropdown-menu dropdown-menu-right">             
+	                    <a class="dropdown-item" href="/myPage">내 계정</a>
+	                    <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
+	                    <a class="dropdown-item" href="/Logout">로그아웃</a>
+	                  </div>  
+	                </div>
 				<%
 					} 
 				%> 
@@ -254,41 +259,41 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ml-auto mr-auto">                    
                     <li class="nav-item">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         여성
                       </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <div class="dropdown-menu dropdown-memu-box" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/men/">셔츠&블라우스</a>
                         <a class="dropdown-item" href="#">드레스</a>                        
                         <a class="dropdown-item" href="#">탑&티셔츠</a>
                       </div>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         남성
                       </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/productList/200/202">티셔츠&탱크탑</a>
+                      <div class="dropdown-menu dropdown-memu-box" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/productList/202">티셔츠&탱크탑</a>
                         <a class="dropdown-item" href="#">후디&스웨트셔츠</a>
                         <a class="dropdown-item" href="#">셔츠</a>
                       </div>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         유아동
                       </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <div class="dropdown-menu dropdown-memu-box" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">신생아</a>
                         <a class="dropdown-item" href="#">여아</a>
                         <a class="dropdown-item" href="#">남아</a>
                       </div>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">지속가능성</a>
+                      <a class="nav-link header-dropdown-title" href="#">지속가능성</a>
                     </li>
                   </ul>
-                  <form class="form-inline my-2 my-lg-0 searchbox">
-                    <input class="form-control searchbar" type="search" placeholder="제품 검색" aria-label="Search">
+                  <form class="form-inline my-2 my-lg-0 searchbox" action="/searchProduct" method="get">
+                    <input class="form-control searchbar" name="keyword" type="search" placeholder="제품 검색" aria-label="Search">
                     <button class="searchbtn" type="submit"></button>
                   </form>
                 </div>
@@ -298,8 +303,8 @@
     </div>    
 
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<!-- 카트 버튼 -->

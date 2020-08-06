@@ -49,7 +49,7 @@
       }
       #adv{ 
           width:100%;
-          background-color: bisque;
+          background-color: #F4EDDD;
       }
       
       .bottom-con{

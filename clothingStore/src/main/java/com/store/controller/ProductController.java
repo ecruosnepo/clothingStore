@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,10 +58,39 @@ public class ProductController {
 		return "products/productPage";
 	}
 	
-	@GetMapping("/productList/{catRefId}/{catId}")
-    public String productListView(@PathVariable("catId") int cat, @PathVariable("catRefId") int catRef, Model model) throws Exception {
-        model.addAttribute("pd_list", productService.listProduct(cat));
-        return "products/productList";
+	@GetMapping("/productList/{catId}")	
+    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
+    	System.out.println(size); 	
+    	System.out.println(sortby); 	
+    	
+    	if(size==null && sortby==null) {
+    		sortby = "pd_id";
+    		model.addAttribute("pd_list", productService.listProduct(cat, sortby));    		
+    	}else{
+    		if (sortby!=null && (size==null || size=="")) {
+				model.addAttribute("pd_list", productService.listProduct(cat, sortby));
+   			}else {
+    			model.addAttribute("pd_list", productService.listProductSize(cat,size, sortby));
+    		}    		
+    	}
+    	model.addAttribute("cat_id", cat);
+    	return "products/productList";
+	}
+	
+	@GetMapping("/searchProduct")	
+    public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
+		System.out.println("상품 검색");
+		if(size==null && sortby==null) {
+    		sortby = "pd_id";
+    		model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));    		
+    	}else{
+    		if (sortby!=null && (size==null || size=="")) {
+				model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
+   			}else {
+    			model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
+    		}    		
+    	}		
+    	return "products/search";
 	}
 		
 	@RequestMapping("/regProductForm")
