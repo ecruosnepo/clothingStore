@@ -197,6 +197,7 @@ public class ProductController {
 		System.out.println("카트 수량 수정");
 		System.out.println(cart_id + "," + pd_quantity);
 		cartService.updateQuantityCart(cart_id,pd_quantity);
+		
 		int result = 1;
 		
 		return result;

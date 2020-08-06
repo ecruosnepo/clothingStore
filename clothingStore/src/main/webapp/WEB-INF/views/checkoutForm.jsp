@@ -503,7 +503,7 @@
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
             name : '주문명:결제테스트',
-            amount : 100,
+            amount : $('.total_price').text(),
             buyer_email : '${user.user_email}',
             buyer_name : '${user.user_name}',
             buyer_tel : '${user.user_phone}',
@@ -607,7 +607,6 @@
 				  $(".orderDetail").text("주문 상세 정보 보기");
     			}
    			});
-    		
     	});
     </script>
     

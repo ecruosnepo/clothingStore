@@ -118,7 +118,7 @@
           
           <br/>
           <br/>
-          <label>합계 ${sum }  </label><br/><br/>
+          <label class="price_sum">합계 ${sum }  </label><br/><br/>
           
           <form action="/checkoutForm" method="post">          	
           	<button type="submit" class="btn btn-primary btn-lg" onclick="">결제 계속하기</button>          
@@ -138,9 +138,8 @@
          <br/><br/><br/>         
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-    	function updateQuantity(obj){        	
+    	function updateQuantity(obj){
 	    	var form = {
 	                cart_id: $(obj).parent('.cart-desc').children('.cart_id').val(),
 	                pd_quantity: $(obj,'option:selected').val()
@@ -154,7 +153,7 @@
 	            success: function(result){
 		            if(result == 1){
 		            	console.log("성공");
-			            $(obj).parent('.cart-desc').children('.total_price').text('total');
+		            	$(obj).parent('.cart-item').load(this.href);
 			        }			            			            
 	            }
 	        });
