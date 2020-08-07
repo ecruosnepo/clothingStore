@@ -3,7 +3,9 @@ package com.store.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,6 +27,7 @@ import com.google.gson.Gson;
 import com.store.FilenameSorting;
 import com.store.dao.CategoryDao;
 import com.store.dto.CartDto;
+import com.store.dto.CartListDto;
 import com.store.dto.CategoryDto;
 import com.store.dto.ProductDto;
 import com.store.dto.StockDto;
@@ -193,14 +196,48 @@ public class ProductController {
 	
 	@PostMapping("/updateCartQuantity")
 	@ResponseBody
-	public int updateCartQuantity(HttpServletRequest req, @Param("cart_id") int cart_id, @Param("pd_quantity") int pd_quantity) throws Exception {
+	public Map<String, Integer> updateCartQuantity(HttpSession session, HttpServletRequest req, @Param("cart_id") int cart_id, @Param("pd_quantity") int pd_quantity) throws Exception {
 		System.out.println("카트 수량 수정");
 		System.out.println(cart_id + "," + pd_quantity);
+		Map<String, Integer> priceMap = new HashMap<String, Integer>();
+		String email = (String)session.getAttribute("email");
+		
 		cartService.updateQuantityCart(cart_id,pd_quantity);
+		List<CartListDto> cDto = cartService.CartListView(email);
 		
-		int result = 1;
+		int total_sum = 0;
+		int price_sum = 0;
+		for(CartListDto list:cDto) {
+			if(list.getCart_id()==cart_id) {
+				price_sum = list.getPd_price()*list.getPd_quantity();
+			}
+			total_sum += list.getPd_price()*list.getPd_quantity();
+		}
 		
-		return result;
+		priceMap.put("pd_sum", price_sum);
+		priceMap.put("total", total_sum+2500);
+		
+		return priceMap;
+	}
+	
+	
+	@PostMapping("/updatePrice")
+	@ResponseBody
+	public int updatePrice(HttpSession session,HttpServletRequest req, Model model) {
+		System.out.println("가격 갱신");
+		String email = (String)session.getAttribute("email");
+		String dv_price = req.getParameter("dv_price");
+		System.out.println();
+		List<CartListDto> cDto = cartService.CartListView(email);
+		
+		int sum = 0;
+		for(CartListDto list:cDto) {
+			sum += list.getPd_price()*list.getPd_quantity();
+		}
+		
+		int price = sum + Integer.parseInt(dv_price);
+
+		return price;
 	}
 	
 	@PostMapping("/deleteCart")

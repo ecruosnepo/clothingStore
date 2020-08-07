@@ -443,6 +443,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
     <script>
+    	var total_price;
+    
+    	$(function(){
+    		var dv_price = parseInt($("input:radio[name='dv_option']:checked").val());    		
+    		var pd_sum = ${sum};
+    		total_price = ${sum} + dv_price;
+    		$(".total_price").text(total_price);
+    		$(".dv_price").text(dv_price);
+    		$(".pd_sum_price").text(pd_sum);
+    		
+    		$("input:radio[name='dv_option']").change(function(){
+    			$.ajax({
+                    url: "/updatePrice",
+                    type: 'POST',
+                    data: {
+                    	dv_price : parseInt($("input:radio[name='dv_option']:checked").val())
+                    },
+                    success:function(data){
+                    	console.log("성공");
+                    	console.log(data);
+                    	total_price = data;
+                    	$('.total_price').text(total_price);
+        			}
+                });
+    		});
+
+    		$( ".orderDetail" ).click(function() {
+    			if($(".orderDetail").data('aria-expanded')=='true'){
+    			  $(".orderDetail").text("주문 상세 정보 숨기기");    				
+    			}else{
+				  $(".orderDetail").text("주문 상세 정보 보기");
+    			}
+   			});
+    	});
+    </script>
+    
+    <script>
         function DaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -493,64 +530,64 @@
     </script>
     
     <script>
-    function checkout(){
-        var IMP = window.IMP; // 생략가능
-        IMP.init('imp64616262'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-        var msg;
-
-        IMP.request_pay({
-            pg : 'kakaopay', // version 1.1.0부터 지원.
-            pay_method : 'card',
-            merchant_uid : 'merchant_' + new Date().getTime(),
-            name : '주문명:결제테스트',
-            amount : $('.total_price').text(),
-            buyer_email : '${user.user_email}',
-            buyer_name : '${user.user_name}',
-            buyer_tel : '${user.user_phone}',
-            buyer_addr : '${user.main_address2}${user.main_address3}${user.main_address4}',
-            buyer_postcode : '${user.main_address1}'
-        },function(rsp) {
-            if ( rsp.success ) {
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-
-                $.ajax({
-                    url: "/checkout", //cross-domain error가 발생하지 않도록 주의해주세요
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        imp_uid : rsp.imp_uid,
-                        user_email : '${user.user_email}',
-                        dv_name : $('.dv_name').text(),
-                        dv_address1 : $('.dv_address1').text(),
-                        dv_address2 : $('.dv_address2').text(),
-                        dv_address3 : $('.dv_address3').text(),
-                        dv_address4 : $('.dv_address4').text(),
-                        dv_phone : $('.dv_phone').val(),
-                        dv_option : $('input:radio[name="dv_option"]:checked').val(),
-                        payment_method : $('input:radio[name="payment_method"]:checked').val(),
-                        dv_message : $('.dv_message').val(),
-                        total_price : $('.total_price').text()                
-                        //기타 필요한 데이터가 있으면 추가 전달
-                    },
-                    success:function(result){
-    					if(result==1){
-        					console.log("성공");
-        					alert(msg);
-        					window.location = "/compliteCheckout";
-    					}
-        			}
-                });
-            } else {
-                var msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
-	            alert(msg);
-            }
-        });
-    };
+	    function checkout(){
+	        var IMP = window.IMP; // 생략가능
+	        IMP.init('imp64616262'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	        var msg;
+	
+	        IMP.request_pay({
+	            pg : 'kakaopay', // version 1.1.0부터 지원.
+	            pay_method : 'kakaopay',
+	            merchant_uid : 'merchant_' + new Date().getTime(),
+	            name : '주문명:결제테스트',
+	            amount : total_price,
+	            buyer_email : '${user.user_email}',
+	            buyer_name : '${user.user_name}',
+	            buyer_tel : '${user.user_phone}',
+	            buyer_addr : '${user.main_address2}${user.main_address3}${user.main_address4}',
+	            buyer_postcode : '${user.main_address1}'
+	        },function(rsp) {
+	            if ( rsp.success ) {
+	                var msg = '결제가 완료되었습니다.';
+	                msg += '고유ID : ' + rsp.imp_uid;
+	                msg += '상점 거래ID : ' + rsp.merchant_uid;
+	                msg += '결제 금액 : ' + rsp.paid_amount;
+	                msg += '카드 승인번호 : ' + rsp.apply_num;
+	
+	                $.ajax({
+	                    url: "/checkout", //cross-domain error가 발생하지 않도록 주의해주세요
+	                    type: 'POST',
+	                    dataType: 'json',
+	                    data: {
+	                        imp_uid : rsp.imp_uid,
+	                        user_email : '${user.user_email}',
+	                        dv_name : $('.dv_name').text(),
+	                        dv_address1 : $('.dv_address1').text(),
+	                        dv_address2 : $('.dv_address2').text(),
+	                        dv_address3 : $('.dv_address3').text(),
+	                        dv_address4 : $('.dv_address4').text(),
+	                        dv_phone : $('.dv_phone').val(),
+	                        dv_option : $('input:radio[name="dv_option"]:checked').val(),
+	                        payment_method : $('input:radio[name="payment_method"]:checked').val(),
+	                        dv_message : $('.dv_message').val(),
+	                        total_price : $('.total_price').text()                
+	                        //기타 필요한 데이터가 있으면 추가 전달
+	                    },
+	                    success:function(result){
+	    					if(result==1){
+	        					console.log("성공");
+	        					alert(msg);
+	        					window.location = "/compliteCheckout";
+	    					}
+	        			}
+	                });
+	            } else {
+	                var msg = '결제에 실패하였습니다.';
+	                msg += '에러내용 : ' + rsp.error_msg;
+		            alert(msg);
+	            }
+	        });
+	    };
     </script>
     
     <!-- <script type="text/javascript">
@@ -582,33 +619,6 @@
             });
 		};
     </script> -->
-    
-    <script>
-    	$(function(){
-    		var dv_price = $("input:radio[name='dv_option']:checked").val();
-    		var pd_sum = ${sum};
-    		var total_price = parseInt(dv_price)+pd_sum;
-    		$(".total_price").text(total_price);
-    		$(".dv_price").text(dv_price);
-    		$(".pd_sum_price").text(pd_sum);
-    		
-    		$("input:radio[name='dv_option']").change(function(){
-    			dv_price = $("input:radio[name='dv_option']:checked").val();
-    			total_price = parseInt(dv_price)+${sum};
-    			
-    			$(".dv_price").text(dv_price);
-    			$(".total_price").text(total_price);
-    		});
-    		
-    		$( ".orderDetail" ).click(function() {
-    			if($(".orderDetail").data('aria-expanded')=='true'){
-    			  $(".orderDetail").text("주문 상세 정보 숨기기");    				
-    			}else{
-				  $(".orderDetail").text("주문 상세 정보 보기");
-    			}
-   			});
-    	});
-    </script>
     
     <script>
       function editUserInfo(obj){

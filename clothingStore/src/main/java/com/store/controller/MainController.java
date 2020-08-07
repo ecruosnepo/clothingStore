@@ -1,6 +1,8 @@
 package com.store.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -72,6 +74,5 @@ public class MainController {
 	@RequestMapping("/compliteCheckout")
 	public String compliteCheckout() {
 		return "/compliteCheckout";
-	}
-	
+	}	
 }
