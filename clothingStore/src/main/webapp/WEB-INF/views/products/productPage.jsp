@@ -63,6 +63,9 @@
         .form-check input:checked +.form-check-label{
             border: 1px solid red;
         }
+        .color-list-box{
+        	margin: 40px 0;
+        }
         .color-carousel-item{
             text-align: center;
         }
@@ -72,9 +75,35 @@
         .size-list{
             margin-bottom: 30px;
         }
+        .size-list:focus{
+        	border:unset;
+        }
         .add-cart{
             width: 100%;
-            height: 45px; 
+            height: 45px;
+            background-color:#222;
+            color:white;
+        }
+        .add-cart > span:before{
+        	width: 15px;
+          	height: 15px;
+          	background-image: url("/icons/icon_bag.png");
+        	filter: invert(100%);
+          	background-size: 24px;
+          	content: '';
+          	display: inline-block;          	
+          	background-size: contain;
+          	background-position: center center;
+          	background-repeat: no-repeat;
+          	margin: auto 5px;
+          	position: relative;
+          	top:3px;
+        }
+        .add-cart > span{
+        	font-size:13px;        	
+        }
+        .add-cart:hover {
+			color:white;
         }
         
         .pd-desc{
@@ -188,7 +217,7 @@
            			<input type="hidden" name="pd_id" class="pd_id" value="${pd_dto.pd_id }" />
                     <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
                     <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
-                    <div class="">
+                    <div class="color-list-box">
 						<ul class="regular">
 						<c:forEach items="${colorList }" var="colors">
                    		<li class="">
@@ -204,12 +233,12 @@
 					  </ul>
 					</div>
                     <div class="pd-select-buttons">
-                        <select name="pd_size" class="form-control form-control-lg size-list">
+                        <select name="pd_size" class="form-control form-control-lg size-list rounded-0 shadow-none">
                             <option value="S">S</option>
                             <option value="M">M</option>
                             <option value="L">L</option>                                
                         </select>
-                        <button class="add-cart" onclick="addCart()">
+                        <button class="btn add-cart" onclick="addCart()">
                             <span>담기</span>
                         </button>
                     </div>

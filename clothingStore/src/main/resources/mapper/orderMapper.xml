@@ -6,7 +6,7 @@
  
 <mapper namespace="com.store.dao.OrderDao"> 
 	<select id="userOrderListDao" resultType="com.store.dto.OrderDto"> 
-		select id, productName from project.order where user_email=#{user_email} order by payDate desc
+		select id, productName from prodect.order where user_email=#{user_email} order by payDate desc
 	</select>
 	
 	<insert id="addOrderDao" parameterType="com.store.dto.OrderDto"> 

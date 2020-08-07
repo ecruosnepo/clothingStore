@@ -17,6 +17,9 @@
 		 	background:none;
 		 	font-size:20px;
 		}
+		.cart-container{
+			margin-top:40px;
+		}
 		.hi{
 		    text-align: center;
 		}
@@ -27,8 +30,17 @@
 		
 		.cart-item{
 			position:relative;
-			padding-bottom: 30px;
+			padding-bottom: 35px;
+			margin-top:35px;
 			border-bottom:1px solid #d0d0d0;
+		}
+		
+		.cart-list-box > div:first-child {
+			margin-top:0px;
+		}
+		
+		.cart-list-box > div:last-child {
+			border-bottom:none;
 		}
 		
 		.cart-img-box, .cart-desc{
@@ -39,19 +51,36 @@
 		.cart-desc{
 			vertical-align:top;
 			font-weight:600;
+			width:60%;
+			padding:0 25px;
+		}
+		
+		.cart-desc span{
+			font-size:12px;
+			display:inline-block;
+			width:23%;
 		}
 		
 		.pd_name{
 			margin-bottom:0px;
 			font-size: 14px;
-			
-		}
-		
-		.pd_price{
 		}
 		
 		.cart-img{
 			height:100%;
+		}
+		
+		.cart-img-box{
+			float:left;
+			overflow:hidden;
+			display:inline-block;
+		}
+		
+		#quantity{
+			width:80px;
+			height:48px;	
+			text-align:center;
+			margin-top:24px;							
 		}
 		
 		.delete-btn{
@@ -59,6 +88,23 @@
 			position:absolute;
 			right:0;
 			outline:0;
+		}
+		
+		.checkout-info{
+			background-color:#FFFFFF;
+			height:100%;
+			padding:0;	
+		}
+		.checkout-info-inner{
+			padding:40px;			
+		}
+		.checkout-btn{
+			align-items: center;
+			font-size:14px;
+			background-color:black;
+		}
+		.checkout-notice{
+			margin-top:30px;
 		}
 		
 	</style>    
@@ -76,10 +122,10 @@
        <br/>
        <br/>
        <h1 style="font-size: 2.5em;">쇼핑백</h1>
-      </div>
-       <div class="container">
+   	   </div>
+       <div class="container cart-container">
         <div class="row">
-          <div class="col-xs-5 col-sm-7">
+          <div class="col-xs-5 col-sm-7 cart-list-box">
           	<c:forEach items="${cart_list }" var="cList">
           		<div class="cart-item ${cList.cart_id}">
           			<c:forTokens items="${cList.pd_img }" var="img" delims="," varStatus="status">
@@ -91,12 +137,12 @@
           			</c:forTokens>
           			<div class="cart-desc">
           				<input type="hidden" value="${cList.cart_id }" name="cart_id" class="cart_id"/>
-	          			<h3 class="pd_name">상품명: ${cList.pd_name }</h3>
+	          			<h3 class="pd_name">${cList.pd_name }</h3>
 	          			<p class="pd_price">&#8361; <fmt:formatNumber value="${cList.pd_price }"/></p>
-	       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
-					    <span class="pd_size">사이즈: ${cList.pd_size }</span> <br/>
-					    <span class="pd_color">컬러: ${cList.pd_color }</span>
-					    합계: &#8361;<span class="price_sum"><fmt:formatNumber value="${cList.pd_price * cList.pd_quantity }"/></span><br/>
+	       			    <span>상품 번호: </span><span class="pd_id">${cList.pd_id }</span>
+					    <span>사이즈: </span><span class="pd_size">${cList.pd_size }</span> <br/>
+					    <span>색상: </span><span class="pd_color">${cList.pd_color }</span>
+					    <span>합계: &#8361; </span><span class="price_sum"><fmt:formatNumber value="${cList.pd_price * cList.pd_quantity }"/></span><br/>
 					    <select name="pd_quantity" id="quantity" onchange="updateQuantity(this);">
 						    <c:forEach var="x" begin="0" end="20" step="1">
 	          					<c:choose>
@@ -119,35 +165,31 @@
             <br/><br/>
             <a href="#">로그인</a> -->
           </div>  
-          <div class="col-xs-100 col-sm-3">
-            <label>할인 코드 추가</label>
-          <form>
-            <div class="form-group">
-              <input type="text" class="form-control" id="exampleInputcard">
-            </div>
-          </form>          
-          
-          <br/>
-          <br/>
-          배송비<label class="total_price"> 2500</label><br/><br/>
-          합계 &#8361; <label class="total_price"><fmt:formatNumber value="${sum }"/></label><br/><br/>
-          
-          <form action="/checkoutForm" method="post">          	
-          	<button type="submit" class="btn btn-primary btn-lg" onclick="">결제 계속하기</button>          
-          </form>
-           
-           
-           <br/><br/>
-           <label>
-            가능한 결제 수단<br/><br/>
-            귀하가 결제 단계에 도달할 때까지 가격 및 배송료는 확인되지 않습니다.<br/><br/>
-            30일의 반품 가능 기간, 반품 수수료 및 미수취시 발생하는 추가 배송 요금 읽어보기 반품 및 환불<br/>
-           </label>
-          </div>
-         <br/>
-         <button class="btn btn-default" type="submit">추가</button>
-         
-         <br/><br/><br/>         
+          	<div class="col-xs-100 col-sm-5 checkout-info">
+	          	<div class="checkout-info-inner">
+		            <label>할인 코드 추가</label>
+		          	<form>
+			            <div class="form-group">
+			              <input type="text" class="form-control" id="exampleInputcard">
+			            </div>
+		          	</form>
+		          	배송비<label class=""> 2500</label><br/><br/>
+		          	합계 &#8361; <label class="total_price"><fmt:formatNumber value="${sum }"/></label><br/><br/>
+			          
+		          	<form action="/checkoutForm" method="post">          	
+		          		<button type="submit" class="btn btn-dark btn-lg btn-block checkout-btn rounded-0" onclick="">결제 계속하기</button>          
+		          	</form>
+		          	<div class="checkout-notice">
+			            <p>가능한 결제 수단</p>
+			            <p>귀하가 결제 단계에 도달할 때까지 가격 및 배송료는 확인되지 않습니다.</p>
+			            <p>30일의 반품 가능 기간, 반품 수수료 및 미수취시 발생하는 추가 배송 요금 읽어보기 반품 및 환불</p>			           	
+		          	</div>
+	          	</div>
+	      		<div class="delivery-notice">
+		            <p>5만원 이상 구매 시 무료배송!</p>
+		            <p>8월 14일 택배인 리프레시데이를 맞아 8월 14일에서 16일까지 3일간 배송과 반품이 이루어지지 않습니다. 따라서 13일 23시 이전 주문건에 한해 17일부터 순차적으로 배송이 재개 됩니다. 8월 17일부터 정상 배송 및 반품 예정이오니 고객님들의 너른 이해 부탁드립니다. 감사합니다.</p>
+	          	</div>
+      		</div>
         </div>
     </div>
     <script>
@@ -165,7 +207,7 @@
 	            success: function(result){
 	            	console.log("성공");
 	            	$('.total_price').text(result['total']);
-	            	$(obj).parents('.cart-desc').children('.price_sum').attr('value',result['pd_sum']);
+	            	$(obj).parents('.cart-desc').children('.price_sum').text(result['pd_sum']);
 	            }
 	        });
 		};
@@ -185,4 +227,5 @@
 		};
 	</script>
   </body>
-</html> 
+  <jsp:include page="../footer.jsp" flush="false" />  
+</html>
