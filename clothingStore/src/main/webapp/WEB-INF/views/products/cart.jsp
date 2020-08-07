@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="../header.jsp" flush ="true"/>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@
 		.cart-item{
 			position:relative;
 			padding-bottom: 30px;
-			border-bottom:1px solid black;
+			border-bottom:1px solid #d0d0d0;
 		}
 		
 		.cart-img-box, .cart-desc{
@@ -37,6 +38,16 @@
 		
 		.cart-desc{
 			vertical-align:top;
+			font-weight:600;
+		}
+		
+		.pd_name{
+			margin-bottom:0px;
+			font-size: 14px;
+			
+		}
+		
+		.pd_price{
 		}
 		
 		.cart-img{
@@ -80,12 +91,12 @@
           			</c:forTokens>
           			<div class="cart-desc">
           				<input type="hidden" value="${cList.cart_id }" name="cart_id" class="cart_id"/>
-	          			<span class="pd_id">상품명: ${cList.pd_name }</span><br/>
-	          			<span class="pd_price">가격: ${cList.pd_price }</span><br/>
+	          			<h3 class="pd_name">상품명: ${cList.pd_name }</h3>
+	          			<p class="pd_price">&#8361; <fmt:formatNumber value="${cList.pd_price }"/></p>
 	       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
 					    <span class="pd_size">사이즈: ${cList.pd_size }</span> <br/>
 					    <span class="pd_color">컬러: ${cList.pd_color }</span>
-					    <span class="total_price">합계:</span><br/>
+					    합계: &#8361;<span class="price_sum"><fmt:formatNumber value="${cList.pd_price * cList.pd_quantity }"/></span><br/>
 					    <select name="pd_quantity" id="quantity" onchange="updateQuantity(this);">
 						    <c:forEach var="x" begin="0" end="20" step="1">
 	          					<c:choose>
@@ -98,9 +109,10 @@
 	          					</c:choose>					    
 						    </c:forEach>
           				</select>
-          			</div>     			
+       				</div>     			
           			<button class="delete-btn" onclick="deleteCart(this)">&#10005;</button>
           		</div>
+          		<c:set var="sum" value="${sum + cList.pd_price*cList.pd_quantity }"/>
           	</c:forEach>
             <!-- <b style="font-size: 27px;">고객님의 쇼핑백이 비어 있습니다.</b><br/>
             고객님의 쇼핑백에 이미 저장된 아이템을 저장하거나 액세스하려면 로그인합니다.
@@ -117,9 +129,10 @@
           
           <br/>
           <br/>
-          <label>합계  </label><br/><br/>
+          배송비<label class="total_price"> 2500</label><br/><br/>
+          합계 &#8361; <label class="total_price"><fmt:formatNumber value="${sum }"/></label><br/><br/>
           
-          <form action="/checkout" method="post">          	
+          <form action="/checkoutForm" method="post">          	
           	<button type="submit" class="btn btn-primary btn-lg" onclick="">결제 계속하기</button>          
           </form>
            
@@ -137,9 +150,8 @@
          <br/><br/><br/>         
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-    	function updateQuantity(obj){        	
+    	function updateQuantity(obj){
 	    	var form = {
 	                cart_id: $(obj).parent('.cart-desc').children('.cart_id').val(),
 	                pd_quantity: $(obj,'option:selected').val()
@@ -150,8 +162,10 @@
 	            type: "POST",
 	            dataType: "json",
 	            data: form,
-	            success: function(data){
-			            console.log("성공");		            
+	            success: function(result){
+	            	console.log("성공");
+	            	$('.total_price').text(result['total']);
+	            	$(obj).parents('.cart-desc').children('.price_sum').attr('value',result['pd_sum']);
 	            }
 	        });
 		};

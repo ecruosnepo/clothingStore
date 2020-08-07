@@ -9,11 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.store.dao.CategoryDao;
+import com.store.dto.CategoryDto;
 import com.store.service.AdminService;
 
 @Controller
@@ -21,10 +25,30 @@ public class AdminController {
 	
 	@Autowired
 	AdminService service;
+	@Autowired
+	CategoryDao categoryDao;
 	
 	@RequestMapping("/admin")
 	public String cusCenter(Model model) {
-		return "redirect:adminMember"; 
+		return "redirect:adminProduct"; 
+	}
+	
+	@RequestMapping("/adminProduct")
+	public String adminProduct(Model model) {
+		System.out.println("상품 등록 폼");		
+		Gson gson = new Gson();
+		List<CategoryDto> allcat = categoryDao.getAllCatDao();
+		model.addAttribute("allcat", gson.toJson(allcat));
+		
+		return "admin/addProduct";
+	}
+	
+	@GetMapping("/updateProductForm")
+	public String updateProductForm(Model model) {
+		System.out.println("상품 수정 폼");
+		
+		
+		return "/admin/updateProduct";
 	}
 	
 	@RequestMapping("/adminQna")
@@ -103,11 +127,6 @@ public class AdminController {
 		model.addAttribute("search", search);
 		
 		return "admin/member_search";
-	}
-	@RequestMapping("/adminAddPd")
-	public String adminAddPd(Model model) {
-		//상품 추가 코드..
-		return "admin/addProduct"; 
 	}
 	
 	@RequestMapping("/adminPdList")

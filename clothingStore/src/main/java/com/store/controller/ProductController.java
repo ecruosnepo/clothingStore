@@ -3,7 +3,9 @@ package com.store.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,6 +27,7 @@ import com.google.gson.Gson;
 import com.store.FilenameSorting;
 import com.store.dao.CategoryDao;
 import com.store.dto.CartDto;
+import com.store.dto.CartListDto;
 import com.store.dto.CategoryDto;
 import com.store.dto.ProductDto;
 import com.store.dto.StockDto;
@@ -58,10 +61,39 @@ public class ProductController {
 		return "products/productPage";
 	}
 	
-	@GetMapping("/productList/{catRefId}/{catId}")
-    public String productListView(@PathVariable("catId") int cat, @PathVariable("catRefId") int catRef, Model model) throws Exception {
-        model.addAttribute("pd_list", productService.listProduct(cat));
-        return "products/productList";
+	@GetMapping("/productList/{catId}")	
+    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
+    	System.out.println(size); 	
+    	System.out.println(sortby); 	
+    	
+    	if(size==null && sortby==null) {
+    		sortby = "pd_id";
+    		model.addAttribute("pd_list", productService.listProduct(cat, sortby));    		
+    	}else{
+    		if (sortby!=null && (size==null || size=="")) {
+				model.addAttribute("pd_list", productService.listProduct(cat, sortby));
+   			}else {
+    			model.addAttribute("pd_list", productService.listProductSize(cat,size, sortby));
+    		}    		
+    	}
+    	model.addAttribute("cat_id", cat);
+    	return "products/productList";
+	}
+	
+	@GetMapping("/searchProduct")	
+    public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
+		System.out.println("상품 검색");
+		if(size==null && sortby==null) {
+    		sortby = "pd_id";
+    		model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));    		
+    	}else{
+    		if (sortby!=null && (size==null || size=="")) {
+				model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
+   			}else {
+    			model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
+    		}    		
+    	}		
+    	return "products/search";
 	}
 		
 	@RequestMapping("/regProductForm")
@@ -134,7 +166,7 @@ public class ProductController {
 		
 	@PostMapping("/addCart")
 	@ResponseBody
-	public void addCart(HttpSession session, @RequestParam("pd_id") int pd_id, @RequestParam("pd_size") String pd_size) throws Exception{		
+	public void addCart(HttpSession session, @RequestParam("pd_id") int pd_id, @RequestParam("pd_size") String pd_size, @RequestParam("pd_price") int pd_price) throws Exception{		
 		String email = (String)session.getAttribute("email");
 		CartDto checkDto = cartService.cartDuplicateCheck(email, pd_id, pd_size);
 		
@@ -150,6 +182,7 @@ public class ProductController {
 			cDto.setPd_id(pd_id);
 			cDto.setPd_size(pd_size);
 			cDto.setPd_quantity(1);
+			cDto.setPd_price(pd_price);
 			cartService.addCart(cDto);
 		}
 	}
@@ -163,10 +196,48 @@ public class ProductController {
 	
 	@PostMapping("/updateCartQuantity")
 	@ResponseBody
-	public void updateCartQuantity(HttpServletRequest req, @Param("cart_id") int cart_id, @Param("pd_quantity") int pd_quantity) throws Exception {
+	public Map<String, Integer> updateCartQuantity(HttpSession session, HttpServletRequest req, @Param("cart_id") int cart_id, @Param("pd_quantity") int pd_quantity) throws Exception {
 		System.out.println("카트 수량 수정");
 		System.out.println(cart_id + "," + pd_quantity);
+		Map<String, Integer> priceMap = new HashMap<String, Integer>();
+		String email = (String)session.getAttribute("email");
+		
 		cartService.updateQuantityCart(cart_id,pd_quantity);
+		List<CartListDto> cDto = cartService.CartListView(email);
+		
+		int total_sum = 0;
+		int price_sum = 0;
+		for(CartListDto list:cDto) {
+			if(list.getCart_id()==cart_id) {
+				price_sum = list.getPd_price()*list.getPd_quantity();
+			}
+			total_sum += list.getPd_price()*list.getPd_quantity();
+		}
+		
+		priceMap.put("pd_sum", price_sum);
+		priceMap.put("total", total_sum+2500);
+		
+		return priceMap;
+	}
+	
+	
+	@PostMapping("/updatePrice")
+	@ResponseBody
+	public int updatePrice(HttpSession session,HttpServletRequest req, Model model) {
+		System.out.println("가격 갱신");
+		String email = (String)session.getAttribute("email");
+		String dv_price = req.getParameter("dv_price");
+		System.out.println();
+		List<CartListDto> cDto = cartService.CartListView(email);
+		
+		int sum = 0;
+		for(CartListDto list:cDto) {
+			sum += list.getPd_price()*list.getPd_quantity();
+		}
+		
+		int price = sum + Integer.parseInt(dv_price);
+
+		return price;
 	}
 	
 	@PostMapping("/deleteCart")

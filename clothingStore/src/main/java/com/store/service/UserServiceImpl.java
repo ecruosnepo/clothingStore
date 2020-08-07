@@ -1,5 +1,6 @@
 package com.store.service;
 
+
 import javax.servlet.http.HttpSession;
 
 import com.store.dto.UserDto;
@@ -7,11 +8,9 @@ import com.store.dto.UserDto;
 public interface UserServiceImpl {
 	public UserDto sGetUserInfo(String user_email);
 	 
-	public int sUserSignUp(String user_email, String user_password, String check) throws Exception ;
-	
-	public int sUserEmail(String email, String password) throws Exception;
-	
-	public int sUserLogin(String email, String password) throws Exception;
+	public int sUserSignUp(String user_email, String user_password, String check2) throws Exception ;
+	// 20200804 UserEmail = UserLogin
+	public int sUserLogin(String user_email, String password) throws Exception;
 	
 	public void sUserUpdate(String name, String birth, String phone, String gender, String email) throws Exception;
 	
@@ -24,4 +23,6 @@ public interface UserServiceImpl {
 	public int sDeleteInfoUser(String email) throws Exception;
 	
 	public int sUpdatePassword(String user_password, String user_email) throws Exception;
+	
+	public int sUserEmail(String user_email) throws Exception; 
 }

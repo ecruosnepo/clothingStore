@@ -7,13 +7,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
- 	body{
- 	background-color: #FAF9F8;
- 	}
-    .firstCenter{
+ 	 body{
+    	 background-color: #FAF9F8;
+ 	 }
+ 	 .addProduct-sideNav{
+ 	 	width:300px;	
+ 	 	position:absolute;
+ 	 	left:0; 	 	
+ 	 }
+ 	 .addProduct-row{
+ 	 	position:relative;
+ 	 }
+ 	 .addProduct-content{
+ 	 	width: 70%;
+ 	 	margin:0 auto;
+ 	 }
+     .firstCenter{
          text-align: center;
-    }
-    .box{    
+     }
+     .box{    
         background-color: whitesmoke;
         padding:5%; 
      }
@@ -24,77 +36,112 @@
      .head{
        font-size: 12px;
      }
-     section{
-       margin-left: 30%;
-     }
      #cencle{
-     background-color: white;
-     border: 1px solid black;
+	     background-color: white;
+	     border: 1px solid black;
      }
+     .input-size{
+     	width:100% !important;
+     }
+     .input-size .text-size{
+     	width:80%
+     }
+     .input-size-box{
+     	padding:10px 3px;
+     }
+     input[type="number"]::-webkit-outer-spin-button,
+	 input[type="number"]::-webkit-inner-spin-button {
+	     -webkit-appearance: none;
+	     -moz-appearance: none;
+	     appearance: none;
+	     margin: 0;
+	 }
+	 input[type=number] {
+    	-moz-appearance: textfield;
+	 }
 </style>
 </head>
 <body>
-<jsp:include page="sideNav.jsp" flush="false" />
-
-<section>
-  <div class="container"> 
-      <div class="row">
-      <div class="col-md-12">
-	        <div class="center-block" style="width: 50%">
-	          <div class="firstCenter">
-	            <label class="head"><a href=#  style="color: black; ">관리자 페이지</a>/<a href="/mgProduct"  style="color: black; ">상품 등록</a></label>
-	        <br/>
-	        <br/>
-	        <label style="font-size: 26px;">상품 등록</label> 
-	        <br/>
-	       </div>    
-	        <div class="box">
-	         <label class="size">새 상품 등록하기</label>
-	         <br/><br/><br/>
-	         <div class="form-group has-success">
-		         <form action="/regProduct"  method="post" enctype="multipart/form-data">
-		            <label class="control-label" for="pd_name" style="color: black;">상품명</label>
-		            <input type="text" name="pd_name" class="form-control" id="pd_name">
-		            <br/>
-		            <label class="control-label" for="pd_price" style="color: black; ">가격</label>
-		            <input type="number" name="pd_price" class="form-control" id="pd_price">
-		            <br/>
-		            <label class="control-label" for="pd_color" style="color: black; ">색상</label>
-		            <input type="text" name="pd_color" class="form-control" id="pd_color">
-		            <br/>
-		            <label class="control-label" for="pd_desc" style="color: black; ">설명</label>
-		            <textarea name="pd_desc" class="form-control" id="pd_desc" rows="10" placeholder="상품 설명"></textarea>
-		            <br/>
-		            <label>메인 카테고리</label> 
-		            <br/>
-		            <select class="form-control category1">
-		                <option value="">메인 카테고리</option>
-		            </select>
-		            <br/>
-		            <label>서브 카테고리</label> 
-		            <br/>
-		            <select class="form-control category2" name="cat_id">
-		                <option value="1">서브 카테고리</option>
-		            </select>
-		            <br/>
-		            <label class="control-label" for="discount" style="color: black; ">할인율</label>
-		            <input type="number" name="discount" class="form-control" id="discount">
-		            <br/>
-		            <label class="control-label" for="img">이미지</label><br/>
-		            <input multiple="multiple" type="file" name="img" id="img">
-		            <br/>
-		            <br/>
-		            <input type="submit" class="btn btn-lg btn-block" style="color: white; background-color: black;">
-		            <button id="cencle" type="button" class="btn btn-default btn-lg btn-block" >취소</button>
-		       	</form>
-	       	</div>
-	      </div>
-	    </div>      
+<section class="addProduct-wrap">
+  <div class="container-fluid addProduct-inner mx-0 px-0"> 
+	  <div class="addProduct-sideNav">
+		<jsp:include page="sideNav.jsp" flush="false" />
+	  </div>
+      <div class="row addProduct-row">
+      	<div class="col-md-12">
+      	<div class="addProduct-content">
+       		<div class="center-block">
+				<div class="firstCenter">
+		            <label class="head"><a href=#  style="color: black; ">관리자 페이지</a>/<a href="/mgProduct"  style="color: black; ">상품 등록</a></label>
+			        <br/>
+			        <br/>
+			        <label style="font-size: 26px;">상품 등록</label> 
+			        <br/>
+		       </div>    
+		       <div class="box">
+					<label class="size">새 상품 등록하기</label>
+		         	<br/><br/><br/>
+		         	<div class="form-group has-success">
+			        	<form action="/regProduct"  method="post" enctype="multipart/form-data">
+				            <label class="control-label" for="pd_name" style="color: black;">상품명</label>
+				            <input type="text" name="pd_name" class="form-control" id="pd_name">
+				            <br/>
+				            <label class="control-label" for="pd_price" style="color: black; ">가격</label>
+				            <input type="number" name="pd_price" class="form-control" id="pd_price">
+				            <br/>
+				            <label class="control-label" for="pd_color" style="color: black; ">색상</label>
+				            <input type="text" name="pd_color" class="form-control" id="pd_color">
+				            <br/>
+				            <label class="control-label" for="pd_desc" style="color: black; ">설명</label>
+				            <textarea name="pd_desc" class="form-control" id="pd_desc" rows="10" placeholder="상품 설명"></textarea>
+				            <br/>
+				            <label>메인 카테고리</label> 
+				            <br/>
+				            <select class="form-control category1">
+				                <option value="">메인 카테고리</option>
+				            </select>
+				            <br/>
+				            <label>서브 카테고리</label> 
+				            <br/>
+				            <select class="form-control category2" name="cat_id">
+				                <option value="">서브 카테고리</option>
+				            </select>
+				            <br/>
+				            <div class="input-size row">
+					            <div class="col-sm input-size-box">
+					            	<input type="checkbox" name="size" id="size_s" class="size-check" value="S"/>
+										<label for="size_s">S</label>
+									<input type="text" name="stock" class="input_s text-size" disabled>
+					            </div>
+					            <div class="col-sm input-size-box">
+					            	<input type="checkbox" name="size" id="size_m" class="size-check" value="M"/>
+										<label for="size_m">M</label>
+									<input type="text" name="stock" class="input_m text-size" disabled>
+					            </div>
+					            <div class="col-sm input-size-box">
+					            	<input type="checkbox" name="size" id="size_l" class="size-check" value="L"/>
+										<label for="size_l">L</label>
+									<input type="text" name="stock" class="input_l text-size" disabled>
+					            </div>
+				            </div>
+				            <label class="control-label" for="discount" style="color: black; ">할인율</label>
+				            <input type="number" name="discount" class="form-control" id="discount">
+				            <br/>
+				            <label class="control-label" for="img">이미지</label><br/>
+				            <input multiple="multiple" type="file" name="img" id="img">
+				            <br/>
+				            <br/>
+				            <input type="submit" class="btn btn-lg btn-block" value="상품 등록" style="color: white; background-color: black;">
+				            <button id="cencle" type="button" class="btn btn-default btn-lg btn-block" >취소</button>
+			       		</form>
+		       		</div>
+		      	</div>
+		    </div>      
+      	</div>
       </div>
   </div>
   </div>
-</section>
-  
+</section>  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 	// 컨트롤러에서 데이터 받기
@@ -175,6 +222,31 @@
 				}
 			}		
 		});		
+	});
+</script>
+<script>
+	$(function(){	
+		$("#size_s").change(function() {
+			if($("#size_s").prop("checked")){
+				$(".input_s").attr("disabled",false);
+			}else{
+				$(".input_s").attr("disabled",true);
+			}    	
+		});
+		$("#size_m").change(function() {
+			if($("#size_m").prop("checked")){
+				$(".input_m").attr("disabled",false);
+			}else{
+				$(".input_m").attr("disabled",true);
+			}    	
+		});	
+		$("#size_l").change(function() {
+			if($("#size_l").prop("checked")){
+				$(".input_l").attr("disabled",false);
+			}else{
+				$(".input_l").attr("disabled",true);
+			}    	
+		});	
 	});
 </script>
 </body>

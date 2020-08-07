@@ -22,6 +22,11 @@
     		height:72px;
     	}
     	
+    	.sidebar{
+			overflow:hidden;
+			height:auto;	
+    	}
+    	
     	.header_logo{
           display: block;
           width: 68px;
@@ -56,8 +61,9 @@
         
         .info, .sidebar{         
           width: 100%;
-          padding: 0;
-          margin: 0;
+          padding: 40px;
+          padding-bottom:0px;
+          margin: 30px 0;
           background-color:white;
         }
 
@@ -69,6 +75,14 @@
         .btn:hover{
           text-decoration: underline;
         }
+        
+        .btn:focus{
+        	box-shadow: none;
+        }
+        
+        .btn{
+        	padding: 20px 0;
+        }
 
         .user-order-form, .address-order-form, .payment-order-form{
           display:none;
@@ -78,9 +92,8 @@
           height: 1em;
         }
 
-        .info{
+        .result{
           margin-bottom: 30px;
-          padding: 30px;
           padding-bottom: 10px;
         }
 
@@ -99,19 +112,21 @@
         .deliveryMethodSelect{
         	height:160px;
         }
-        
-        .radioBox{
-        	height:50%;
-        	display:flex;
-        	align-items: center;
-        	padding: 20px 10px;
-        }
-        
+
         .radioBox *{
         	width: auto;        	
         }
         
+        .radioBox {        	
+        	height:50%;
+        	vertical-align:bottom;
+        }
+        
         .radioBox:hover{
+        	background-color:#F4EDDD;
+        }
+        
+        input[type='radio']:checked {
         	background-color:#F4EDDD;
         }
         
@@ -152,13 +167,59 @@
 			border:none;
 		}
 		
+		.orderTotal{
+			margin: 30px 0;
+			width:100%;
+		}
+		
+		.orderTotal th, .orderTotal td{
+			font-size:13px;
+		}
+		
+		.orderTotal td{
+			text-align:right;
+		}
+		
 		.orderDetail{
 			text-align:left;
-			padding:0;
+			padding:20px 0;
 		}
 		
 		.orderDetail:hover{
 			color:#D6001C;
+		}
+		        
+        .paymentMethodSelect{
+        	height:160px;
+        }
+        
+        .card{
+        	padding:0;
+        }
+        
+        .cart-item{        	
+        	height: auto;
+        	padding: 10px 0;
+        	border-bottom: 1px solid lightGray;
+        }
+        
+        .cart-img-box {
+        	float:left;
+        	overflow:hidden;
+        	width:25.333%;
+			display:inline-block;
+			height:100%;					
+		}
+		
+		.cart-img{
+			height:auto;
+			width:100%;
+		}
+		
+		.orderProduct{
+			display:inline-block;
+			width:calc(100%-26%) !important;
+			padding:0 20px;
 		}
 
     </style>
@@ -170,7 +231,7 @@
     	<a class="header_logo" href="/"></a>
     </header>
       <div class="row">
-        <div class="col-md-8 info-group">
+        <div class="col-md-7 info-group">
           <div class="row user-info info">
             <header>
               <h4>내 정보</h4>
@@ -228,43 +289,48 @@
 				<p>일반 배송</p>
 				
 				<p>배송 주소</p>
-				<p>이름 우편번호 시 도로명 상세주소</p>
+				<p>${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }</p>
 				
 				<p>배송 업데이트를 위한 전화번호</p>
-				<p>01022223333</p>
+				<p>${user.user_phone }</p>
             </div>            
             <form class="address-order-form">
             	<h5>배송 방법</h5>
 				<div class="deliveryMethodSelect inputContents">
 					<div class="radioBox">
-						<input type="radio" id="basicMethod" name="deliveryMethod" checked="checked"/>
+						<input type="radio" id="basicMethod" name="dv_option" checked="checked" value="2500"/>
 						<label for="basicMethod">일반 배송</label>
 					</div>
 					<div class="radioBox">
-						<input type="radio" id="fastMethod" name="deliveryMethod"/>
+						<input type="radio" id="fastMethod" name="dv_option" value="3000"/>
 						<label for="fastMethod">특급 익일 배송</label>
 					</div>
 				</div>
 				<h5>배송 주소</h5>
-				<div class="addressSelectBox">
-					<input type="hidden" value="${user.user_name }" name="dv_address1"/>
-					<input type="hidden" value="${user.main_address1 }" name="dv_address1"/>
-					<input type="hidden" value="${user.main_address2 }" name="dv_address2"/>
-					<input type="hidden" value="${user.main_address3 }" name="dv_address3"/>
-					<input type="hidden" value="${user.main_address4 }" name="dv_address4"/>
+				<div class="addressSelectBox">					
 					<!-- Button trigger modal -->
 					<button type="button" data-toggle="modal" data-target="#exampleModal" class="selectedAddress inputContents">
-					  ${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }
+					  	<span class="dv_name">${user.user_name }</span>,
+	        			<span class="dv_address1">${user.main_address1 }</span>,
+	        			<span class="dv_address2">${user.main_address2 }</span>,
+	        			<span class="dv_address3">${user.main_address3 }</span>,
+	        			<span class="dv_address4">${user.main_address4 }</span>
 					</button>
 					
 					<!-- Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog modal-dialog-centered">
+					<div class="modal fade modal-address" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered modal-lg">
 					    <div class="modal-content">					      
 					      <div class="modal-body">
-					        <c:forEach var="x" begin="0" end="3" step="1">
+					        <c:forEach items="${address_list }" var="aList">
        						 	<div class="addressList">
-					        		<button class="addressBtn">테스트, 테스트주소1, 2 ,3, 4</button>
+					        		<button class="addressBtn" onclick="selectAddress(this)">
+					        			<span class="selected_name">${aList.r_name }</span>,
+					        			<span class="selected_address1">${aList.address1 }</span>,
+					        			<span class="selected_address2">${aList.address2 }</span>,
+					        			<span class="selected_address3">${aList.address3 }</span>,
+					        			<span class="selected_address4">${aList.address4 }</span>
+					        		</button>
 					        	</div>   
 						    </c:forEach>
 					      </div>					      
@@ -274,13 +340,13 @@
 				</div>
 				<h6>필수 전화번호</h6>
 				<div class="phoneBox">
-					<input type="text" name="user_phone" style="height:50px;">
+					<input type="text" class="dv_phone" name="dv_phone" value="${user.user_phone }" style="height:50px;">
 				</div>
 				<h6>배송업체에 전하는 메세지</h6>
 				<div class="message">
-					<input type="text" name="message" style="height:50px;">
+					<input type="text" class="dv_message" name="dv_message" style="height:50px;">
 				</div>
-				<button class="submitBtn" onclick="editAddressInfoBtn(this)">결제 단계로 넘어가기</button>
+				<button class="submitBtn" type="button" onclick="editAddressInfoBtn()">결제 단계로 넘어가기</button>
             </form>
             <button class="address-info-btn btn" value="수정" onclick="editAddressInfo(this)">
               수정
@@ -293,36 +359,47 @@
 
             </div>
             <form class="payment-order-form">
-
+            	<div class="paymentMethodSelect inputContents">
+					<div class="radioBox form-check align-middle">
+						<input class="form-check-input" type="radio" id="card" name="payment_method" value="card"/>
+						<label class="form-check-label" for="card">카드 결제</label>
+					</div>
+					<div class="radioBox form-check align-middle">
+						<input class="form-check-input" type="radio" id="kakao" name="payment_method" value="kakao" checked/>
+						<label class="form-check-label" for="kakao">카카오 페이</label>
+					</div>
+				</div>
             </form>
-            <button class="payment-info-btn btn" value="수정" onclick="">
+            <button class="payment-info-btn btn" value="수정" onclick="editPaymentInfo(this)">
               수정
             </button>
           </div>
           <div class="row submit-btn">
-  
+          	<button class="btn" onclick="checkout()">결제</button>
           </div>
+          
         </div>
-        <div class="col-md-4 sidebar info" style="height: 600px;">
-         	<h4>고객님의 주문</h4>
-         	
-         	<div>
-         		<table class="orderTotal">
-         			<tr>
-         				<th>주문 가격</th>
-         				<td><span>20000</span></td>
-         			</tr>
-         			<tr>
-         				<th>배송</th>
-         				<td><span>20000</span></td>
-         			</tr>
-         			<tr>
-         				<th>합계</th>
-         				<td><span>20000</span></td>
-         			</tr>
-         		</table>
-         	</div>
-	         
+        <div class="col-md-5">
+        <div class="sidebar result">
+        	<div class="">
+	         	<h4>고객님의 주문</h4>         	
+	         	<div>
+	         		<table class="orderTotal">
+	         			<tr>
+	         				<th>주문 가격</th>
+	         				<td><span class="pd_sum_price">${sum }</span></td>
+	         			</tr>
+	         			<tr>
+	         				<th>배송</th>
+	         				<td><span class="dv_price"></span></td>
+	         			</tr>
+	         			<tr>
+	         				<th>합계</th>
+	         				<td><span class="total_price"></span></td>
+	         			</tr>
+	         		</table>
+	         	</div>
+        	</div>
 	       	<p>
 			  <button class="orderDetail" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 			    주문 세부 정보 보기
@@ -341,19 +418,19 @@
 	          				</c:if>
 	          			</c:forTokens>
 				 		<div class="orderProduct">
-	          				<input type="hidden" value="${cList.cart_id }" name="cart_id" class="cart_id"/>
 		          			<span class="pd_id">상품명: ${cList.pd_name }</span><br/>
 		          			<span class="pd_price">가격: ${cList.pd_price }</span><br/>
 		       			    <span class="pd_id">상품 번호: ${cList.pd_id }</span>
 						    <span class="pd_size">사이즈: ${cList.pd_size }</span><br/>
 						    <span class="pd_color">컬러: ${cList.pd_color }</span>
-						    <span class="total_price">합계:</span><br/>						    
+						    <span class="price_sum">합계:${cList.pd_price*cList.pd_quantity }</span><br/>						    
 	          			</div>
-			    	</div>					                
+			    	</div>
+			    	<c:set var="sum" value="${sum + cList.pd_price * cList.pd_quantity }"/>
           		</c:forEach>
-          		<!-- </div> -->
 			  </div>
-			</div>         
+			</div>        
+          </div>
         </div>
       </div>
     </div>
@@ -364,6 +441,44 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
+    <script>
+    	var total_price;
+    
+    	$(function(){
+    		var dv_price = parseInt($("input:radio[name='dv_option']:checked").val());    		
+    		var pd_sum = ${sum};
+    		total_price = ${sum} + dv_price;
+    		$(".total_price").text(total_price);
+    		$(".dv_price").text(dv_price);
+    		$(".pd_sum_price").text(pd_sum);
+    		
+    		$("input:radio[name='dv_option']").change(function(){
+    			$.ajax({
+                    url: "/updatePrice",
+                    type: 'POST',
+                    data: {
+                    	dv_price : parseInt($("input:radio[name='dv_option']:checked").val())
+                    },
+                    success:function(data){
+                    	console.log("성공");
+                    	console.log(data);
+                    	total_price = data;
+                    	$('.total_price').text(total_price);
+        			}
+                });
+    		});
+
+    		$( ".orderDetail" ).click(function() {
+    			if($(".orderDetail").data('aria-expanded')=='true'){
+    			  $(".orderDetail").text("주문 상세 정보 숨기기");    				
+    			}else{
+				  $(".orderDetail").text("주문 상세 정보 보기");
+    			}
+   			});
+    	});
+    </script>
+    
     <script>
         function DaumPostcode() {
             new daum.Postcode({
@@ -413,22 +528,117 @@
             }).open();
         }
     </script>
+    
+    <script>
+	    function checkout(){
+	        var IMP = window.IMP; // 생략가능
+	        IMP.init('imp64616262'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	        var msg;
+	
+	        IMP.request_pay({
+	            pg : 'kakaopay', // version 1.1.0부터 지원.
+	            pay_method : 'kakaopay',
+	            merchant_uid : 'merchant_' + new Date().getTime(),
+	            name : '주문명:결제테스트',
+	            amount : total_price,
+	            buyer_email : '${user.user_email}',
+	            buyer_name : '${user.user_name}',
+	            buyer_tel : '${user.user_phone}',
+	            buyer_addr : '${user.main_address2}${user.main_address3}${user.main_address4}',
+	            buyer_postcode : '${user.main_address1}'
+	        },function(rsp) {
+	            if ( rsp.success ) {
+	                var msg = '결제가 완료되었습니다.';
+	                msg += '고유ID : ' + rsp.imp_uid;
+	                msg += '상점 거래ID : ' + rsp.merchant_uid;
+	                msg += '결제 금액 : ' + rsp.paid_amount;
+	                msg += '카드 승인번호 : ' + rsp.apply_num;
+	
+	                $.ajax({
+	                    url: "/checkout", //cross-domain error가 발생하지 않도록 주의해주세요
+	                    type: 'POST',
+	                    dataType: 'json',
+	                    data: {
+	                        imp_uid : rsp.imp_uid,
+	                        user_email : '${user.user_email}',
+	                        dv_name : $('.dv_name').text(),
+	                        dv_address1 : $('.dv_address1').text(),
+	                        dv_address2 : $('.dv_address2').text(),
+	                        dv_address3 : $('.dv_address3').text(),
+	                        dv_address4 : $('.dv_address4').text(),
+	                        dv_phone : $('.dv_phone').val(),
+	                        dv_option : $('input:radio[name="dv_option"]:checked').val(),
+	                        payment_method : $('input:radio[name="payment_method"]:checked').val(),
+	                        dv_message : $('.dv_message').val(),
+	                        total_price : $('.total_price').text()                
+	                        //기타 필요한 데이터가 있으면 추가 전달
+	                    },
+	                    success:function(result){
+	    					if(result==1){
+	        					console.log("성공");
+	        					alert(msg);
+	        					window.location = "/compliteCheckout";
+	    					}
+	        			}
+	                });
+	            } else {
+	                var msg = '결제에 실패하였습니다.';
+	                msg += '에러내용 : ' + rsp.error_msg;
+		            alert(msg);
+	            }
+	        });
+	    };
+    </script>
+    
+    <!-- <script type="text/javascript">
+		function test(){
+			$.ajax({
+                url: "/checkout", //cross-domain error가 발생하지 않도록 주의해주세요
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    imp_uid : 214124214,
+                    user_email : '${user.user_email}',
+                    dv_name : $('.dv_name').text(),
+                    dv_address1 : $('.dv_address1').text(),
+                    dv_address2 : $('.dv_address2').text(),
+                    dv_address3 : $('.dv_address3').text(),
+                    dv_address4 : $('.dv_address4').text(),
+                    dv_phone : $('.dv_phone').val(),
+                    dv_option : $('input:radio[name="dv_option"]:checked').val(),
+                    payment_method : $('input:radio[name="payment_method"]:checked').val(),
+                    dv_message : $('.dv_message').val(),
+                    total_price : $('.total_price').text()                
+                    //기타 필요한 데이터가 있으면 추가 전달
+                },
+                success:function(result){
+					if(result==1){
+    					console.log("성공");
+					}
+    			}
+            });
+		};
+    </script> -->
+    
     <script>
       function editUserInfo(obj){
     	  $(obj).hide();
           $('.user-readonly').hide();
+          $('.user-info').css("backgroundColor","#FAF9F8");
           $('.user-order-form').show();
       };
 
       function editAddressInfo(obj){
     	  $(obj).hide();
           $('.address-readonly').hide();
+          $('.address-info').css("backgroundColor","#FAF9F8");
           $('.address-order-form').show();
       };
 
       function editPaymentInfo(obj){
     	  $(obj).hide();
           $('.payment-readonly').hide();
+          $('.payment-info').css("backgroundColor","#FAF9F8");
           $('.payment-order-form').show();
       };
       
@@ -445,18 +655,34 @@
 		});
 	  };
 	  
-	  function editAddressInfoBtn(){
-		var addressForm = $(".address-order-form").serialize();
-   	  
-   		$.ajax({
-			url:"updateSubAddress",
-			type:"POST",
-			data: addressForm,
-			success:function(data){
-				console.log("성공");
-			}
-		});
+	  function editAddressInfoBtn(obj){
+		var addreeFormArray = $(".address-order-form").serializeArray(),
+	    	addressFormdataObj = {};
+		
+		for (i=0; i<addreeFormArray.length; i++) {
+			$("#"+addreeFormArray[i].name).val(addreeFormArray[i].value);
+		}
+		
+  	    $(obj).hide();
+        $('.address-readonly').show();
+        $('.address-info-btn').show();        
+        $('.address-info').css("backgroundColor","white");
+        $('.address-order-form').hide();
 	  };
+
+	  function selectAddress(obj){
+		var name = $(this).children('.selected_name').text();
+		var address1 = $(this).children('.selected_address1').text();
+		var address2 = $(this).children('.selected_address2').text();
+		var address3 = $(this).children('.selected_address3').text();
+		var address4 = $(this).children('.selected_address4').text();
+
+		$('.r_name').text(name);
+		$('.dv_address1').text(address1);
+		$('.dv_address2').text(address2);
+		$('.dv_address3').text(address3);
+		$('.dv_address4').text(address4);
+      }
     </script>
   </body>
 </html>

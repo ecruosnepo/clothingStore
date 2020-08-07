@@ -1,5 +1,6 @@
 package com.store.service;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,32 +22,14 @@ public class UserService implements UserServiceImpl {
 
 	// 화원가입
 	@Override
-	public int sUserSignUp(String email, String password, String check) throws Exception {
-	        // 이메일, 패스워드 null 체크
-		    if ( "".equals(email)  && "".equals(password)) {
-				return 0;
-			}
-			// 이메일 폼 null 체크 
-			if(null == email || "".equals(email)) { 
-				return 2; 
-			}
-			// 패스워드 폼 null 체크
-			if(null == password || "".equals(password)) {
-				return 3;
-			}	
-		    // 개인정보 동의 체크
-		    if ( null == check || "".equals(check) ) {
-		    	return 4;  	
-			}
-		    else{
-		    	dao.UserSignUp(email, password);
-				return 1;	
-		    } 
+
+	public int sUserSignUp(String email, String password, String check2) throws Exception {
+    	 return dao.UserSignUp(email, password);	
 	}                 	
 
 	// 로그인
-	@Override
-	public int sUserEmail(String email, String password) throws Exception {
+	@Override   // 20200804 UserEmail = UserLogin
+	public int sUserLogin(String email, String password) throws Exception {
 		// 이메일 폼 체크
 		if(null == email || "".equals(email)) { 
 			return 2; 
@@ -68,38 +51,12 @@ public class UserService implements UserServiceImpl {
 			// : DB에 같은 패스워드 값이 존재하지 않는다.
 			return 3;
 		}
+		UserDto dto = dao.getUserInfo(email);
+		if( dto.getUser_email().equals("manager@1") || "manager@1".equals(dto.getUser_email())) {
+			return 4;
+		}
 		 return 1;
 	}
-	// 로그인
-	   @Override   // 20200804 UserEmail = UserLogin
-	   public int sUserLogin(String email, String password) throws Exception {
-	      // 이메일 폼 체크
-	      if(null == email || "".equals(email)) { 
-	         return 2; 
-	      }
-	      
-	      // 패스워드 폼 체크
-	      if(null == password || "".equals(password)) {
-	         return 3;
-	      }      
-	      // email 체크
-	      int checkEmail = dao.UserEmail(email);
-	      if(0 == checkEmail) {
-	         // : DB에 같은 이메일 값이 존재하지 않는다.
-	         return 2;
-	      }
-	      // 패스워드 체크
-	      int checkPassword = dao.UserPassword(password);
-	      if(0 == checkPassword) {
-	         // : DB에 같은 패스워드 값이 존재하지 않는다.
-	         return 3;
-	      }
-	      UserDto dto = dao.getUserInfo(email);
-	      if( dto.getUser_email().equals("manager@1") || "manager@1".equals(dto.getUser_email())) {
-	         return 4;
-	      }
-	       return 1;
-	   }
 
 	
 	// 내 상세정보 편집
@@ -139,5 +96,10 @@ public class UserService implements UserServiceImpl {
 	@Override
 	public int sUpdatePassword(String user_password, String user_email) throws Exception {
 		return dao.updatePassword(user_password, user_email);
-	}	   
+	}
+
+	@Override
+	public int sUserEmail(String user_email) throws Exception {
+		return dao.UserEmail(user_email);
+	}
 }

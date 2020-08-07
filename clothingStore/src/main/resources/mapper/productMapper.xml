@@ -13,9 +13,19 @@
 	<select id="listProductDao" resultType="com.store.dto.ProductDto">
 		select * from products
 		<if test="cat_id!=0">
-		where cat_id=#{0}	
+		where cat_id=#{cat_id}	
 		</if>
-		 order by pd_id desc;	
+		<choose>
+			<when test='sortby eq "low_price"'>
+				order by pd_price;
+			</when>
+			<when test='sortby eq "high_price"'>
+				order by pd_price desc;
+			</when>
+			<when test='sortby eq "new"'>
+				order by pd_id desc;
+			</when>
+		</choose>
 	</select>
 	
 	<!-- 상품 상세 -->
@@ -47,7 +57,7 @@
 	<update id="updateProductDao">
 		update products set pd_model=#{pd_model}, pd_name=#{pd_name}, pd_price=#{pd_price}, pd_size=#{pd_size}, pd_color=#{pd_color}, pd_desc=#{pd_desc}, cat_id=#{cat_id}, discount=#{discount}, pd_img=#{pd_img}, pd_stock=#{pd_stock} where pd_id=#{pd_id};
 	</update>
-	
+
 	<select id="adminListProductDao" resultType="com.store.dto.ProductDto">
 		select p.pd_id, p.pd_name, p.pd_color, s.pd_size, s.pd_stock from products as p inner join stock as s on p.pd_id=s.pd_id
 		<if test="search!=null">
@@ -70,5 +80,49 @@
 	
 	<select id="adminImageDao" resultType="String">
 		select pd_img from products where pd_id=#{pd_id}
+	</select>
+
+	<!-- 상품 사이즈 목록 -->
+	<select id="listProductSizeDao" resultType="com.store.dto.ProductDto">
+		select * from products p join stock s on p.pd_id=s.pd_id
+		<if test="cat_id != null">
+		where p.cat_id=#{cat_id}
+		</if>		
+		<if test='size != null'>
+			and s.pd_size = #{size}
+		</if>
+		<if test='sortby != null'>
+			<choose>
+				<when test='sortby eq "low_price"'>
+					order by p.pd_price;
+				</when>
+				<when test='sortby eq "high_price"'>
+					order by p.pd_price desc;
+				</when>
+				<when test='sortby eq "new"'>
+					order by p.pd_id;
+				</when>
+			</choose>		
+		</if>
+	</select>
+	
+	<!-- 상품 검색 목록 -->
+	<select id="listSearchProductDao" resultType="com.store.dto.ProductDto">
+		select * from products p join stock s on p.pd_id=s.pd_id
+		where pd_name like CONCAT('%',#{keyword},'%')
+		<if test='size != null'>
+			and s.pd_size = #{size}
+		</if>
+		<choose>
+			<when test='sortby eq "low_price"'>
+				order by p.pd_price;
+			</when>
+			<when test='sortby eq "high_price"'>
+				order by p.pd_price desc;
+			</when>
+			<when test='sortby eq "new"'>
+				order by p.pd_id desc;
+			</when>
+		</choose>
 	</select>
 </mapper>

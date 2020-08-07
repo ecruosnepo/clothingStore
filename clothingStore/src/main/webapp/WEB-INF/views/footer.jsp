@@ -11,7 +11,7 @@
     footer{
         font-family: 'Nanum Myeongjo';
         width:100%;
-        background-color: lightgray;
+        background-color: #E4E4E4;
     }
     #footerP{
         margin: 0 auto;

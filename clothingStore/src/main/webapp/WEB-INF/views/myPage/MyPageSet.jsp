@@ -117,8 +117,7 @@
     <br/>
     <br/>
     <br/>
-  
-   <button><a href="updatePassword" class="btn btn-primary">비밀번호 변경</a></button>
+	   <button class="btn btn-primary" onclick = "location.href = 'updatePassword'">비밀번호 변경</button>
     <br/>
     <br/>
     <form action="deleteInfoUser" method="post">

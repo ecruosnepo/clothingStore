@@ -8,7 +8,7 @@ import lombok.Data;
 public class OrderDto {
 	private String order_id;	
 	private String user_email;
-	//주문자 이름
+	//받는 사람 이름
 	private String dv_name;
 	private String dv_address1;
 	private String dv_address2;
