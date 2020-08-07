@@ -216,7 +216,7 @@
                    관리자 계정
                 </a>
                   	<div class="dropdown-menu dropdown-menu-right">            
-                    <a class="dropdown-item" href="/myPage">관리자 페이지</a>
+                    <a class="dropdown-item" href="/adminQna">관리자 페이지</a>
                     <a class="dropdown-item" href="/logout">로그아웃</a>
                   </div>  
                    </div>

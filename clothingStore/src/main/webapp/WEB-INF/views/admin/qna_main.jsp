@@ -57,7 +57,6 @@
       <section>
       	<div id="sectDiv">
           <h1>문의 관리</h1><br><br>
-<<<<<<< HEAD
             <div class="form-check mb-2 mr-sm-2" style="float:right; ">
             	<form action="/adminQnaSearch" method="get" class="form-inline" >
 	              <select id="boardCat" name="boardCat" class="form-control" style="width: 150px; ">
@@ -72,25 +71,7 @@
 	          	  <input type="submit" class="btn btn-primary" value="검색" style="margin:5px;">
 	           </form>
 			</div>
-=======
-          <form action="/adminQnaSearch" method="get" class="form-inline" style="float:left;">
-              <div class="input-group mb-2 mr-sm-2">
-                <input type="text" class="form-control" name="keyword" id="inlineFormInputGroupUsername2" placeholder="Email or Name">
-              </div>
-              <input type="submit" class="btn btn-primary mb-2" value="검색">
-           </form>
-            <div class="form-check mb-2 mr-sm-2" style="float:right;">
-              <select id="inputState" name="boardCat" class="form-control" style="width: 200px;">
-                <option selected>== 분류 ==</option>
-                <option value="배송">배송</option>
-                <option value="결제">결제</option>
-                <option value="반품">반품</option>
-                <option value="환불">환불</option>
-                <option value="기타">기타</option>
-              </select>
-            </div>
 
->>>>>>> 65991e0a8eb195f023ebe53009a565cdcd439121
             <table class="table table-hover" id="qna">
                 <thead>
                 <tr>
