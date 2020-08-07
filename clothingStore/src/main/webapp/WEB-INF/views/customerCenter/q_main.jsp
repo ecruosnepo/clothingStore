@@ -7,6 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<% 
+	if ( session.getAttribute("email") == null && session.getAttribute("manager") == null ){   
+%>
+	<script type="text/javascript">
+		alert("로그인 후 이용해 주세요.");
+	    history.back();
+	</script>
+<%
+	}
+%>
 <style>
 	.customerManage{
 		min-height:500px;
@@ -49,9 +59,6 @@
 	}
 </style>
 </head>
-<c:if test="${ checkLogin!=1 }">
- <script>alert('회원 가입 후 이용해 주세요.'); history.back(); </script>
-</c:if>
 <jsp:include page="sideNav.jsp" flush="false" />
 <body>
 	<section  class="customerManage">
@@ -79,7 +86,9 @@
 		                  </c:if>
 		              </td>
 		              <td>${dto.boardCat}</td>
-		              <td><a href="boardListView?id=${ dto.id }" id="title">${dto.title}</a></td>
+		              <td style="max-width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+		              	<a href="boardListView?id=${ dto.id }" id="title"><c:out value="${dto.title}" /></a>
+		              </td>
 		              <td>${dto.regDate}</td>
 		          </tr>
 		         </c:forEach>

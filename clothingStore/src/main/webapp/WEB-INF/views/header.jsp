@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
- session.getAttribute("email");
-%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">	
-	
-	<!-- slick -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">   
+   
+   <!-- slick -->
     <title>메인</title>
 
     <style>
@@ -56,7 +53,7 @@
         }
         .header-wrap .dropdown > .dropdown-toggle:active {            
             pointer-events: none;
-        }
+        }x
         .navbar{
           background-color: #FAF9F8;
           padding: 25px 0 0 0;          
@@ -197,15 +194,41 @@
               <a class="header_logo" href="/"></a>
               <!-- 로그인 / 장바구니 -->
               <div class="menu_login_cart">
-                <div class="btn-group">
+               <div class="btn-group">
                	<%
-					if (session.getAttribute("email") == null ){
+					if ( session.getAttribute("email") != null ){	
 				%>
-					<button class="btn dropdown-toggle login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick = "location.href = '/login'">
+
+				<a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   내 계정
+                </a>
+                  <div class="dropdown-menu dropdown-menu-right">             
+                    <a class="dropdown-item" href="/myPage">내 계정</a>
+                    <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
+                    <a class="dropdown-item" href="/logout">로그아웃</a>
+                  </div>  
+                  </div>  
+                <%
+				 }  else if ( session.getAttribute("manager") != null ){
+                %>
+                  <a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   관리자 계정
+                </a>
+                  	<div class="dropdown-menu dropdown-menu-right">            
+                    <a class="dropdown-item" href="/adminQna">관리자 페이지</a>
+                    <a class="dropdown-item" href="/logout">로그아웃</a>
+                  </div>  
+                   </div>
+				<%
+					}else{
+				%>    
+                  <div class="btn-group">
+					<a class="btn dropdown-toggle login" href="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     	로그인
-                  	</button>
+                  	</a>
+                  	
                   	<div class="dropdown-menu dropdown-menu-right">
-                    <form class="px-4 py-3" action="/LoginForm" method="post">
+                    <form class="px-4 py-3" action="loginForm" method="post">
                       <div class="form-group">
                         <label for="exampleDropdownFormEmail1">Email address</label>
                         <input type="email" name="user_email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
@@ -228,27 +251,17 @@
                     <a class="dropdown-item" href="/login">New around here? Sign up</a>
                     <a class="dropdown-item" href="/sendEmail">Forgot password?</a>
                   </div>  
+                 </div>
                 </div>
-				<%
-					}else {
-				%>    
-			     	  <button class="btn dropdown-toggle login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick = "location.href = '/myPage'">
-	                  	내 계정
-		              </button>
-	           		  <div class="dropdown-menu dropdown-menu-right">             
-	                    <a class="dropdown-item" href="/myPage">내 계정</a>
-	                    <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
-	                    <a class="dropdown-item" href="/Logout">로그아웃</a>
-	                  </div>  
-	                </div>
 				<%
 					} 
 				%> 
                 <div class="btn-group">
 	                <button type="button" class="btn cart" onclick = "location.href = '/cart'">
 	                  장바구니
-	                </button>                
+	                </button>  
                 </div>
+                
               </div>
               <!-- 고객센터 -->
               <div class="menu_service">
@@ -298,10 +311,7 @@
                   </form>
                 </div>
               </nav>
-          </div>  
-      </header>
-    </div>    
-
+		</header>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>

@@ -66,7 +66,7 @@
 			
           <form action="/adminPdSearch" method="get" class="form-inline">
               <div class="input-group mb-2 mr-sm-2">
-                <input type="text" name="search" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Product or Category ">
+                <input type="text" name="search" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Product or Category" value="${search }">
               </div>
               <input type="submit" class="btn btn-primary mb-2" value="검색">
             </form>
@@ -98,13 +98,13 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group mr-2" role="group" aria-label="First group">
                 		<c:if test="${page.startPageIdx > 1}">
-                   			<button type="button" class="btn btn-secondary" onclick="location.href='/adminPdList?page=${page.thisPage-1}' ">prev</button>
+                   			<button type="button" class="btn btn-secondary" onclick="location.href='/adminPdSearch?page=${page.thisPage-1}&search=${search }' ">prev</button>
                    		</c:if>
                  <c:forEach varStatus="num" begin="${page.startPageIdx}" end="${ page.endPageIdx }" >
-		         	<button type="button" class="btn btn-secondary" onclick="location.href='/adminPdList?page=${num.index}' ">${num.index}</button>
+		         	<button type="button" class="btn btn-secondary" onclick="location.href='/adminPdSearch?page=${num.index}&search=${search }' ">${num.index}</button>
 		         </c:forEach>
                    <c:if test="${page.totalPage > page.endPageIdx}">
-                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminPdList?page=${page.thisPage+1}' ">next</button>
+                   		<button type="button" class="btn btn-secondary" onclick="location.href='/adminPdSearch?page=${page.thisPage+1}&search=${search }' ">next</button>
                    </c:if>
                 </div>
             </div>

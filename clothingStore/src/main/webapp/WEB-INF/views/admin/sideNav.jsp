@@ -44,16 +44,26 @@
     .sidenav a {font-size: 18px;}
     } */
 </style>
-
+<%-- <% 
+	if ( session.getAttribute("manager") == null ){
+%>
+	<script type="text/javascript">
+		alert("관리자만 이용 가능한 페이지 입니다.");
+	    history.back();
+	</script>
+<%
+	}
+%> --%>
 <div class="container q_wrap">           
     <div class="center-block" style="width: 100%;">
 		<div class="row">
 			<aside class="sidenav">
-			  <h3><a href="/admin">관리자 페이지</a></h3><br>
-			  <h5><a href="adminProductList">상품 관리</a></h5><br>
-			  <h5><a href="/adminProduct">상품 등록</a></h5><br>
-			  <h5><a href="/adminQna">고객 문의 관리</a></h5><br>
-			  <h5><a href="/adminMember">고객관리</a></h5><br>
+				<h3><a href="/admin">관리자 페이지</a></h3><br>
+				<h5><a href="/adminMember">고객관리</a></h5><br>
+				<h5><a href="/adminQna">고객 문의 관리</a></h5><br>
+				<h5><a href="/adminPdList">상품 관리</a></h5><br>
+				<h5><a href="/adminAddPd">상품 등록</a></h5><br>
+			 	<h5><a href="adminOrderList">주문현황</a></h5><br>
 		 	</aside>
  		</div>
  	</div>

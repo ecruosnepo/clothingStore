@@ -5,6 +5,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.store.dao.OrderDao"> 
+<<<<<<< HEAD
 	<select id="userOrderListDao" resultType="com.store.dto.OrderDto"> 
 		select id, productName from prodect.order where user_email=#{user_email} order by payDate desc
 	</select>
@@ -12,8 +13,29 @@
 	<insert id="addOrderDao" parameterType="com.store.dto.OrderDto"> 
 		insert into `order` (order_id, user_email, dv_name, dv_address1, dv_address2, dv_address3, dv_address4, dv_phone, dv_option, dv_message, total_price, payment_method) values (#{order_id}, #{user_email}, #{dv_name}, #{dv_address1}, #{dv_address2}, #{dv_address3}, #{dv_address4}, #{dv_phone}, #{dv_option}, #{dv_message}, #{total_price}, #{payment_method});
 	</insert>
+=======
+<select id="userOrderListDao" resultType="com.store.dto.OrderDto"> 
+	select id, productName from project.order where user_email=#{user_email} order by payDate desc
+</select>
+
+<select id="adminOrderListDao" resultType="com.store.dto.OrderDto"> 
+	select order_id, user_email, total_price, order_state, payDate from shop.order order by payDate DESC
+</select>
+
+<select id="adminOrderCountDao" resultType="_int">
+	select count(*) from shop.order;
+</select>
+
+<select id="adOrderViewDao" resultType="com.store.dto.OrderDto" >
+	select * from shop.order where order_id=#{order_id}
+</select>
+>>>>>>> 512b94028e82342e623c68762f5d3d882b0ecf39
 	
-	<insert id="addOrderDetailDao"> 
-		insert into order_detail (order_id, pd_id, pd_size, pd_quantity) select #{order_id}, pd_id, pd_size, pd_quantity from cart where email=#{user_email}; 
-	</insert>
+<insert id="addOrderDao" parameterType="com.store.dto.OrderDto"> 
+	insert into `order` (order_id, user_email, dv_name, dv_address1, dv_address2, dv_address3, dv_address4, dv_phone, dv_option, dv_message, total_price, payment_method) values (#{order_id}, #{user_email}, #{dv_name}, #{dv_address1}, #{dv_address2}, #{dv_address3}, #{dv_address4}, #{dv_phone}, #{dv_option}, #{dv_message}, #{total_price}, #{payment_method});
+</insert>
+
+<insert id="addOrderDetailDao"> 
+	insert into order_detail (order_id, pd_id, pd_size, pd_quantity) select #{order_id}, pd_id, pd_size, pd_quantity from cart where email=#{user_email}; 
+</insert>
 </mapper>
