@@ -23,7 +23,7 @@ public class AddressController {
 	    // 회원 주소록 새 주소 추가
 		@RequestMapping(value="/insertSubAddress", method = RequestMethod.GET)
 		public String insertsubAddress() throws Exception {
-		   return "/myPage/insertSubAddress";
+		   return "/user/insertSubAddress";
 		}
 		// insert
 		@RequestMapping(value="/insertSubAddressForm", method = RequestMethod.POST) 
@@ -36,9 +36,9 @@ public class AddressController {
 			String email = (String)session.getAttribute("email");
 			if ( null != email ) {
 				addressService.sInsertSubAddress(email, r_name, address1, address2, address3, address4);
-				return "/myPage/insertSubAddressAction";
+				return "/user/insertSubAddressAction";
 			}
-			 return "/myPage/insertSubAddressAction";
+			 return "/user/insertSubAddressAction";
 		}
 		
 		// 회원 주소록 새 주소 편집
@@ -49,9 +49,9 @@ public class AddressController {
         	model.addAttribute("address", aDto);
         	if ( null != email ) {
         	
-            	return "/myPage/updateSubAddress";
+            	return "/user/updateSubAddress";
 			}
-        	return "/myPage/updateSubAddress";
+        	return "/user/updateSubAddress";
         } 
         // update
         @RequestMapping(value="/updateSubAddressForm", method = RequestMethod.POST)
@@ -65,9 +65,9 @@ public class AddressController {
             String user_email = (String)session.getAttribute("email");   
 		    if ( null != user_email) {
 			  addressService.sUpdateSubAddress(r_name, address1, address2 ,address3, address4, user_email, address_index);
-			  return "/myPage/updateSubAddressAction";		  
+			  return "/user/updateSubAddressAction";		  
 		    }
-		  return "/myPage/updateSubAddressAction";		
+		  return "/user/updateSubAddressAction";		
          }
         
         @RequestMapping(value="/deleteSubAddress", method = RequestMethod.GET)
@@ -76,9 +76,9 @@ public class AddressController {
         	String email = (String)session.getAttribute("email");
         	if ( null != email) {
         	addressService.sDeleteSubAddress(email, address_index);
-        	return "/myPage/deleteSubAddressAction";
+        	return "/user/deleteSubAddressAction";
         	}
-			return "/myPage/deleteSubAddressAction";
+			return "/user/deleteSubAddressAction";
         }
         
         

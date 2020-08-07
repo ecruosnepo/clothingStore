@@ -1,5 +1,6 @@
 package com.store.dao;
 
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,6 +13,7 @@ public interface UserDao {
 	 
 	 public int UserSignUp(@Param("user_email")String user_email, @Param("user_password")String user_password) throws Exception;
 
+	 // SELECT COUNT USER_EMAIL
      public int UserEmail(@Param("user_email")String user_email) throws Exception;
      
      public int UserPassword(@Param("user_password")String user_password) throws Exception;
@@ -41,4 +43,6 @@ public interface UserDao {
      // UPDATE USER_PASSWORD 
      public int updatePassword(@Param("user_password")String user_password,
                                @Param("user_email")String user_email) throws Exception;
-}
+
+	
+}    

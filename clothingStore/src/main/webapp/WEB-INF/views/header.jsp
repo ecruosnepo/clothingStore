@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
- session.getAttribute("email");
-%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -56,7 +53,7 @@
         }
         .header-wrap .dropdown > .dropdown-toggle:active {            
             pointer-events: none;
-        }
+        }x
         .navbar{
           background-color: #FAF9F8;
           padding: 25px 0 0 0;          
@@ -189,15 +186,41 @@
               <a class="header_logo" href="/"></a>
               <!-- 로그인 / 장바구니 -->
               <div class="menu_login_cart">
-                <div class="btn-group">
+               <div class="btn-group">
+              
                	<%
-					if (session.getAttribute("email") == null ){
+					if ( session.getAttribute("email") != null ){	
 				%>
-					<a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   내 계정
+                </a>
+                  <div class="dropdown-menu dropdown-menu-right">             
+                    <a class="dropdown-item" href="/myPage">내 계정</a>
+                    <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
+                    <a class="dropdown-item" href="/logout">로그아웃</a>
+                  </div>  
+                  </div>  
+                <%
+				 }  else if ( session.getAttribute("manager") != null ){
+                %>
+                  <a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   관리자 계정
+                </a>
+                  	<div class="dropdown-menu dropdown-menu-right">            
+                    <a class="dropdown-item" href="/myPage">관리자 페이지</a>
+                    <a class="dropdown-item" href="/logout">로그아웃</a>
+                  </div>  
+                   </div>
+				<%
+					}else{
+				%>    
+                  <div class="btn-group">
+					<a class="btn dropdown-toggle login" href="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     	로그인
                   	</a>
+                  	 
                   	<div class="dropdown-menu dropdown-menu-right">
-                    <form class="px-4 py-3" action="/LoginForm" method="post">
+                    <form class="px-4 py-3" action="loginForm" method="post">
                       <div class="form-group">
                         <label for="exampleDropdownFormEmail1">Email address</label>
                         <input type="email" name="user_email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
@@ -220,18 +243,7 @@
                     <a class="dropdown-item" href="#">New around here? Sign up</a>
                     <a class="dropdown-item" href="#">Forgot password?</a>
                   </div>  
-                </div>
-				<%
-					}else {
-				%>    
-					<a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    	내 계정
-                  	</a>
-                  	<div class="dropdown-menu dropdown-menu-right">             
-                    <a class="dropdown-item" href="/myPage">내 계정</a>
-                    <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
-                    <a class="dropdown-item" href="/Logout">로그아웃</a>
-                  </div>  
+                 </div>
                 </div>
 				<%
 					} 
@@ -241,6 +253,7 @@
 	                  장바구니
 	                </a>                
                 </div>
+                
               </div>
               <!-- 고객센터 -->
               <div class="menu_service">
@@ -291,14 +304,7 @@
                 </div>
               </nav>
           </div>  
-      </header>
-    </div>    
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-	<!-- 카트 버튼 -->
+          </header>
+    </div>   
   </body>
 </html>
