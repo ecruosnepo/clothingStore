@@ -55,8 +55,8 @@
 		    <h1>문의 내용</h1><br><br>
 			
 		   <nav id="navbar-example2" class="navbar navbar-light bg-light">
-		     <h2>제목 : ${dto.title}</h2>
-		     <p><a href="#">${ dto.user_email }님</a>&nbsp; 문의</p>
+		     <h2 style="max-height:100px">제목 : <c:out value="${dto.title}" /></h2>
+		     <p><a href="adminMemSearch?search=${ dto.user_email }">${ dto.user_email }님</a>&nbsp; 문의</p>
 		   </nav>
 		   <div id="sectionDiv" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
 		     <select id="disabledSelect" class="form-control" disabled>
@@ -64,21 +64,41 @@
 		     </select>
 		     <h4 id="fat">문의내용</h4>
 		     <c:if test="${ dto.file!='' || dto.file==null }">
-		     	<h6 style="float: right;">첨부파일 : <a href="/questionFile/${dto.file}">${dto.file}</a></h6><br>
+		     	<h6 style="float: right;" >
+		     		첨부파일 :
+		     		<a type="button" id="file" data-toggle="modal" data-target="#exampleModal" >${dto.file}</a>
+		     	</h6><br>
 		     </c:if>
 		     <c:if test="${ dto.orderId!=0 || dto.orderId==null }">
 		     	<h6 style="float: right;"><a href=#>주문번호 : ${dto.orderId}</a></h6>
 		     </c:if>
-		     <p id="write">${dto.question}</p>
+		     <p id="write"><c:out value="${dto.question}" /></p>
 		     <h4 id="fat">답변내용</h4>
 		     <form action="/adminQnaUpdate?id=${dto.id}" method="post" >
 			     <div class="form-group">
-	                  <textarea class="form-control" name="answer" id="exampleFormControlTextarea1" rows="10" placeholder="답변 작성">${dto.answer}</textarea>
+	                  <textarea class="form-control" name="answer" id="exampleFormControlTextarea1" rows="10" placeholder="답변 작성"><c:out value="${dto.answer}" /></textarea>
 	             </div>
 		         <button type="button" class="btn btn-danger" onclick="deleteClick();">삭제</button>
 		         <input type="submit" class="btn btn-info">
 		   		</form>
 		   </div>
+		</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body" id="modal-body">
+		        <img src="questionFile/${dto.file}" style="max-width: 100%;">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 	</section>
 	<jsp:include page="../footer.jsp" flush="false" />
@@ -108,6 +128,12 @@
 		if(del){
 			location.href="/adminQnaDelete?id="+boardId;
 		}
+	}
+	
+	var imgSrc= $("#file").text();
+	/* 이미지파일이 아닐 경우 이미지 표시 안 함.  */
+	if(imgSrc.match(".jpg")==null && imgSrc.match(".png")==null ){
+		document.getElementById('modal-body').innerHTML="<a href=''>${dto.file}</a>";
 	}
 </script>
 

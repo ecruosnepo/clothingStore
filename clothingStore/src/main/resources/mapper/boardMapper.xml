@@ -43,7 +43,20 @@
 </delete>
 
 <update id="boardUpdateDao" parameterType="hashMap"> 
-	update board set title=#{title}, question=#{question}, boardCat=#{boardCat}, file=#{file}, orderId=#{orderId}, regDate=now() WHERE id=#{id}
+	update board set 
+	<choose>
+	    <when test='file == null || file == "" '>
+	      title=#{title}, question=#{question}, boardCat=#{boardCat}, orderId=#{orderId}, regDate=now() 
+	    </when>
+	    <otherwise>
+	      title=#{title}, question=#{question}, boardCat=#{boardCat}, file=#{file}, orderId=#{orderId}, regDate=now() 
+	    </otherwise>
+  	</choose>
+	WHERE id=#{id}
+</update> 
+
+<update id="fileDeleteDao" > 
+	update board set file='' WHERE file=#{file}
 </update> 
 
 <select id="boardFileNameListDao" resultType="String">
@@ -58,5 +71,12 @@
 	delete from board where user_email=#{user_email}
 </delete>
 
+<select id="bIdFindFileDao" resultType="String">
+		select file from board where id=#{id}
+</select>
+
+<select id="bEmailFindFileDao" resultType="String">
+		select file from board where user_email=#{user_email}
+</select>
 </mapper>
 

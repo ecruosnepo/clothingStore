@@ -6,24 +6,19 @@ import lombok.Data;
 
 @Data
 public class OrderDto {
-
-	private int order_id;
-	
+	private String order_id;	
 	private String user_email;
+	//주문자 이름
+	private String dv_name;
 	private String dv_address1;
 	private String dv_address2;
 	private String dv_address3;
 	private String dv_address4;
-	private String dv_option;
+	private String dv_phone;
+	private String dv_option;//배송료
 	private String dv_message;
-	private int total;
+	private int total_price;//배송료 포함 총금액
 	private String payment_method;
 	private Date payDate;
 	private String order_state;
-	
-	//orderDetail
-	private int pd_id;
-	private String pd_size;
-	private String pd_quantity;
-	private String price_sum;
 }

@@ -71,20 +71,27 @@ public class UserController {
 		return "login";
 	}	
 	
-	@RequestMapping(value="/LoginForm", method = RequestMethod.POST)
-	public String UserLogin(@RequestParam("user_email") String email, 
-			                @RequestParam("user_password") String password,
-			                Model model, HttpSession session) {
-		try {
-			result = userService.sUserEmail(email, password);
+	@RequestMapping(value="/loginForm", method = RequestMethod.POST)
+	   public String UserLogin(@RequestParam("user_email") String email, @RequestParam("user_password") String password,
+               Model model, HttpSession session) {
+		
+		try {            // 20200804 UserEmail = UserLogin
+			result = userService.sUserLogin(email, password);
 		} catch(Exception e) {
 			e.printStackTrace();
 			result = 0;
 		}
+		if ( 4 == result ) {
+			model.addAttribute("result", result);
+			session.setAttribute("manager", email);
+			session.setMaxInactiveInterval(60*60);
+		return "/user/loginAction";
+		}
 		// 세션생성
+		model.addAttribute("result", result);
 		session.setAttribute("email", email);
-		model.addAttribute("result", result);		
-		return "loginAction";
+		session.setMaxInactiveInterval(60*60);
+		return "/user/loginAction";
 	}
 	
 	// 로그아웃

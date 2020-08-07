@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.store.dao.AddressDao;
 import com.store.dao.UserDao;
 import com.store.dto.UserDto;
 
@@ -43,7 +42,7 @@ public class UserService implements UserServiceImpl {
 		    	dao.UserSignUp(email, password);
 				return 1;	
 		    } 
-}                 	
+	}                 	
 
 	// 로그인
 	@Override
@@ -71,6 +70,37 @@ public class UserService implements UserServiceImpl {
 		}
 		 return 1;
 	}
+	// 로그인
+	   @Override   // 20200804 UserEmail = UserLogin
+	   public int sUserLogin(String email, String password) throws Exception {
+	      // 이메일 폼 체크
+	      if(null == email || "".equals(email)) { 
+	         return 2; 
+	      }
+	      
+	      // 패스워드 폼 체크
+	      if(null == password || "".equals(password)) {
+	         return 3;
+	      }      
+	      // email 체크
+	      int checkEmail = dao.UserEmail(email);
+	      if(0 == checkEmail) {
+	         // : DB에 같은 이메일 값이 존재하지 않는다.
+	         return 2;
+	      }
+	      // 패스워드 체크
+	      int checkPassword = dao.UserPassword(password);
+	      if(0 == checkPassword) {
+	         // : DB에 같은 패스워드 값이 존재하지 않는다.
+	         return 3;
+	      }
+	      UserDto dto = dao.getUserInfo(email);
+	      if( dto.getUser_email().equals("manager@1") || "manager@1".equals(dto.getUser_email())) {
+	         return 4;
+	      }
+	       return 1;
+	   }
+
 	
 	// 내 상세정보 편집
 	@Override

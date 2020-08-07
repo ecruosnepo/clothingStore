@@ -8,6 +8,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<% 
+	if ( session.getAttribute("email") == null && session.getAttribute("manager") == null ){   
+%>
+	<script type="text/javascript">
+		alert("로그인 후 이용해 주세요.");
+	    history.back();
+	</script>
+<%
+	}
+%>
 <style>
       section{
 		 min-height:400px;
@@ -35,6 +45,16 @@
 		margin-left: 20%;
 		max-width:50%;
 	}
+	.img_wrap {
+         width: 300px;
+     }
+     .img_wrap img {
+         max-width: 100%;
+         margin: 10px;
+     }
+     #inputFile{
+     	margin-bottom: 10px;
+     }
 </style>
 </head>
 <body>
@@ -64,7 +84,7 @@
                   <option disabled selected>=== 선택 ===</option>
                   <option value="배송">배송</option>
                   <option value="결제">결제</option>
-                  <option value="반품">반품</option>
+                  <option value="교환">교환</option>
                   <option value="환불">환불</option>
                   <option value="기타">기타</option>
                 </select>
@@ -108,8 +128,11 @@
               </div>
           </div>
           <div>
-              <input name="uploadFile" type="file" >
-          </div><br><br>
+              <input name="uploadFile" id="inputFile" type="file" >
+          </div>
+          <div class="img_wrap">
+            <img id="img" />
+          </div>
           <input type="submit" value="확인" class="btn btn-primary btn-ms">
           <button type="button" onclick="location.href='/customerQna' " class="btn btn-secondary btn-ms">취소</button>
       </form>
@@ -117,7 +140,7 @@
   </section>
 <jsp:include page="../footer.jsp" flush="false" />
 
-<script>
+<script type="text/javascript">
 //체크박스 하나만 선택
 	function doOpenCheck(chk){
 	    var obj = document.getElementsByName("orderId");
@@ -126,6 +149,39 @@
 	            obj[i].checked = false;
 	        }
 	    }
+	}
+
+    var sel_file;
+
+    $(document).ready(function() {
+        $("#inputFile").on("change", imgFileSelect);
+    }); 
+
+    function imgFileSelect(e) {
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+
+        filesArr.forEach(function(f) {
+            if(!f.type.match("image.*")) {
+            	$("#img").hide();
+                return;
+            }
+
+            sel_file = f;
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            	$("#img").show();
+                $("#img").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+    
+	var imgSrc= $('#img').attr('src');
+	/* 이미지파일이 아닐 경우 이미지 표시 안 함.  */
+	if(!(imgSrc.match(".jpg"))){
+		$("#img").hide();	
 	}
 </script>
 </body>

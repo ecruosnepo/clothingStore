@@ -118,11 +118,7 @@
     <br/>
     <br/>
   
-<<<<<<< HEAD
-   <button><a href="getpass.html" class="btn btn-primary">비밀번호 변경</a></button>
-=======
    <button><a href="updatePassword" class="btn btn-primary">비밀번호 변경</a></button>
->>>>>>> 65991e0a8eb195f023ebe53009a565cdcd439121
     <br/>
     <br/>
     <form action="deleteInfoUser" method="post">

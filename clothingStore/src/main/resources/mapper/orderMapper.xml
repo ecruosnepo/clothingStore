@@ -8,4 +8,17 @@
 <select id="userOrderListDao" resultType="com.store.dto.OrderDto"> 
 	select id, productName from project.order where user_email=#{user_email} order by payDate desc
 </select>
+
+<select id="adminOrderListDao" resultType="com.store.dto.OrderDto"> 
+	select order_id, user_email, total_price, order_state, payDate from shop.order order by payDate DESC
+</select>
+
+<select id="adminOrderCountDao" resultType="_int">
+	select count(*) from shop.order;
+</select>
+
+<select id="adOrderViewDao" resultType="com.store.dto.OrderDto" >
+	select * from shop.order where order_id=#{order_id}
+</select>
+
 </mapper>

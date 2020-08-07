@@ -1,5 +1,6 @@
 package com.store.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.store.dto.BoardDto;
 import com.store.dto.OrderDto;
-import com.store.service.DefaultService;
 import com.store.service.BoardService;
+import com.store.service.DefaultService;
+
 
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=1024*1024*50)
 @Controller
@@ -74,12 +77,12 @@ public class CustController {
 	public String qnaWrite(HttpSession session, Model model) {
 		String userId = (String) session.getAttribute("email");
 		List<OrderDto> order=service.boardOrderViewService(userId);
-		model.addAttribute("orderList", order) ;
-		return "customerCenter/q_write"; 
+		model.addAttribute("orderList", order);
+		return "customerCenter/q_write";
 	}
 	
 	@RequestMapping("/customerWrite")
-	public String qnaWrite(BoardDto bDto, @RequestParam(name="orderId", defaultValue="0")Integer orderId, 
+	public String qnaWrite(BoardDto bDto, @RequestParam(name="orderId", defaultValue="0")Integer orderId,
 			HttpServletRequest req, HttpSession session, Model model) {
 		
 		String user_email = (String) session.getAttribute("email");
@@ -98,7 +101,6 @@ public class CustController {
 			
 		}else {
 			//정상적으로 모두 입력 되었을 때
-			
 			//첨부파일 받기
 			Part filePart=null;
 			String realPath="";
@@ -124,7 +126,7 @@ public class CustController {
 	}
 	
 	@RequestMapping(value="/boardListView")
-	public String listView(@RequestParam("id")int id, Model model) {
+	public String boardListView(@RequestParam("id")int id, Model model) {
 		BoardDto dto=service.boardListViewService(id);
 		
 		model.addAttribute("dto",dto);
@@ -132,23 +134,23 @@ public class CustController {
 	}
 	
 	@RequestMapping(value="/boardDelete", method = RequestMethod.GET)
-	public String delete(@RequestParam("id")int id) {
-		System.out.println("문의 삭제");
-		service.boardDeleteService(id);
+	public String boardDelete(@RequestParam("id")int id, HttpServletRequest req) {
+		String realPath=req.getServletContext().getRealPath("/resources/questionFile");
+		service.boardDeleteService(id, realPath);
 		return "redirect:customerQna"; 
 	}
 	@RequestMapping(value="/boardUpdateForm", method = RequestMethod.GET)
-	public String updateForm(@RequestParam("id")int id, Model model) {
+	public String boardUpdateForm(@RequestParam("id")int id, Model model) {
 		
 		Map<String,Object> map=service.boardUpdateFormService(id);
 		model.addAttribute("dto", map.get("dto"));
-		model.addAttribute("otherCatList", map.get("otherCatList"));
+		model.addAttribute("list", map.get("catList"));
 		model.addAttribute("orderList", map.get("orderList"));
 		return "customerCenter/q_update";
 	}
 	
 	@RequestMapping("/boardUpdate")
-	public String update( BoardDto bDto, HttpServletRequest req, Model model) {
+	public String boardupdate( BoardDto bDto, HttpServletRequest req, Model model) throws IOException, ServletException {
 		
 		//게시판 글쓰기 확인 값  1:제목미기재 10:글쓰기 성공
 		int result=10;
@@ -160,27 +162,53 @@ public class CustController {
 			return "customerCenter/q_update";
 		}
 		
-		//첨부 파일 받기
-		Part filePart=null;
-		String realPath="";
+		//새로 올라온 파일
+		Part filePart=req.getPart("uploadFile");
+		//기존에 올렸던 파일
+		String oldFile=req.getParameter("oldFile");
+		String realPath=req.getServletContext().getRealPath("/resources/questionFile");
+		String fileName;
 		
-		try {
-			filePart = req.getPart("uploadFile");
-			realPath=req.getServletContext().getRealPath("/resources/questionFile");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ServletException e) {
-			e.printStackTrace();
+		//기존에 올렸던 파일이 없을 경우
+		if("questionFile/".equals(oldFile)) {
+			fileName=service.boardFileUploadService(filePart, realPath);
+		}else {
+			//기존 올렸던 파일이 있을 경우
+			fileName=service.boardFileUploadService(filePart, realPath, oldFile);
 		}
-		String fileName=service.boardFileUploadService(filePart, realPath);
 		
-		//boardDto에 file이름 추가
-		bDto.setFile(fileName);
+		if("".equals(fileName)) {
+			
+		}else {
+			//boardDto에 file이름 추가
+			bDto.setFile(fileName);
+		}
+		
 		service.boardUpdateService(bDto);
 		
 		model.addAttribute("result", result);
 		
 		return "customerCenter/q_update"; 
 	}
+	@RequestMapping("/fileDelete")
+	public @ResponseBody int fileDelete(@RequestParam("file") String file, HttpServletRequest req) {
+		System.out.println(file);
+		String realPath=req.getServletContext().getRealPath("/resources/questionFile");
+		String filePath=realPath + "/" +file;
+		System.out.println("filePath"+filePath);
+		File delfile = new File(filePath);
+		
+		if(delfile.exists()) {
+			System.out.println("파일 있음"+delfile);
+			delfile.delete();
+		}
+		
+		int result=service.fileDeleteService(file);
+		
+		return result;
+	}
+		
+		
+	
 	
 }

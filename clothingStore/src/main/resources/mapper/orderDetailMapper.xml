@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.store.dao.OrderDetailDao"> 
+	<select id="orderDetailListDao" resultType="com.store.dto.OrderDetailDto">
+		SELECT o.order_id, o.pd_size, o.pd_quantity, o.price_sum, p.pd_name, p.pd_price 
+		FROM shop.order_detail as o join shop.products as p on o.pd_id=p.pd_id where o.order_id=#{order_id};
+	</select>
+
+</mapper>

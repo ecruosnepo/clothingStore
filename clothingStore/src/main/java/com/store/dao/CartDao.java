@@ -18,6 +18,6 @@ public interface CartDao {
 	public CartDto cartDuplicateCheckDao(@Param("email")String email, @Param("pd_id")int pd_id, @Param("pd_size")String pd_size);
 	//관리자페이지
 	//회원삭제시- Cart 삭제
-	public void deleteUserCartDao(String email);
+	public void deleteUserCartDao(String user_email);
 	public int updateDuplicateCartDao(int cart_id);
 }

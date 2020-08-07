@@ -49,7 +49,7 @@
         <h3><p>로그인</p></h3>
         <br>
         <div class="input">
-            <form action="LoginForm" method="post">
+            <form action="loginForm" method="post">
                 <div class="form-group">
                     <h4>이메일</h4><h4 style="color: red;">*</h4><br>
                     <input required type="text" class="form-control" id="exampleInputEmail1" name="user_email" >

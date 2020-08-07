@@ -21,6 +21,10 @@ public interface BoardDao {
 	public void boardDeleteListDao(@Param("id")int id);
 	public void boardUpdateDao(BoardDto bDto);
 	public List<String> boardFileNameListDao();
+	public int fileDeleteDao(@Param("file")String file);
+	//boardId로 파일명 찾기
+	public String bIdFindFileDao(@Param("id")int id);
+	
 	
 	//관리자 페이지
 	//문의글 답변 작성
@@ -35,4 +39,6 @@ public interface BoardDao {
 	public int boardListAllCountDao(@Param("search") String search, @Param("boardCat") String boardCat);
 	//회원삭제시- 문의글 삭제
 	public void boardDelUserDao(@Param("user_email")String user_email);
+	//userEmail로 파일명 찾기
+	public List<String> bEmailFindFileDao(@Param("user_email")String user_email);
 }
