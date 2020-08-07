@@ -57,7 +57,31 @@
 	<update id="updateProductDao">
 		update products set pd_model=#{pd_model}, pd_name=#{pd_name}, pd_price=#{pd_price}, pd_size=#{pd_size}, pd_color=#{pd_color}, pd_desc=#{pd_desc}, cat_id=#{cat_id}, discount=#{discount}, pd_img=#{pd_img}, pd_stock=#{pd_stock} where pd_id=#{pd_id};
 	</update>
+
+	<select id="adminListProductDao" resultType="com.store.dto.ProductDto">
+		select p.pd_id, p.pd_name, p.pd_color, s.pd_size, s.pd_stock from products as p inner join stock as s on p.pd_id=s.pd_id
+		<if test="search!=null">
+			where p.pd_name like #{search} or p.cat_id=ANY(select cat_id from categorys where cat_name like #{search})
+		</if>
+		order by p.pd_id;
+	</select>
 	
+	<select id="listPdCountDao" resultType="_int">
+		select count(*) from products as p inner join stock as s on p.pd_id=s.pd_id
+		<if test="search!=null">
+			where p.pd_name like #{search} or p.cat_id=ANY(select cat_id from categorys where cat_name like #{search})
+		</if>
+		order by p.pd_id;
+	</select>
+	
+	<delete id="adminDeletePdsDao">
+		delete from products where pd_id=#{pd_id}
+	</delete>
+	
+	<select id="adminImageDao" resultType="String">
+		select pd_img from products where pd_id=#{pd_id}
+	</select>
+
 	<!-- 상품 사이즈 목록 -->
 	<select id="listProductSizeDao" resultType="com.store.dto.ProductDto">
 		select * from products p join stock s on p.pd_id=s.pd_id

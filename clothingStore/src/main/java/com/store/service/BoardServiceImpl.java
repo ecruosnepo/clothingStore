@@ -61,7 +61,18 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void boardDeleteService(int id) {
+	public void boardDeleteService(int id, String realPath) {
+		
+		String fileName=dao.bIdFindFileDao(id);
+		String filePath=realPath + "/" +fileName;
+		File delFile = new File(filePath);
+		System.out.println(filePath);
+		if(delFile.exists()) {
+			System.out.println("파일 있음"+delFile);
+			delFile.delete();
+		}else
+			System.out.println("파일 없음");
+		
 		dao.boardDeleteListDao(id);
 	}
 
@@ -74,18 +85,12 @@ public class BoardServiceImpl implements BoardService{
 		List<String> list=new ArrayList<String>();
 		list.add("배송");
 		list.add("결제");
-		list.add("반품");
+		list.add("교환");
 		list.add("환불");
 		list.add("기타");
 		
-		for (int i = 0; i < list.size(); i++) {
-			if(dto.getBoardCat().equals(list.get(i))) {
-				list.remove(i);
-			}
-		}
-		
 		map.put("dto",dto);
-		map.put("otherCatList", list);
+		map.put("catList", list);
 		map.put("orderList", order);
 		
 		return map;
@@ -95,12 +100,13 @@ public class BoardServiceImpl implements BoardService{
 	public void boardUpdateService(BoardDto bDto) {
 		dao.boardUpdateDao(bDto);
 	}
-
+	
 	//파일 올려주고 filename 리턴 메소드
 	@Override
 	public String boardFileUploadService(Part filePart, String realPath) {
 		
 		String fileName="";
+		
 		try {
 			fileName=filePart.getSubmittedFileName();
 			//파일이 없을 경우 공백 리턴
@@ -108,7 +114,6 @@ public class BoardServiceImpl implements BoardService{
 				return "";
 			}
 			
-			//기존 저장된 파일이름 불러오기
 			List<String> oFileNames=dao.boardFileNameListDao();
 			//파일이름 중복 제거
 			for(int i=0; i<oFileNames.size();i++) {
@@ -130,14 +135,35 @@ public class BoardServiceImpl implements BoardService{
 			while((size=fis.read(buf)) != -1) {
 				fos.write(buf,0,size);
 			}
-			
-			fos.close();
-			fis.close();
-			
+				fos.close();
+				fis.close();
+				
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return fileName;
+	}
+	
+	public String boardFileUploadService(Part filePart, String realPath, String oldFile) {
+		String filePath=realPath +"../../"+ oldFile;
+		File oFile = new File(filePath);
+		String newFile=filePart.getSubmittedFileName();
+		
+		//기존 파일에서 새로운 파일로 바뀌었을 때
+		if(!(newFile==null || "".equals(newFile))) {
+			if(oFile.exists()) {
+				System.out.println("파일 있음"+oFile);
+				oFile.delete();
+			}else
+				System.out.println("파일 없음");
+		}
+		//기존 파일이 있지만 파일 수정은 없을 경우
+		return boardFileUploadService(filePart, realPath);
+	}
+	@Override
+	public int fileDeleteService(String file) {
+		int result=dao.fileDeleteDao(file);
+		return result;
 	}
 	
 	

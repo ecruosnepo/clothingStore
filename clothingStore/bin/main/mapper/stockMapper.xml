@@ -7,4 +7,10 @@
 	<insert id="addStockDao">
 		insert into stock (pd_id, pd_stock, pd_size) values (#{pd_id}, #{pd_stock}, #{pd_size});
 	</insert>
+	<select id="countStockDao" resultType="_int" >
+		select count(*) from stock where pd_id=#{pd_id}
+	</select>
+	<delete id="deleteStockDao">
+		delete from stock where pd_size=#{pd_size} and pd_id=#{pd_id}
+	</delete>
 </mapper>

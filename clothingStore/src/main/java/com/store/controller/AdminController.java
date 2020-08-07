@@ -3,6 +3,8 @@ package com.store.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,8 +79,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/adminQnaDelete")
-	public String adminQnaDelete(@RequestParam("id")int id) {
-		service.adminQnaDeleteService(id);
+	public String adminQnaDelete(@RequestParam("id")int id, HttpServletRequest req) {
+		String realPath=req.getServletContext().getRealPath("/resources/questionFile");
+		service.adminQnaDeleteService(id,realPath);
+		
 		return "redirect:adminQna";
 	}
 	@RequestMapping("/adminQnaSearch")
@@ -106,10 +110,9 @@ public class AdminController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/adminMemberDel", method=RequestMethod.POST)
-	public @ResponseBody int adminMemDel(@RequestParam(value = "chbox[]") List<String> chArr) throws Exception {
-		
-		System.out.println(chArr);
-		int result=service.adminMemDelService(chArr);
+	public @ResponseBody int adminMemDel(@RequestParam(value = "chbox[]") List<String> chArr, HttpServletRequest req) throws Exception {
+		String realPath=req.getServletContext().getRealPath("/resources/questionFile");
+		int result=service.adminMemDelService(chArr, realPath);
 		
 		return result;
 	}
@@ -125,8 +128,58 @@ public class AdminController {
 		
 		return "admin/member_search";
 	}
-	@RequestMapping("/adminProductList")
-	public String adminProductList(Model model) {
-		return "admin/adminProductList"; 
+	
+	@RequestMapping("/adminPdList")
+	public String adminProductList(@RequestParam(defaultValue="1") int page, Model model) {
+		Map<String, Object> map=service.adminPdListService(page);
+		model.addAttribute("list", map.get("pdList"));
+		model.addAttribute("page", map.get("page"));
+		return "admin/adminProductList";
+	}
+	
+	@RequestMapping("/adminPdSearch")
+	public String adminPdSearch(@RequestParam(defaultValue="1") int page, @RequestParam(name="search",defaultValue="")String search,
+			Model model) {
+		Map<String, Object> map=service.adminPdListService(page,search);
+		model.addAttribute("list", map.get("pdList"));
+		model.addAttribute("page", map.get("page"));
+		model.addAttribute("search", search);
+		
+		return "admin/adminPdSearch"; 
+	}
+	
+	@RequestMapping("adminPdDelete")
+	public @ResponseBody int adminPdDelete(@RequestParam("pd_id[]")List<String> pd_id, @RequestParam("pd_size[]")List<String> pd_size,
+			HttpServletRequest req) {
+		String realPath=req.getServletContext().getRealPath("/resources/pdImages");
+		System.out.println(pd_id);
+		System.out.println(pd_size);
+		
+		int result=service.adminPdDeleteService(pd_id, pd_size, realPath);
+		
+		return result;
+	}
+	
+	@RequestMapping("/adminPdUpdate")
+	public String adminPdUpdate(Model model) {
+		//상품 업데이트 코드...
+		return "admin/updateProduct"; 
+	}
+	
+	@RequestMapping("/adminOrderList")
+	public String adOrderList(@RequestParam(defaultValue="1") int page, Model model) {
+		Map<String, Object> map=service.adOrderListService(page);
+		model.addAttribute("list", map.get("orderList"));
+		model.addAttribute("page", map.get("page"));
+		
+		return "admin/orderList";
+	}
+	@RequestMapping("/adOrderView")
+	public String adOrderView(@RequestParam("order_id")String order_id, Model model) {
+		Map<String, Object> map=service.adOrderViewService(order_id);
+		model.addAttribute("order", map.get("orderList"));
+		model.addAttribute("detail", map.get("detailList"));
+		
+		return "admin/order_view"; 
 	}
 }

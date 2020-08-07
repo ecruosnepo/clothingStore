@@ -40,4 +40,11 @@ public interface OrderDao {
 			@Param("total") int total,
 			@Param("payment_method") String payment_method
 			);
+	//관리자 페이지
+	//전체 리스트 출력
+	public List<OrderDto> adminOrderListDao();
+	//전체 리스트 갯수
+	public int adminOrderCountDao();
+	//order_id
+	public OrderDto adOrderViewDao(String order_id);
 }

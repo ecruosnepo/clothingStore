@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">	
-	
-	<!-- slick -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">   
+   
+   <!-- slick -->
     <title>메인</title>
 
     <style>
@@ -195,7 +195,6 @@
               <!-- 로그인 / 장바구니 -->
               <div class="menu_login_cart">
                <div class="btn-group">
-              
                	<%
 					if ( session.getAttribute("email") != null ){	
 				%>
@@ -260,7 +259,7 @@
                 <div class="btn-group">
 	                <button type="button" class="btn cart" onclick = "location.href = '/cart'">
 	                  장바구니
-	                </button>                
+	                </button>  
                 </div>
                 
               </div>
@@ -312,10 +311,7 @@
                   </form>
                 </div>
               </nav>
-          </div>  
-      </header>
-    </div>    
-
+		</header>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>

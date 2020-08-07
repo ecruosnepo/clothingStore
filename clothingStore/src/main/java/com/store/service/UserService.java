@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.store.dao.UserDao;
 import com.store.dto.UserDto;
 
@@ -23,9 +22,10 @@ public class UserService implements UserServiceImpl {
 
 	// 화원가입
 	@Override
+
 	public int sUserSignUp(String email, String password, String check2) throws Exception {
     	 return dao.UserSignUp(email, password);	
-}                 	
+	}                 	
 
 	// 로그인
 	@Override   // 20200804 UserEmail = UserLogin
@@ -57,6 +57,7 @@ public class UserService implements UserServiceImpl {
 		}
 		 return 1;
 	}
+
 	
 	// 내 상세정보 편집
 	@Override

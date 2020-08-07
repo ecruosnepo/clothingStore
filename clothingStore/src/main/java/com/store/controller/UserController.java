@@ -129,8 +129,8 @@ public class UserController {
 	
 	@RequestMapping(value="/loginForm", method = RequestMethod.POST)
 	public String UserLogin(@RequestParam("user_email") String email, 
-			                @RequestParam("user_password") String password,
-			                Model model, HttpSession session) {		
+			                 @RequestParam("user_password") String password,
+			                 Model model, HttpSession session) {		
 		try {            // 20200804 UserEmail = UserLogin
 			result = userService.sUserLogin(email, password);
 		} catch(Exception e) {
@@ -147,7 +147,7 @@ public class UserController {
 		session.setAttribute("email", email);
 		return "/user/loginAction";
 		}
-}
+	}
 	
 	// 로그아웃
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
