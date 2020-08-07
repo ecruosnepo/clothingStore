@@ -37,7 +37,6 @@ public class UserController {
 	
 	@Autowired
 	private AddressServiceImpl addressService;
-	
 	Random ran = new Random();
 	public String getPass() {
 		String psss = "";
@@ -235,9 +234,6 @@ public class UserController {
 		System.out.println(user_phone);
 		
 		userService.sUpdateOderUserInfo(user_email, user_name, main_address1, main_address2, main_address3, main_address4, user_phone);
-		/*
-		 * String referer = req.getHeader("Referer"); return "redirect:"+ referer;
-		 */
 	}
 	
 	// 배송 주소 수정
@@ -255,6 +251,7 @@ public class UserController {
 		}
 	   return "/user/setMainAddress";
 	}
+	
 	@RequestMapping(value="/setMainAddressForm", method = RequestMethod.POST) // update
 	public String setMainAddress(@RequestParam("main_address1")String main_address1,
 			                     @RequestParam("main_address2")String main_address2,
@@ -295,27 +292,31 @@ public class UserController {
 	public String sendEmailForm(String email, HttpServletRequest request) throws Exception{
 		SimpleMailMessage simpleMessage = new SimpleMailMessage();
 		// simpleMessage.setFrom("보낸사람@naver.com"); // NAVER, DAUM, NATE일 경우 넣어줘야 함
-		UserController s = new UserController();
-		String pass = s.getPass();
-		simpleMessage.setTo("rlaskagh776@gmail.com");
+		String pass = getPass();
+		simpleMessage.setTo(email);
 		simpleMessage.setSubject("옷가게 쇼핑몰 입니다. 임시 비밀번호 발송 했습니다.");
 		simpleMessage.setText("임시 비밀번호 :" + pass);
 		javaMailSender.send(simpleMessage); 
 		String getEmail = request.getParameter("getEmail");
 		userService.sUpdatePassword(pass, getEmail);
+
 		return "/user/login";	
   }
+
 	
 	// 비밀번호 변경
 	@RequestMapping(value="/updatePassword", method = RequestMethod.GET)
 	public String updatePassword() throws Exception{
 		return "/user/updatePassword";
 	}
+	
 	@RequestMapping(value="/updatePasswordForm", method = RequestMethod.POST)
 	public String updatePasswordForm(@RequestParam("updatePassword1")String updatePassword1,
 			                         HttpSession session, Model model) throws Exception {
 		String email = (String)session.getAttribute("email");
 		userService.sUpdatePassword(updatePassword1, email);
+
 		return "/user/login";
 	}
+
 }

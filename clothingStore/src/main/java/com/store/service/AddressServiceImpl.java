@@ -19,7 +19,6 @@ public class AddressServiceImpl implements AddressService {
 	      dao.updateDeliveryAddress(email, r_name, address1, address2, address3, address4);
 	} 
 	
-	
 	// address insert
 	@Override 
 	public void sInsertSubAddress(String email, String r_name, String address1, 
@@ -45,7 +44,6 @@ public class AddressServiceImpl implements AddressService {
 		return result;
 	}
 
-
 //	@Override
 //	public int sUpdateSubAddress(String address1, String address2, String address3, String address4, String r_name)
 //			throws Exception {
@@ -56,9 +54,6 @@ public class AddressServiceImpl implements AddressService {
 	public AddressDto sGetAddressDto(String email, int address_index) {
 		return dao.getAddressDto(email,address_index);
 	}
-
-
-
 
 	@Override
 	public int sUpdateSubAddress(String r_name, String address1, String address2, String address3, String address4, String user_email, int address_index) throws Exception {
@@ -72,6 +67,3 @@ public class AddressServiceImpl implements AddressService {
 		return dao.deleteSubAddress(email, address_index);
 	}
 }	
- 
-
-

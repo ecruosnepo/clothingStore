@@ -1,13 +1,18 @@
 package com.store.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.store.bean.PagingBean;
+import com.store.dao.AddressDao;
 import com.store.dao.BoardDao;
+import com.store.dao.CartDao;
+import com.store.dao.UserDao;
 import com.store.dto.BoardDto;
 
 @Service
@@ -16,19 +21,21 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	BoardDao boardDao;
 	@Autowired
+	UserDao userDao;
+	@Autowired
+	AddressDao addressDao;
+	@Autowired
+	CartDao cartDao;
+	@Autowired
 	PagingBean pageBean;
 
 	@Override
 	public Map<String, Object> adminQnaService(int page) {
 		Map<String, Object> map=new HashMap<String, Object>(); 
-		pageBean=new PagingBean(page,boardDao.boardListCountDao(),5,3);
+		pageBean=new PagingBean(page,boardDao.boardListAllCountDao(),10,3);
 		
 		map.put("dto", boardDao.boardListAllDao());
-		map.put("startIdx", pageBean.getStartIdx());
-		map.put("endIdx", pageBean.getEndIdx());
-		map.put("totalPage", pageBean.getTotalPage());
-		map.put("startPageIdx", pageBean.getStartPageIdx());
-		map.put("endPageIdx", pageBean.getEndPageIdx());
+		map.put("page", pageBean);
 		
 		return map;
 	}
@@ -49,17 +56,57 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Map<String, Object> adminQnaSearchService(int page, String keyword) {
+	public Map<String, Object> adminQnaSearchService(int page, String search, String boardCat) {
 		Map<String, Object> map=new HashMap<String, Object>(); 
-		pageBean=new PagingBean(page,boardDao.boardListCountDao(keyword),5,3,keyword);
+		pageBean=new PagingBean(page,boardDao.boardListAllCountDao("%"+search+"%", "%"+boardCat+"%"),10,3);
 		
-		map.put("dto", boardDao.boardListAllDao("%"+keyword+"%"));
-		map.put("keyword", pageBean.getKeyword());
-		map.put("startIdx", pageBean.getStartIdx());
-		map.put("endIdx", pageBean.getEndIdx());
-		map.put("totalPage", pageBean.getTotalPage());
-		map.put("startPageIdx", pageBean.getStartPageIdx());
-		map.put("endPageIdx", pageBean.getEndPageIdx());
+		List<String> list=new ArrayList<String>();
+		list.add("");
+		list.add("배송");
+		list.add("결제");
+		list.add("반품");
+		list.add("환불");
+		list.add("기타");
+		
+		map.put("boardDto", boardDao.boardListAllDao("%"+search+"%", "%"+boardCat+"%"));
+		map.put("boardCatList", list);
+		map.put("page", pageBean);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> adminMemberListService(int page) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		pageBean=new PagingBean(page,userDao.userListCount(),10,3);
+		
+		map.put("dto", userDao.userAllList());
+		map.put("page", pageBean);
+		return map;
+	}
+
+	@Override
+	public int adminMemDelService(List<String> chArr) throws Exception {
+		List<String> delList=chArr;
+		
+		int result=0;
+		for(String email : delList) {
+			result+=userDao.deleteInfoUser(email);
+			addressDao.deleteInfoAddress(email);
+			cartDao.deleteUserCartDao(email);
+			boardDao.boardDelUserDao(email);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> adminMemSearch(int page, String search) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		pageBean=new PagingBean(page, userDao.userSearchCount("%"+search+"%"),10,3);
+		
+		map.put("searchList", userDao.userSearchList("%"+search+"%"));
+		map.put("page", pageBean);
 		
 		return map;
 	}

@@ -67,7 +67,7 @@
 		            <th scope="col" >작성일</th>
 		        </tr>
 		        </thead>
-		        <c:forEach items="${ list }" var="dto" varStatus="idx" begin="${ startIdx }" end="${ endIdx }" >
+		        <c:forEach items="${ list }" var="dto" varStatus="idx" begin="${ page.startIdx }" end="${ page.endIdx }" >
 		          <tr>
 		              <td scope="row"><a href="boardListView?id=${ dto.id }">${idx.index+1}</a></td>
 		              <td>
@@ -84,17 +84,17 @@
 		          </tr>
 		         </c:forEach>
 		  </table>
-		  <div> <p>${ thisPage }/${ totalPage } pages</p> </div><br>
+		  <div> <p>${ page.thisPage }/${ page.totalPage } pages</p> </div><br>
 		  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 		      <div class="btn-group mr-2" role="group" aria-label="First group">
-		      		<c:if test="${startPageIdx > 1}">
-		         		<button type="button" class="btn btn-secondary" onclick="location.href='/customerQna?page=${thisPage-1}' ">prev</button>
+		      		<c:if test="${page.startPageIdx > 1}">
+		         		<button type="button" class="btn btn-secondary" onclick="location.href='/customerQna?page=${page.thisPage-1}' ">prev</button>
 		         	</c:if>
-		      	<c:forEach varStatus="page" begin="${startPageIdx}" end="${ endPageIdx }" >
-		         	<button type="button" class="btn btn-secondary" onclick="location.href='/customerQna?page=${page.index}' ">${page.index}</button>
+		      	<c:forEach varStatus="num" begin="${page.startPageIdx}" end="${ page.endPageIdx }" >
+		         	<button type="button" class="btn btn-secondary" onclick="location.href='/customerQna?page=${num.index}' ">${num.index}</button>
 		         </c:forEach>
-		         <c:if test="${totalPage > endPageIdx}">
-		         	<button type="button" class="btn btn-secondary" onclick="location.href='/customerQna?page=${thisPage+1}' ">next</button>
+		         <c:if test="${page.totalPage > page.endPageIdx}">
+		         	<button type="button" class="btn btn-secondary" onclick="location.href='/customerQna?page=${page.thisPage+1}' ">next</button>
 		         </c:if>
 		      </div>
 		  </div>

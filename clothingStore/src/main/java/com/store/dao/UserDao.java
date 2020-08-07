@@ -1,6 +1,9 @@
 package com.store.dao;
 
 
+import java.util.List;
+
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -39,6 +42,16 @@ public interface UserDao {
     		 @Param("main_address3")String main_address3, 
     		 @Param("main_address4")String main_address4,
     		 @Param("user_phone")String user_phone) throws Exception;
+     
+     //관리자 페이지
+     //전체 리스트 출력
+     public List<UserDto> userAllList();
+     //전체 리스트 갯수
+     public int userListCount();
+     //검색한 회원 정보 출력
+     public List<UserDto> userSearchList(String search);
+     //검색한 회원의 리스트 갯수
+     public int userSearchCount(String search);
    
      // UPDATE USER_PASSWORD 
      public int updatePassword(@Param("user_password")String user_password,

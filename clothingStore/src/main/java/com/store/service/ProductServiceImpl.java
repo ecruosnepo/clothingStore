@@ -16,9 +16,10 @@ public class ProductServiceImpl implements ProductService {
 	
 	//상품 목록
 	@Override
-	public List<ProductDto> listProduct(int catId) {
+	public List<ProductDto> listProduct(int catId, String sortby) {
 		System.out.println("상품 목록");
-		return dao.listProductDao(catId);
+		System.out.println(sortby);
+		return dao.listProductDao(catId, sortby);
 	}
 
 	@Override
@@ -31,6 +32,15 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDto> getColorList(String pd_name) {
 		System.out.println("색상 목록");
 		return dao.getColorListDao(pd_name);
+	}
+	
+	//상품 목록
+	@Override
+	public List<ProductDto> listSearchProduct(String keyword,String size, String sortby) {
+		System.out.println("상품 검색 목록");
+		System.out.println(sortby);
+		System.out.println(keyword);
+		return dao.listSearchProductDao(keyword, size, sortby);
 	}
 
 	@Override
@@ -55,5 +65,13 @@ public class ProductServiceImpl implements ProductService {
 	public int updateProduct(Map<String, String> map) {
 		System.out.println("상품 정보 수정");
 		return dao.updateProductDao(map);
+	}
+	
+	@Override
+	public List<ProductDto> listProductSize(int catId, String size, String sortby) {
+		System.out.println("상품 사이즈 목록");
+		System.out.println(size);
+		System.out.println(sortby);
+		return dao.listProductSizeDao(catId, size, sortby);
 	}
 }

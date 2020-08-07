@@ -52,9 +52,9 @@
                 <br/><br/>임시 비밀번호를 보내 드립니다 로그인 후 변경 해주세요.
             </label>
             <br/><br/>
-            <label style="font-size: 24px;">이메일<label style="color: red; size: 5px;">*</label></label>
+            <label style="font-size: 24px;">이메일<span style="color: red; size: 5px;">*</span></label>
             <form action="sendEmailForm" method="post">
-            <input type="text" class="form-control" id="inputSuccess1" name="getEmail">
+            	<input type="text" class="form-control" id="inputSuccess1" name="email">
             <br/>
            <button type="submit" class="btn btn-primary btn-lg" >비밀번호 찾기</button> 
           </form> 

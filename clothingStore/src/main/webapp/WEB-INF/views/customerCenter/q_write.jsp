@@ -108,7 +108,7 @@
               </div>
           </div>
           <div>
-              <input name="file" type="file" >
+              <input name="uploadFile" type="file" >
           </div><br><br>
           <input type="submit" value="확인" class="btn btn-primary btn-ms">
           <button type="button" onclick="location.href='/customerQna' " class="btn btn-secondary btn-ms">취소</button>

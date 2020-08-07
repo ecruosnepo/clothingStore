@@ -4,7 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.store.dao.AddressDao"> 
-			
 			<!-- USER ADDRESS  -->
 			<update id="UpDateAddress">
 			   UPDATE
@@ -77,7 +76,4 @@
 			  WHERE
 			  user_email = #{user_email} AND address_index = #{address_index}
 		  </delete>
-			
-
-
 </mapper>

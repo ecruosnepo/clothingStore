@@ -104,7 +104,7 @@
 	                </div>
 	            </div>
 	            <div>
-	                <input name="file" type="file">
+	                <input name="uploadFile" type="file" >
 	            </div><br><br>
 	            <input type="submit" class="btn btn-primary btn-ms" value="수정">
 	            <button type="button" onclick="location.href='/boardListView?id=${dto.id}' " class="btn btn-secondary btn-ms">취소</button>
