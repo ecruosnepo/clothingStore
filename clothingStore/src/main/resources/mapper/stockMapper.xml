@@ -13,4 +13,7 @@
 	<delete id="deleteStockDao">
 		delete from stock where pd_size=#{pd_size} and pd_id=#{pd_id}
 	</delete>
+	<update id="updateStockDao">
+		update stock set pd_stock=pd_stock-#{pd_quantity} where pd_id=#{pd_id} and pd_size=#{pd_size};
+	</update>
 </mapper>

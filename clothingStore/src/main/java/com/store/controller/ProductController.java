@@ -178,7 +178,7 @@ public class ProductController {
 			System.out.println(email);
 			System.out.println(pd_id);
 			System.out.println(pd_size);
-			cDto.setEmail(email);
+			cDto.setUser_email(email);;
 			cDto.setPd_id(pd_id);
 			cDto.setPd_size(pd_size);
 			cDto.setPd_quantity(1);
@@ -190,7 +190,7 @@ public class ProductController {
 	@GetMapping("/cart")
     public String cartView(HttpSession session, Model model) throws Exception {
         String email = (String)session.getAttribute("email");
-		model.addAttribute("cart_list", cartService.CartListView(email));		
+		model.addAttribute("cart_list", cartService.cartListView(email));		
         return "products/cart";
 	}
 	
@@ -203,7 +203,7 @@ public class ProductController {
 		String email = (String)session.getAttribute("email");
 		
 		cartService.updateQuantityCart(cart_id,pd_quantity);
-		List<CartListDto> cDto = cartService.CartListView(email);
+		List<CartListDto> cDto = cartService.cartListView(email);
 		
 		int total_sum = 0;
 		int price_sum = 0;
@@ -215,7 +215,7 @@ public class ProductController {
 		}
 		
 		priceMap.put("pd_sum", price_sum);
-		priceMap.put("total", total_sum+2500);
+		priceMap.put("total", total_sum);
 		
 		return priceMap;
 	}
@@ -228,7 +228,7 @@ public class ProductController {
 		String email = (String)session.getAttribute("email");
 		String dv_price = req.getParameter("dv_price");
 		System.out.println();
-		List<CartListDto> cDto = cartService.CartListView(email);
+		List<CartListDto> cDto = cartService.cartListView(email);
 		
 		int sum = 0;
 		for(CartListDto list:cDto) {

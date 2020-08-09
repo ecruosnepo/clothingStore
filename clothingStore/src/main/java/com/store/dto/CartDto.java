@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class CartDto {
 	private int cart_id;
-	private String email;
+	private String user_email;
 	private int pd_id;
 	private String pd_size;
 	private int pd_price;
