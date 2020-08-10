@@ -18,4 +18,7 @@ public class CartListDto {
 	private int pd_price;
 	private String pd_color;
 	private String pd_img;
+	
+	// 재고 dto
+	private String pd_stock;
 }

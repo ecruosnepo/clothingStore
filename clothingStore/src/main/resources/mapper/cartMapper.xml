@@ -5,7 +5,11 @@
     
 <mapper namespace="com.store.dao.CartDao">
 	<select id="cartListDao" resultType="com.store.dto.CartListDto">
-		select c.cart_id, c.pd_size, c.pd_quantity, p.pd_name, p.pd_price, p.pd_id, p.pd_color, p.pd_price, p.pd_img from cart c join products p on c.pd_id=p.pd_id where c.user_email=#{user_email} order by cart_id desc;
+		select c.cart_id, c.pd_size, c.pd_quantity, p.pd_name, p.pd_price, p.pd_id, p.pd_color, p.pd_price, p.pd_img, s.pd_stock
+		from cart c 
+		join products p on c.pd_id=p.pd_id
+		join stock s on c.pd_size=s.pd_size and c.pd_id=s.pd_id
+		where c.user_email=#{user_email} order by cart_id desc;
 	</select>
 	
 	<select id="cartDuplicateCheckDao" resultType="com.store.dto.CartDto">

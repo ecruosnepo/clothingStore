@@ -158,6 +158,23 @@
 	<h1 style="font-size: 2.5em; padding:32px; text-align:center; font-weight:600;" >쇼핑백</h1>
 	<div class="row">
          <div class="col-xs-5 col-sm-7 cart-list-box">
+         <%
+         	if(session.getAttribute("email")==null){         		
+         %>
+         		<div class="empty-cart">
+         			<h3>로그인 후 이용하실 수 있습니다.</h3>
+         		</div>
+       		</div>
+		<%
+         	}else if(request.getAttribute("result")==null){
+		%>
+				<div class="empty-cart">
+         			<h3>고객님의 쇼핑백이 비어있습니다</h3>
+         		</div>
+       		</div>
+		<%
+         	}else{
+		%>	
          	<c:forEach items="${cart_list }" var="cList">
          		<div class="cart-item ${cList.cart_id}">
          			<c:forTokens items="${cList.pd_img }" var="img" delims="," varStatus="status">
@@ -176,7 +193,7 @@
 					    <span>색상: </span><span class="pd_color">${cList.pd_color }</span>
 					    <span>합계: </span><span class="price">&#8361;<span class="price_sum"><fmt:formatNumber value="${cList.pd_price * cList.pd_quantity }"/></span></span>
 				    	<select name="pd_quantity" id="quantity" onchange="updateQuantity(this);">
-					    <c:forEach var="x" begin="0" end="20" step="1">
+					    <c:forEach var="x" begin="1" end="${cList.pd_stock }" step="1">
           					<c:choose>
           						<c:when test="${cList.pd_quantity eq x}">
           							<option value=${x } selected>${x }</option>
@@ -191,35 +208,34 @@
          			<button class="delete-btn" onclick="deleteCart(this)">&#10005;</button>
          		</div>
          		<c:set var="sum" value="${sum + cList.pd_price*cList.pd_quantity }"/>
-         	</c:forEach>
-           <!-- <b style="font-size: 27px;">고객님의 쇼핑백이 비어 있습니다.</b><br/>
-           고객님의 쇼핑백에 이미 저장된 아이템을 저장하거나 액세스하려면 로그인합니다.
-           <br/><br/>
-           <a href="#">로그인</a> -->
-         	</div>  
+         	</c:forEach>           
+         	</div>
+   	   <%
+       		}
+       %>
          	<div class="col-xs-100 col-sm-5 checkout-info">
           	<div class="checkout-info-inner">
 	            <p style="margin:0;">할인 코드 추가</p>
-	          	<form>
+	          	<form action="/checkoutForm" method="post">
 		            <div class="form-group" style="margin:8px 0">
 		              <input type="text" class="form-control rounded-0" id="exampleInputcard" style="height:48px;">
-		            </div>
-	          	</form>
-	          	<table class="total-table">
-	          		<tr>
-		          		<th>주문가격</th>
-		          		<td>&#8361; <span class="pd_price_sum"><fmt:formatNumber value="${sum }"/></span></td>
-	          		</tr>
-	          		<tr class="dv_price_row">
-		          		<th>배송</th>
-		          		<td>&#8361; <span class="dv_price">2500</span></td>
-	          		</tr>
-	          		<tr>
-		          		<th>합계</th>
-		          		<td>&#8361; <span class="total_price"><fmt:formatNumber value="${sum }"/></span></td>
-	          		</tr>
-	          	</table>
-          		<button class="btn btn-dark btn-lg btn-block checkout-btn rounded-0" onclick="checkout()">결제 계속하기</button>          
+		            </div>	          	
+		          	<table class="total-table">
+		          		<tr>
+			          		<th>주문가격</th>
+			          		<td>&#8361; <span class="pd_price_sum"><fmt:formatNumber value="${sum }"/></span></td>
+		          		</tr>
+		          		<tr class="dv_price_row">
+			          		<th>배송</th>
+			          		<td>&#8361; <span class="dv_price">2500</span></td>
+		          		</tr>
+		          		<tr>
+			          		<th>합계</th>
+			          		<td>&#8361; <span class="total_price"><fmt:formatNumber value="${sum }"/></span></td>
+		          		</tr>
+		          	</table>
+	          		<button class="btn btn-dark btn-lg btn-block checkout-btn rounded-0" onclick="checkout()">결제 계속하기</button>
+          		</form>
 	          	<div class="checkout-notice">
 		            <p>가능한 결제 수단</p>
 		            <p>귀하가 결제 단계에 도달할 때까지 가격 및 배송료는 확인되지 않습니다.</p>
@@ -233,6 +249,7 @@
      		</div>
        </div>
    </div>
+
     <script>
     	function updateQuantity(obj){
 	    	var form = {

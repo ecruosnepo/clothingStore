@@ -9,6 +9,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Slick Slide CSS -->
+	<link rel="stylesheet" type="text/css" href="/css/slick.css">
+  	<link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
     <title>Document</title>    
     <style>
         .list-wrap {
@@ -29,7 +32,13 @@
         }
         a:hover{ 
             color: #d6001c;             
-        }        
+        }
+        .row-cols-4>*{
+        	flex:0 0 calc(25% - 4px);
+        }
+        .row-cols-3>*{
+        	flex:0 0 calc(33.333333% - 4px);
+        }       
         #catDesc{
             grid-area: description;
             width:100%;            
@@ -60,6 +69,9 @@
             grid-area: article;
             padding: 0;           
             padding-right: 32px;
+        }
+        #products{
+        	grid-column-gap: 4px;
         }
         #products > *{
             padding: 0;
@@ -134,10 +146,67 @@
         .main-cat{
             padding-bottom: 0;
         }
+        
+        .no-result p{
+        	line-height: 20px;
+        	font-size: 13px;
+        	font-weight:600;
+        	margin-bottom:0;
+        }
+        .favorite-row{
+        	margin:50px 0;
+        }
+        .favorite-row h3{
+        	margin:0 auto;
+        	width:70%;
+        	margin-bottom:20px;
+        }
+        .recommand-box{
+        	width:100%;
+        }
+        .recommand-slide{
+        	width:70%;
+        	margin:0 auto;
+        }
+        .slick-prev:before,
+	    .slick-next:before {
+	      color: black;
+	    }
 
     </style>
 </head>
 <body>
+	<div id="catDesc">
+    	<%
+	    	if(request.getAttribute("result")=="0") {
+    	%>
+	    	<div class="no-result">
+	    		<h5>일치하는 아이템 없음</h5>
+	    		<p>검색 "<%=request.getParameter("keyword") %>"과(와) 일치하는 결과가 없습니다.</p>
+	    		<p>맞춤법을 확인하거나 넓은 의미의 검색어로 다시 시도하십시오.</p>    	
+	    	</div>
+   		</div>
+   		 <!-- 상품 추천 -->	     
+   		 <div class="row favorite-row">   	
+   		 	<h3>SELECTED FAVORITES</h3>	 	
+	        <div class="recommand-box">
+	        	<div class="recommand-slide">
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>
+		            <div><img alt="" src="http://placehold.it/296x506"></div>        	
+	        	</div>        
+	        </div>
+   		 </div>
+    	<%		
+    		}else{
+    	%>
+           	<h5><%=request.getParameter("keyword") %>에 대한 결과 표시</h5>        
+    </div> 
 	<div class="container list-wrap">
 	    <!-- 사이드 네비게이션 바 -->
 	    <aside id="sideNav">
@@ -221,9 +290,7 @@
 	    </aside>
 	
 	    <!-- 상품 목록 -->
-	    <div id="catDesc">
-            <h5><%=request.getParameter("keyword") %>에 대한 결과 표시</h5>
-	    </div>    
+	       
 	    <article id="productsList">
 	        <div id="filter" class="sticky-top">
 	            <ul class="nav nav-pills">
@@ -254,44 +321,21 @@
 	                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">사이즈</a>
 	                    <div class="dropdown-menu">
 	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="sizeview" id="sizeview" value="S">
+	                            <input class="form-check-input" type="checkbox" name="sizeview" id="sizeview" value="S">
 	                            <label class="form-check-label" for="sizeview">
 	                                S
 	                            </label>
 	                        </div>
 	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="sizeview" id="sizeview" value="M">
+	                            <input class="form-check-input" type="checkbox" name="sizeview" id="sizeview" value="M">
 	                            <label class="form-check-label" for="sizeview">
 	                                M
 	                            </label>
 	                        </div>
 	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="sizeview" id="sizeview" value="L">
+	                            <input class="form-check-input" type="checkbox" name="sizeview" id="sizeview" value="L">
 	                            <label class="form-check-label" for="sizeview">
 	                                L
-	                            </label>
-	                        </div>
-	                    </div>
-	                </li>
-	                <li class="nav-item dropdown dropdown-title">
-	                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">컬러</a>
-	                    <div class="dropdown-menu">
-	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-	                            <label class="form-check-label" for="exampleRadios3">
-	                                빨강
-	                            </label>
-	                        </div>
-	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-	                            <label class="form-check-label" for="exampleRadios3">
-	                                노랑
-	                            </label>
-	                        </div>
-	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-	                            <label class="form-check-label" for="exampleRadios3">
-	                                초록
 	                            </label>
 	                        </div>
 	                    </div>
@@ -322,10 +366,11 @@
 	            </div>
 	        </div>
 	    </article>
-	
-	    <!-- 페이지 확장 버튼 -->
 	</div>
-	
+	<%
+    		}
+    %>
+	<script src="/css/slick.js" type="text/javascript" charset="utf-8"></script>
     <script>
         $(".bigbtn").click(function(){
             $('#products').removeClass('row-cols-4').addClass('row-cols-3');
@@ -339,9 +384,9 @@
     </script>
     <script>
     	$(function(){
-    		$("input:radio").change(function(){
+    		$("input:checkbox").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:radio[name='sizeview']:checked").val();
+    			var size = $("input:checkbox[name='sizeview']:checked").val();
     			
     			$.ajax({
                     url: "/searchProduct?keyword="+"${keyword}",
@@ -355,8 +400,33 @@
                     	$('.product-container').html(result);
         			}
                 });
-    		});    		
+    		});
+    		$("input:radio").change(function(){
+    			var sortby = $("input:radio[name='sortbyprice']:checked").val();
+    			var size = $("input:checkbox[name='sizeview']:checked").val();
+    			
+    			$.ajax({
+                    url: "/searchProduct?keyword="+"${keyword}",
+                    type: 'GET',
+                    data: {
+                    	size : size,
+                    	sortby : sortby
+                    },
+                    success:function(pd_list){
+                    	var result = $(pd_list).find('.product-container');
+                    	$('.product-container').html(result);
+        			}
+                });
+    		});
+    		
+    		$(".recommand-slide").slick({
+	   		     dots: false,
+	   		     infinite: true,
+	   		     slidesToShow: 4,
+	   		     slidesToScroll: 4
+   	   		});
     	});
-    </script>
+    </script>  
 </body>
+<jsp:include page="../footer.jsp" flush="false" /> 
 </html>

@@ -2,6 +2,7 @@ package com.store.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,16 +85,21 @@ public class ProductController {
 	@GetMapping("/searchProduct")	
     public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
 		System.out.println("상품 검색");
+		
 		if(size==null && sortby==null) {
-    		sortby = "pd_id";
     		model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));    		
     	}else{
     		if (sortby!=null && (size==null || size=="")) {
 				model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
    			}else {
     			model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
-    		}    		
-    	}		
+    		}
+    	}
+		
+		if(ObjectUtils.isEmpty(model.getAttribute("pd_list"))) {
+			model.addAttribute("result", "0");
+		}
+		
     	return "products/search";
 	}
 		
@@ -190,7 +197,10 @@ public class ProductController {
 	@GetMapping("/cart")
     public String cartView(HttpSession session, Model model) throws Exception {
         String email = (String)session.getAttribute("email");
-		model.addAttribute("cart_list", cartService.cartListView(email));		
+		model.addAttribute("cart_list", cartService.cartListView(email));
+		if(ObjectUtils.isEmpty(model.getAttribute("cart_list"))) {
+			model.addAttribute("result", "0");			
+		}
         return "products/cart";
 	}
 	

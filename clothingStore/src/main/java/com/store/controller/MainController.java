@@ -70,7 +70,7 @@ public class MainController {
 		orderService.addOrderDetail(imp_uid,email);
 		
 		for(CartDto list:cDto) {
-			stockService.updateStock(list.getPd_id(), list.getPd_size(), list.getPd_quantity());
+			stockService.updateStock(list.getPd_id(), list.getPd_size(), list.getPd_quantity(),"sub");
 		}
 		
 		cartService.deleteOrderCart(email);
