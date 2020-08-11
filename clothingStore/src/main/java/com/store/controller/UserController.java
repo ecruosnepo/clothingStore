@@ -167,10 +167,8 @@ public class UserController {
 	public String MyPageSet(Model model, HttpSession session) throws Exception {
 		String email = (String) session.getAttribute("email");
 		result = addressService.sSelectAddress(email);
-		String message = "<a href=\"insertSubAddress\"><button type=\"button\" class=\"btn btn-success\">새 주소 추가</button></a>";
 		if ( result < 3 ) {
 			model.addAttribute("result", result);
-			model.addAttribute("message", message);
 			model.addAttribute("user", userService.sGetUserInfo(email));
 			return "/user/MyPageSet";
 		}
