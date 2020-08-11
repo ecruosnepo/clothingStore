@@ -8,6 +8,11 @@
 		insert into stock (pd_id, pd_stock, pd_size) values (#{pd_id}, #{pd_stock}, #{pd_size});
 	</insert>
 	
+	<select id="getStockDao">
+		select 
+		
+	</select>
+	
 	<select id="countStockDao" resultType="_int" >
 		select count(*) from stock where pd_id=#{pd_id}
 	</select>
@@ -28,4 +33,8 @@
 		</choose>
 		where pd_id=#{pd_id} and pd_size=#{pd_size};
 	</update>
+	
+	<select id="productStockDao" resultType="com.store.dto.StockDto" >
+		select * from stock where pd_id=#{pd_id}
+	</select>
 </mapper>

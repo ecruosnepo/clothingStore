@@ -15,6 +15,9 @@
 			font-weight:600;
 			line-height:1;
 		}
+		.cart-wrap{
+			margin-bottom:50px;
+		}
 	 	button{
 		 	border:none;
 		 	background:none;
@@ -145,9 +148,29 @@
 			padding:40px;
 		}
 		
+		.logout-cart, .empty-cart{
+			background-color:white;
+			items-align:center;
+			padding:30px;			
+		}
+		.logout-cart h3, .empty-cart h3{
+			font-weight:600 !important;
+		}
+		.logout-cart p, .empty-cart p{
+			font-weight:600 !important;
+			font-size:13px;
+		}
+		.logout-cart a{
+			color:#222;					
+		}
+		.logout-cart a:hover{
+			color:#222;			
+		}
+		
 	</style>    
 </head>
 <body>
+<div class="cart-wrap">
   	<div class="hi">
        <span><a href="like.html">HM.com</a> / <a href="bag.html">쇼핑백</a></span>
   	</div>
@@ -158,18 +181,21 @@
 	<h1 style="font-size: 2.5em; padding:32px; text-align:center; font-weight:600;" >쇼핑백</h1>
 	<div class="row">
          <div class="col-xs-5 col-sm-7 cart-list-box">
-         <%
-         	if(session.getAttribute("email")==null){         		
+         <%         	
+         	if(session.getAttribute("email")==null || request.getAttribute("result")=="1"){         		
          %>
-         		<div class="empty-cart">
+         		<div class="logout-cart">
          			<h3>로그인 후 이용하실 수 있습니다.</h3>
+         			<p>장바구니를 이용하려면 로그인해야합니다.</p>
+         			<p><a href="/login">로그인</a></p>
          		</div>
        		</div>
 		<%
-         	}else if(request.getAttribute("result")==null){
+         	}else if(request.getAttribute("result")=="0"){
 		%>
 				<div class="empty-cart">
-         			<h3>고객님의 쇼핑백이 비어있습니다</h3>
+         			<h3>고객님의 쇼핑백이 비어있습니다.</h3>
+         			<p>마음에 드는 상품을 담아보세요.</p>
          		</div>
        		</div>
 		<%
@@ -249,6 +275,7 @@
      		</div>
        </div>
    </div>
+</div>
 
     <script>
     	function updateQuantity(obj){
@@ -307,6 +334,14 @@
 				}
 			});
 		}
+		
+		$(function(){
+			var isEmpty = <%=request.getAttribute("result")%>;
+			if(isEmpty == "0" || isEmpty == "1"){
+				$('.checkout-btn').prop("disabled",true);
+				$('.dv_price').text("");
+			}
+		});
 	</script>
   </body>
   <jsp:include page="../footer.jsp" flush="false" />  

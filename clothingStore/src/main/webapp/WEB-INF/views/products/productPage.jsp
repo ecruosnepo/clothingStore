@@ -248,7 +248,7 @@
                         	<option selected>사이즈 선택</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
-                            <option value="L">L</option>                                
+                            <option value="L">L</option>
                         </select>
                         <button class="btn add-cart rounded-0" onclick="addCart()">
                             <span>담기</span>

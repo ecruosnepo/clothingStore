@@ -59,6 +59,7 @@ public class ProductController {
 		ProductDto pDto = productService.viewProduct(pd_id);
 		model.addAttribute("pd_dto", pDto);		
 		model.addAttribute("colorList",productService.getColorList(pDto.getPd_name()));
+		model.addAttribute("stock_list", stockService.getStock(pd_id));
 		
 		return "products/productPage";
 	}
@@ -197,9 +198,16 @@ public class ProductController {
 	@GetMapping("/cart")
     public String cartView(HttpSession session, Model model) throws Exception {
         String email = (String)session.getAttribute("email");
-		model.addAttribute("cart_list", cartService.cartListView(email));
-		if(ObjectUtils.isEmpty(model.getAttribute("cart_list"))) {
-			model.addAttribute("result", "0");			
+		System.out.println(email);
+		System.out.println();
+        
+		if(email==null) {
+			model.addAttribute("result", "1");
+		} else {
+			model.addAttribute("cart_list", cartService.cartListView(email));
+			if(ObjectUtils.isEmpty(model.getAttribute("cart_list"))) {
+					model.addAttribute("result", "0");			
+			}
 		}
         return "products/cart";
 	}
@@ -229,7 +237,6 @@ public class ProductController {
 		
 		return priceMap;
 	}
-	
 	
 	@PostMapping("/updatePrice")
 	@ResponseBody

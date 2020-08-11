@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.store.dao.CategoryDao;
 import com.store.dto.CategoryDto;
+import com.store.dto.OrderDto;
 import com.store.service.AdminService;
+import com.store.service.OrderService;
 
 @Controller
 public class AdminController {
@@ -27,6 +29,8 @@ public class AdminController {
 	AdminService service;
 	@Autowired
 	CategoryDao categoryDao;
+	@Autowired
+	OrderService orderService;
 	
 	@RequestMapping("/admin")
 	public String cusCenter(Model model) {
@@ -172,14 +176,40 @@ public class AdminController {
 		model.addAttribute("list", map.get("orderList"));
 		model.addAttribute("page", map.get("page"));
 		
-		return "admin/orderList";
+		return "admin/orderList2";
 	}
+	
 	@RequestMapping("/adOrderView")
 	public String adOrderView(@RequestParam("order_id")String order_id, Model model) {
 		Map<String, Object> map=service.adOrderViewService(order_id);
 		model.addAttribute("order", map.get("orderList"));
 		model.addAttribute("detail", map.get("detailList"));
+		model.addAttribute("stockList", map.get("stockList"));
 		
-		return "admin/order_view"; 
+		System.out.println(map.get("orderList").toString());
+
+		return "admin/order_view2"; 
+	}
+	@RequestMapping("/adPdMiniSearch")
+	public @ResponseBody Object adPdMiniSearch(@RequestParam(defaultValue="1") int page, @RequestParam(name="search",defaultValue="")String search,
+			Model model) {
+		Map<String, Object> map=service.adminPdListService(page,search);
+		model.addAttribute("list", map.get("pdList"));
+		model.addAttribute("page", map.get("page"));
+		model.addAttribute("search", search);
+		System.out.println(map.get("pdList"));
+		
+		return map.get("pdList"); 
+	}
+	@RequestMapping("/adOrderUpdate")
+	public String adOrderUpdate(HttpServletRequest req, OrderDto oDto, Model model) {
+		System.out.println("주문 수정 Controller");
+		System.out.println(oDto.toString());
+		
+		orderService.adOrderUpdateDao(oDto);
+		System.out.println("주문 수정 완료");
+		
+		String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer; 
 	}
 }

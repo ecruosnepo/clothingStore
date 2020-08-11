@@ -6,7 +6,10 @@
  
 <mapper namespace="com.store.dao.OrderDao"> 
 	<select id="userOrderListDao" resultType="com.store.dto.OrderDto"> 
-		select id, productName from product.order where user_email=#{user_email} order by payDate desc
+		SELECT DISTINCT o.order_id, p.pd_name, o.order_state, o.payDate FROM shop.order AS o 
+		JOIN shop.order_detail AS od ON o.order_id=od.order_id
+		JOIN shop.products AS p ON p.pd_id=od.pd_id
+		WHERE o.user_email=#{user_email} ORDER BY o.payDate DESC;
 	</select>
 	
 	<select id="adminOrderListDao" resultType="com.store.dto.OrderDto"> 
@@ -22,10 +25,18 @@
 	</select>
 	
 	<insert id="addOrderDao" parameterType="com.store.dto.OrderDto"> 
-    	insert into `order` (order_id, user_email, dv_name, dv_address1, dv_address2, dv_address3, dv_address4, dv_phone, dv_option, dv_message, total_price, payment_method, order_state) values (#{order_id}, #{user_email}, #{dv_name}, #{dv_address1}, #{dv_address2}, #{dv_address3}, #{dv_address4}, #{dv_phone}, #{dv_option}, #{dv_message}, #{total_price}, #{payment_method}, #{order_state});
+		insert into `order` (order_id, user_email, dv_name, dv_address1, dv_address2, dv_address3, dv_address4, dv_phone, dv_option, dv_message, total_price, payment_method) values (#{order_id}, #{user_email}, #{dv_name}, #{dv_address1}, #{dv_address2}, #{dv_address3}, #{dv_address4}, #{dv_phone}, #{dv_option}, #{dv_message}, #{total_price}, #{payment_method});
 	</insert>
 	
-	<insert id="addOrderDetailDao">
-		insert into order_detail (order_id, pd_id, pd_size, pd_quantity) select #{order_id}, pd_id, pd_size, pd_quantity from cart where user_email=#{user_email}; 
+	<insert id="addOrderDetailDao"> 
+		insert into order_detail (order_id, pd_id, pd_size, pd_quantity) select #{order_id}, pd_id, pd_size, pd_quantity from cart where email=#{user_email}; 
 	</insert>
+	
+	<update id="adOrderUpdateDao">
+		update `order` set 
+		dv_name='${dv_name}', dv_address1=#{dv_address1}, dv_address2=#{dv_address2}, 
+		dv_address3=#{dv_address3}, dv_address4=#{dv_address4}, dv_phone=#{dv_phone}, 
+		dv_message=#{dv_message}, dv_option=#{dv_option}, total_price=#{total_price}, order_state=#{order_state}  
+		where order_id=#{order_id};
+	</update>
 </mapper>

@@ -14,10 +14,27 @@
 	  body{
 	  	background-color:#FAF9F8;
 	  }
-      section a{text-decoration: none; color: black; margin: 5px;}
+	  p{
+	  	margin-bottom:0 !important;
+	  }
+      section a{
+      	text-decoration: none; color: black; margin: 5px;
+      }
+      .index-promotion{
+      	text-align:center;
+      	background-color:#FBEE6E;
+      	font-weight:600 !important;
+      	margin:0 auto;
+      	padding: 20px 0;
+      	margin-bottom: 30px;
+      }
+      .index-promotion p{
+      	font-weight:900 !important;
+      	font-size:30px;
+      }
       #adv h4{
       	text-align: center;
-      	margin-bottom: 30px;
+      	margin-bottom: 30px;      	
       }
       #goods{
           width: 980px;
@@ -25,19 +42,35 @@
           font-family: sans-serif;
       }
       #goods div{
-          width: 900px;
-          margin: 20px;
+          width: 100%;
       }
       .text-center{
           height: 700px;
-          position: relative
+          position: relative;
+          margin:0 auto;
+          margin-bottom:30px;
       }
       .card-body{
           position: absolute;
-       bottom: 20%;
+		  bottom: 5%;
+      }
+      #main3 p, #main1 p{
+      	color:black;
+      }
+      #main2 p, #main4 p{
+      	color:white;
+      }
+      .card-title{
+      	font-weight:700;
+      	font-size:42px;
+      }
+      .banner-btn{
+      	background-color:white;
+      	font-size:13px !important;
+      	padding:10px 20px !important;
       }
       .cs2{
-          background-color: bisque
+          background-color: bisque;
       }
       .item{
           background-color: aquamarine;
@@ -72,51 +105,61 @@
       }
       #main1{
          background-image: url('/mainImages/main_women.jpg');
+         background-size : cover;
       }
       #main2{
          background-image: url('/mainImages/main_man.jpg');
+         background-size : cover;
       }
       #main3{
          background-image: url('/mainImages/main_kids.jpg');
+         background-size : cover;
       }
       #main4{
          background-image: url('/mainImages/main_story.jpg');
+         background-size : cover;
       }
     
 </style>
 </head>
 <body>
 <jsp:include page="header.jsp" flush="false" />
-	<section id="goods">
-	     <div id="main1" class="card text-center">
-	         <div class="card-body">
-	             <h5 class="card-title">여성 의류</h5>
-	             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
-	             <a href="#" class="btn btn-primary">Go somewhere</a>
-	         </div>
-	     </div>
-	         <div id="main2" class="card text-center">
+	<div class="container index-wrap">
+		<section id="goods">
+			 <div class="index-promotion">
+			 	<p>H&M 카카오 채널 친구 추가시<br/>10% OFF 쿠폰 지급</p>
+			 	<span>2020-08-05부터 ~ 2002-08-19까지 지급 | 온라인 단독!</span>			 	
+			 </div>
+		     <div id="main1" class="card text-center rounded-0 border-0">
+		         <div class="card-body">
+		             <p class="card-title">여성 의류</p>
+		             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+		             <a href="#" class="btn banner-btn bg-white rounded-0">지금 쇼핑하기</a>
+		         </div>
+		     </div>
+	         <div id="main2" class="card text-center rounded-0 border-0">
 	             <div class="card-body">
-	                 <h5 class="card-title">남성 의류</h5>
+	                 <p class="card-title">남성 의류</p>
 	                 <p class="card-text">올 여름에 유행하는 필수 아이템</p>
-	                 <a href="#" class="btn btn-primary">Go somewhere</a>
+	                 <a href="#" class="btn banner-btn bg-white rounded-0">지금 쇼핑하기</a>
 	             </div>
 	         </div>
-	     <div id="main3" class="card text-center">
-	         <div class="card-body">
-	             <h5 class="card-title">아동복</h5>
-	             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
-	             <a href="#" class="btn btn-primary">Go somewhere</a>
-	         </div>
-	     </div>
-	     <div id="main4" class="card text-center">
-	         <div class="card-body">
-	             <h5 class="card-title">친환경 제품</h5>
-	             <p class="card-text">환경을 생각하는 친환경 의류복</p>
-	             <a href="#" class="btn btn-primary">Go somewhere</a>
-	         </div>
-	     </div>
-	</section>
+		     <div id="main3" class="card text-center rounded-0 border-0">
+		         <div class="card-body">
+		             <p class="card-title">아동복</p>
+		             <p class="card-text">올 여름에 유행하는 필수 아이템</p>
+		             <a href="#" class="btn banner-btn bg-white rounded-0">지금 쇼핑하기</a>
+		         </div>
+		     </div>
+		     <div id="main4" class="card text-center rounded-0 border-0">
+		         <div class="card-body">
+		             <p class="card-title">친환경 제품</p>
+		             <p class="card-text">환경을 생각하는 친환경 의류복</p>
+		             <a href="#" class="btn banner-btn bg-white rounded-0">지금 쇼핑하기</a>
+		         </div>
+		     </div>
+		</section>
+	</div>
 	<section id="adv">
 		<div class="bottom-con">
 	        <br><br><br>
