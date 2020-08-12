@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	if(session.getAttribute("email") == null){
+		response.sendRedirect("/login");
+	}
+%>
 <%-- <% session.setAttribute("email", "123@123"); %> --%>
 <!doctype html>
 <html lang="en">
@@ -16,6 +21,7 @@
     <style>
     	body{
     		background-color:#FAF9F8;
+    		font-weight:600;
     	}
     	
     	header{
@@ -105,52 +111,61 @@
         	text-align:left;
         }
         
-        .address-order-form {
-        	
-        }
-        
         .deliveryMethodSelect{
         	height:160px;
         }
-
         .radioBox *{
         	width: auto;        	
         }
-        
         .radioBox {        	
         	height:50%;
         	vertical-align:bottom;
         }
-        
         .radioBox:hover{
         	background-color:#F4EDDD;
         }
-        
+        .radioBox-inner{
+        	margin:auto 0;
+        	padding:24px 24px;
+        	height:100%;
+        	display:flex;
+        	align-items:center;
+        }
+        .radioBox-inner label{
+        	margin-left:15px;
+        	margin-bottom:0px;
+        	height:100%;        	
+        }
+        .dv-method{
+        	display:block;
+        	font-size:13px;
+        }
+        .dv-period{
+        	display:block;
+        	font-size:11px;
+        }
+        .dv-select-price {
+        	text-align:right;
+        }
         input[type='radio']:checked {
         	background-color:#F4EDDD;
         }
-        
         .selectedAddress{
         	height:60px;
         }
-        
         .addressList:hover{
         	background-color:#F4EDDD;
         }
-        
         button{
         	border:none;
         	background:none;
         }
-        
         button:focus { 
 		    outline: none; 
 		}
-
         .address-box{
           width: 100%;
         }
-        
         .submitBtn{
         	background-color:black;
         	color:white;
@@ -158,51 +173,40 @@
         	width:200px;
         	margin:20px 0;
         }
-        
         .payment-list{
           text-align: center;
         }
-
 		.card-body{
 			border:none;
 		}
-		
 		.orderTotal{
 			margin: 30px 0;
 			width:100%;
 		}
-		
 		.orderTotal th, .orderTotal td{
 			font-size:13px;
 		}
-		
 		.orderTotal td{
 			text-align:right;
 		}
-		
 		.orderDetail{
 			text-align:left;
 			padding:20px 0;
 		}
-		
 		.orderDetail:hover{
 			color:#D6001C;
 		}
-		        
         .paymentMethodSelect{
         	height:160px;
         }
-        
         .card{
         	padding:0;
         }
-        
         .cart-item{        	
         	height: auto;
         	padding: 10px 0;
         	border-bottom: 1px solid lightGray;
         }
-        
         .cart-img-box {
         	float:left;
         	overflow:hidden;
@@ -210,16 +214,31 @@
 			display:inline-block;
 			height:100%;					
 		}
-		
 		.cart-img{
 			height:auto;
 			width:100%;
 		}
-		
 		.orderProduct{
 			display:inline-block;
 			width:calc(100%-26%) !important;
 			padding:0 20px;
+		}
+		.submit-btn{
+			width: 100%;
+          	margin: 30px 0;
+          	padding: 0 0px 50px;
+		}
+		.submit-btn button{
+			background-color:#222;
+			color:white;
+			font-size:13px;
+			font-weight:600;			
+			padding: 12px 21px 11px;
+			line-height:1;
+		}
+		.submit-btn button:hover{
+			text-decoration:none;
+			color:white;
 		}
 
     </style>
@@ -283,7 +302,7 @@
           </div>
           
           <div class="row address-info info">
-            <h4>배송</h4>            
+            <h2 style="font-size:20px; padding-bottom:20px; margin:0; font-weight:600;">배송</h2>            
             <div class="address-readonly">
 				<p>배송 종류</p>
 				<p>일반 배송</p>
@@ -295,15 +314,31 @@
 				<p>${user.user_phone }</p>
             </div>            
             <form class="address-order-form">
-            	<h5>배송 방법</h5>
+            	<p style="font-size:16px; padding-bottom:24px;">배송 방법 선택</p>
 				<div class="deliveryMethodSelect inputContents">
 					<div class="radioBox">
-						<input type="radio" id="basicMethod" name="dv_option" checked="checked" value="2500"/>
-						<label for="basicMethod">일반 배송</label>
+						<div class="radioBox-inner">
+							<input type="radio" id="basicMethod" name="dv_option" checked="checked" value="2500"/>
+							<label for="basicMethod">
+								<span>
+									<span class="dv-method">일반 배송</span>
+									<span class="dv-period">1-2 일</span>
+								</span>
+								<span class="dv-select-price">&#8361;2500</span>
+							</label>
+						</div>
 					</div>
 					<div class="radioBox">
-						<input type="radio" id="fastMethod" name="dv_option" value="3000"/>
-						<label for="fastMethod">특급 익일 배송</label>
+						<div class="radioBox-inner">
+							<input type="radio" id="fastMethod" name="dv_option" value="3000"/>
+							<label for="fastMethod">
+								<span>
+									<span class="dv-method">익일 특급 배송</span>
+									<span class="dv-period">1 일</span>
+								</span>
+								<span class="dv-select-price">&#8361;3000</span>
+							</label>
+						</div>
 					</div>
 				</div>
 				<h5>배송 주소</h5>
@@ -375,7 +410,7 @@
             </button>
           </div>
           <div class="row submit-btn">
-          	<button class="btn" onclick="checkout()">결제</button>
+          	<button class="btn rounded-0" onclick="checkout()">결제 단계로 넘어가기</button>
           </div>
           
         </div>
@@ -570,7 +605,8 @@
 	                        dv_option : $('input:radio[name="dv_option"]:checked').val(),
 	                        payment_method : $('input:radio[name="payment_method"]:checked').val(),
 	                        dv_message : $('.dv_message').val(),
-	                        total_price : $('.total_price').text()                
+	                        total_price : $('.total_price').text(),
+	                        order_state : '결제완료'
 	                        //기타 필요한 데이터가 있으면 추가 전달
 	                    },
 	                    success:function(result){
@@ -632,6 +668,7 @@
     	  $(obj).hide();
           $('.address-readonly').hide();
           $('.address-info').css("backgroundColor","#FAF9F8");
+          $('.address-info').css("padding","0px");
           $('.address-order-form').show();
       };
 
@@ -667,6 +704,7 @@
         $('.address-readonly').show();
         $('.address-info-btn').show();        
         $('.address-info').css("backgroundColor","white");
+        $('.address-info').css("padding","40px");     
         $('.address-order-form').hide();
 	  };
 

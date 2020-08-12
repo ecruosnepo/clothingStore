@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../header.jsp" flush ="true"/>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -45,8 +46,14 @@
 
         /* 옵션 선택 */
         .pd-option{
-            padding: 0 28px 60px 60px;
-            position: relative;
+            padding: 0 28px 60px 70px;
+            position: relative;            
+        }
+        .pd-option *{
+        	font-weight:600;
+        }
+        .color-label{
+        	font-size:13px;
         }
         .option-box{
         	top:40px;
@@ -63,6 +70,9 @@
         .form-check input:checked +.form-check-label{
             border: 1px solid red;
         }
+        .color-list-box{
+        	margin: 40px 0;
+        }
         .color-carousel-item{
             text-align: center;
         }
@@ -71,10 +81,39 @@
         }
         .size-list{
             margin-bottom: 30px;
+            font-size:13px;
+            border:1px solid #d0d0d0;
+            height:46px;
+        }
+        .size-list:focus{
+        	border:unset;
         }
         .add-cart{
             width: 100%;
-            height: 45px; 
+            height: 45px;
+            background-color:#222;
+            color:white;
+        }
+        .add-cart > span:before{
+        	width: 15px;
+          	height: 15px;
+          	background-image: url("/icons/icon_bag.png");
+        	filter: invert(100%);
+          	background-size: 24px;
+          	content: '';
+          	display: inline-block;          	
+          	background-size: contain;
+          	background-position: center center;
+          	background-repeat: no-repeat;
+          	margin: auto 5px;
+          	position: relative;
+          	top:3px;
+        }
+        .add-cart > span{
+        	font-size:13px;        	
+        }
+        .add-cart:hover {
+			color:white;
         }
         
         .pd-desc{
@@ -187,9 +226,10 @@
                 <div class="option-box sticky-top">                    
            			<input type="hidden" name="pd_id" class="pd_id" value="${pd_dto.pd_id }" />
                     <h1 style="font-size:20px; font-weight:bold;">${pd_dto.pd_name }</h1>
-                    <h1 style="font-size:20px; font-weight:bold;">&#8361; ${pd_dto.pd_price }</h1>
-                    <div class="">
-						<ul class="regular">
+                    <h1 style="font-size:20px; font-weight:bold;">&#8361; <fmt:formatNumber value="${pd_dto.pd_price }"/></h1>
+                    <div class="color-list-box">
+                    	<p class="color-label">${pd_dto.pd_color }</p>
+						<ul class="regular" style="padding-left:0px;">
 						<c:forEach items="${colorList }" var="colors">
                    		<li class="">
                        		<a href="/productpage/${colors.pd_id }">	                                 	
@@ -204,12 +244,13 @@
 					  </ul>
 					</div>
                     <div class="pd-select-buttons">
-                        <select name="pd_size" class="form-control form-control-lg size-list">
+                        <select name="pd_size" class="form-control form-control-lg size-list rounded-0 shadow-none">
+                        	<option selected>사이즈 선택</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
-                            <option value="L">L</option>                                
+                            <option value="L">L</option>
                         </select>
-                        <button class="add-cart" onclick="addCart()">
+                        <button class="btn add-cart rounded-0" onclick="addCart()">
                             <span>담기</span>
                         </button>
                     </div>
@@ -269,8 +310,8 @@
 	   $(".regular").slick({
 	     dots: false,
 	     infinite: false,
-	     slidesToShow: 5,
-	     slidesToScroll: 5
+	     slidesToShow: 7,
+	     slidesToScroll: 7
 	   });
 
 	   $(".recommand-slide").slick({
@@ -319,5 +360,6 @@
 			});
 		};
 	</script>
+	<jsp:include page="../footer.jsp" flush="false" /> 
   </body>
 </html>

@@ -16,4 +16,5 @@ public class OrderDetailDto {
 	//관리자 페이지 주문정보 조회시 사용
 	private String pd_name;
 	private int pd_price;
+	private String pd_color;
 }

@@ -2,6 +2,7 @@ package com.store.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,6 +59,7 @@ public class ProductController {
 		ProductDto pDto = productService.viewProduct(pd_id);
 		model.addAttribute("pd_dto", pDto);		
 		model.addAttribute("colorList",productService.getColorList(pDto.getPd_name()));
+		model.addAttribute("stock_list", stockService.getStock(pd_id));
 		
 		return "products/productPage";
 	}
@@ -83,16 +86,21 @@ public class ProductController {
 	@GetMapping("/searchProduct")	
     public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
 		System.out.println("상품 검색");
+		
 		if(size==null && sortby==null) {
-    		sortby = "pd_id";
     		model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));    		
     	}else{
     		if (sortby!=null && (size==null || size=="")) {
 				model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
    			}else {
     			model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
-    		}    		
-    	}		
+    		}
+    	}
+		
+		if(ObjectUtils.isEmpty(model.getAttribute("pd_list"))) {
+			model.addAttribute("result", "0");
+		}
+		
     	return "products/search";
 	}
 		
@@ -178,7 +186,7 @@ public class ProductController {
 			System.out.println(email);
 			System.out.println(pd_id);
 			System.out.println(pd_size);
-			cDto.setEmail(email);
+			cDto.setUser_email(email);;
 			cDto.setPd_id(pd_id);
 			cDto.setPd_size(pd_size);
 			cDto.setPd_quantity(1);
@@ -190,7 +198,17 @@ public class ProductController {
 	@GetMapping("/cart")
     public String cartView(HttpSession session, Model model) throws Exception {
         String email = (String)session.getAttribute("email");
-		model.addAttribute("cart_list", cartService.CartListView(email));		
+		System.out.println(email);
+		System.out.println();
+        
+		if(email==null) {
+			model.addAttribute("result", "1");
+		} else {
+			model.addAttribute("cart_list", cartService.cartListView(email));
+			if(ObjectUtils.isEmpty(model.getAttribute("cart_list"))) {
+					model.addAttribute("result", "0");			
+			}
+		}
         return "products/cart";
 	}
 	
@@ -203,7 +221,7 @@ public class ProductController {
 		String email = (String)session.getAttribute("email");
 		
 		cartService.updateQuantityCart(cart_id,pd_quantity);
-		List<CartListDto> cDto = cartService.CartListView(email);
+		List<CartListDto> cDto = cartService.cartListView(email);
 		
 		int total_sum = 0;
 		int price_sum = 0;
@@ -215,11 +233,10 @@ public class ProductController {
 		}
 		
 		priceMap.put("pd_sum", price_sum);
-		priceMap.put("total", total_sum+2500);
+		priceMap.put("total", total_sum);
 		
 		return priceMap;
 	}
-	
 	
 	@PostMapping("/updatePrice")
 	@ResponseBody
@@ -228,7 +245,7 @@ public class ProductController {
 		String email = (String)session.getAttribute("email");
 		String dv_price = req.getParameter("dv_price");
 		System.out.println();
-		List<CartListDto> cDto = cartService.CartListView(email);
+		List<CartListDto> cDto = cartService.cartListView(email);
 		
 		int sum = 0;
 		for(CartListDto list:cDto) {

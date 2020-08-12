@@ -40,9 +40,9 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<CartListDto> CartListView(String user_id) {
+	public List<CartListDto> cartListView(String user_id) {
 		System.out.println("카트 목록");
-		return cDao.CartListDao(user_id);
+		return cDao.cartListDao(user_id);
 	}
 	
 	@Override
@@ -50,5 +50,16 @@ public class CartServiceImpl implements CartService {
 		System.out.println("카트 중복 조회");
 		return cDao.cartDuplicateCheckDao(email, pd_id, pd_size);
 	}
-
+	
+	@Override
+	public List<CartDto> cartInfo(String email){
+		System.out.println("카트 정보 조회");
+		return cDao.cartInfoDao(email);
+	}
+	
+	@Override
+	public int deleteOrderCart(String email) {
+		System.out.println("주문 카트 삭제");
+		return cDao.deleteOrderCartDao(email);
+	}
 }

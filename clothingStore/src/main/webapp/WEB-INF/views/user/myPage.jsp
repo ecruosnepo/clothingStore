@@ -89,7 +89,6 @@
        <P><b style="font-size: 23px;"><label>도움이 필요하세요?</label></b></P>
        <P><a href="#" class="button" style="color: black; text-decoration: underline; font-size: 15px; ">문의하기</a></P> 
        <P><a href="#" class="button" style="color: black; text-decoration: underline; font-size: 15px; ">로그아웃</a></P>  
-     
       </div> 
       </div>
  

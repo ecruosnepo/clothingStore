@@ -54,6 +54,7 @@ public interface OrderDao {
 	public List<MyPageDto> selectPdMyPage(@Param("user_email")String user_email);
 	
 	public OrderDto selectOrderDto();
-	
-			                           
+
+	//order수정
+	public int adOrderUpdateDao(OrderDto oDto);
 }
