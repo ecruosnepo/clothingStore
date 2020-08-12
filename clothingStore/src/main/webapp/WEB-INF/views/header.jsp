@@ -15,6 +15,13 @@
     <title>메인</title>
 
     <style>
+    	.btn:focus{
+    		box-shadow:none;    		
+    	}
+    	.dropdown-item:active{
+    		background-color:unset;
+    		color:#222;
+    	}
         .header-wrap{
           max-width: 100%;
           background-color: #FAF9F8;
@@ -53,7 +60,7 @@
         }
         .header-wrap .dropdown > .dropdown-toggle:active {            
             pointer-events: none;
-        }x
+        }
         .navbar{
           background-color: #FAF9F8;
           padding: 25px 0 0 0;          
@@ -64,7 +71,7 @@
         .navbar-light .navbar-nav .nav-link {
             color: rgb(0, 0, 0);
         }
-        .header-wrap .nav-item > .dropdown-menu{
+        .header-wrap .header-nav-item > .dropdown-menu{
           width: 100%;
           text-align: center;
           padding-top:38px;
@@ -178,7 +185,7 @@
           background-repeat: no-repeat;
           margin: 0 5px;
         }
-        .header-wrap .nav-item:hover > .dropdown-menu{
+        .header-wrap .header-nav-item:hover > .dropdown-menu{
           display:block;
         }
         .header-wrap .btn-group:hover > .dropdown-menu{
@@ -199,9 +206,9 @@
 					if ( session.getAttribute("email") != null ){	
 				%>
 
-				<a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button class="btn dropdown-toggle login" onclick="location.href='/myPage';" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                    내 계정
-                </a>
+                </button>
                   <div class="dropdown-menu dropdown-menu-right">             
                     <a class="dropdown-item" href="/myPage">내 계정</a>
                     <a class="dropdown-item" href="/customer">도움이 필요하세요?</a>
@@ -211,21 +218,21 @@
                 <%
 				 }  else if ( session.getAttribute("manager") != null ){
                 %>
-                  <a class="btn dropdown-toggle login" href="/loginForm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn dropdown-toggle login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                    관리자 계정
-                </a>
+                  </button>
                   	<div class="dropdown-menu dropdown-menu-right">            
-                    <a class="dropdown-item" href="/myPage">관리자 페이지</a>
-                    <a class="dropdown-item" href="/logout">로그아웃</a>
-                  </div>  
-                   </div>
+	                    <a class="dropdown-item" href="/adminQna">관리자 페이지</a>
+	                    <a class="dropdown-item" href="/logout">로그아웃</a>
+                  	</div>  
+                 </div>
 				<%
 					}else{
 				%>    
                   <div class="btn-group">
-					<a class="btn dropdown-toggle login" href="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<button class="btn dropdown-toggle login" href="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="location.href='/login';">
                     	로그인
-                  	</a>
+                  	</button>
                   	
                   	<div class="dropdown-menu dropdown-menu-right">
                     <form class="px-4 py-3" action="loginForm" method="post">
@@ -271,7 +278,7 @@
               <nav class="navbar navbar-expand-lg navbar-light bg-light">                
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ml-auto mr-auto">                    
-                    <li class="nav-item">
+                    <li class="header-nav-item">
                       <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         여성
                       </a>
@@ -281,7 +288,7 @@
                         <a class="dropdown-item" href="#">탑&티셔츠</a>
                       </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="header-nav-item">
                       <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         남성
                       </a>
@@ -291,7 +298,7 @@
                         <a class="dropdown-item" href="#">셔츠</a>
                       </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="header-nav-item">
                       <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         유아동
                       </a>
@@ -301,7 +308,7 @@
                         <a class="dropdown-item" href="#">남아</a>
                       </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="header-nav-item">
                       <a class="nav-link header-dropdown-title" href="#">지속가능성</a>
                     </li>
                   </ul>

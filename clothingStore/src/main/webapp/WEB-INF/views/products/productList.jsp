@@ -20,7 +20,7 @@
             grid-template-columns: 200px 1fr;
             grid-gap: 10px;            
             margin: 0;
-            background-color: #FAF9F8;
+            background-color: #FAF9F8;            
         }
         a{            
             text-decoration: none;
@@ -60,10 +60,20 @@
         .sticky-top{
             background-color: #FAF9F8;
         }
+        
         #productsList{
             grid-area: article;
             padding: 0;           
             padding-right: 32px;
+        }
+        .row-cols-4>*{
+        	flex:0 0 calc(25% - 4px);
+        }
+        .row-cols-3>*{
+        	flex:0 0 calc(33.333333% - 4px);
+        }
+        #products{
+        	grid-column-gap: 4px;
         }
         #products > *{
             padding: 0;
@@ -73,7 +83,7 @@
             max-width: 100%;
         }
         .productInfo{
-        	height:680px;
+        	height:auto;
         	margin-bottom:20px;
         }
         .productImg > img{
@@ -100,7 +110,7 @@
             border:unset;
         }
         .card-body{
-            padding: 0 20px;
+            padding: 0 15px;
         }
         .main-cat, .sub-cat{
         	font-weight:bold;        	
@@ -108,7 +118,7 @@
             padding: 0;
         }
         .sub-cat-box{
-        	padding-top:10px;
+        	padding:5px 0;
         }
         .sub-cat{
         	font-size:13px;
@@ -120,23 +130,23 @@
         .cat-box{
             border: unset;
         }
-        .dropdown-menu > .form-check{
+        .pl-dropdown-menu{
+			padding:0;        
+        }
+        .pl-dropdown-menu > .form-check{
             padding: 10px 40px;
         }
         .nav-pills .show > .nav-link {
             color: #d6001c;
             background-color: unset;
-        }
-        .btn{
-            padding:12px 6px;
-            border: unset;
-        }
-        .btn:focus{
-            box-shadow: unset;
-            color: #d6001c;
-        }
+        }        
         .main-cat{
             padding-bottom: 0;
+        }
+        .main-cat:focus{
+        	color: #d6001c;
+        	box-shadow:none;
+        	text-decoration:none;
         }
 
     </style>
@@ -236,7 +246,7 @@
 	            <ul class="nav nav-pills">
 	                <li class="nav-item dropdown dropdown-title">
 	                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="padding-left:0;">정렬 기준</a>
-	                    <div class="dropdown-menu">
+	                    <div class="dropdown-menu pl-dropdown-menu">
 	                        <div class="form-check dropdown-item">
 	                            <input class="form-check-input" type="radio" name="sortbyprice" id="sortbyprice" value="new" checked>
 	                            <label class="form-check-label" for="sortbyprice">
@@ -259,7 +269,7 @@
 	                </li>
 	                <li class="nav-item dropdown dropdown-title">
 	                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">사이즈</a>
-	                    <div class="dropdown-menu">
+	                    <div class="dropdown-menu pl-dropdown-menu">
 	                        <div class="form-check dropdown-item">
 	                            <input class="form-check-input" type="radio" name="sizeview" id="sizeview" value="S">
 	                            <label class="form-check-label" for="sizeview">
@@ -282,7 +292,7 @@
 	                </li>
 	                <li class="nav-item dropdown dropdown-title">
 	                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">컬러</a>
-	                    <div class="dropdown-menu">
+	                    <div class="dropdown-menu pl-dropdown-menu">
 	                        <div class="form-check dropdown-item">
 	                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
 	                            <label class="form-check-label" for="exampleRadios3">

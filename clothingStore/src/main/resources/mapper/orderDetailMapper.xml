@@ -13,5 +13,4 @@
 	<select id="orderDetailCountDao" resultType="_int">
 		SELECT count(*) FROM shop.order_detail WHERE order_id=#{order_id};
 	</select>
-
 </mapper>

@@ -108,22 +108,38 @@
 	
 	<!-- 상품 검색 목록 -->
 	<select id="listSearchProductDao" resultType="com.store.dto.ProductDto">
-		select * from products p join stock s on p.pd_id=s.pd_id
-		where pd_name like CONCAT('%',#{keyword},'%')
-		<if test='size != null'>
-			and s.pd_size = #{size}
-		</if>
-		<choose>
-			<when test='sortby eq "low_price"'>
-				order by p.pd_price;
-			</when>
-			<when test='sortby eq "high_price"'>
-				order by p.pd_price desc;
-			</when>
-			<when test='sortby eq "new"'>
-				order by p.pd_id desc;
-			</when>
-		</choose>
+		select * from 
+			<if test="size==null">
+				products 
+				where pd_name like CONCAT('%',#{keyword},'%') 
+				<choose>
+					<when test='sortby eq "low_price"'>
+						order by pd_price;
+					</when>
+					<when test='sortby eq "high_price"'>
+						order by pd_price desc;
+					</when>
+					<when test='sortby eq "new" or sortby eq null'>
+						order by pd_id desc;
+					</when>
+				</choose>
+			</if>
+			<if test="size!=null">
+				products p join stock s on p.pd_id=s.pd_id
+				where pd_name like CONCAT('%',#{keyword},'%')		
+				and s.pd_size = #{size}
+				<choose>
+					<when test='sortby eq "low_price"'>
+						order by p.pd_price;
+					</when>
+					<when test='sortby eq "high_price"'>
+						order by p.pd_price desc;
+					</when>
+					<when test='sortby eq "new"'>
+						order by p.pd_id desc;
+					</when>
+				</choose>
+			</if>			
 	</select>
 	<select id="adPdMiniSearchDao" resultType="com.store.dto.ProductDto">
 		select pd_id, pd_name, pd_color,pd_price from products where pd_name like #{search} order by pd_id;

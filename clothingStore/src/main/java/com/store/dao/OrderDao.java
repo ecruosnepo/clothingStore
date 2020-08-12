@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.store.dto.MyPageDto;
 import com.store.dto.OrderDto;
 
 @Mapper
@@ -47,6 +48,13 @@ public interface OrderDao {
 	public int adminOrderCountDao();
 	//order_id별로 보기
 	public OrderDto adOrderViewDao(String order_id);
+	
+	public List<OrderDto> selectOrderList(@Param("user_email")String user_email);
+	
+	public List<MyPageDto> selectPdMyPage(@Param("user_email")String user_email);
+	
+	public OrderDto selectOrderDto();
+
 	//order수정
 	public int adOrderUpdateDao(OrderDto oDto);
 }

@@ -1,9 +1,7 @@
 package com.store.dto;
 
 import java.sql.Date;
-
 import lombok.Data;
-
 @Data
 public class OrderDto {
 	private String order_id;	

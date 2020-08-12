@@ -177,39 +177,56 @@ public class AdminController {
 		model.addAttribute("list", map.get("orderList"));
 		model.addAttribute("page", map.get("page"));
 		
-		return "admin/orderList";
+		return "admin/orderList2";
 	}
+	
 	@RequestMapping("/adOrderView")
 	public String adOrderView(@RequestParam("order_id")String order_id, Model model) {
 		Map<String, Object> map=service.adOrderViewService(order_id);
 		model.addAttribute("order", map.get("orderList"));
 		model.addAttribute("detail", map.get("detailList"));
 		model.addAttribute("stockList", map.get("stockList"));
+		System.out.println(map.get("orderList").toString());
 
-		return "admin/order_view"; 
+		return "admin/order_view2"; 
 	}
 	@RequestMapping("/adPdMiniSearch")
-	public @ResponseBody Object adPdMiniSearch(@RequestParam(name="search",defaultValue="")String search) {
-		Map<String, Object> map=service.adPdMiniSearchService(search);
+	public @ResponseBody Object adPdMiniSearch(@RequestParam(defaultValue="1") int page, @RequestParam(name="search",defaultValue="")String search,
+			Model model) {
+		Map<String, Object> map=service.adminPdListService(page,search);
+		model.addAttribute("list", map.get("pdList"));
+		model.addAttribute("page", map.get("page"));
+		model.addAttribute("search", search);
 		System.out.println(map.get("pdList"));
 		
-		return map; 
+		return map.get("pdList"); 
 	}
+
+	/*
+	 * @RequestMapping("/adPdMiniSearch") public @ResponseBody Object
+	 * adPdMiniSearch(@RequestParam(name="search",defaultValue="")String search) {
+	 * Map<String, Object> map=service.adPdMiniSearchService(search);
+	 * System.out.println(map.get("pdList"));
+	 * 
+	 * return map; }
+	 */
+	
+	@RequestMapping("/adOrderUpdate")
+	public String adOrderUpdate(HttpServletRequest req, OrderDto oDto, Model model) {
+		System.out.println("주문 수정 Controller");
+		System.out.println(oDto.toString());
+		
+		orderService.adOrderUpdate(oDto);
+		System.out.println("주문 수정 완료");
+		
+		String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer; 
+	}
+	
 	@RequestMapping("/adSelectStock")
 	public @ResponseBody Object adSelectStock(@RequestParam(name="pd_id",defaultValue="")Integer pd_id) {
 		List<StockDto> stock=service.adSelectStockService(pd_id);
 		System.out.println(stock);
 		return stock; 
 	}
-   @RequestMapping("/adOrderUpdate")
-   public String adOrderUpdate(HttpServletRequest req, OrderDto oDto, Model model) {
-      System.out.println("주문 수정 Controller");
-      System.out.println(oDto.toString());
-      
-      orderService.adOrderUpdate(oDto);
-      System.out.println("주문 수정 완료");
-      
-      String referer = req.getHeader("Referer");
-       return "redirect:"+ referer; 
-   }
 }

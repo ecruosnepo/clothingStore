@@ -254,7 +254,4 @@ public class AdminServiceImpl implements AdminService {
 	public List<StockDto> adSelectStockService(int pd_id) {
 		return stockDao.productStockDao(pd_id);
 	}
-	
-	
-
 }

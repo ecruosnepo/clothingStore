@@ -1,8 +1,6 @@
 package com.store.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.store.dto.AddressDto;
+import com.store.dto.CartDto;
 import com.store.dto.CartListDto;
 import com.store.dto.OrderDetailDto;
 import com.store.dto.OrderDto;
@@ -23,6 +22,7 @@ import com.store.dto.UserDto;
 import com.store.service.AddressService;
 import com.store.service.CartService;
 import com.store.service.OrderService;
+import com.store.service.StockService;
 import com.store.service.UserService;
 
 @Controller
@@ -35,14 +35,16 @@ public class MainController {
 	@Autowired
 	CartService cartService;
 	@Autowired
-	OrderService orderService;	
+	OrderService orderService;
+	@Autowired
+	StockService stockService;
 	
-	@PostMapping("/checkoutForm")
+	@RequestMapping("/checkoutForm")
 	public String checkoutForm(HttpSession session, HttpServletRequest req, Model model) throws Exception {
 		String email = (String)session.getAttribute("email");
 		UserDto uDto = userService.sGetUserInfo(email);		
 		List<AddressDto> aDto = addressService.sGetAddressList(email);
-		List<CartListDto> cDto = cartService.CartListView(email);
+		List<CartListDto> cDto = cartService.cartListView(email);
 		
 		model.addAttribute("cart_list", cDto);		
 		model.addAttribute("user", uDto);
@@ -55,6 +57,7 @@ public class MainController {
 	@ResponseBody
 	public int checkout(Model model,OrderDetailDto odDto, OrderDto oDto, @RequestParam("imp_uid")String imp_uid) throws Exception {
 		String email = oDto.getUser_email();
+		List<CartDto> cDto = cartService.cartInfo(email);
 		
 		oDto.setOrder_id(imp_uid);		
 		
@@ -65,6 +68,12 @@ public class MainController {
 		System.out.println("orderDetail추가 시작");	
 		
 		orderService.addOrderDetail(imp_uid,email);
+		
+		for(CartDto list:cDto) {
+			stockService.updateStock(list.getPd_id(), list.getPd_size(), list.getPd_quantity(),"sub");
+		}
+		
+		cartService.deleteOrderCart(email);
 		
 		int result = 1; 
 		

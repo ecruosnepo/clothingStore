@@ -27,7 +27,7 @@ public class UserController {
 	
 	private int result; 
 	
-	private int result2;
+	private int selectCheck;
 	
 	@Autowired
 	public JavaMailSender javaMailSender;
@@ -69,10 +69,11 @@ public class UserController {
 	@RequestMapping(value = "/signUpForm", method = RequestMethod.POST)
 	public String SignUp(@RequestParam("user_email") String user_email, 
 			             @RequestParam("user_password") String user_password,
-			             @RequestParam("user_password2") String user_password2,
+			             @RequestParam("user_password2") String user_password2,               // 개인정보 동의 체크
 			             @RequestParam(value="check2", required = false, defaultValue = "")String check2,
 			             Model model ) throws Exception {
-		    result2 = userService.sUserEmail(user_email);
+		    // 0: 레코드 없음,  1: 레코드 있음.
+		    selectCheck = userService.sUserEmail(user_email);
 		    // 이메일 폼 null 체크 
 		    if( "".equals(user_email) && "".equals(user_password)) { 
  				result = 0;
@@ -97,7 +98,7 @@ public class UserController {
  				return "/user/userSignUpAction";
  			}
 		    // 중복 체크
-		    else if ( 1 == result2 ) {
+		    else if ( 1 == selectCheck ) {
 		    	result = 5; 
      			model.addAttribute("result", result);
 				return "/user/userSignUpAction";
@@ -155,22 +156,14 @@ public class UserController {
 		 userService.sLogout(session);
 		return "/user/logout";
 	}
-	
-	// MyPage 페이지
-	@RequestMapping(value="/myPage", method = RequestMethod.GET)
-	public String MyPage() throws Exception {
-	   return "/user/myPage";
-	}
-	
+		
 	// 내설정
-	@RequestMapping(value="/MyPageSet", method = RequestMethod.GET)
+	@RequestMapping(value="/myPage/setting", method = RequestMethod.GET)
 	public String MyPageSet(Model model, HttpSession session) throws Exception {
 		String email = (String) session.getAttribute("email");
 		result = addressService.sSelectAddress(email);
-		String message = "<a href=\"insertSubAddress\"><button type=\"button\" class=\"btn btn-success\">새 주소 추가</button></a>";
 		if ( result < 3 ) {
 			model.addAttribute("result", result);
-			model.addAttribute("message", message);
 			model.addAttribute("user", userService.sGetUserInfo(email));
 			return "/user/MyPageSet";
 		}
@@ -179,14 +172,14 @@ public class UserController {
 	}
 	
 	// 회원 상세정보 편집
-	@RequestMapping(value="/updateForm", method = RequestMethod.GET)
+	@RequestMapping(value="/myPage/updateForm", method = RequestMethod.GET)
 	public String updateForm(Model model, HttpSession session)throws Exception {
 		String email = (String) session.getAttribute("email");
 		model.addAttribute("u", userService.sGetUserInfo(email));
 		return "/user/updateForm";
 	}
 
-	@RequestMapping(value="/userUpdate", method = RequestMethod.POST)
+	@RequestMapping(value="/myPage/userUpdate", method = RequestMethod.POST)
 	public String updateForm(@RequestParam("user_name")String name,
 						     @RequestParam("user_birth")String birth,
 							 @RequestParam("user_phone")String phone,
@@ -201,21 +194,21 @@ public class UserController {
 	}
 	
 	// 회원 주소록
-	@RequestMapping(value="/address", method = RequestMethod.GET)
+	@RequestMapping(value="/myPage/address", method = RequestMethod.GET)
 	public String address(Model model, HttpSession session) throws Exception {
 		String email = (String)session.getAttribute("email");
 		model.addAttribute("user", userService.sGetUserInfo(email));
 		model.addAttribute("address", addressService.sGetAddressList(email));
-		return "/user/address";
+		return "/user/myPage/address";
 	}
 	
-	 @PostMapping("/updateMainAddress") public void updateMainAddress(UserDto
+	 @PostMapping("/myPage/updateMainAddress") public void updateMainAddress(UserDto
 	   uDto) throws Exception{ userService.sUpdateMainAddress(uDto.getUser_email(),
 	   uDto.getMain_address1(), uDto.getMain_address2(), uDto.getMain_address3(),
 	   uDto.getMain_address4()); }
 	  
 	// 주문페이지 유저 정보 수정
-	@PostMapping("/updateOrderUserInfo")
+	@PostMapping("/myPage/updateOrderUserInfo")
 	@ResponseBody
 	public void updateOrderUserInfo(HttpServletRequest req, 
 			@RequestParam("main_address1")String main_address1,
@@ -237,22 +230,22 @@ public class UserController {
 	}
 	
 	// 배송 주소 수정
-	@PostMapping("/updateDeliveryAddress")
+	@PostMapping("/myPage/updateDeliveryAddress")
 	public void updateDeliveryAddress(AddressDto aDto) throws Exception{
 		addressService.sUpdateAddress(aDto.getEmail(), aDto.getR_name(), aDto.getAddress1(), aDto.getAddress2(), aDto.getAddress3(), aDto.getAddress4());
 	}
 	
 	// 회원 주소록 등록
-	@RequestMapping(value="/setMainAddress", method = RequestMethod.GET)
+	@RequestMapping(value="/myPage/setMainAddress", method = RequestMethod.GET)
 	public String setMainAddress(HttpSession session, Model model) throws Exception {
 		String email = (String)session.getAttribute("email");
 		if ( null != email ) {
 			model.addAttribute("address", userService.sGetUserInfo(email));
 		}
-	   return "/user/setMainAddress";
+	   return "/user/myPage/setMainAddress";
 	}
 	
-	@RequestMapping(value="/setMainAddressForm", method = RequestMethod.POST) // update
+	@RequestMapping(value="/myPage/setMainAddressForm", method = RequestMethod.POST) // update
 	public String setMainAddress(@RequestParam("main_address1")String main_address1,
 			                     @RequestParam("main_address2")String main_address2,
 			                     @RequestParam("main_address3")String main_address3,
@@ -262,13 +255,13 @@ public class UserController {
 		if ( null != emails ) {
 			userService.sUpdateMainAddress(main_address1, main_address2, main_address3, main_address4, emails);
 			model.addAttribute("address", userService.sGetUserInfo(emails));
-		    return "/user/setMainAddressAction";
+		    return "/user/myPage/setMainAddressAction";
 		}
-		 return "/user/setMainAddressAction";
+		 return "/user/myPage/setMainAddressAction";
 	}
 	
 	// 계정 삭제
-	@RequestMapping(value="/deleteInfoUser", method = RequestMethod.POST)
+	@RequestMapping(value="/myPage/deleteInfoUser", method = RequestMethod.POST)
 	public String deleteInfoUser(HttpSession session, Model model) throws Exception{
 		String email = (String)session.getAttribute("email");
 		if ( null != email ) {
@@ -276,9 +269,9 @@ public class UserController {
 			addressService.sDeleteInfoAddress(email);
 			model.addAttribute("result", result);
 			userService.sLogout(session);
-			return "/user/deleteInfoUserAction";
+			return "/user/myPage/deleteInfoUserAction";
 		}
-		return "/user/deleteInfoUserAction";
+		return "/user/myPage/deleteInfoUserAction";
 	}
 	
 	// 회원 임시 비밀번호 전송
@@ -304,17 +297,24 @@ public class UserController {
   }
 	
 	// 비밀번호 변경
-	@RequestMapping(value="/updatePassword", method = RequestMethod.GET)
+	@RequestMapping(value="/myPage/updatePassword", method = RequestMethod.GET)
 	public String updatePassword() throws Exception{
 		return "/user/updatePassword";
 	}
 	
-	@RequestMapping(value="/updatePasswordForm", method = RequestMethod.POST)
+	@RequestMapping(value="/myPage/updatePasswordForm", method = RequestMethod.POST)
 	public String updatePasswordForm(@RequestParam("updatePassword1")String updatePassword1,
+			                         @RequestParam("getPassword")String getPassword,
 			                         HttpSession session, Model model) throws Exception {
 		String email = (String)session.getAttribute("email");
-		userService.sUpdatePassword(updatePassword1, email);
-
+	    userService.sUpdatePassword(updatePassword1, email);	    
+	    int result = userService.sUserLogin(email, getPassword);
+	    // 비밀번호 변경시에 현재 비밀번호가 일치한지 확인.
+	    if ( 1 == result ) {
+	    	result = 6;
+			model.addAttribute("result", result);
+			return "/user/loginAction";
+		}
 		return "/user/login";
 	}
 
