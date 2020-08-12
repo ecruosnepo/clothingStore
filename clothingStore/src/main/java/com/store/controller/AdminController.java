@@ -206,7 +206,7 @@ public class AdminController {
 		System.out.println("주문 수정 Controller");
 		System.out.println(oDto.toString());
 		
-		orderService.adOrderUpdateDao(oDto);
+		orderService.adOrderUpdate(oDto);
 		System.out.println("주문 수정 완료");
 		
 		String referer = req.getHeader("Referer");

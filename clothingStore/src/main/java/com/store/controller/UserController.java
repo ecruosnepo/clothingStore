@@ -310,10 +310,16 @@ public class UserController {
 	
 	@RequestMapping(value="/updatePasswordForm", method = RequestMethod.POST)
 	public String updatePasswordForm(@RequestParam("updatePassword1")String updatePassword1,
-			                         HttpSession session, Model model) throws Exception {
+			                         @RequestParam("getPassword")String getPassword, HttpSession session, Model model) throws Exception {
 		String email = (String)session.getAttribute("email");
 		userService.sUpdatePassword(updatePassword1, email);
-
+       int result = userService.sUserLogin(email, getPassword);
+       // 비밀번호 변경시에 현재 비밀번호가 일치한지 확인.
+       if ( 1 == result ) {
+          result = 6;
+         model.addAttribute("result", result);
+         return "/user/loginAction";
+       }
 		return "/user/login";
 	}
 

@@ -14,27 +14,28 @@
 	  		margin-bottom:0 !important;
 	  	}
 	  	.sitemap{
-	  		margin-bottom:24px !important;
-	  		font-size:10px;
-	  		text-decoration:none;
+  		margin-bottom:15px !important;
+  		font-size:11px;
+  		text-decoration:none;
+  		font-weight:600 !important;
 	  	}
 	  	.sitemap a {
 	  		text-decoration:none !important;
-	  		margin:11px 0;
+	  		margin:11px 0;  		
 	  	}
-	  	.mysetting-header{
+	  	.mysetting-header {
 	  		font-weight:600;
 	  		text-align:center;
-	  		margin-bottom:16px;
+	  		margin-bottom:20px;
 	  	}
 	  	.mysetting-header h1 {
 	  		font-size:27px;
 	  		font-weight:700;
 	  		line-height: 1.142857143;  		
 	  	}
-	  	.mysetting-header p {
-	  		font-size:13px;
-	  	}
+	 	.mysetting-header p {
+	 		font-size:13px;
+	 	}
 	  	.mysetting-wrap{
 	  		max-width: 676px !important;
 	  		padding: 0 24px 24px !important;

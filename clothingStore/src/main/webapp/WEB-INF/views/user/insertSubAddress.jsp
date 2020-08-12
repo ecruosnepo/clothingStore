@@ -109,7 +109,7 @@
 </head>
 <body>
 <jsp:include page="../header.jsp" flush="false" />
-  <div class="container addsubaddr-wrap px-0"> 
+<div class="container addsubaddr-wrap px-0"> 
     <div class="row mx-0">
       <div class="center-block">
 	    <div class="addsubaddr-header">  
@@ -146,8 +146,8 @@
      </div>
   </div>
 </div>
-    <jsp:include page="../footer.jsp" flush="false" />
-  </body>  
+<jsp:include page="../footer.jsp" flush="false" />
+</body>  
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
    <script>
    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.

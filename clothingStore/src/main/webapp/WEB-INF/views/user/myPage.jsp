@@ -31,9 +31,6 @@
         <b style="font-size: 23px;"><label>내 계정</label></b>
         <br/>
         <br/>
-        <a href="#" class="button" style="color: black; text-decoration: underline; font-size: 15px;">결제 설정</a>
-        <br/>
-        <br/>
         <a href="MyPageSet" class="button" style="color: black; text-decoration: underline; font-size: 15px; ">내 설정</a>
         <br/>
         <br/>  

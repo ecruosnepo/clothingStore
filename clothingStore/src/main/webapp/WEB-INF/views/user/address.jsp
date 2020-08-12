@@ -13,27 +13,28 @@
 	  		margin-bottom:0 !important;
 	  	}	  	
 	  	.sitemap{
-	  		margin-bottom:24px !important;
-	  		font-size:10px;
+	  		margin-bottom:15px !important;
+	  		font-size:11px;
 	  		text-decoration:none;
+	  		font-weight:600 !important;
 	  	}
 	  	.sitemap a {
 	  		text-decoration:none !important;
-	  		margin:11px 0;
+	  		margin:11px 0;  		
 	  	}
 	  	.adrress-header {
 	  		font-weight:600;
 	  		text-align:center;
-	  		margin-bottom:16px;
+	  		margin-bottom:40px;
 	  	}
 	  	.adrress-header h1 {
 	  		font-size:27px;
 	  		font-weight:700;
 	  		line-height: 1.142857143;  		
 	  	}
-	  	.mysetting-header p {
-	  		font-size:13px;
-	  	}
+	 	.adrress-header p {
+	 		font-size:13px;
+	 	}
 	  	.address-wrap{
 	  		max-width: 684px !important;
 	  		padding: 0 24px 24px !important;
@@ -107,9 +108,8 @@
       <div class="row mx-0">
         <div class="center-block">
 		   <div class="adrress-header">
-		       <label><a href="#"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="address"  style="color: black; ">주소록</a></label>
-		       <h2>주소록</h2>
-		       <label>여기서 계정 및 구독을 관리할 수 있습니다</label>
+		       <p class="sitemap"><a href="#"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="address"  style="color: black; ">주소록</a></p>
+		       <p style="font-size: 28px;">주소록</p>
 		   </div>
 		   <div class="box" >
 		    	<div class="box-title">
