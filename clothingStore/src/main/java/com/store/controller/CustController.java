@@ -2,7 +2,6 @@ package com.store.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.store.dto.BoardDto;
-import com.store.dto.OrderDto;
 import com.store.service.BoardService;
 import com.store.service.DefaultService;
 
@@ -63,10 +61,8 @@ public class CustController {
 			Map<String, Object> map=service.boardListService(userId,page);
 			model.addAttribute("list", map.get("dto"));
 			model.addAttribute("page", map.get("page"));
-		
 			checkLogin=1;
 		}
-		
 		model.addAttribute("checkLogin", checkLogin);
 		
 		return "customerCenter/q_main"; 
@@ -76,14 +72,15 @@ public class CustController {
 	@RequestMapping("/customerQnaWriteForm")
 	public String qnaWrite(HttpSession session, Model model) {
 		String userId = (String) session.getAttribute("email");
-		List<OrderDto> order=service.boardOrderViewService(userId);
-		model.addAttribute("orderList", order);
+		Map<String,Object> map=service.boardWriteFormService(userId);
+		model.addAttribute("orderList", map.get("orderList") );
+		model.addAttribute("orderCount", map.get("orderCount") );
+		
 		return "customerCenter/q_write";
 	}
 	
 	@RequestMapping("/customerWrite")
-	public String qnaWrite(BoardDto bDto, @RequestParam(name="orderId", defaultValue="0")Integer orderId,
-			HttpServletRequest req, HttpSession session, Model model) {
+	public String qnaWrite(BoardDto bDto, HttpServletRequest req, HttpSession session, Model model) {
 		
 		String user_email = (String) session.getAttribute("email");
 		System.out.println(bDto.getTitle());
@@ -116,9 +113,12 @@ public class CustController {
 			int b_check=0;
 			//파일 저장
 			String fileName=service.boardFileUploadService(filePart, realPath);
+			bDto.setB_check(b_check);
+			bDto.setUser_email(user_email);
+			bDto.setFile(fileName);
 			
 			//입력 실행
-			service.boardWriteService(b_check, user_email, bDto, fileName,orderId);
+			service.boardWriteService(bDto);
 		}
 		model.addAttribute("result", result);
 		
@@ -143,9 +143,11 @@ public class CustController {
 	public String boardUpdateForm(@RequestParam("id")int id, Model model) {
 		
 		Map<String,Object> map=service.boardUpdateFormService(id);
-		model.addAttribute("dto", map.get("dto"));
+		model.addAttribute("dto", map.get("board"));
 		model.addAttribute("list", map.get("catList"));
 		model.addAttribute("orderList", map.get("orderList"));
+		model.addAttribute("orderCount", map.get("orderCount"));
+		
 		return "customerCenter/q_update";
 	}
 	

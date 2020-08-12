@@ -1,5 +1,7 @@
 package com.store.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,5 +16,6 @@ public interface StockDao {
 	public int countStockDao(@Param("pd_id")int pd_id);
 	//재고 삭제
 	public int deleteStockDao(@Param("pd_size")String pd_size, @Param("pd_id")int pd_id);
-	
+	public int updateStockDao(@Param("pd_id")int pd_id, @Param("pd_size")String pd_size, @Param("pd_quantity")int pd_quantity);
+	public List<StockDto> productStockDao(@Param("pd_id")int pd_id);
 }

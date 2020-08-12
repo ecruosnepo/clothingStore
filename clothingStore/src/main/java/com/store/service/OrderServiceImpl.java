@@ -23,5 +23,13 @@ public class OrderServiceImpl implements OrderService {
 	public int addOrderDetail(String order_id,String user_email) {
 		return oDao.addOrderDetailDao(order_id,user_email);
 	}
+	
+   @Override
+   public int adOrderUpdate(OrderDto oDto) {
+      System.out.println("주문 수정 service");
+      oDao.adOrderUpdateDao(oDto);
+
+      return oDao.adOrderUpdateDao(oDto);
+   }
 
 }

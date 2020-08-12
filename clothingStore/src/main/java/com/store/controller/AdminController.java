@@ -18,13 +18,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.store.dao.CategoryDao;
 import com.store.dto.CategoryDto;
+import com.store.dto.OrderDto;
+import com.store.dto.StockDto;
 import com.store.service.AdminService;
+import com.store.service.OrderService;
 
 @Controller
 public class AdminController {
 	
 	@Autowired
 	AdminService service;
+	@Autowired
+	OrderService orderService;
 	@Autowired
 	CategoryDao categoryDao;
 	
@@ -179,7 +184,32 @@ public class AdminController {
 		Map<String, Object> map=service.adOrderViewService(order_id);
 		model.addAttribute("order", map.get("orderList"));
 		model.addAttribute("detail", map.get("detailList"));
-		
+		model.addAttribute("stockList", map.get("stockList"));
+
 		return "admin/order_view"; 
 	}
+	@RequestMapping("/adPdMiniSearch")
+	public @ResponseBody Object adPdMiniSearch(@RequestParam(name="search",defaultValue="")String search) {
+		Map<String, Object> map=service.adPdMiniSearchService(search);
+		System.out.println(map.get("pdList"));
+		
+		return map; 
+	}
+	@RequestMapping("/adSelectStock")
+	public @ResponseBody Object adSelectStock(@RequestParam(name="pd_id",defaultValue="")Integer pd_id) {
+		List<StockDto> stock=service.adSelectStockService(pd_id);
+		System.out.println(stock);
+		return stock; 
+	}
+   @RequestMapping("/adOrderUpdate")
+   public String adOrderUpdate(HttpServletRequest req, OrderDto oDto, Model model) {
+      System.out.println("주문 수정 Controller");
+      System.out.println(oDto.toString());
+      
+      orderService.adOrderUpdate(oDto);
+      System.out.println("주문 수정 완료");
+      
+      String referer = req.getHeader("Referer");
+       return "redirect:"+ referer; 
+   }
 }

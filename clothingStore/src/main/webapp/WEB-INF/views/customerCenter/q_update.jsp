@@ -124,18 +124,28 @@ var boardId=getParameterByName('id');
                           </div>
                           
                           <div class="modal-body">
-	                        <c:forEach items="${ orderList }" var="ods" > 
-							  <h5>주문번호 : ${ ods.id }</h5>
+	                        <c:forEach items="${ orderList }" var="ods" varStatus="n"> 
                           	  <c:choose> 
-							    <c:when test="${ods.id == dto.orderId }"> 
-                         		<!-- 선택된 주문번호 -->
-	                            <input type='checkbox' name='orderId' value='${ ods.id }' onclick="doOpenCheck(this)" checked/> 상품명 : ${ ods.productName } 
+							    <c:when test="${ods.order_id == dto.orderId }"> 
+	                         		<!-- 선택된 주문번호 -->
+		                            <input type='checkbox' name='orderId' value='${ ods.order_id }' onclick="doOpenCheck(this)" checked/>
+		                            <h5 style="display: inline;"><label for="order${n.index}" id="orderLabel"> 주문번호 : ${ ods.order_id }</label></h5><br>
 							    </c:when> 
-							    <c:otherwise> 
-						    	<!-- 선택안된 주문번호 출력 -->
-	                             <input type='checkbox' name='orderId' value='${ ods.id }' onclick="doOpenCheck(this)"/> 상품명 : ${ ods.productName }
-							    </c:otherwise>
+							    <c:when test="${ods.order_id != dto.orderId }"> 
+							    	<!-- 선택안된 주문번호 출력 -->
+		                            <input type='checkbox' name='orderId' value='${ ods.order_id }' onclick="doOpenCheck(this)"/>
+		                            <h5 style="display: inline;"><label for="order${n.index}" id="orderLabel"> 주문번호 : ${ ods.order_id }</label></h5><br>
+							    </c:when>
+							    <c:when test="${ orderCount.get(n.index) > 1 }">
+							    	<!-- 하나의 주문에 여러 상품을 구매했을 경우 -->
+	                      			상품명 : ${ ods.pd_name } 외 ${ orderCount.get(n.index)-1 } <br>
+	                      		</c:when>
+	                      		<c:when test="${ orderCount.get(n.index) <= 1 }">
+	                      			<!-- 하나의 주문에 한 상품만 구매했을 경우 -->
+	                      			상품명 : ${ ods.pd_name } <br>
+	                      		</c:when>
 							</c:choose> 
+							결제일 : ${ ods.payDate }
 							<hr>
                           </c:forEach> 
                           </div>

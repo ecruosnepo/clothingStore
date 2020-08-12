@@ -71,7 +71,7 @@
 		     		<a type="button" id="file" data-toggle="modal" data-target="#exampleModal" >${dto.file}</a>
 		     	</h6><br>
 		     </c:if>
-		     <c:if test="${ dto.orderId!=0 || dto.orderId==null }">
+		     <c:if test="${ dto.orderId!='' || dto.orderId!=null }">
 		     	<h6 style="float: right;"><a href=#>주문번호 : ${dto.orderId}</a></h6>
 		     </c:if>
 		     <p><c:out value="${dto.question}" /></p>

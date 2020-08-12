@@ -125,4 +125,7 @@
 			</when>
 		</choose>
 	</select>
+	<select id="adPdMiniSearchDao" resultType="com.store.dto.ProductDto">
+		select pd_id, pd_name, pd_color,pd_price from products where pd_name like #{search} order by pd_id;
+	</select>
 </mapper>

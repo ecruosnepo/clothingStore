@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.store.dto.OrderDetailDto;
 import com.store.dto.OrderDto;
 
 @Mapper
@@ -16,6 +15,7 @@ public interface OrderDao {
 	
 	//회원별 주문 내역 출력
 	public List<OrderDto> userOrderListDao(@Param("user_email") String user_email);
+	
 	public int addOrder(
 			@Param("user_email") String user_email,
 			@Param("dv_name") String dv_name,
@@ -45,6 +45,8 @@ public interface OrderDao {
 	public List<OrderDto> adminOrderListDao();
 	//전체 리스트 갯수
 	public int adminOrderCountDao();
-	//order_id
+	//order_id별로 보기
 	public OrderDto adOrderViewDao(String order_id);
+	//order수정
+	public int adOrderUpdateDao(OrderDto oDto);
 }

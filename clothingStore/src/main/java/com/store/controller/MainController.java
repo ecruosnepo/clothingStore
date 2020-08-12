@@ -62,7 +62,7 @@ public class MainController {
 		
 		orderService.addOrder(oDto);
 		System.out.println("order추가 완료");
-		System.out.println("orderDetail추가 시작");		
+		System.out.println("orderDetail추가 시작");	
 		
 		orderService.addOrderDetail(imp_uid,email);
 		

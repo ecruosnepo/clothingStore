@@ -302,7 +302,6 @@ public class UserController {
 
 		return "/user/login";	
   }
-
 	
 	// 비밀번호 변경
 	@RequestMapping(value="/updatePassword", method = RequestMethod.GET)

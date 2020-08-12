@@ -26,6 +26,7 @@ public interface ProductDao {
 	public int listPdCountDao();
 	public int listPdCountDao(String search); 
 	public int adminDeletePdsDao(int pd_id);
+	public List<ProductDto> adPdMiniSearchDao(String search);
 	//파일 이미지 호출
 	public String adminImageDao(int pd_id);
 }
