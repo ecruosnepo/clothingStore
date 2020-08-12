@@ -1,5 +1,6 @@
 package com.store.controller;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.store.dto.AddressDto;
+import com.store.dto.MyPageDto;
+import com.store.dto.OrderDto;
 import com.store.dto.UserDto;
 import com.store.service.AddressServiceImpl;
+import com.store.service.OrderService;
 import com.store.service.UserServiceImpl;
 
 @Controller
@@ -34,6 +38,10 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImpl userService;
+	
+
+	@Autowired
+	private OrderService orderService;
 	
 	@Autowired
 	private AddressServiceImpl addressService;
@@ -155,6 +163,22 @@ public class UserController {
 	public String logout( HttpSession session ) {
 		 userService.sLogout(session);
 		return "/user/logout";
+	}	
+	
+	// MyPage 페이지
+	@RequestMapping(value="/myPage", method = RequestMethod.GET)
+	public String MyPage(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+		String user_email = (String)session.getAttribute("email");
+		
+		String user_name = (String)userService.sGetUserInfo(user_email).getUser_name();
+		List<OrderDto> oDto = orderService.selectOrderList(user_email);
+		List<MyPageDto> mDto = orderService.selectPdMyPage(user_email);
+		
+		model.addAttribute("user_name", user_name);
+	    model.addAttribute("oDto", oDto);
+	    model.addAttribute("mDto", mDto);
+		   	
+	   	return "/user/myPage";
 	}
 		
 	// 내설정
