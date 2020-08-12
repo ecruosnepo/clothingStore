@@ -7,12 +7,7 @@
 	<insert id="addStockDao">
 		insert into stock (pd_id, pd_stock, pd_size) values (#{pd_id}, #{pd_stock}, #{pd_size});
 	</insert>
-	
-	<select id="getStockDao">
-		select 
-		
-	</select>
-	
+
 	<select id="countStockDao" resultType="_int" >
 		select count(*) from stock where pd_id=#{pd_id}
 	</select>
@@ -21,11 +16,11 @@
 		delete from stock where pd_size=#{pd_size} and pd_id=#{pd_id}
 	</delete>
 
-	<update id="updateStockDao">
+	<update id="orderUpdateStockDao">
 		update stock set
 		<choose>
 			<when test="op==sum">
-				pd_stock=pd_stock+#{pd_quantity} 		
+				pd_stock=pd_stock+#{pd_quantity}
 			</when>
 			<when test="op==sub">
 				pd_stock=pd_stock-#{pd_quantity} 
@@ -33,6 +28,14 @@
 		</choose>
 		where pd_id=#{pd_id} and pd_size=#{pd_size};
 	</update>
+	
+	<update id="updateStockDao">
+		update stock set pd_stock=#{pd_stock} where pd_id=#{pd_id} and pd_size=#{pd_size};		
+	</update>
+	
+	<select id="checkStockDao" resultType="boolean">
+		select if(count(*)=1,1,0) from stock where pd_id=#{pd_id} and pd_size=#{pd_size};		
+	</select>
 	
 	<select id="productStockDao" resultType="com.store.dto.StockDto" >
 		select * from stock where pd_id=#{pd_id}

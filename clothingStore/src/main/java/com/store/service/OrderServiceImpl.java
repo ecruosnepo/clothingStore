@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.store.dao.OrderDao;
 import com.store.dto.MyPageDto;
-import com.store.dto.OrderDetailDto;
 import com.store.dto.OrderDto;
 
 @Service

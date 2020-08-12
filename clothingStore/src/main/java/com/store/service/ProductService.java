@@ -1,19 +1,19 @@
 package com.store.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.store.dto.ProductDto;
 
 public interface ProductService {
 	//상품 목록
-	List<ProductDto> listProduct(int catId, String sortby);
-	ProductDto viewProduct(int id);
-	List<ProductDto> getColorList(String name);
-	int getProductId(String pd_name,String pd_color);
-	int regProduct(ProductDto pDto);
-	int deleteProduct(String id);
-	int updateProduct(Map<String, String> map);
-	List<ProductDto> listProductSize(int catId, String size, String sortby);
-	List<ProductDto> listSearchProduct(String keyword, String size, String sortby);	
+	public List<ProductDto> listProduct(int catId, String sortby);
+	public ProductDto viewProduct(int id);
+	public ProductDto adminViewProduct(int pd_id); 
+	public List<ProductDto> getColorList(String name);
+	public int getProductId(String pd_name,String pd_color);
+	public int regProduct(ProductDto pDto);
+	public int deleteProduct(String id);
+	public int updateProduct(ProductDto pDto);
+	public List<ProductDto> listProductSize(int catId, String size, String sortby);
+	public List<ProductDto> listSearchProduct(String keyword, String size, String sortby);	
 }

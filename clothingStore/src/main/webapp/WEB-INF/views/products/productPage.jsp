@@ -88,6 +88,9 @@
         .size-list:focus{
         	border:unset;
         }
+        .size-list option{
+        	padding: 10px 15px;
+        }
         .add-cart{
             width: 100%;
             height: 45px;
@@ -246,9 +249,9 @@
                     <div class="pd-select-buttons">
                         <select name="pd_size" class="form-control form-control-lg size-list rounded-0 shadow-none">
                         	<option selected>사이즈 선택</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
+                        	<c:forEach items="${stock_list }" var="stock">
+	                            <option value="${stock.pd_size }">${stock.pd_size }</option>
+                            </c:forEach>
                         </select>
                         <button class="btn add-cart rounded-0" onclick="addCart()">
                             <span>담기</span>

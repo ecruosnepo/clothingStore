@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <% 
-	if ( session.getAttribute("manager") != null ){
+	if ( session.getAttribute("manager") == null ){
 %>
 	<script type="text/javascript">
 		alert("관리자만 이용 가능한 페이지 입니다.");
@@ -85,8 +85,8 @@
                 <c:forEach items="${ list }" var="dto" varStatus="idx" begin="${ page.startIdx }" end="${ page.endIdx }" >
                     <tr>
                     	<td><input type="checkbox" class="chBox" name="chBox" value="${ dto.pd_id }" data-cartNum="${ dto.pd_size }"></td>
-                        <td scope="row"><a href='adminPdUpdate?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }' id="id">${ dto.pd_id }</a></td>
-                        <td scope="row"><a href='adminPdUpdate?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }'>${ dto.pd_name }</a></td>
+                        <td scope="row"><a href='updateProductForm?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }' id="id">${ dto.pd_id }</a></td>
+                        <td scope="row"><a href='updateProductForm?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }'>${ dto.pd_name }</a></td>
                         <td>${ dto.pd_color }</td>
                         <td id="size">${ dto.pd_size }</td>
                         <td>${ dto.pd_stock }</td>
