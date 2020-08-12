@@ -26,3 +26,15 @@
     location.href = 'index';
   </script>
 </c:if>
+<c:if test="${result == '5'}">
+  <script>
+    alert('이메일과 비밀번호가 일치하지 않습니다.');
+    history.go(-1);
+  </script>
+</c:if>
+<c:if test="${result == '6'}">
+  <script>
+    alert('현재 비밀번호가 일치하지 않습니다.');
+    history.go(-1);
+  </script>
+</c:if>

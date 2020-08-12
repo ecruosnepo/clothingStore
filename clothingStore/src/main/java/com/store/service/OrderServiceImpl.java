@@ -1,9 +1,12 @@
 package com.store.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.store.dao.OrderDao;
+import com.store.dto.MyPageDto;
 import com.store.dto.OrderDto;
 
 @Service
@@ -24,4 +27,23 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.addOrderDetailDao(order_id,user_email);
 	}
 
+	@Override
+	public List<OrderDto> userOrderListDao(String user_email) {
+		return oDao.userOrderListDao(user_email);
+	}
+	
+	@Override
+	public List<OrderDto> selectOrderList(String user_email) throws Exception {
+		return oDao.selectOrderList(user_email);
+	}
+
+	@Override
+	public List<MyPageDto> selectPdMyPage(String user_email)throws Exception {
+		return oDao.selectPdMyPage(user_email);
+	}
+
+	@Override
+	public OrderDto selectOrderDto() throws Exception {
+		return oDao.selectOrderDto();
+	}
 }

@@ -10,7 +10,11 @@
 				users 
 				( user_email, user_password ) VALUES 
 				(#{user_email} ,#{user_password}) 
-			</insert> 
+			</insert>
+			
+			<select id="userLoginCheck" parameterType="String" resultType="int">
+			     SELECT COUNT(*) FROM users WHERE user_email = #{user_email} AND user_password = #{user_password}
+			</select> 
 			
 			<!-- USER EMAIL -->
 			<select id="UserEmail" parameterType="String" resultType="int"> 

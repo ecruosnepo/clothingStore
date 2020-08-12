@@ -11,6 +11,8 @@ import com.store.dto.UserDto;
 
 @Mapper
 public interface UserDao {
+	 
+	 public int userLoginCheck(@Param("user_email")String user_email, @Param("user_password")String user_password);
 	
 	 public UserDto getUserInfo(@Param("user_email")String user_email);
 	 

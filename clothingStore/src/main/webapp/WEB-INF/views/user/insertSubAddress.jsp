@@ -4,68 +4,150 @@
 <html>
 <head>
 <title>옷가게</title>
-    <style>
-   .firstCenter{
-    text-align: center;
-   }
-   .box{
-    background-color:whitesmoke;
-    text-align: left;
-    padding: 5%;
-    margin:5%;
-    
-   }
-   .size{
-     font-size: 24px;
-     text-align: center;
-   }
-   .sub{
-     font-size: 12px;
-     color: red;
-   }
-   .head{
-     font-size: 20px;
-   }
-  </style>
-  </head>
+	<style>
+   		body{
+	  		background-color:#FAF9F8;
+	  	}
+	  	p{
+	  		margin-bottom:0 !important;
+	  	}	  	
+	  	.sitemap{
+	  		margin-bottom:10px !important;
+	  		font-size:10px;
+	  		text-decoration:none;
+	  	}
+	  	.sitemap a {
+	  		text-decoration:none !important;
+	  		margin:11px 0;
+	  	}
+	  	.addsubaddr-header {
+	  		font-weight:600;
+	  		text-align:center;
+	  		margin-bottom:40px;
+	  	}
+	  	.addsubaddr-header h1 {
+	  		font-size:27px;
+	  		font-weight:700;
+	  		line-height: 1.142857143;  		
+	  	}
+	  	.addsubaddr-header p {
+	  		font-size:13px;
+	  	}
+	  	.addsubaddr-wrap{
+	  		max-width: 684px !important;
+	  	}
+	  	.addsubaddr-wrap a {
+	    	color:#222;
+	    	text-decoration:underline;
+	  	}
+	  	.addsubaddr-wrap a:hover {
+	    	color:#222;    	
+	  	}
+	  	.center-block{
+	  		width:100%;
+	  	}
+	    .first{
+	       text-align: center;
+	    }
+	    .box{
+	      background-color:white;
+	      text-align: left;
+	      margin-bottom:50px;	      
+	    }
+	    .box-title{
+	     	width:100%;
+	     	background-color:#F4E6E3;
+	     	margin-bottom:0;    
+	    }
+	    .box-title p{
+	   	 	font-size:13px;
+	   	 	padding:18px 24px;
+	    }
+	    .box-title a{
+	    	float:right;
+	    	font-size:13px;
+	    }
+	    .box *{
+			font-weight:600;
+		}
+	    .box-content{
+	     	padding:24px;
+	    }
+	    .group_p{
+	    	margin:5px 0 10px;
+	    }
+	    .group_p *{
+	    	margin:6px 0 7px;
+	    }
+	    .headName{
+	    	color:#707070;
+	       font-size: 12px;
+	    }
+	    .subName{
+	       font-size: 14px;
+	    }
+	    .address-btn {
+	    	background-color:#222 !important;
+	    	font-size:13px !important;
+	    	margin-right:40px;
+	    	padding:13px 16px !important;
+	    	font-weight:600 !important;
+	    }
+	    .address-btn-w {
+	    	background-color:white !important;
+	    	border:1px solid #222 !important;
+	    }
+	    .has-success *{
+	    	margin:6px 0 7px;
+	    }
+	    .input-address{
+	    	height:auto !important;
+	    	border: 1px solid #d0d0d0;
+	    	padding: 14px 25px 14px 10px !important;
+	    }
+	</style>
+</head>
 <body>
 <jsp:include page="../header.jsp" flush="false" />
-  <div class="container"> 
-    <div class="row">
-      <div class="center-block" style="width: 55%; float:none; margin:0 auto">
-	    <div class="firstCenter">  
-			<p class="head"><a href="index"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="subAddress"  style="color: black; ">주소록</a></p>
-			  <p style="font-size: 26px;">주소록</p>
-			  </div>
-			  <div class="box" >
-			    <p class="size"><b>새 주소 추가</b></p>		     
-			       <form action="insertSubAddressForm" method="post">
-			         <div class="form-group has-success">
-			        <p class="head">이름</p>
-			          <input type="text" class="form-control" id="inputSuccess1" name="r_name">
-			            <br/><br/>
-		                <button type="button" onclick="DaumPostcode();" class="btn btn-info btn-lg">주소 검색</button>    
-                    <p class="head">우편번호</p>
-		             <input type="text" class="form-control" id="postcode" placeholder="우편번호" name="address1">
-		            <p id="id_1"></p> 
-		            <p class="head">주소</p>
-		             <input type="text" class="form-control" id="address" placeholder="도로명 주소" name="address2">
-		            <p id="id_2"></p>
-		            <p class="head">아파트 명/건물 명</p>
-		             <input type="text" class="form-control" id="address-name" placeholder="지번 주소" name="address3">
-		            <p id="id_3"></p>
-		            <p class="head">동 호수/층 수</p>
-		             <input type="text" class="form-control" id="address-dong" placeholder="상세 주소"  name="address4">
-		            <p id="id_4"></p>
-                 </div>
-               <button type="submit" class="btn btn-primary btn-lg" >세부 정보 저장</button> 
-             </form>
-            </div>  
-          </div>
-	    </div>
-	  </div>
-    <jsp:include page="../footer.jsp" flush="false" />
-  </body>  
+<div class="container addsubaddr-wrap px-0"> 
+    <div class="row mx-0">
+      <div class="center-block">
+	    <div class="addsubaddr-header">  
+			<p class="sitemap"><a href="index"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="subAddress"  style="color: black; ">주소록</a></p>
+		  	<p style="font-size: 26px;">배송 주소 추가</p>
+	  	</div>
+	  	<div class="box" >
+	     	<div class="box-title">
+	    		<p>배송 주소 추가</p>    		
+	    	</div>
+	    	<div class="box-content address-content">
+			   <form action="insertSubAddressForm" method="post">
+			       <div class="form-group has-success">
+				        <p class="headName">이름</p>
+			          	<input type="text" class="form-control input-address rounded-0" id="inputSuccess1" name="dv_name">
+		                <button type="button" onclick="DaumPostcode();" class="btn btn-lg rounded-0 address-btn text-white">주소 검색</button>    
+	                    <p class="headName">우편번호</p>
+		             	<input type="text" class="form-control input-address rounded-0" id="postcode" placeholder="우편번호" name="dv_address1">
+			            <p id="id_1"></p> 
+			            <p class="headName">주소</p>
+		             	<input type="text" class="form-control input-address rounded-0" id="address" placeholder="도로명 주소" name="dv_address2">
+			            <p id="id_2"></p>
+			            <p class="headName">아파트 명/건물 명</p>
+		             	<input type="text" class="form-control input-address rounded-0" id="address-name" placeholder="지번 주소" name="dv_address3">
+			            <p id="id_3"></p>
+			            <p class="headName">동 호수/층 수</p>
+		             	<input type="text" class="form-control input-address rounded-0" id="address-dong" placeholder="상세 주소"  name="dv_address4">
+			            <p id="id_4"></p>
+                 	</div>
+              		<button type="submit" class="btn btn-lg rounded-0 address-btn text-white" >세부 정보 저장</button> 
+            	</form>
+	    	</div>
+	 	</div>
+     </div>
+  </div>
+</div>
+<jsp:include page="../footer.jsp" flush="false" />
+</body>  
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
    <script>
    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.

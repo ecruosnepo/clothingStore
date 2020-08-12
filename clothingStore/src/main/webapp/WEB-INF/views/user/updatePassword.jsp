@@ -4,72 +4,110 @@
 <html>
 <head>
 <title>옷가게</title>
-  <style>
-    
-    .firstCenter{
-      text-align: center;
-    }
-
-     .box{
-      
-      background-color:whitesmoke;
-      text-align: left;
-      padding: 5%;
-      margin:5%;
-      
-     }
-     .size{
-       font-size: 24px;
-       text-align: center;
-     }
-     .sub{
-       font-size: 12px;
-       color: red;
-     }
-     .head{
-       font-size: 12px;
-     }
-    
-   
-    </style>
-    </head>
-  <body>
-   <jsp:include page="../header.jsp" flush="false" />  
-    <div class="container"> 
-      <div class="row ">
-        <div class="center-block" style="width: 55%; float:none; margin:0 auto">
-    <div class="firstCenter">
-
-        <label class="head"><a href="#"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="MyPageSet"  style="color: black; ">내 설정</a></label>
-
-        <p style="font-size: 26px;"><b>비밀번호 변경</b></p>
-    </div>
-  
-    <div class="box" >
-      <label class="size"></label>
-        <div class="form-group has-success">
-            <label class="control-label" for="inputSuccess1" style="color: black;">
-                 변경하실 비밀번호를 입력 해주세요.
-                <br/><br/>
-            </label>
-            <br/><br/>
-            <form action="updatePasswordForm" method="post" name="delId">
-            <label style="font-size: 21px;">변경 비밀번호</label>
-            <input type="password" class="form-control" id="password" onkeyup="pwCheckFunction();" name="updatePassword1">
-             <br/>
-            <label style="font-size: 21px;">변경 비밀번호 확인</label>
-           <input type="password" class="form-control" id="password2" onkeyup="pwCheckFunction();" name="updatePassword2">
-           <p id="pwCheckMessage"></p>
-           <input type="button" onclick="update()" class="btn btn-primary btn-lg" value="비밀번호 변경"/> 
-          </form> 
-          </div>
-           </div>  
-         </div>  
-     </div>
-    </div>
-   <jsp:include page="../footer.jsp" flush="false" />  
-  </body> 
-<script>      
+<style>
+	.changePass-wrap{
+		max-width:676px !important;		
+	}
+	.inner-content{
+		width:100%;
+		padding: 0 24px;
+	}
+	.sitemap{
+  		margin-bottom:24px !important;
+  		font-size:11px;
+  		text-decoration:none;
+  		font-weight:600 !important;
+  	}
+  	.sitemap a {
+  		text-decoration:none !important;
+  		margin:11px 0;  		
+  	}
+  	.content-header {
+  		font-weight:600;
+  		text-align:center;
+  	}
+  	.content-header p {
+  		font-size:27px;
+  		font-weight:700;
+  		line-height: 1.142857143;
+  		margin-bottom:8px;	
+  	}
+ 	.content-header p {
+ 		font-size:13px;
+ 	}
+	.firstCenter{
+		text-align: center;
+	}
+	.box{
+		background-color:#FAF9F8;
+		text-align: left;
+		font-weight:600;
+		padding:32px;
+	}
+	.size{
+		font-size: 24px;
+		text-align: center;
+	}
+	.headName{
+		color:#707070;
+		font-size: 13px;
+	}
+	.input-text{
+		padding:8px !important;
+		height: 48px !important;
+	}
+   .address-btn {
+		background-color:#222 !important;
+		font-size:13px !important;
+		margin-right:20px;
+		margin-bottom:16px;
+		padding:13px 16px !important;
+		font-weight:600 !important;
+   }
+   .address-btn-w {
+	   	background-color:white !important;
+	   	border:1px solid #222 !important;
+   }
+    .required-field:after {
+		content: "*";
+		color: #d6001c;
+		font-size:13px;
+		font-weight:600 !important;
+		margin-left:2px
+	}
+</style>
+</head>
+<body>
+<jsp:include page="../header.jsp" flush="false" />  
+<div class="container changePass-wrap"> 
+	<div class="row ">
+        <div class="inner-content">
+		    <div class="content-header">
+		        <label class="sitemap"><a href="#"  style="color: black; ">HM.com</a>/<a href="MyPage"  style="color: black; ">나의 계정</a>/<a href="MyPageSet"  style="color: black; ">내 설정</a></label>
+		        <p style="font-size: 28px;"><b>비밀번호 변경</b></p>
+		    </div>
+		    <div class="box" >
+		        <div class="form-group has-success">
+		            <p class="control-label">비밀번호 변경</p>
+		            <form action="updatePasswordForm" method="post" name="delId">
+			            <label class="headName required-field">현재 비밀번호</label>			            
+			            <input type="password" class="form-control input-text rounded-0" id="getPassword" onkeyup="pwCheckFunction();" name="getPassword">
+			            <label class="headName required-field">새 비밀번호</label>			            
+			            <input type="password" class="form-control input-text rounded-0" id="password" onkeyup="pwCheckFunction();" name="updatePassword1">
+		             	<p class="headName">8 characters1 lowercase1 uppercase1 number</p>
+		            	<label class="headName required-field">새 비밀번호 확인</label>
+		           		<input type="password" class="form-control input-text rounded-0" id="password2" onkeyup="pwCheckFunction();" name="updatePassword2">
+		           		<p id="pwCheckMessage"></p>
+             			<input type="button" onclick="update()" class="btn btn-lg rounded-0 btn-block address-btn text-white" value="비밀번호 변경"/>
+	               		<button type="submit" class="btn btn-lg rounded-0 btn-block address-btn address-btn-w" onclick="history.back();">취소</button>
+		          	</form> 
+				</div>
+			</div>  
+		</div>  
+	</div>
+</div>
+<jsp:include page="../footer.jsp" flush="false" />  
+<script>
  function pwCheckFunction(){ // 비밀번호 확인
 	    var userPW1 = $('#password').val();
 	    var userPW2 = $('#password2').val();
@@ -86,5 +124,6 @@
         location.href='MyPageSet';
       }
 };
- </script> 
+</script> 
+</body> 
 </html>

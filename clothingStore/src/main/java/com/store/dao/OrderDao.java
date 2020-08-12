@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.store.dto.OrderDetailDto;
+import com.store.dto.MyPageDto;
 import com.store.dto.OrderDto;
 
 @Mapper
@@ -16,6 +16,7 @@ public interface OrderDao {
 	
 	//회원별 주문 내역 출력
 	public List<OrderDto> userOrderListDao(@Param("user_email") String user_email);
+	
 	public int addOrder(
 			@Param("user_email") String user_email,
 			@Param("dv_name") String dv_name,
@@ -47,4 +48,12 @@ public interface OrderDao {
 	public int adminOrderCountDao();
 	//order_id
 	public OrderDto adOrderViewDao(String order_id);
+	
+	public List<OrderDto> selectOrderList(@Param("user_email")String user_email);
+	
+	public List<MyPageDto> selectPdMyPage(@Param("user_email")String user_email);
+	
+	public OrderDto selectOrderDto();
+	
+			                           
 }

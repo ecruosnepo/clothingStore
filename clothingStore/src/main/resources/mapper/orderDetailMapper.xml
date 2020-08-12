@@ -10,4 +10,6 @@
 		FROM shop.order_detail as o join shop.products as p on o.pd_id=p.pd_id where o.order_id=#{order_id};
 	</select>
 
+
+
 </mapper>

@@ -17,7 +17,7 @@
 	select count(*) from shop.order;
 </select>
 
-<select id="adOrderViewDao" resultType="com.store.dto.OrderDto" >
+<select id="adOrderViewDao" resultType="com.store.dto.OrderDto">
 	select * from shop.order where order_id=#{order_id}
 </select>
 	
@@ -28,4 +28,40 @@
 <insert id="addOrderDetailDao"> 
 	insert into order_detail (order_id, pd_id, pd_size, pd_quantity) select #{order_id}, pd_id, pd_size, pd_quantity from cart where email=#{user_email}; 
 </insert>
+
+<!-- <select id="selectMyPage" parameterType="String" resultType="com.store.dto.OrderDto">
+    SELECT order_id, total_price, payDate FROM shop.order WHERE user_email= #{user_email}
+</select> -->
+
+<select id="selectPdMyPage" resultType="com.store.dto.MyPageDto">
+	SELECT 
+		<!-- a.pd_img, a.pd_name, a.pd_price , a.pd_id, b.pd_quantity, a.pd_color,
+		b.pd_size, b.price_sum -->
+		*
+	FROM 
+		products a, order_detail b
+	JOIN
+		`order` o
+	ON
+		o.order_id=b.order_id
+	WHERE 
+		a.pd_id = b.pd_id
+	    AND
+	    o.user_email = #{user_email};
+</select>
+
+<select id="selectOrderList" resultType="com.store.dto.OrderDto">
+	SELECT 
+	    payDate, order_id, total_price, dv_name, dv_address1, dv_address2, dv_address3, dv_address4, dv_option  
+	FROM
+	    `order` o 
+	WHERE 
+	    user_email = #{user_email} ORDER BY payDate DESC
+</select>
+
+<select id="selectOrderDto" resultType="com.store.dto.OrderDto">
+    SELECT * FROM shop.order_detail;
+</select>
+
+
 </mapper>
