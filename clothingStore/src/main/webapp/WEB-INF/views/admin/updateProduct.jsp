@@ -130,7 +130,7 @@
 				            <input type="number" name="discount" class="form-control" id="discount" value="${pDto.discount }">
 				            <br/>
 				            <label class="control-label" for="img">이미지</label><br/>
-				            <input multiple="multiple" type="file" name="img" id="img" required>
+				            <input multiple="multiple" type="file" name="img" id="img">
 				            <div class="select_img">
 				            	<c:forTokens items="${pDto.pd_img }" var="img" delims=",">
 									<img src="/images/${img }" style="width:130px;"/>
@@ -321,10 +321,13 @@
 			var fileList = this.files;
 			$(".select_img").empty();
 			for(var i = 0 ; i<fileList.length; i++){
-				var reader = new FileReader;
-				reader.onload = function(data) {
-					$(".select_img").prepend("<img src="+data.target.result+" style='width:130px;'/>");
-				};
+				var filereader = new FileReader;
+				let $img=jQuery.parseHTML("<img src='' style='width:130px;'>");
+	            filereader.onload = function(){
+	                $img[0].src=this.result;
+	            };
+	            filereader.readAsDataURL(this.files[i]);
+	            $(".select_img").append($img);
 			};
 		}
 	});

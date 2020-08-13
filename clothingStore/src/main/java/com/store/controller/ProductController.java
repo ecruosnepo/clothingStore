@@ -183,9 +183,16 @@ public class ProductController {
 		File f;
 		String[] fileToString = new String[file.length];	    
 	    String fileMultiName = "";
+	    
 
 	    if(!file[0].isEmpty()) {
-	    	new File(uploadPath + req.getParameter("preImg")).delete();
+	    	String[] preFileName = (String[])req.getParameter("preImg").split("\\,");
+	    	for(String pre:preFileName) {
+	    		System.out.println(pre);
+	    	}
+	    	for(int i=0; i<preFileName.length; i++) {
+	    		new File(uploadPath+"/"+preFileName[i]).delete();
+	    	}
 	    	
 	    	//멀티파트파일
 	    	for(int i=0; i<file.length; i++) {
@@ -214,7 +221,7 @@ public class ProductController {
 	    	System.out.println("*"+fileMultiName);
 	    	pDto.setPd_img(fileMultiName);
 	    }else {
-	    	pDto.setPd_img(pDto.getPd_img());
+	    	pDto.setPd_img(req.getParameter("preImg"));
 	    }
 	    
 	    productService.updateProduct(pDto);
@@ -224,8 +231,8 @@ public class ProductController {
 	    	sDto.setPd_id(pDto.getPd_id());
 	    	sDto.setPd_size(size[i]);
 	    	sDto.setPd_stock(stock[i]);
-	    	if(stockService.checkStock(pDto.getPd_id(), size[i])==1) {
-	    		stockService.updateStock(sDto);	    		
+	    	if(stockService.checkStock(pDto.getPd_id(), size[i])==true) {
+	    		stockService.updateStock(sDto);
 	    	}else {
 	    		stockService.addStock(sDto);
 	    	}

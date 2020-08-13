@@ -40,7 +40,7 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	@Override
-	public int checkStock(int pd_id, String pd_size) {
+	public boolean checkStock(int pd_id, String pd_size) {
 		System.out.println("사이즈 유무 확인");
 		return stockDao.checkStockDao(pd_id, pd_size);
 	}

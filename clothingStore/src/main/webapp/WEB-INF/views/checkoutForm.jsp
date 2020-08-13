@@ -109,6 +109,7 @@
         
         .selectedAddress{
         	text-align:left;
+        	padding: 0px 25px;
         }
         
         .deliveryMethodSelect{
@@ -130,6 +131,7 @@
         	height:100%;
         	display:flex;
         	align-items:center;
+        	position:relative;
         }
         .radioBox-inner label{
         	margin-left:15px;
@@ -146,6 +148,9 @@
         }
         .dv-select-price {
         	text-align:right;
+        	position:absolute;
+        	right:30px;
+        	top:28px;
         }
         input[type='radio']:checked {
         	background-color:#F4EDDD;
@@ -359,7 +364,7 @@
 					      <div class="modal-body">
 					        <c:forEach items="${address_list }" var="aList">
        						 	<div class="addressList">
-					        		<button class="addressBtn" onclick="selectAddress(this)">
+					        		<button type="button" class="addressBtn" onclick="selectAddress(this)" data-addrid="${aList.address_index }">
 					        			<span class="selected_name">${aList.r_name }</span>,
 					        			<span class="selected_address1">${aList.address1 }</span>,
 					        			<span class="selected_address2">${aList.address2 }</span>,
@@ -471,11 +476,10 @@
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
     <script>
     	var total_price;
@@ -709,18 +713,25 @@
 	  };
 
 	  function selectAddress(obj){
-		var name = $(this).children('.selected_name').text();
-		var address1 = $(this).children('.selected_address1').text();
-		var address2 = $(this).children('.selected_address2').text();
-		var address3 = $(this).children('.selected_address3').text();
-		var address4 = $(this).children('.selected_address4').text();
-
-		$('.r_name').text(name);
-		$('.dv_address1').text(address1);
-		$('.dv_address2').text(address2);
-		$('.dv_address3').text(address3);
-		$('.dv_address4').text(address4);
-      }
+		var addrid = $(obj).data("addrid");
+		console.log(addrid);
+		
+		$.ajax({
+            url: "/getDeliveryAddress", //cross-domain error가 발생하지 않도록 주의해주세요
+            type: 'POST',
+            data: {
+                address_index : addrid                
+            },
+            success:function(result){
+            	$('.dv_name').text(result.r_name);
+        		$('.dv_address1').text(result.address1);
+        		$('.dv_address2').text(result.address2);
+        		$('.dv_address3').text(result.address3);
+        		$('.dv_address4').text(result.address4);
+            	$('#exampleModal').modal('hide');            	
+			}
+        });
+      };
     </script>
   </body>
 </html>

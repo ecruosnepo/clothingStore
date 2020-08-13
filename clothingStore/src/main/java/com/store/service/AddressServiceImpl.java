@@ -57,10 +57,8 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public int sUpdateSubAddress(String r_name, String address1, String address2, String address3, String address4, String user_email, int address_index) throws Exception {
-		
 		return dao.updateSubAddress(r_name, address1, address2 ,address3, address4, user_email, address_index);
 	}
-
 
 	@Override
 	public int sDeleteSubAddress(String email, int address_index) throws Exception {

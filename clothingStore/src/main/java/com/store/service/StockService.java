@@ -11,5 +11,5 @@ public interface StockService {
 	public int addStock(StockDto sDto);
 	public int orderUpdateStock(@Param("pd_id")int pd_id, @Param("pd_size")String pd_size, @Param("pd_quantity")int pd_quantity, @Param("op") String op);
 	public int updateStock(StockDto sDto);
-	public int checkStock(int pd_id, String pd_size);
+	public boolean checkStock(int pd_id, String pd_size);
 }

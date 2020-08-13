@@ -43,12 +43,12 @@ public class OrderController {
 	public String checkoutForm(HttpSession session, HttpServletRequest req, Model model) throws Exception {
 		String email = (String)session.getAttribute("email");
 		UserDto uDto = userService.sGetUserInfo(email);		
-		List<AddressDto> aDto = addressService.sGetAddressList(email);
+		List<AddressDto> address_list = addressService.sGetAddressList(email);
 		List<CartListDto> cDto = cartService.cartListView(email);
 		
 		model.addAttribute("cart_list", cDto);		
 		model.addAttribute("user", uDto);
-		model.addAttribute("address_list",aDto);
+		model.addAttribute("address_list",address_list);
 		
 		return "/checkoutForm";
 	}
@@ -80,8 +80,17 @@ public class OrderController {
 		return result;
 	}
 	
+	@RequestMapping("/getDeliveryAddress")
+	public @ResponseBody AddressDto getDeliveryAddress(HttpSession session, @RequestParam("address_index")int address_index, Model model) {
+		System.out.println("배송 주소 받기");
+		String email = (String)session.getAttribute("email");
+		AddressDto aDto = addressService.sGetAddressDto(email, address_index);
+		
+		return aDto;
+	}
+	
 	@RequestMapping("/compliteCheckout")
 	public String compliteCheckout() {
 		return "/compliteCheckout";
-	}		
+	}
 }
