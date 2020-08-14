@@ -176,7 +176,8 @@ public class AdminController {
 		model.addAttribute("list", map.get("orderList"));
 		model.addAttribute("page", map.get("page"));
 		
-		return "admin/orderList2";
+	 //	return "admin/orderList2";
+		return "admin/orderList";
 	}
 	
 	@RequestMapping("/adOrderView")
@@ -188,7 +189,8 @@ public class AdminController {
 		
 		System.out.println(map.get("orderList").toString());
 
-		return "admin/order_view2"; 
+		// return "admin/order_view2";
+		return "admin/order_view";
 	}
 	@RequestMapping("/adPdMiniSearch")
 	public @ResponseBody Object adPdMiniSearch(@RequestParam(defaultValue="1") int page, @RequestParam(name="search",defaultValue="")String search,

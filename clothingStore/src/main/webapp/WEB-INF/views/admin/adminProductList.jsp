@@ -9,16 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<% 
-	if ( session.getAttribute("manager") != null ){
-%>
-	<script type="text/javascript">
-		alert("관리자만 이용 가능한 페이지 입니다.");
-	    history.back();
-	</script>
-<%
-	}
-%>
+
 <style>
 .customerManage{
 		min-height:500px;

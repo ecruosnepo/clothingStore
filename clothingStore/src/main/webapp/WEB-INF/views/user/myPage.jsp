@@ -78,7 +78,7 @@
   <jsp:include page="../header.jsp" flush="false" />
    <div class="container"> 
     <div class="row">
-     <div class="col-md-4"">
+     <div class="col-md-4">
       <div class="box1">
        
        <p style="font-size: 20px;">안녕하세요</p>

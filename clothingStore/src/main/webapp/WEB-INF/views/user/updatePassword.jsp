@@ -92,14 +92,14 @@
 		            <form action="updatePasswordForm" method="post" name="delId">
 			            <label class="headName required-field">현재 비밀번호</label>			            
 			            <input type="password" class="form-control input-text rounded-0" id="getPassword" onkeyup="pwCheckFunction();" name="getPassword">
-			            <label class="headName required-field">새 비밀번호</label>			            
+			            <label class="headName  required-field">새 비밀번호</label>			            
 			            <input type="password" class="form-control input-text rounded-0" id="password" onkeyup="pwCheckFunction();" name="updatePassword1">
-		             	<p class="headName">8 characters1 lowercase1 uppercase1 number</p>
+		             	<p class="headName" >8 characters1 lowercase1 uppercase1 number</p>
 		            	<label class="headName required-field">새 비밀번호 확인</label>
 		           		<input type="password" class="form-control input-text rounded-0" id="password2" onkeyup="pwCheckFunction();" name="updatePassword2">
 		           		<p id="pwCheckMessage"></p>
              			<input type="button" onclick="update()" class="btn btn-lg rounded-0 btn-block address-btn text-white" value="비밀번호 변경"/>
-	               		<button type="submit" class="btn btn-lg rounded-0 btn-block address-btn address-btn-w" onclick="history.back();">취소</button>
+	               		<button type="button" class="btn btn-lg rounded-0 btn-block address-btn address-btn-w" onclick="history.back();">취소</button>
 		          	</form> 
 				</div>
 			</div>  
@@ -118,12 +118,21 @@
 	  }
 
  function update(){
-     if ( confirm("귀하의 비밀번호를 변경 하시겠습니까?") == true ) {
-	      document.delId.submit();
-	  }else{
-        location.href='MyPageSet';
-      }
+     if ( $.trim($('#getPassword').val()) == '') {
+    	 alert('비밀번호를 입력 해주새요.');
+    	 return;
+    }if ( $.trim($('#password').val()) == '') {
+    	     alert('비밀번호를 입력 해주새요.');
+	    	 return;
+    }if ( $.trim($('#password2').val()) == '') {
+	    	 alert('비밀번호를 입력 해주새요.');
+	    	 return;
+    } else if( confirm("귀하의 비밀번호를 변경 하시겠습니까?") == true){
+    	document.delId.submit();
+    } 
 };
+
+           
 </script> 
 </body> 
 </html>

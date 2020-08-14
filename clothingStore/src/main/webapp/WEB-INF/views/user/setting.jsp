@@ -51,7 +51,7 @@
 	  		width:100%;
 	  	}
 	    .group_p{
-	       padding:1.8%;
+	       padding:1.8%;  
 	    }
 	    .box{
 	      background-color:white;
@@ -151,7 +151,10 @@
 	    	<div class="box-content address-content">
 			    <div class="group_p">
 			    	<p class="headName"><a href="updatePassword">비밀번호 변경</a></p>
-					<p class="headName"><a href="/deleteInfoUser" onclick="deleteId()">계정삭제</a></p>
+				    <!-- <form action="deleteInfoUser" method="post" name="delId">	  
+			      		<input class="headName" type="button" onclick="deleteId()" class="btn btn btn-danger btn-round " value="계정삭제"/>
+			      	</form> -->
+					<p class="headName"><a href="/myPage/deleteInfoUser" onclick="return confirm('귀하의 계정을 삭제 하시겠습니까?');">계정삭제</a></p> 
 			    </div>			    
 	    	</div>
 	      </div> 
@@ -163,11 +166,11 @@
 <script>
 
 function deleteId() {  
-
+	
       if ( confirm("귀하의 계정을 삭제 하시겠습니까?") == true ) {
-	      document.delId.submit();
+ 	      document.delId.submit(); 
 	  }else{
-          return false;
+		  return false;
       }
  }
 </script>
