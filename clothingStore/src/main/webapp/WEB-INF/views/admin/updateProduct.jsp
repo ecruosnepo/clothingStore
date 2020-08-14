@@ -18,6 +18,7 @@
  	 }
  	 .addProduct-row{
  	 	position:relative;
+ 	 	margin-bottom:50px !important;
  	 }
  	 .addProduct-content{
  	 	width: 70%;
@@ -26,13 +27,21 @@
      .firstCenter{
          text-align: center;
      }
-     .box{    
-        background-color: whitesmoke;
-        padding:5%; 
+     .box{
+        background-color: white;
      }
-     .size{
-       font-size: 24px;
-       text-align: center;
+     .form-header{
+     	width:100%;
+     	background-color:#F4E6E3;
+     }
+	.form-header p{
+		font-size:15px;
+		padding:16px 24px;
+		font-weight:600;
+		margin-bottom:0;
+	}
+     .form-content{
+     	padding:30px;
      }
      .head{
        font-size: 12px;
@@ -60,6 +69,9 @@
 	 input[type=number] {
     	-moz-appearance: textfield;
 	 }
+	 .select_img{
+	 	margin-top:15px;
+	 }
 </style>
 </head>
 <body>
@@ -76,36 +88,37 @@
 		            <label class="head"><a href=#  style="color: black; ">관리자 페이지</a>/<a href="/mgProduct"  style="color: black; ">상품 등록</a></label>
 			        <br/>
 			        <br/>
-			        <label style="font-size: 26px;">상품 등록</label> 
+			        <label style="font-size: 26px;">상품 수정</label> 
 			        <br/>
 		       </div>    
 		       <div class="box">
-					<label class="size">새 상품 등록하기</label>
-		         	<br/><br/><br/>
-		         	<div class="form-group has-success">
+		       		<div class="form-header">
+						<p class="size">상품 수정</p>
+		       		</div>
+		         	<div class="form-group has-success form-content">
 			        	<form action="/updateProduct"  method="post" enctype="multipart/form-data">
 			        		<input type="hidden" name="pd_id" value="<%=request.getParameter("pd_id")%>">
 				            <label class="control-label" for="pd_name" style="color: black;">상품명</label>
-				            <input type="text" name="pd_name" class="form-control" id="pd_name" value="${pDto.pd_name }">
+				            <input type="text" name="pd_name" class="form-control rounded-0" id="pd_name" value="${pDto.pd_name }">
 				            <br/>
 				            <label class="control-label" for="pd_price" style="color: black; ">가격</label>
-				            <input type="number" name="pd_price" class="form-control" id="pd_price" value="${pDto.pd_price }">
+				            <input type="number" name="pd_price" class="form-control rounded-0" id="pd_price" value="${pDto.pd_price }">
 				            <br/>
 				            <label class="control-label" for="pd_color" style="color: black; ">색상</label>
-				            <input type="text" name="pd_color" class="form-control" id="pd_color" value="${pDto.pd_color }">
+				            <input type="text" name="pd_color" class="form-control rounded-0" id="pd_color" value="${pDto.pd_color }">
 				            <br/>
 				            <label class="control-label" for="pd_desc" style="color: black; ">설명</label>
-				            <textarea name="pd_desc" class="form-control" id="pd_desc" rows="10">${pDto.pd_desc }</textarea>
+				            <textarea name="pd_desc" class="form-control rounded-0" id="pd_desc" rows="10">${pDto.pd_desc }</textarea>
 				            <br/>
 				            <label>메인 카테고리</label> 
 				            <br/>
-				            <select class="form-control category1">
+				            <select class="form-control category1 rounded-0">
 				                <option value="">메인 카테고리</option>
 				            </select>
 				            <br/>
 				            <label>서브 카테고리</label> 
 				            <br/>
-				            <select class="form-control category2" name="cat_id">
+				            <select class="form-control category2 rounded-0" name="cat_id">
 				                <option value="">서브 카테고리</option>
 				            </select>
 				            <br/>
@@ -127,7 +140,7 @@
 					            </div>
 				            </div>
 				            <label class="control-label" for="discount" style="color: black; ">할인율</label>
-				            <input type="number" name="discount" class="form-control" id="discount" value="${pDto.discount }">
+				            <input type="number" name="discount" class="form-control rounded-0" id="discount" value="${pDto.discount }">
 				            <br/>
 				            <label class="control-label" for="img">이미지</label><br/>
 				            <input multiple="multiple" type="file" name="img" id="img">

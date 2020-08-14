@@ -90,7 +90,9 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/compliteCheckout")
-	public String compliteCheckout() {
+	public String compliteCheckout(@RequestParam("checkout_complite")int complite) {
+		
+		
 		return "/compliteCheckout";
 	}
 }

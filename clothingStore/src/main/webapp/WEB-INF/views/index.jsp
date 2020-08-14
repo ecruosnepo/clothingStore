@@ -128,7 +128,7 @@
 		<section id="goods">
 			 <div class="index-promotion">
 			 	<p>H&M 카카오 채널 친구 추가시<br/>10% OFF 쿠폰 지급</p>
-			 	<span>2020-08-05부터 ~ 2002-08-19까지 지급 | 온라인 단독!</span>			 	
+			 	<span>2020-08-05부터 ~ 2020-08-19까지 지급 | 온라인 단독!</span>			 	
 			 </div>
 		     <div id="main1" class="card text-center rounded-0 border-0">
 		         <div class="card-body">
