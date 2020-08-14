@@ -22,12 +22,7 @@
     	body{
     		background-color:#FAF9F8;
     		font-weight:600;
-    	}
-    	
-    	header{
-    		height:72px;
-    	}
-    	
+    	}    	
     	.sidebar{
 			overflow:hidden;
 			height:auto;	
@@ -105,6 +100,12 @@
 
         .info *{
           width: 100%;
+        }
+        .readonly-content{
+        	font-size:13px;
+        	font-weight:600;
+        	line-height: 1.5;
+        	margin-bottom:4px;
         }
         
         .selectedAddress{
@@ -257,12 +258,10 @@
       <div class="row">
         <div class="col-md-7 info-group">
           <div class="row user-info info">
-            <header>
-              <h4>내 정보</h4>
-            </header>
+            <h4>내 정보</h4>
             <div class="user-readonly">
-              <p>이메일</p>
-              <p>${user.user_email }</p>
+              <p class="readonly-content">이메일</p>
+              <p class="readonly-content">${user.user_email }</p>
             </div>
             <form class="user-order-form" method="post">
               <input name="user_email" type="hidden" value="${user.user_email }"/>
@@ -309,14 +308,14 @@
           <div class="row address-info info">
             <h2 style="font-size:20px; padding-bottom:20px; margin:0; font-weight:600;">배송</h2>            
             <div class="address-readonly">
-				<p>배송 종류</p>
-				<p>일반 배송</p>
-				
-				<p>배송 주소</p>
-				<p>${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }</p>
-				
-				<p>배송 업데이트를 위한 전화번호</p>
-				<p>${user.user_phone }</p>
+				<p class="readonly-content">배송 종류</p>
+				<p class="readonly-content">일반 배송</p>
+				<br>
+				<p class="readonly-content">배송 주소</p>
+				<p class="readonly-content">${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }</p>
+				<br>
+				<p class="readonly-content">배송 업데이트를 위한 전화번호</p>
+				<p class="readonly-content">${user.user_phone }</p>
             </div>            
             <form class="address-order-form">
             	<p style="font-size:16px; padding-bottom:24px;">배송 방법 선택</p>

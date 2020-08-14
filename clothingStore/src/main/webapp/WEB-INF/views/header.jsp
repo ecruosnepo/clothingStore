@@ -185,6 +185,9 @@
           background-repeat: no-repeat;
           margin: 0 5px;
         }
+        .dropdown-menu{
+        	z-index:1300 !important;
+        }
         .header-wrap .header-nav-item:hover > .dropdown-menu{
           display:block;
         }

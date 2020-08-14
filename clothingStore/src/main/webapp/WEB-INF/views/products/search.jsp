@@ -205,88 +205,14 @@
     	<%		
     		}else{
     	%>
-           	<h5><%=request.getParameter("keyword") %>에 대한 결과 표시</h5>        
+
+       	<h5><%=request.getParameter("keyword") %>에 대한 결과 표시</h5>        
+
     </div> 
 	<div class="container list-wrap">
 	    <!-- 사이드 네비게이션 바 -->
 	    <aside id="sideNav">
-	      <div class="accordion cat-list-box" id="accordionExample">
-            <a class="btn btn-link btn-block text-left collapsed main-cat" href="" type="button" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="">
-              모두보기
-            </a>        
-	        <div class="card cat-box">
-	          <div class="card-header" id="headingOne">
-	            <h2 class="mb-0">
-	              <a class="btn btn-link btn-block text-left collapsed main-cat" href="" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-	                티셔츠&탱크탑
-	              </a>
-	            </h2>
-	          </div>	      
-	          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-	            <div class="card-body">
-	              <ul class="nav flex-column sub-cat-box">
-	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	              </ul>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="card cat-box">
-	          <div class="card-header" id="headingTwo">
-	            <h2 class="mb-0">
-	              <a class="btn btn-link btn-block text-left collapsed main-cat" href="" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-	                후디&스웨터셔츠
-	              </a>
-	            </h2>
-	          </div>
-	          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-	            <div class="card-body">
-	              <ul class="nav flex-column sub-cat-box">
-	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	              </ul>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="card cat-box">
-	          <div class="card-header" id="headingThree">
-	            <h2 class="mb-0">
-	              <a class="btn btn-link btn-block text-left collapsed main-cat" href="" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-	                베이직
-	              </a>
-	            </h2>
-	          </div>
-	          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-	            <div class="card-body">
-	              <ul class="nav flex-column sub-cat-box">
-	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	              </ul>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
+	      
 	    </aside>
 	
 	    <!-- 상품 목록 -->
