@@ -66,7 +66,7 @@
 			    FROM
 			 	address 
 			 	WHERE 
-			 	user_email = #{user_email} AND address_index = #{address_index}
+			 	user_email = #{user_email} AND address_index = #{address_index};
 		   </select>
 		   
 		   <delete id="deleteSubAddress">

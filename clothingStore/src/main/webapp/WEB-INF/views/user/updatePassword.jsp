@@ -111,7 +111,10 @@
  function pwCheckFunction(){ // 비밀번호 확인
 	    var userPW1 = $('#password').val();
 	    var userPW2 = $('#password2').val();
-	    if(userPW1.length < 8) $('#pwCheckMessage').html('비밀번호는 8자리 수 이상이어야 합니다').css('color', 'red').css('font-size', '16px');
+	    var pattern1 = /[0-9]/;
+	    var pattern2 = /[a-zA-Z]/;
+	    var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; 
+	    if(userPW1.length < 8 || !pattern1.test(userPW1) || !pattern2.test(userPW1)) $('#pwCheckMessage').html('비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.').css('color', 'red').css('font-size', '16px');
 	    else if(userPW1 == "" || userPW2 == "") $('#pwCheckMessage').html('');
 	    else if(userPW1 != userPW2) $('#pwCheckMessage').html('비밀번호가 서로 일치하지 않습니다').css('color', 'red').css('font-size', '16px');
 	    else $('#pwCheckMessage').html('비밀번호가 서로 일치합니다').css('color','blue');

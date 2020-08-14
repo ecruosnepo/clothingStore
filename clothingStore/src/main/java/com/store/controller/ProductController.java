@@ -59,7 +59,7 @@ public class ProductController {
 		ProductDto pDto = productService.viewProduct(pd_id);
 		model.addAttribute("pd_dto", pDto);		
 		model.addAttribute("colorList",productService.getColorList(pDto.getPd_name()));
-		model.addAttribute("stock_list", stockService.getStock(pd_id));
+		model.addAttribute("stock_list", stockService.productStock(pd_id));
 		
 		return "products/productPage";
 	}
@@ -171,6 +171,76 @@ public class ProductController {
 	    String referer = req.getHeader("Referer");
 	    return "redirect:"+ referer;
 	}
+	
+	@PostMapping("/updateProduct")
+	public String updateProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, @RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
+		System.out.println("상품 수정");
+		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\pdImages");
+		System.out.println(uploadPath);
+		SimpleDateFormat formatter;
+		String extension;
+		Calendar now;
+		File f;
+		String[] fileToString = new String[file.length];	    
+	    String fileMultiName = "";
+	    
+
+	    if(!file[0].isEmpty()) {
+	    	String[] preFileName = (String[])req.getParameter("preImg").split("\\,");
+	    	for(String pre:preFileName) {
+	    		System.out.println(pre);
+	    	}
+	    	for(int i=0; i<preFileName.length; i++) {
+	    		new File(uploadPath+"/"+preFileName[i]).delete();
+	    	}
+	    	
+	    	//멀티파트파일
+	    	for(int i=0; i<file.length; i++) {
+	    		fileToString[i] = file[i].getOriginalFilename();
+	    	}
+	    	
+	    	fileToString = FilenameSorting.solution(fileToString);
+	    	
+	    	for(int i=0; i<file.length; i++) {
+	    		formatter = new SimpleDateFormat("YYYYMMDD_HHMMSS_"+i);
+	    		now = Calendar.getInstance();
+	    		
+	    		//확장자명
+	    		extension = fileToString[i].split("\\.")[1];
+	    		
+	    		//fileOriginName에 날짜+.+확장자명으로 저장시킴.
+	    		fileToString[i] = formatter.format(now.getTime())+"."+extension;
+	    		System.out.println("변경된 파일명 : "+fileToString[i]);
+	    		
+	    		f = new File(uploadPath+"/"+fileToString[i]);
+	    		file[i].transferTo(f);
+	    		if(i==0) { fileMultiName += fileToString[i]; }
+	    		else{ fileMultiName += ","+fileToString[i]; }
+	    	}
+	    	
+	    	System.out.println("*"+fileMultiName);
+	    	pDto.setPd_img(fileMultiName);
+	    }else {
+	    	pDto.setPd_img(req.getParameter("preImg"));
+	    }
+	    
+	    productService.updateProduct(pDto);
+	    
+	    for(int i = 0; i < stock.length; i++) {
+	    	StockDto sDto = new StockDto();
+	    	sDto.setPd_id(pDto.getPd_id());
+	    	sDto.setPd_size(size[i]);
+	    	sDto.setPd_stock(stock[i]);
+	    	if(stockService.checkStock(pDto.getPd_id(), size[i])==true) {
+	    		stockService.updateStock(sDto);
+	    	}else {
+	    		stockService.addStock(sDto);
+	    	}
+	    }
+	    
+	    String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer;
+	}
 		
 	@PostMapping("/addCart")
 	@ResponseBody
@@ -206,7 +276,7 @@ public class ProductController {
 		} else {
 			model.addAttribute("cart_list", cartService.cartListView(email));
 			if(ObjectUtils.isEmpty(model.getAttribute("cart_list"))) {
-					model.addAttribute("result", "0");			
+					model.addAttribute("result", "0");
 			}
 		}
         return "products/cart";

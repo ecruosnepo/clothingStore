@@ -50,14 +50,23 @@
 		   <h1>주문 상세보기</h1><br><br>
 		   <div id="sectionDiv" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
 		   	<form  action='adOrderUpdate' method="post" >
+<<<<<<< HEAD
 			    <select id="inputState" name="order_state" class="form-control" style="width: 200px;">
+=======
+			    <select id="inputState" name="boardCat" class="form-control" style="width: 200px;">
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 		                <option disabled selected>=== 상품현황 ===</option>
 		                <option value="결제완료">결제완료</option>
 		                <option value="배송중">배송중</option>
 		                <option value="배송완료">배송완료</option>
 		                <option value="환불">환불</option>
+<<<<<<< HEAD
 		                <option value="교환">교환</option>
 	          	</select>
+=======
+		                <option value="기타">교환</option>
+		          </select>
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 			     <h4 id="fat">주문번호 : ${ order.order_id }</h4>
 			     <input type="hidden" value="${order.order_id }" name="order_id"/>
 			     <div id="detail">
@@ -80,7 +89,11 @@
 			     	<b>요청사항</b><br>
 			     	<p><input type="text" placeholder="요청사항" name="dv_message" value="${ order.dv_message }"></p><br>
 			     	
+<<<<<<< HEAD
 			     	<b>상품</b><br>
+=======
+			     	<b>주문 상품</b><br>
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 			     	<table class="table table-hover" id="qna">
 		                <thead>
 			                <tr>
@@ -95,11 +108,22 @@
 		                </thead>
 		                <tbody>
 			                <c:forEach var="pd" items="${ detail }">
+<<<<<<< HEAD
 		                    	<tr>
 			                        <td scope="row">${ pd.pd_name }</td>
 			                        <td>${ pd.pd_color }</td>
 			                        <td>
 			                        	<select name="pd_size" class="form-control" style="width: 200px;">
+=======
+		                    	<tr class="pd_row">
+			                        <td scope="row">
+				                        <input type="hidden" name="pd_id" value="${ pd.pd_id }">
+				                        ${ pd.pd_name }
+			                        </td>
+			                        <td>${ pd.pd_color }</td>
+			                        <td>
+			                        	<select name="pd_size" class="form-control" >
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 			                        	<c:forEach var="stock" items="${stockList.get(pd.pd_id)}">
 				                        	<c:choose>
 				                        		<c:when test="${ pd.pd_size==stock.pd_size }">
@@ -112,8 +136,13 @@
 				                        </c:forEach>
 				                        </select>
 			                        </td>
+<<<<<<< HEAD
 			                        <td>${ pd.pd_price }</td>
 			                        <td><input type="number" name="pd_quantity" value="${ pd.pd_quantity }"></td>
+=======
+			                        <td class="price">${ pd.pd_price }</td>
+			                        <td><input class="pd_quantity" type="number" name="pd_quantity" value="${ pd.pd_quantity }"></td>
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 			                        <td>
 										<c:forEach var="stock" items="${stockList.get(pd.pd_id)}">
 											${ stock.pd_size } : ${ stock.pd_stock }<br>
@@ -121,11 +150,18 @@
 									</td>
 			                        <td><span class="btn" onclick="deleteLine(this);">삭제</span></td>
 		                    	</tr>
+<<<<<<< HEAD
 		                    	<p>${ pd.pd_name } ${ pd.pd_price } ${ pd.pd_size } ${ pd.pd_quantity }</p>
 		                    </c:forEach>
 	                    </tbody>
 		            </table>
 			     	<div class="btn btn-dark" id="addTable">추가</div>
+=======
+		                    </c:forEach>
+	                    </tbody>
+		            </table>
+			     	<div class="btn btn-dark" id="addTable"  data-toggle="modal" data-target="#exampleModal">추가</div>
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 			     	
 			     	<b>배송료</b><br>
 			     	<div class="deliveryMethodSelect inputContents">
@@ -145,7 +181,7 @@
 						</div>
 					</div><br>
 			     	<b>총 결제금액</b><br>
-			     	<p>${ order.total_price }원</p><br>
+			     	<p><span id="totalPrice">${ order.total_price }</span>원</p><br>
 			     	<b>결제방법</b><br>
 			     	<p>${ order.payment_method }</p><br>
 			     	<b>결제일</b><br>
@@ -162,7 +198,11 @@
            <div class="modal-dialog">
              <div class="modal-content">
                <div class="modal-header">
+<<<<<<< HEAD
                  <h5 class="modal-title" id="exampleModalLabel">주문 내역</h5>
+=======
+                 <h5 class="modal-title" id="exampleModalLabel">상품 검색</h5>
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
                  </button>
@@ -172,8 +212,16 @@
               		<input type="text" placeholder="상품명" name="search" id="search">
               		<div class="btn" onclick="searchBt()">검색</div>
               	</form>
+<<<<<<< HEAD
               	<div><table id = "searchResult" border = "1"></table></div>
                </div>
+=======
+              	<div id="searchResult"></div>
+               </div>
+               <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      </div>
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
              </div>
            </div>
          </div>
@@ -230,6 +278,7 @@
         }).open();
     }
   	
+<<<<<<< HEAD
     //테이블 추가
     $('#addTable').click(function(){
    	    $('.table tr:last').after('<tr ><td><div class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">상품추가</div></td> <td>색상</td> <td>사이즈</td> <td>가격</td> <td>수량</td> <td>재고</td>'
@@ -248,6 +297,9 @@
 			}
 		});
 	});
+=======
+    
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 	
 	//상품 검색
 	function searchBt() {
@@ -262,15 +314,132 @@
 		    success : function(list){
 			    console.log("complete");
 			    console.log("result:"+list);
+<<<<<<< HEAD
                 /* console.log(list[]); */
 			    
 			    $("#searchResult").append(str); 
+=======
+                
+                var obj = JSON.parse(list);
+                var searchList = obj.pdList;
+				var html = "";
+				html += "<br><table>";
+				html += "<tr> <td>상품번호</td> <td>상품명</td> <td>색상</td> <td>가격</td> </tr>";
+				
+				for(var i = 0; i < searchList.length; i ++) {
+					html += "<tr>";
+					html += "<td>" + searchList[i].pd_id + "</td>";
+					html += "<td><a onclick='pdChoose("+searchList[i].pd_id+")' style='cursor:pointer' id='name"+searchList[i].pd_id+"'>" + searchList[i].pd_name + "</a></td>";
+					html += "<td id='color"+searchList[i].pd_id+"'>" + searchList[i].pd_color + "</td>";
+					html += "<td id='price"+searchList[i].pd_id+"'>" + searchList[i].pd_price + "</td>";
+					html += "</tr>";
+				}
+				html += "</table>";
+
+				$("#searchResult").html(html);
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 		    },
           error : function(request, status, error) {
         	  console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
           }
 	   });
 	}
+<<<<<<< HEAD
+=======
+	
+	function pdChoose(id){
+		console.log(id);
+		var color=$('#color'+id).text();
+		var name=$('#name'+id).text();
+		var price=$('#price'+id).text();
+		
+		//테이블 추가
+		$('.table tr:last').after('<tr class="pd_row">'+
+				'<input type="hidden" name="pd_id" value="'+id+'">'+
+   	    	    '<td>'+name+'</td> <td>'+color+'</td> '+
+   	    	    '<td><select name="pd_size" class="form-control" id="size'+id+'"></select></td>'+
+   	    	    '<td class="price">'+price+'</td> <td><input class="pd_quantity" type="number" name="pd_quantity"></td> <td id="stock'+id+'"></td>'+
+   	    	    '<td><button class="btn" onclick="deleteLine(this);">삭제</button></td> </tr>');
+   	    $(".modal").attr("aria-hidden","true");
+
+   	    
+ 	    $.ajax({
+		    url : "/adSelectStock",
+		    type : "GET",
+		    data : { pd_id : id },
+		    dataType: "text",
+		    async : false,
+		    success : function(stock){
+		    	var stockList = JSON.parse(stock);
+ 				var html = "";
+				for(var i = 0; i < stockList.length; i ++) {
+					html += '<option value="${ '+stockList[i].pd_size+' }">'+stockList[i].pd_size+'</option>';
+				}
+ 				$("#size"+id).append(html); 
+ 				
+ 				var html = "";
+				for(var i = 0; i < stockList.length; i ++) {
+					html += stockList[i].pd_size+" : "+stockList[i].pd_stock+" <br>";
+				}
+
+ 				$("#stock"+id).append(html); 
+ 				
+			    console.log("complete");
+			    console.log("result:"+stockList);
+                
+		    },
+          error : function(request, status, error) {
+        	  console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+	   }); 
+		return false;
+	}
+
+ 	//테이블 삭제
+	function deleteLine(obj) {
+	    var tr = $(obj).parent().parent();
+	    tr.remove();
+	}
+
+   // 상품 현황 select
+   $(function(){
+      $("select[name=order_state]").find("option").each(function(index){
+         if($(this).val()=='${order.order_state}'){
+            $("select[name=order_state]").val('${order.order_state}').prop("selected", true);
+         }
+      });
+		 //총 합계
+     	$(document).on('focusin',".pd_quantity", function(){
+	  	    console.log("Saving value " + $(this).val());
+	  	    $(this).data('val', $(this).val());
+	  	});
+	  	
+	  	$(document).on("change keyup paste",".pd_quantity", function(){
+	  		var currentTotalPrice = $('#totalPrice').text();
+	  		var prevQuantity = $(this).data('val');
+	  		var changeTotalPrice = 0;
+	  		var thisPrice = $(this).parents('.pd_row').children('.price').text();
+	  		changeTotalPrice = (currentTotalPrice-(prevQuantity*thisPrice))+(thisPrice * $(this).val());
+	  		$('#totalPrice').text(changeTotalPrice);
+	  		$(this).data('val', $(this).val());
+	  	});
+   });
+/*    function quantitySave(obj){
+		console.log("Saving value " + $(obj).val());
+    	$(obj).data('val', $(obj).val());
+   }
+
+	function quantityChange(obj){
+		var currentTotalPrice = $('#totalPrice').text();
+  		var prevQuantity = $(obj).data('val');
+  		var changeTotalPrice = 0;
+  		var thisPrice = $(obj).parents('.pd_row').children('.price').text();
+  		changeTotalPrice = (currentTotalPrice-(prevQuantity*thisPrice))+(thisPrice * $(obj).val());
+  		$('#totalPrice').text(changeTotalPrice);
+  		$(obj).data('val', $(obj).val());
+	} */
+
+>>>>>>> e0fb47ee444096edc320c060aa7993662822d748
 </script>
 </body>
 </html>

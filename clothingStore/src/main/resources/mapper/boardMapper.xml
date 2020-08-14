@@ -18,7 +18,7 @@
 	select id,b_check,user_email,title,boardCat,regDate from board where user_email=#{user_email} order by regDate DESC
 </select>
 
-<insert id="boardWriteDao">
+<insert id="boardWriteDao" parameterType="hashMap">
 	insert into board (b_check,user_email,title,question,boardCat,file,orderId,regDate)
 	values (#{b_check},#{user_email},#{title},#{question},#{boardCat},#{file},#{orderId},now())
 </insert>

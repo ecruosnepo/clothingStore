@@ -46,7 +46,7 @@ public interface OrderDao {
 	public List<OrderDto> adminOrderListDao();
 	//전체 리스트 갯수
 	public int adminOrderCountDao();
-	//order_id
+	//order_id별로 보기
 	public OrderDto adOrderViewDao(String order_id);
 	
 	public List<OrderDto> selectOrderList(@Param("user_email")String user_email);

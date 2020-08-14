@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.store.dto.BoardDto;
+import com.store.dto.OrderDto;
+import com.store.dto.StockDto;
 
 public interface AdminService {
 
@@ -20,4 +22,6 @@ public interface AdminService {
 	public int adminPdDeleteService(List<String> pd_id,List<String> pd_size, String realPath);
 	public Map<String, Object> adOrderListService(int page);
 	public Map<String, Object> adOrderViewService(String order_id);
+	public Map<String, Object> adPdMiniSearchService(String search);
+	public List<StockDto> adSelectStockService(int pd_id);
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="../header.jsp" flush="false" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,18 +83,19 @@
 					<label class="size">새 상품 등록하기</label>
 		         	<br/><br/><br/>
 		         	<div class="form-group has-success">
-			        	<form action="/regProduct"  method="post" enctype="multipart/form-data">
+			        	<form action="/updateProduct"  method="post" enctype="multipart/form-data">
+			        		<input type="hidden" name="pd_id" value="<%=request.getParameter("pd_id")%>">
 				            <label class="control-label" for="pd_name" style="color: black;">상품명</label>
-				            <input type="text" name="pd_name" class="form-control" id="pd_name">
+				            <input type="text" name="pd_name" class="form-control" id="pd_name" value="${pDto.pd_name }">
 				            <br/>
 				            <label class="control-label" for="pd_price" style="color: black; ">가격</label>
-				            <input type="number" name="pd_price" class="form-control" id="pd_price">
+				            <input type="number" name="pd_price" class="form-control" id="pd_price" value="${pDto.pd_price }">
 				            <br/>
 				            <label class="control-label" for="pd_color" style="color: black; ">색상</label>
-				            <input type="text" name="pd_color" class="form-control" id="pd_color">
+				            <input type="text" name="pd_color" class="form-control" id="pd_color" value="${pDto.pd_color }">
 				            <br/>
 				            <label class="control-label" for="pd_desc" style="color: black; ">설명</label>
-				            <textarea name="pd_desc" class="form-control" id="pd_desc" rows="10" placeholder="상품 설명"></textarea>
+				            <textarea name="pd_desc" class="form-control" id="pd_desc" rows="10">${pDto.pd_desc }</textarea>
 				            <br/>
 				            <label>메인 카테고리</label> 
 				            <br/>
@@ -109,30 +111,36 @@
 				            <br/>
 				            <div class="input-size row">
 					            <div class="col-sm input-size-box">
-					            	<input type="checkbox" name="size" id="size_s" class="size-check" value="S"/>
+					            	<input type="checkbox" name="size" id="size_S" class="size-check" value="S"/>
 										<label for="size_s">S</label>
-									<input type="text" name="stock" class="input_s text-size" disabled>
+									<input type="text" name="stock" class="input_S text-size" disabled>
 					            </div>
 					            <div class="col-sm input-size-box">
-					            	<input type="checkbox" name="size" id="size_m" class="size-check" value="M"/>
+					            	<input type="checkbox" name="size" id="size_M" class="size-check" value="M"/>
 										<label for="size_m">M</label>
-									<input type="text" name="stock" class="input_m text-size" disabled>
+									<input type="text" name="stock" class="input_M text-size" disabled>
 					            </div>
 					            <div class="col-sm input-size-box">
-					            	<input type="checkbox" name="size" id="size_l" class="size-check" value="L"/>
+					            	<input type="checkbox" name="size" id="size_L" class="size-check" value="L"/>
 										<label for="size_l">L</label>
-									<input type="text" name="stock" class="input_l text-size" disabled>
+									<input type="text" name="stock" class="input_L text-size" disabled>
 					            </div>
 				            </div>
 				            <label class="control-label" for="discount" style="color: black; ">할인율</label>
-				            <input type="number" name="discount" class="form-control" id="discount">
+				            <input type="number" name="discount" class="form-control" id="discount" value="${pDto.discount }">
 				            <br/>
 				            <label class="control-label" for="img">이미지</label><br/>
 				            <input multiple="multiple" type="file" name="img" id="img">
+				            <div class="select_img">
+				            	<c:forTokens items="${pDto.pd_img }" var="img" delims=",">
+									<img src="/images/${img }" style="width:130px;"/>
+				            	</c:forTokens>
+							</div>
+							<input type="hidden" name="preImg" value="${pDto.pd_img }" />
 				            <br/>
 				            <br/>
-				            <input type="submit" class="btn btn-lg btn-block" value="상품 등록" style="color: white; background-color: black;">
-				            <button id="cencle" type="button" class="btn btn-default btn-lg btn-block" >취소</button>
+				            <input type="submit" class="btn btn-lg btn-block rounded-0" value="상품 수정" style="color: white; background-color: black;">
+				            <button id="cencle" type="button" class="btn btn-default btn-lg btn-block rounded-0" >취소</button>
 			       		</form>
 		       		</div>
 		      	</div>
@@ -149,9 +157,12 @@
 	// 필요한 배열과 오브젝트 변수 생성
 	var cate1Arr = new Array();
 	var cate1Obj = new Object();
+	var cate2Arr = new Array();
+	var cate2Obj = new Object();
+	var pd_cat = '${pDto.cat_id}';
+	var pd_cat_ref = '${pDto.cat_id_ref}';
 	// 1차 분류 셀렉트 박스에 삽입할 데이터 준비
 	for(var i = 0; i < jsonData.length; i++) {
-		
 		if(jsonData[i].cat_id%10 == "0") {  // 레벨이 1인 데이터가 있다면 
 			cate1Obj = new Object();  // 초기화
 			
@@ -163,13 +174,58 @@
 			cate1Arr.push(cate1Obj);
 		}
 	}
+
 	// 1차 분류 셀렉트 박스에 데이터 삽입
 	var cate1Select = $("select.category1")
 	for(var i = 0; i < cate1Arr.length; i++) {
 		// cate1Arr에 저장된 값을 cate1Select에 추가
-		cate1Select.append("<option value='" + cate1Arr[i].cat_id + "'>"
+		if(cate1Arr[i].cat_id == pd_cat_ref){
+			cate1Select.append("<option value='" + cate1Arr[i].cat_id + "'selected>"
+					+ cate1Arr[i].cat_name + "</option>");
+		}else{
+			cate1Select.append("<option value='" + cate1Arr[i].cat_id + "'>"
 							+ cate1Arr[i].cat_name + "</option>");	
+		}
 	}
+
+	// 2차 분류 셀렉트 박스에 삽입할 데이터 준비
+	for(var i = 0; i < jsonData.length; i++) {
+		
+		if(jsonData[i].cat_id%10 != "0") {  // 레빌이 2인 데이터가 있다면
+			cate2Obj = new Object();  // 초기화
+			
+			// cate2Obj에 cat_id, cat_name, cat_id_ref를 저장
+			cate2Obj.cat_id = jsonData[i].cat_id;
+			cate2Obj.cat_name = jsonData[i].cat_name;
+			cate2Obj.cat_id_ref = jsonData[i].cat_id_ref;
+			
+			// cate2Obj에 저장된 값을 cate1Arr 배열에 저장
+			cate2Arr.push(cate2Obj);
+		} 
+	}
+
+	var cate2Select = $("select.category2");
+
+		
+	var selectVal = $(".category1 option:selected").val();  // 현재 선택한 cate1Select의 값을 저장
+
+	cate2Select.append("<option value='" + selectVal + "'>전체</option>");  // cate2Select의 '전체'에 현재 선택한 cate1Select와 같은 값 부여
+	
+	// cate2Arr의 데이터를 cate2Select에 추가
+	for(var i = 0; i < cate2Arr.length; i++) {
+		
+		// 현재 선택한 cate1Select의 값과 일치하는 cate2Arr의 데이터를 가져옴
+		if(selectVal == cate2Arr[i].cat_id_ref) {
+			if(cate2Arr[i].cat_id == pd_cat){
+				cate2Select.append("<option value='" + cate2Arr[i].cat_id + "'selected>"
+									+ cate2Arr[i].cat_name + "</option>");
+			}else{
+				cate2Select.append("<option value='" + cate2Arr[i].cat_id + "'>"
+						+ cate2Arr[i].cat_name + "</option>");
+			}
+		}
+	}		
+	
 	// 클래스가 category1인 select변수의 값이 바뀌었을 때 실행
 	$(document).on("change", "select.category1", function(){
 		
@@ -225,28 +281,55 @@
 	});
 </script>
 <script>
+	$("input[name=size]").each(function(){
+		var stockJson = ${pd_stock};
+		for(var i = 0; i < stockJson.length; i++) {
+			if(stockJson[i].pd_size == $(this).val()) {  // 레벨이 1인 데이터가 있다면 
+				$(".input_"+stockJson[i].pd_size).val(stockJson[i].pd_stock);
+				$("#size_"+stockJson[i].pd_size).prop("checked",true);
+				$(".input_"+stockJson[i].pd_size).attr("disabled",false);
+			}
+		}
+	});
+	
 	$(function(){	
-		$("#size_s").change(function() {
-			if($("#size_s").prop("checked")){
-				$(".input_s").attr("disabled",false);
+		$("#size_S").change(function() {
+			if($("#size_S").prop("checked")){
+				$(".input_S").attr("disabled",false);
 			}else{
-				$(".input_s").attr("disabled",true);
+				$(".input_S").attr("disabled",true);
 			}    	
 		});
-		$("#size_m").change(function() {
-			if($("#size_m").prop("checked")){
-				$(".input_m").attr("disabled",false);
+		$("#size_M").change(function() {
+			if($("#size_M").prop("checked")){
+				$(".input_M").attr("disabled",false);
 			}else{
-				$(".input_m").attr("disabled",true);
+				$(".input_M").attr("disabled",true);
 			}    	
 		});	
-		$("#size_l").change(function() {
-			if($("#size_l").prop("checked")){
-				$(".input_l").attr("disabled",false);
+		$("#size_L").change(function() {
+			if($("#size_L").prop("checked")){
+				$(".input_L").attr("disabled",false);
 			}else{
-				$(".input_l").attr("disabled",true);
+				$(".input_L").attr("disabled",true);
 			}    	
 		});	
+	});
+	
+	$("#img").change(function(){
+		if(this.files && this.files[0]) {
+			var fileList = this.files;
+			$(".select_img").empty();
+			for(var i = 0 ; i<fileList.length; i++){
+				var filereader = new FileReader;
+				let $img=jQuery.parseHTML("<img src='' style='width:130px;'>");
+	            filereader.onload = function(){
+	                $img[0].src=this.result;
+	            };
+	            filereader.readAsDataURL(this.files[i]);
+	            $(".select_img").append($img);
+			};
+		}
 	});
 </script>
 </body>

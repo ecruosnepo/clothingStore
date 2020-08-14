@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.store.dao.OrderDao;
 import com.store.dto.MyPageDto;
-import com.store.dto.OrderDetailDto;
 import com.store.dto.OrderDto;
 
 @Service
@@ -27,6 +26,14 @@ public class OrderServiceImpl implements OrderService {
 	public int addOrderDetail(String order_id,String user_email) {
 		return oDao.addOrderDetailDao(order_id,user_email);
 	}
+	
+   @Override
+   public int adOrderUpdate(OrderDto oDto) {
+      System.out.println("주문 수정 service");
+      oDao.adOrderUpdateDao(oDto);
+
+      return oDao.adOrderUpdateDao(oDto);
+   }
 
 	@Override
 	public List<OrderDto> userOrderListDao(String user_email) {
@@ -63,13 +70,5 @@ public class OrderServiceImpl implements OrderService {
 	public OrderDto adOrderViewDao(String order_id) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public int adOrderUpdate(OrderDto oDto) {
-		System.out.println("주문 수정 service");
-		oDao.adOrderUpdateDao(oDto);
-
-		return oDao.adOrderUpdateDao(oDto);
 	}
 }

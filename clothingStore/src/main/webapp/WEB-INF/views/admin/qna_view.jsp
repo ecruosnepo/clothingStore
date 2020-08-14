@@ -70,7 +70,7 @@
 		     	</h6><br>
 		     </c:if>
 		     <c:if test="${ dto.orderId!=0 || dto.orderId==null }">
-		     	<h6 style="float: right;"><a href=#>주문번호 : ${dto.orderId}</a></h6>
+		     	<h6 style="float: right;"><a href="adOrderView?order_id=${dto.orderId}">주문번호 : ${dto.orderId}</a></h6>
 		     </c:if>
 		     <p id="write"><c:out value="${dto.question}" /></p>
 		     <h4 id="fat">답변내용</h4>

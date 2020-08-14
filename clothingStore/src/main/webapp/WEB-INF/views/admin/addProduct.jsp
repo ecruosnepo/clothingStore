@@ -129,6 +129,8 @@
 				            <br/>
 				            <label class="control-label" for="img">이미지</label><br/>
 				            <input multiple="multiple" type="file" name="img" id="img">
+				            <div class="select_img">
+							</div>
 				            <br/>
 				            <br/>
 				            <input type="submit" class="btn btn-lg btn-block" value="상품 등록" style="color: white; background-color: black;">
@@ -247,6 +249,21 @@
 				$(".input_l").attr("disabled",true);
 			}    	
 		});	
+	});
+	
+	$("#img").change(function(){
+		if(this.files && this.files[0]) {
+			var fileList = this.files;
+			for(var i = 0 ; i<fileList.length; i++){
+				var filereader = new FileReader;
+				let $img=jQuery.parseHTML("<img src='' style='width:130px;'>");
+	            filereader.onload = function(){
+	                $img[0].src=this.result;
+	            };
+	            filereader.readAsDataURL(this.files[i]);
+	            $(".select_img").append($img);
+			};
+		}
 	});
 </script>
 </body>

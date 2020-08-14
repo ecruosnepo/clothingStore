@@ -13,8 +13,7 @@ public interface BoardDao {
 	
 	//아이디 기준 모든 게시물 출력
 	public List<BoardDto> boardListDao(@Param("user_email") String user_email);
-	public void boardWriteDao(@Param("b_check")int b_check, @Param("user_email")String user_email,@Param("title") String title,
-			@Param("question")String question, @Param("boardCat")String boardCat, @Param("file")String file, @Param("orderId")int orderId);
+	public void boardWriteDao(BoardDto bDto);
 	public BoardDto boardViewDao(@Param("id") int id);
 	//총 게시물수
 	public int boardListCountDao(@Param("user_email") String user_email);

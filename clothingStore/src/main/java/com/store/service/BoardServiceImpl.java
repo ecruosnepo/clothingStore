@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.store.bean.PagingBean;
 import com.store.dao.BoardDao;
 import com.store.dao.OrderDao;
+import com.store.dao.OrderDetailDao;
 import com.store.dto.BoardDto;
 import com.store.dto.OrderDto;
 
@@ -29,6 +30,8 @@ public class BoardServiceImpl implements BoardService{
 	BoardDao dao;
 	@Autowired
 	OrderDao orderDao;
+	@Autowired
+	OrderDetailDao oDetailDao;
 	@Autowired
 	PagingBean pageBean;
 	
@@ -44,14 +47,22 @@ public class BoardServiceImpl implements BoardService{
 		return map;
 	}
 	@Override
-	public List<OrderDto> boardOrderViewService(String userId){
-		List<OrderDto> orderDto= orderDao.userOrderListDao(userId);
-		return orderDto;
+	public Map<String,Object> boardWriteFormService(String userId){
+		Map<String,Object> map=new HashMap<String, Object>();
+		List<OrderDto> orderList= orderDao.userOrderListDao(userId);
+		List<Integer> orderCount=new ArrayList<Integer>();
+		for(OrderDto dto : orderList) {
+			orderCount.add(oDetailDao.orderDetailCountDao(dto.getOrder_id()));
+		}
+		map.put("orderList", orderList);
+		map.put("orderCount", orderCount);
+		
+		return map;
 	}
 	@Override
-	public void boardWriteService(int b_check, String user_email, BoardDto bDto, String fileName, int orderId) {
+	public void boardWriteService(BoardDto bDto) {
 		
-		dao.boardWriteDao(b_check, user_email, bDto.getTitle(), bDto.getQuestion(), bDto.getBoardCat(), fileName, orderId);
+		dao.boardWriteDao(bDto);
 	}
 
 	@Override
@@ -79,19 +90,27 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public Map<String,Object> boardUpdateFormService(int id) {
 		Map<String,Object> map=new HashMap<String,Object>();
+		//boardId에 해당하는 BoardDto
 		BoardDto dto=dao.boardViewDao(id);
-		List<OrderDto> order=orderDao.userOrderListDao(dto.getUser_email());
+		//email에 해당하는 orderList
+		List<OrderDto> orderList= orderDao.userOrderListDao(dto.getUser_email());
+		//orderid당 상품 수량
+		List<Integer> orderCount=new ArrayList<Integer>();
+		for(OrderDto oDto : orderList) {
+			orderCount.add(oDetailDao.orderDetailCountDao(oDto.getOrder_id()));
+		}
+		map.put("orderList", orderList);
+		map.put("orderCount", orderCount);
 		
-		List<String> list=new ArrayList<String>();
-		list.add("배송");
-		list.add("결제");
-		list.add("교환");
-		list.add("환불");
-		list.add("기타");
+		//board카테고리 리스트
+		List<String> catList=new ArrayList<String>();
+		catList.add("배송"); catList.add("결제"); catList.add("교환"); catList.add("환불"); catList.add("기타");
 		
-		map.put("dto",dto);
-		map.put("catList", list);
-		map.put("orderList", order);
+		map.put("board",dto);
+		map.put("catList", catList);
+		map.put("orderList", orderList);
+		map.put("orderCount", orderCount);
+		
 		
 		return map;
 	}

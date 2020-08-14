@@ -19,4 +19,7 @@ public class OrderDto {
 	private String payment_method;
 	private Date payDate;
 	private String order_state;
+	
+	//이용자 border-order확인용
+	private String pd_name;
 }

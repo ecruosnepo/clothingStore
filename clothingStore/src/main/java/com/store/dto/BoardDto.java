@@ -17,7 +17,7 @@ public class BoardDto {
 	private String boardCat;
 	private Date regDate;
 	private String file;
-	private int orderId;
+	private String orderId;
 	
 	public String getTitle() {
 		if(title==null) {

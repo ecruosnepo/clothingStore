@@ -4,163 +4,273 @@
 <!DOCTYPE html>
 <html> 
 <head>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>옷가게</title>
-  <style>
-	.center-block{
-		background-color:white;
+<style>
+	.myPage-container{
+		font-weight:600;
 	}
-     .box1{    
-        background-color: white;
-        padding:5%;
-          
-        height: auto;
-        
-     }
-     .left{
-        text-align: left;
-        padding-right: 20%;
-     }
-     .right{
-        text-align: right;
-     }
-   .panel-title{
-    padding: 2%;
-   }
-   img{
-     whith:500px;
-     height:500px; 
-   }
-   .product{
-     font-family: serif;
-     font-size: 18px;
-     font-weight: bold;
-   }
-      
-.wrapper{
-  width:100%;
-}
-@media(max-width:992px){
- .wrapper{
-  width:100%;
-} 
-}
-.panel-heading {
-  padding: 0;
-	border:0;
-}
-.panel-title>a, .panel-title>a:active{
-	display:block;
-	padding:15px;
-    color:#555;
-    font-size:16px;
-    font-weight:bold;
-	text-transform:uppercase;
-	letter-spacing:1px;
-    word-spacing:3px;
-	text-decoration:none;
-}
-.panel-heading  a:before {
-   font-family: 'Glyphicons Halflings';
-   content: "\e114";
-   float: right;
-   transition: all 0.5s;
-}
-.panel-heading.active a:before {
-	-webkit-transform: rotate(180deg);
-	-moz-transform: rotate(180deg);
-	transform: rotate(180deg);
-} 
- 
+	.myPage-container p{
+		margin-bottom: 0;
+	}
+	.orderinfo-box{
+		background-color:white;
+		padding:32px 48px;		
+		margin-bottom:30px;
+		font-size:13px;	
+	}
+	.myPage-sidenav{
+		max-width:28% !important;
+	}
+	.myPage-content{
+		flex:0 0 72% !important;
+		max-width:72% !important;
+	}
+	.sidenav-content{    
+		background-color:#FAF9F8;
+		height: auto;
+	}
+	.sidenav-content *{
+		font-weight:600;
+	}
+	.sidenav-userinfo{
+		font-size:13px;
+	}
+	.sidenav-title{
+		font-size:16px;
+	}
+	.sidenav-sub a{
+		font-size:13px;
+		color:#222;
+	}
+	.sidenav-cate{
+		margin-top:32px;
+	}
+	.content-title{
+		font-size:16px;
+		text-align:left;
+	}
+	.panel-heading {		
+	}
+	.orderinfo-table td{
+		text-align:left !important;
+	}
+	.panel-body{
+		height:auto;
+		display:flex;
+		margin-bottom:10px;
+	}
+	.panel-body p{
+		margin-bottom:0;
+	}
+	.panel-body img{		
+		width:131px;
+		float:left;	 
+	}
+	.pd-info{
+		display:inline-block;
+		font-weight:600;
+		margin-left: 10px;
+	}
+	.pd-info table{
+		width:auto;
+	}
+	.pd-info th,.pd-info td{
+		width:auto !important;
+		height:auto !important;
+		text-align:left !important;	
+		font-size:11px;	
+	}
+	.pd-title{
+		font-size:13px;
+	}
+	.pd-sub{
+		font-size:11px;
+	}
+	.wrapper{
+		width:100%;
+	}
+	@media(max-width:992px){
+		.wrapper{
+			width:100%;
+		} 
+	}
+	.panel-heading {
+		position:relative;
+		padding:0;
+		border:0;
+	}
+	.extend-arrow a{
+		position:absolute;
+		right:0px;		
+		top:0px;
+	}
+	.panel-title a, .panel-title a:active{
+		display:block;
+		padding:15px;
+		color:#222;
+		font-size:16px;
+		font-weight:bold;
+		text-transform:uppercase;
+		letter-spacing:1px;
+		word-spacing:3px;
+		text-decoration:none;
+	}
+	.panel-heading a::after {
+		font-family: 'FontAwesome';
+		content: "\f107";
+		font-size:20px;
+		float: right;
+		transition: all 0.5s;
+	}
+	.panel-heading.active a::after {
+		-webkit-transform: rotate(180deg);
+		-moz-transform: rotate(180deg);
+		transform: rotate(180deg);
+	} 
+	.deliveryinfo{		
+		height:auto;
+		margin-bottom:10px;
+	}
+	.order-summary{
+		border-top:1px solid #e4e4e4;
+		padding:16px 0;
+		text-align:right;
+	}
+	.order-summary table{
+		margin-left:auto;
+	}
+	.order-summary th, .order-summary td{				
+		height:auto !important;
+		font-size:13px;	
+	}
+	.order-summary td{
+		width:30% !important;
+		text-align:right !important;
+	}
+	.order-summary th{
+		width:70% !important;
+		text-align:left !important;
+	}
 </style>
- </head>
-  <body>
-  <jsp:include page="../header.jsp" flush="false" />
-   <div class="container"> 
-    <div class="row">
-     <div class="col-md-4">
-      <div class="box1">
-       
-       <p style="font-size: 20px;">안녕하세요</p>
-       <p style="font-size: 17px;">${email}</p>
-       <p style="font-size: 23px;"><b>계정</b></p>
-       <P><a href="#" class="button" style="color: black; text-decoration: underline; font-size: 15px;">결제 설정</a></P>
-       <P><a href="MyPageSet" class="button" style="color: black; text-decoration: underline; font-size: 15px; ">내 설정</a></P> 
-       <P><b style="font-size: 23px;"><label>도움이 필요하세요?</label></b></P>
-       <P><a href="#" class="button" style="color: black; text-decoration: underline; font-size: 15px; ">문의하기</a></P> 
-       <P><a href="#" class="button" style="color: black; text-decoration: underline; font-size: 15px; ">로그아웃</a></P>  
-      </div> 
-      </div>
- 
-   <!--  -[wpv-post-id] -->
- <%int i=0; %>
-<div class="col-md-8">
-<p style="font-weight: bold; text-align: center; font-size: 29px;">모든 구매 내역</p>
-<br/> 
- <c:forEach items="${oDto}" var="oDto">
-<% i++; %>
-<div class="wrapper center-block">
-  <div class="panel-group" id="accordion<%=i%>" role="tablist" aria-multiselectable="true" >
-   <div class="panel panel-default">
-    <div class="panel-heading active" role="tab" id="headingOne<%=i%>">
-      <h4 class="panel-title">
-      <a role="button" data-toggle="collapse" data-parent="#accordion<%=i%>" href="#collapseOne<%=i%>" aria-expanded="true" aria-controls="collapseOne">
-       <div style="margin-left: 73%;  color: black;">상세 구매 내역</div>
-        </a><br/>
-       <table>
-            <tr>
-	      	   <td class="left">거래 완료</td>
-	           <td class="right">${oDto.payDate}</td>
-	        </tr>	
-	        <tr>
-	           <td class="left">#${oDto.order_id}</td>
-	           <td class="right">&#8361;${oDto.total_price}</td>	
-	        </tr>  
- 	  	 </table>
-      </h4>
-    </div>
-    <div id="collapseOne<%=i%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-        <c:forEach items="${mDto }" var="mDto">
-        <c:if test="${mDto.order_id == oDto.order_id }">
-         <div class="panel-body">
-	          <c:forTokens items="${mDto.pd_img}" var="img" delims="," varStatus="status">
-                   <c:if test="${status.last}">
-                      <img src="resources/pdImages/${img}" />
-                   </c:if>
-			  </c:forTokens>
-			        <p class="product">${mDto.pd_name}</p>
-			        <p class="product">&#8361;${mDto.pd_price}</p>
-			        <p class="product">상품번호:   ${mDto.pd_id}</p>
-			        <p class="product">수량:   ${mDto.pd_quantity}</p>
-			        <p class="product">컬러:   ${mDto.pd_color}</p>
-			        <p class="product">사이즈:   ${mDto.pd_size }</p>
-			        <p class="product">합계:   &#8361;${(mDto.price_sum + mDto.pd_price) * mDto.pd_quantity}</p>
-			        <c:set var="sum" value="${sum + ((mDto.price_sum + mDto.pd_price) * mDto.pd_quantity)}"/>
-        	 </div>	 
-	     </c:if> 
-	     </c:forEach><br/>
-		    	      <h1 style="margin-left: 12px;">배송주소</h1><br/>
-			     	  <p class="product" style="margin-left: 13px;">${oDto.dv_name}</p>
-			     	  <p class="product" style="margin-left: 13px;">${oDto.dv_address1}</p>
-			     	  <p class="product" style="margin-left: 13px;">${oDto.dv_address2}</p>
-			     	  <p class="product" style="margin-left: 13px;">${oDto.dv_address3}</p>
-			     	  <p class="product" style="margin-left: 13px;">${oDto.dv_address4}</p> 	  
-			 <div class="panel-body" >
-			    <p class="product">상품 합계: &#8361;${sum}</p>
-			    <p class="product">배송: &#8361;${oDto.dv_option}</p>
-			    <p class="product">총 합계: &#8361;${sum + oDto.dv_option}</p>
-			   <c:set var="sum" value="0"/>
-			 </div>
-		     </div>
-		   </div>
-	    </div>
-	   </div>
-	   </c:forEach>	
-	   </div>
-	  </div>	
+</head>
+<body>
+	<jsp:include page="../header.jsp" flush="false" />
+	<div class="container myPage-container"> 
+    	<div class="row">
+     		<div class="col-md-4 myPage-sidenav px-0">
+      			<div class="sidenav-content">
+			       <p class="sidenav-userinfo">${user_name }</p>
+			       <p class="sidenav-userinfo">${email}</p>
+			       <div class="sidenav-cate">
+				       <p class="sidenav-title">내 계정</p>
+				       <P class="sidenav-sub"><a href="MyPageSet" class="button">내 설정</a></P> 
+			       </div>
+			       <div class="sidenav-cate">
+				       <P class="sidenav-title"><label>도움이 필요하세요?</label></P>
+				       <P class="sidenav-sub"><a href="#" class="button">문의하기</a></P> 
+				       <P class="sidenav-sub"><a href="#" class="button">로그아웃</a></P>  
+			       </div>
+      			</div> 
+      		</div>
+			<%int i=0; %>
+			<div class="col-md-8 myPage-content px-0">
+				<p class="content-title">모든 구매 내역</p>
+				<c:forEach items="${oDto}" var="oDto">
+					<% i++; %>
+					<div class="wrapper orderinfo-box">
+						<div class="panel-group" id="accordion<%=i%>" role="tablist" aria-multiselectable="true" >
+   							<div class="panel panel-default">
+    							<div class="panel-heading" role="tab" id="headingOne<%=i%>">
+      								<div class="panel-title">       									
+       									<table class="orderinfo-table">
+								            <tr>
+									      	   <td class="left">거래 완료</td>
+									           <td class="right">${oDto.payDate}</td>
+									        </tr>	
+									        <tr>
+									           <td class="left">#${oDto.order_id}</td>
+									           <td class="right">&#8361;${oDto.total_price}</td>	
+									        </tr>  
+ 	  	 								</table>
+ 	  	 								<div class="extend-arrow">
+       										<a role="button" data-toggle="collapse" data-parent="#accordion<%=i%>" href="#collapseOne<%=i%>" aria-expanded="true" aria-controls="collapseOne"></a>
+										</div>
+      								</div>
+    							</div>
+    							<div id="collapseOne<%=i%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+	        						<c:forEach items="${mDto }" var="mDto">
+		        						<c:if test="${mDto.order_id == oDto.order_id }">
+			        						<div class="panel-body">
+				          						<c:forTokens items="${mDto.pd_img}" var="img" delims="," varStatus="status">
+								                  	<c:if test="${status.last}">
+								                      	<img src="resources/pdImages/${img}" />
+								                   	</c:if>
+							  					</c:forTokens>
+							  					<div class="pd-info">
+								  					<p class="pd-title">${mDto.pd_name}</p>
+											        <p class="pd-title">&#8361;${mDto.pd_price}</p>
+								  					<table>
+								  						<tr>
+								  							<th>상품번호:</th>
+								  							<td>${mDto.pd_id}</td>
+								  						</tr>
+								  						<tr>
+								  							<th>수량:</th>
+								  							<td>${mDto.pd_quantity}</td>
+								  						</tr>
+								  						<tr>
+								  							<th>컬러:</th>
+								  							<td>${mDto.pd_color}</td>
+								  						</tr>
+								  						<tr>
+								  							<th>사이즈:</th>
+								  							<td>${mDto.pd_size }</td>
+								  						</tr>
+								  						<tr>
+								  							<th style="font-size:16px !important;">합계:</th>
+								  							<td style="font-size:16px !important;">&#8361;${(mDto.price_sum + mDto.pd_price) * mDto.pd_quantity}</td>
+								  						</tr>
+								  					</table>
+							  					</div>
+										        <c:set var="sum" value="${sum + ((mDto.price_sum + mDto.pd_price) * mDto.pd_quantity)}"/>
+	        	 							</div>	 
+		     							</c:if> 
+		     						</c:forEach>
+		     						<div class="deliveryinfo">
+										<p style="margin-bottom:10px;">배송주소</p>
+										<p>${oDto.dv_name}</p>
+										<p>${oDto.dv_address1}</p>
+										<p>${oDto.dv_address2}</p>
+										<p>${oDto.dv_address3} ${oDto.dv_address4}</p>
+		     						</div>
+				 					<div class="order-summary" >
+				 						<table>
+				 							<tr>
+				 								<th>합계:</th>
+				 								<td>&#8361;${sum}</td>
+				 							</tr>
+				 							<tr>
+				 								<th>배송:</th>
+				 								<td>&#8361;${oDto.dv_option}</td>
+				 							</tr>
+				 							<tr>
+				 								<th>총합:</th>
+				 								<td>&#8361;${sum + oDto.dv_option}</td>
+				 							</tr>
+				 						</table>
+										<c:set var="sum" value="0"/>
+									</div>
+		     					</div>
+		   					</div>
+	    				</div>
+	   				</div>
+	   			</c:forEach>	
+   			</div>
+	  	</div>	
 	</div>
-   <jsp:include page="../footer.jsp" flush="false" />
- </body>
+<jsp:include page="../footer.jsp" flush="false" />
+</body>
  <script type="text/javascript">
  $('.panel-collapse').on('show.bs.collapse', function () {
 	    $(this).siblings('.panel-heading').addClass('active');
@@ -171,3 +281,14 @@
 	  });
  </script>
 </html>
+
+
+
+
+
+
+
+
+
+
+

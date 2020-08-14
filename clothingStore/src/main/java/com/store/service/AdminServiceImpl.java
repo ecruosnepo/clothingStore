@@ -19,6 +19,9 @@ import com.store.dao.ProductDao;
 import com.store.dao.StockDao;
 import com.store.dao.UserDao;
 import com.store.dto.BoardDto;
+import com.store.dto.OrderDetailDto;
+import com.store.dto.OrderDto;
+import com.store.dto.StockDto;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -221,9 +224,34 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Map<String, Object> adOrderViewService(String order_id) {
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("orderList", orderDao.adOrderViewDao(order_id));
-		map.put("detailList", oDetailDao.orderDetailListDao(order_id));
+		List<OrderDetailDto> odDto=oDetailDao.orderDetailListDao(order_id);
+		Map<Integer, Object> sDto=new HashMap<Integer, Object>();
+		System.out.println(odDto);
 		
+		for (int i = 0; i < odDto.size(); i++) {
+			List<StockDto> sdto=stockDao.productStockDao(odDto.get(i).getPd_id());
+			sDto.put(odDto.get(i).getPd_id(), sdto );
+			System.out.println(odDto.get(i).getPd_id());
+			System.out.println(sdto);
+		}
+		
+		map.put("orderList", orderDao.adOrderViewDao(order_id));
+		map.put("detailList", odDto);
+		map.put("stockList", sDto);
+		System.out.println(sDto);
+		System.out.println(sDto.get(11));
 		return map;
+	}
+
+	@Override
+	public Map<String, Object> adPdMiniSearchService(String search) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pdList", productDao.adPdMiniSearchDao("%" + search + "%"));
+		return map;
+	}
+
+	@Override
+	public List<StockDto> adSelectStockService(int pd_id) {
+		return stockDao.productStockDao(pd_id);
 	}
 }

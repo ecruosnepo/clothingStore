@@ -19,8 +19,11 @@ import com.google.gson.Gson;
 import com.store.dao.CategoryDao;
 import com.store.dto.CategoryDto;
 import com.store.dto.OrderDto;
+import com.store.dto.StockDto;
 import com.store.service.AdminService;
 import com.store.service.OrderService;
+import com.store.service.ProductService;
+import com.store.service.StockService;
 
 @Controller
 public class AdminController {
@@ -28,13 +31,17 @@ public class AdminController {
 	@Autowired
 	AdminService service;
 	@Autowired
+	OrderService orderService;
+	@Autowired
 	CategoryDao categoryDao;
 	@Autowired
-	OrderService orderService;
+	ProductService productService;
+	@Autowired
+	StockService stockService;
 	
 	@RequestMapping("/admin")
 	public String cusCenter(Model model) {
-		return "redirect:adminProduct"; 
+		return "redirect:adminProduct";
 	}
 	
 	@RequestMapping("/adminProduct")
@@ -48,9 +55,15 @@ public class AdminController {
 	}
 	
 	@GetMapping("/updateProductForm")
-	public String updateProductForm(Model model) {
+	public String updateProductForm(Model model, @RequestParam("pd_id")int pd_id) {
 		System.out.println("상품 수정 폼");
 		
+		Gson gson = new Gson();
+		List<CategoryDto> allcat = categoryDao.getAllCatDao();
+		List<StockDto> pd_stock = stockService.productStock(pd_id);
+		model.addAttribute("allcat", gson.toJson(allcat));
+		model.addAttribute("pd_stock", gson.toJson(pd_stock));
+		model.addAttribute("pDto", productService.adminViewProduct(pd_id));
 		
 		return "/admin/updateProduct";
 	}
@@ -164,12 +177,6 @@ public class AdminController {
 		return result;
 	}
 	
-	@RequestMapping("/adminPdUpdate")
-	public String adminPdUpdate(Model model) {
-		//상품 업데이트 코드...
-		return "admin/updateProduct"; 
-	}
-	
 	@RequestMapping("/adminOrderList")
 	public String adOrderList(@RequestParam(defaultValue="1") int page, Model model) {
 		Map<String, Object> map=service.adOrderListService(page);
@@ -186,7 +193,6 @@ public class AdminController {
 		model.addAttribute("order", map.get("orderList"));
 		model.addAttribute("detail", map.get("detailList"));
 		model.addAttribute("stockList", map.get("stockList"));
-		
 		System.out.println(map.get("orderList").toString());
 
 		// return "admin/order_view2";
@@ -203,6 +209,16 @@ public class AdminController {
 		
 		return map.get("pdList"); 
 	}
+
+	/*
+	 * @RequestMapping("/adPdMiniSearch") public @ResponseBody Object
+	 * adPdMiniSearch(@RequestParam(name="search",defaultValue="")String search) {
+	 * Map<String, Object> map=service.adPdMiniSearchService(search);
+	 * System.out.println(map.get("pdList"));
+	 * 
+	 * return map; }
+	 */
+	
 	@RequestMapping("/adOrderUpdate")
 	public String adOrderUpdate(HttpServletRequest req, OrderDto oDto, Model model) {
 		System.out.println("주문 수정 Controller");
@@ -213,5 +229,12 @@ public class AdminController {
 		
 		String referer = req.getHeader("Referer");
 	    return "redirect:"+ referer; 
+	}
+	
+	@RequestMapping("/adSelectStock")
+	public @ResponseBody Object adSelectStock(@RequestParam(name="pd_id",defaultValue="")Integer pd_id) {
+		List<StockDto> stock=service.adSelectStockService(pd_id);
+		System.out.println(stock);
+		return stock; 
 	}
 }

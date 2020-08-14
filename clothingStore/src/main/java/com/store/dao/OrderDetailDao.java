@@ -10,5 +10,6 @@ import com.store.dto.OrderDetailDto;
 public interface OrderDetailDao {
 
 	public List<OrderDetailDto> orderDetailListDao(String order_id);
-	public int orderDetailCountDao(String order_id);	
+	public int orderDetailCountDao(String order_id);
+
 }

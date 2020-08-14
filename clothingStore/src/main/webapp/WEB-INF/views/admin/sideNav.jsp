@@ -62,7 +62,7 @@
 				<h5><a href="/adminMember">고객관리</a></h5><br>
 				<h5><a href="/adminQna">고객 문의 관리</a></h5><br>
 				<h5><a href="/adminPdList">상품 관리</a></h5><br>
-				<h5><a href="/adminAddPd">상품 등록</a></h5><br>
+				<h5><a href="/adminProduct">상품 등록</a></h5><br>
 			 	<h5><a href="adminOrderList">주문현황</a></h5><br>
 		 	</aside>
  		</div>

@@ -29,6 +29,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	public ProductDto adminViewProduct(int pd_id) {
+		System.out.println("관리자 상품 상세");
+		return dao.adminViewProductDao(pd_id);
+	}
+	
+	@Override
 	public List<ProductDto> getColorList(String pd_name) {
 		System.out.println("색상 목록");
 		return dao.getColorListDao(pd_name);
@@ -62,9 +68,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int updateProduct(Map<String, String> map) {
+	public int updateProduct(ProductDto pDto) {
 		System.out.println("상품 정보 수정");
-		return dao.updateProductDao(map);
+		return dao.updateProductDao(pDto);
 	}
 	
 	@Override

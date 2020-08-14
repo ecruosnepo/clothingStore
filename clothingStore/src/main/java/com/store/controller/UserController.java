@@ -39,9 +39,11 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 	
+
 	@Autowired
 	private OrderService orderService;
 	
+
 	@Autowired
 	private AddressServiceImpl addressService;
 	Random ran = new Random();
@@ -162,6 +164,22 @@ public class UserController {
 	public String logout( HttpSession session ) {
 		 userService.sLogout(session);
 		return "/user/logout";
+	}	
+	
+	// MyPage 페이지
+	@RequestMapping(value="/myPage", method = RequestMethod.GET)
+	public String MyPage(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+		String user_email = (String)session.getAttribute("email");
+		
+		String user_name = (String)userService.sGetUserInfo(user_email).getUser_name();
+		List<OrderDto> oDto = orderService.selectOrderList(user_email);
+		List<MyPageDto> mDto = orderService.selectPdMyPage(user_email);
+		
+		model.addAttribute("user_name", user_name);
+	    model.addAttribute("oDto", oDto);
+	    model.addAttribute("mDto", mDto);
+		   	
+	   	return "/user/myPage";
 	}
 		
 	// 내설정
@@ -302,7 +320,6 @@ public class UserController {
 
 		return "/user/login";	
   }
-
 	
 	// 비밀번호 변경
 	@RequestMapping(value="/myPage/updatePassword", method = RequestMethod.GET)
@@ -341,20 +358,6 @@ public class UserController {
 		}
 	}
 	
-	// MyPage 페이지
-	@RequestMapping(value="/myPage", method = RequestMethod.GET)
-	public String MyPage(HttpSession session, HttpServletRequest request, Model model) throws Exception {
-		String user_email = (String)session.getAttribute("email");
 
-		List<OrderDto> oDto = orderService.selectOrderList(user_email);
-		List<MyPageDto> mDto = orderService.selectPdMyPage(user_email);
-	    int sum = 0;
-		
-		model.addAttribute("sum", sum);
-	    model.addAttribute("oDto", oDto);
-	    model.addAttribute("mDto", mDto);
-		   	
-	   	return "/user/myPage";
-	}
 
 }

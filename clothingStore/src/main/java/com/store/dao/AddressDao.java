@@ -2,8 +2,6 @@ package com.store.dao;
 
 import java.util.List;
 
-import javax.annotation.Priority;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
