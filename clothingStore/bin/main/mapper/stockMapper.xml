@@ -19,10 +19,10 @@
 	<update id="orderUpdateStockDao">
 		update stock set
 		<choose>
-			<when test="op==sum">
+			<when test="op == 'sum'">
 				pd_stock=pd_stock+#{pd_quantity}
 			</when>
-			<when test="op==sub">
+			<when test="op == 'sub'">
 				pd_stock=pd_stock-#{pd_quantity} 
 			</when>		
 		</choose>

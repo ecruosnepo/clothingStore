@@ -337,7 +337,7 @@
 		
 		$(function(){
 			var isEmpty = <%=request.getAttribute("result")%>;
-			if(isEmpty == "0" || isEmpty == "1"D){
+			if(isEmpty == "0" || isEmpty == "1"){
 				$('.checkout-btn').prop("disabled",true);
 				$('.dv_price').text("");
 			}

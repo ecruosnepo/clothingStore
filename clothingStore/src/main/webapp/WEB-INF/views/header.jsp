@@ -233,12 +233,12 @@
 					}else{
 				%>    
                   <div class="btn-group">
-					<button class="btn dropdown-toggle login" href="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="location.href='/login';">
+					<button class="btn dropdown-toggle login" href="/login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="location.href='/login';">
                     	로그인
                   	</button>
                   	
                   	<div class="dropdown-menu dropdown-menu-right">
-                    <form class="px-4 py-3" action="loginForm" method="post">
+                    <form class="px-4 py-3" action="/loginForm" method="post">
                       <div class="form-group">
                         <label for="exampleDropdownFormEmail1">Email address</label>
                         <input type="email" name="user_email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">

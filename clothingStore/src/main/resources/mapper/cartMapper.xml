@@ -41,6 +41,6 @@
 	</delete>
 	
 	<select id="cartInfoDao" resultType="com.store.dto.CartDto">
-		select pd_id,pd_size,pd_quantity from cart where user_email=#{user_email};
+		select c.pd_id, c.pd_size, c.pd_quantity, p.pd_price from cart c join products p on c.pd_id=p.pd_id where c.user_email=#{user_email};
 	</select>
 </mapper>

@@ -59,6 +59,8 @@ public class OrderController {
 		String email = oDto.getUser_email();
 		List<CartDto> cDto = cartService.cartInfo(email);
 		
+		int price_sum = 0;
+		
 		oDto.setOrder_id(imp_uid);		
 		
 		System.out.println(oDto.toString());
@@ -67,11 +69,11 @@ public class OrderController {
 		System.out.println("order추가 완료");
 		System.out.println("orderDetail추가 시작");	
 		
-		orderService.addOrderDetail(imp_uid,email);
-		
 		for(CartDto list:cDto) {
+			price_sum += list.getPd_price()*list.getPd_quantity();
 			stockService.orderUpdateStock(list.getPd_id(), list.getPd_size(), list.getPd_quantity(),"sub");
 		}
+		orderService.addOrderDetail(imp_uid, email, price_sum);
 		
 		cartService.deleteOrderCart(email);
 		

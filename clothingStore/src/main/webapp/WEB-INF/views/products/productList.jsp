@@ -186,13 +186,13 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">탱크탑</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">티셔츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">롱 슬리브</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -210,13 +210,10 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">후디</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">스웨터셔츠</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -226,7 +223,7 @@
 	          <div class="card-header" id="headingThree">
 	            <h2 class="mb-0">
 	              <a class="btn btn-link btn-block text-left collapsed main-cat" href="" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-	                베이직
+	                팬츠
 	              </a>
 	            </h2>
 	          </div>
@@ -234,13 +231,13 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">치노팬츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">조거팬츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">리넨팬츠</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -321,8 +318,11 @@
 	                <div class="productInfo col">
 	                    <a class="productImg" href="/productpage/${pd_dto.pd_id }">
 	                    <c:forTokens items="${pd_dto.pd_img }" var="img" delims="," varStatus="status">
+	                    	<c:if test="${status.first == true }">
+	                    		<c:set var="firstimg" value="${img }"/>
+	                    	</c:if>
 		                    <c:if test="${status.last == true}">
-		                        <img src="/images/${img}" alt="">		                        
+		                        <img src="/images/${img}" onmouseover="this.src='/images/${firstimg}'" onmouseout="this.src='/images/${img}'" alt="">
 		                    </c:if>
 	                    </c:forTokens>              
 	                    </a>

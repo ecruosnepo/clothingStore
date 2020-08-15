@@ -47,11 +47,6 @@ public class ProductController {
 	@Autowired
 	private StockService stockService;
 	
-	@GetMapping("/test")
-	public String test() {
-		return "login";
-	}
-	
 	@GetMapping("/productpage/{pdId}")
 	public String productView(@PathVariable("pdId") int pd_id, HttpServletRequest req, Model model){
 		System.out.println("상세 페이지");
