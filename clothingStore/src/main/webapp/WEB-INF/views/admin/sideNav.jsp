@@ -44,7 +44,7 @@
     .sidenav a {font-size: 18px;}
     } */
 </style>
-<%-- <% 
+<% 
 	if ( session.getAttribute("manager") == null ){
 %>
 	<script type="text/javascript">
@@ -53,7 +53,7 @@
 	</script>
 <%
 	}
-%> --%>
+%>
 <div class="container q_wrap">           
     <div class="center-block" style="width: 100%;">
 		<div class="row">

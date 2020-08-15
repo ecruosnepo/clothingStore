@@ -57,12 +57,11 @@ public class UserService implements UserServiceImpl {
 			return 3;
 		}
 		UserDto dto = dao.getUserInfo(email);
-		if(( dto.getUser_email().equals("manager@1") || "manager@1".equals(dto.getUser_email()) ) && ( 1 == result ) ) {
+		if(( dto.getUser_email().equals("manager@1") || "manager@1".equals(dto.getUser_email()) ) ) {
 			return 4;
 		}
 		 
 		// login 체크
-		
 		if ( 0 == result ) {
 			return 5;
 		} 
@@ -115,6 +114,11 @@ public class UserService implements UserServiceImpl {
 	@Override
 	public int sUserEmail(String user_email) throws Exception {
 		return dao.UserEmail(user_email);
+	}
+
+	@Override
+	public int sUserLoginCheck(String user_email, String user_password) throws Exception {
+		return dao.userLoginCheck(user_email, user_password);
 	}
 
 

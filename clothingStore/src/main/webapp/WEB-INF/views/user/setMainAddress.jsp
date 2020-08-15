@@ -109,7 +109,7 @@
 	    		<p>청구지 주소</p>    		
 	    	</div>
 			<div class="box" >
-       			<form action="setMainAddressForm" method="post">
+       			<form action="myPage/setMainAddressForm" method="post">
 					<div class="form-group has-success">
 						<button type="button" onclick="DaumPostcode();" class="btn btn-lg default-btn text-white rounded-0">주소 검색</button> 
 						<div class="group_p">

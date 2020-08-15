@@ -205,7 +205,9 @@
     	<%		
     		}else{
     	%>
+
        	<h5><%=request.getParameter("keyword") %>에 대한 결과 표시</h5>        
+
     </div> 
 	<div class="container list-wrap">
 	    <!-- 사이드 네비게이션 바 -->

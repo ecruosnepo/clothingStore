@@ -7,16 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<% 
-	if ( session.getAttribute("manager") != null ){
-%>
-	<script type="text/javascript">
-		alert("관리자만 이용 가능한 페이지 입니다.");
-	    history.back();
-	</script>
-<%
-	}
-%>
+
 <style>
   .customerManage{
 		min-height:500px;
@@ -64,20 +55,7 @@
       <section>
       	<div id="sectDiv">
           <h1>주문 관리</h1><br><br>
-<!--             <div class="form-check mb-2 mr-sm-2" style="float:right; ">
-            	<form action="/adminQnaSearch" method="get" class="form-inline" >
-	              <select id="boardCat" name="boardCat" class="form-control" style="width: 150px; ">
-	                <option value="">모두 보기</option>
-	                <option value="배송">배송</option>
-	                <option value="결제">결제</option>
-	                <option value="반품">교환</option>
-	                <option value="환불">환불</option>
-	                <option value="기타">기타</option>
-	              </select>
-	              <input type="text" class="form-control" name="search" id="inlineFormInputGroupUsername2" placeholder="Email" >
-	          	  <input type="submit" class="btn btn-primary" value="검색" style="margin:5px;">
-	           </form>
-			</div> -->
+
 
             <table class="table table-hover" >
                 <thead>
