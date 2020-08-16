@@ -9,7 +9,7 @@
 	</select>
 	
 	<select id="getCatDao" resultType="com.store.dto.CategoryDto">
-		select * from categorys where cat_id={0};
+		select * from categorys where cat_id=#{cat_id};
 	</select>
 </mapper>
 

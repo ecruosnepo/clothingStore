@@ -186,13 +186,13 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">탱크탑</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">티셔츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">롱 슬리브</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -210,13 +210,10 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">후디</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">스웨터셔츠</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -226,7 +223,7 @@
 	          <div class="card-header" id="headingThree">
 	            <h2 class="mb-0">
 	              <a class="btn btn-link btn-block text-left collapsed main-cat" href="" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-	                베이직
+	                팬츠
 	              </a>
 	            </h2>
 	          </div>
@@ -234,13 +231,13 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">치노팬츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">조거팬츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">리넨팬츠</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -257,7 +254,7 @@
 			</div>
 	        <div class="cat-info">
 	            <h1>남성 티셔츠 & 베스트</h1>
-	            <p>H&M 온라인에서 남성 티셔츠와 베스트를 만나보세요. 여러분의 개성을 드러낼 수 있는 트렌디한 모티프와 패턴의 프린트 티셔츠로 일상 룩을 업그레이드해 보세요. 레귤러 핏과 슬림 핏의 다양한 클래식 컬러 코튼 티셔츠와 베스트로 기본 아이템을 준비하세요. 헬스클럽에 가는 길이신가요? H&M 스포츠 베스트의 쇼트 & 롱 슬리브 스타일로 완벽한 운동복을 준비해보세요.</p>
+	            <p>${cat.cat_desc }</p>
 	        </div>
 	    </div>    
 	    <article id="productsList">
@@ -321,8 +318,11 @@
 	                <div class="productInfo col">
 	                    <a class="productImg" href="/productpage/${pd_dto.pd_id }">
 	                    <c:forTokens items="${pd_dto.pd_img }" var="img" delims="," varStatus="status">
+	                    	<c:if test="${status.first == true }">
+	                    		<c:set var="firstimg" value="${img }"/>
+	                    	</c:if>
 		                    <c:if test="${status.last == true}">
-		                        <img src="/images/${img}" alt="">		                        
+		                        <img src="/images/${img}" onmouseover="this.src='/images/${firstimg}'" onmouseout="this.src='/images/${img}'" alt="">
 		                    </c:if>
 	                    </c:forTokens>              
 	                    </a>
@@ -354,9 +354,13 @@
     	$(function(){
     		$("input:checkbox").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:checkbox[name='sizeview']:checked").val();
-    			var cate = ${cat_id};
-    			
+    			var cate = ${cat.cat_id};
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
+
+    			console.log(size);
     			$.ajax({
                     url: "/productList/"+cate,
                     type: 'GET',
@@ -373,8 +377,11 @@
     		
     		$("input:radio").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:radio[name='sizeview']:checked").val();
-    			var cate = ${cat_id};
+    			var cate = ${cat.cat_id};
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
     			
     			$.ajax({
                     url: "/productList/"+cate,
@@ -391,5 +398,6 @@
     		});    		
     	});
     </script>
+<jsp:include page="../footer.jsp" flush="false" />
 </body>
 </html>

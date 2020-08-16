@@ -30,6 +30,7 @@ public class StockServiceImpl implements StockService {
 	public int orderUpdateStock(@Param("pd_id")int pd_id, @Param("pd_size")String pd_size, @Param("pd_quantity")int pd_quantity, String op) {
 		System.out.println("주문 재고 수정");
 		System.out.println(pd_quantity);
+		System.out.println(op);
 		return stockDao.orderUpdateStockDao(pd_id, pd_size, pd_quantity, op);
 	}
 	
@@ -40,7 +41,7 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	@Override
-	public boolean checkStock(int pd_id, String pd_size) {
+	public int checkStock(int pd_id, String pd_size) {
 		System.out.println("사이즈 유무 확인");
 		return stockDao.checkStockDao(pd_id, pd_size);
 	}

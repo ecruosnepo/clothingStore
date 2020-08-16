@@ -23,8 +23,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int addOrderDetail(String order_id,String user_email) {
-		return oDao.addOrderDetailDao(order_id,user_email);
+	public int addOrderDetail(String order_id, String user_email, int price_sum) {
+		return oDao.addOrderDetailDao(order_id, user_email, price_sum);
 	}
 	
    @Override

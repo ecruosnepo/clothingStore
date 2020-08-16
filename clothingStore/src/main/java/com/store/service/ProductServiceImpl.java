@@ -1,7 +1,6 @@
 package com.store.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	//상품 목록
 	@Override
-	public List<ProductDto> listSearchProduct(String keyword,String size, String sortby) {
+	public List<ProductDto> listSearchProduct(String keyword,List<String> size, String sortby) {
 		System.out.println("상품 검색 목록");
 		System.out.println(sortby);
 		System.out.println(keyword);
@@ -74,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<ProductDto> listProductSize(int catId, String size, String sortby) {
+	public List<ProductDto> listProductSize(int catId, List<String> size, String sortby) {
 		System.out.println("상품 사이즈 목록");
 		System.out.println(size);
 		System.out.println(sortby);

@@ -12,7 +12,7 @@ import com.store.dto.OrderDto;
 public interface OrderDao {
 	public int addOrderDao(OrderDto oDto);
 	
-	public int addOrderDetailDao(@Param("order_id")String order_id,@Param("user_email")String user_email);	
+	public int addOrderDetailDao(@Param("order_id")String order_id,@Param("user_email")String user_email, @Param("price_sum")int price_sum);	
 	
 	//회원별 주문 내역 출력
 	public List<OrderDto> userOrderListDao(@Param("user_email") String user_email);

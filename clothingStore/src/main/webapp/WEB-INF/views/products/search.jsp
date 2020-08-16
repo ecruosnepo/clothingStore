@@ -205,7 +205,9 @@
     	<%		
     		}else{
     	%>
+
        	<h5><%=request.getParameter("keyword") %>에 대한 결과 표시</h5>        
+
     </div> 
 	<div class="container list-wrap">
 	    <!-- 사이드 네비게이션 바 -->
@@ -310,7 +312,10 @@
     	$(function(){
     		$("input:checkbox").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:checkbox[name='sizeview']:checked").val();
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
     			
     			$.ajax({
                     url: "/searchProduct?keyword="+"${keyword}",
@@ -327,7 +332,10 @@
     		});
     		$("input:radio").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:checkbox[name='sizeview']:checked").val();
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
     			
     			$.ajax({
                     url: "/searchProduct?keyword="+"${keyword}",
