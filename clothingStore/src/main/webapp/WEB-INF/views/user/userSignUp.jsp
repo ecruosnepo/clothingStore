@@ -80,7 +80,7 @@
                 <br><br>
                 <label for="check2"></label>
                 <input type="checkbox" class="form-check-input" name="check2" id="check2">
-                    개인정보 수집, 이용 및 보관에 동의합니다.
+                    개인정보 수집, 이용 및 보관에 동의합니다.<h5 style="color: red; ">*</h5>
                 </label><br>
                 <textarea readonly="readonly" >"개인정보 수집, 이용 및 보관에 동의 수집하는 개인정보 항목     
 						    • 성명(국문 및 영문), 이메일 주소, 휴대전화번호, 우편번호(청구서/배송), 사용자 이름과 비밀번호, 생년월일
@@ -108,8 +108,8 @@
             </div>
             <br> 
           	<p class="w3-center">
-				<button type="submit" id="signUp" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">Join</button>
-				<button type="button" onclick="history.go(-1);" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
+				<button type="submit" id="signUp" class="btn btn-primary btn-lg">Join</button>
+				<button type="button" onclick="history.go(-1);" class="btn btn-danger btn-lg">Cancel</button>
 			</p>
         </form>
     </div>
@@ -119,14 +119,21 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   </body>
 <script type="text/javascript">     
-	function pwCheckFunction(){ // 비밀번호 확인
+	function pwCheckFunction(){ 
+		// 비밀번호 확인
 	    var userPW1 = $('#password').val();
 	    var userPW2 = $('#password2').val();
-	    if(userPW1.length < 8) $('#pwCheckMessage').html('비밀번호는 8자리 수 이상이어야 합니다').css('color', 'red').css('font-size', '16px');
+	    // 비밀번호 문자 숫자 특수문자 체크
+	    var pattern1 = /[0-9]/;
+	    var pattern2 = /[a-zA-Z]/;
+	    var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;
+	    if(userPW1.length < 8 || !pattern1.test(userPW1) || !pattern2.test(userPW1) ||
+	    !pattern3.test(userPW1)) $('#pwCheckMessage').html('비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.')
+	    .css('color', 'red').css('font-size', '16px');
 	    else if(userPW1 == "" || userPW2 == "") $('#pwCheckMessage').html('');
 	    else if(userPW1 != userPW2) $('#pwCheckMessage').html('비밀번호가 서로 일치하지 않습니다').css('color', 'red').css('font-size', '16px');
 	    else $('#pwCheckMessage').html('비밀번호가 서로 일치합니다').css('color','blue');
- 	}
+	 	};
 		
 	    // 중복체크
 		function dcheck(){
@@ -137,12 +144,19 @@
 					"user_email":$('#user_email').val()
 				},
 				success: function(result){
-					if(result == 0 && $.trim($('#user_email').val()) != '' ){
+			        // 아이디 특수문자 확인
+			        var user_email = $('#user_email').val();
+					var pattern = /[~!#$%^&*()_+|<>?:{}]/;
+					if(result == 0 && $.trim($('#user_email').val()) != ''){
 						var html="<label  style='color: blue; font-size: 16px;'>사용가능</label>";
 						$('#idCheck').empty();
 						$('#idCheck').append(html);
-					}else{
-						var html="<label  style='color: red; font-size: 16px;'>사용불가능한 아이디 입니다</label>";
+					}/* if( pattern.test(user_email) ){
+						var html="<label  style='color: red; font-size: 16px;'>특수문자 포함은 불가 합니다.</label>";
+						$('#idCheck').empty();
+						$('#idCheck').append(html);
+					} */ else{
+						var html="<label  style='color: red; font-size: 16px;'>사용불가한 아이디 입니다</label>";
 						$('#idCheck').empty();
 						$('#idCheck').append(html);
 					}

@@ -25,4 +25,6 @@ public interface UserServiceImpl {
 	public int sUpdatePassword(String user_password, String user_email) throws Exception;
 	
 	public int sUserEmail(String user_email) throws Exception; 
+	
+    public int sUserLoginCheck(String user_email, String user_password) throws Exception;
 }

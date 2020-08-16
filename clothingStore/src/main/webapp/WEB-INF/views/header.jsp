@@ -185,6 +185,9 @@
           background-repeat: no-repeat;
           margin: 0 5px;
         }
+        .dropdown-menu{
+        	z-index:1300 !important;
+        }
         .header-wrap .header-nav-item:hover > .dropdown-menu{
           display:block;
         }
@@ -255,7 +258,7 @@
                       <button type="submit" class="btn btn-primary">Sign in</button>
                     </form>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/login">New around here? Sign up</a>
+                    <a class="dropdown-item" href="/userSignUp">New around here? Sign up</a>
                     <a class="dropdown-item" href="/sendEmail">Forgot password?</a>
                   </div>  
                  </div>

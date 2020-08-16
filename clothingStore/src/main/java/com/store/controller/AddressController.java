@@ -20,12 +20,12 @@ public class AddressController {
 	  private AddressService addressService;
 	
 	    // 회원 주소록 새 주소 추가
-		@RequestMapping(value="/insertSubAddress", method = RequestMethod.GET)
+		@RequestMapping(value="insertSubAddress", method = RequestMethod.GET)
 		public String insertsubAddress() throws Exception {
 		   return "/user/insertSubAddress";
 		}
 		// insert
-		@RequestMapping(value="/insertSubAddressForm", method = RequestMethod.POST) 
+		@RequestMapping(value="insertSubAddressForm", method = RequestMethod.POST) 
 		public String insertsubAddress(@RequestParam("r_name")String r_name,
 					                   @RequestParam("address1")String address1,
 					                   @RequestParam("address2")String address2,
@@ -69,7 +69,7 @@ public class AddressController {
 		  return "/user/updateSubAddressAction";		
          }
         
-        @RequestMapping(value="/deleteSubAddress", method = RequestMethod.GET)
+        @RequestMapping(value="/myPage/deleteSubAddress", method = RequestMethod.GET)
         public String deleteSubAddress(@RequestParam("address_index")int address_index,
         		                       HttpSession session) throws Exception {
         	String email = (String)session.getAttribute("email");

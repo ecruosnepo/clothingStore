@@ -1,5 +1,6 @@
 package com.store.controller;
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,9 +89,12 @@ public class OrderController {
 		
 		return aDto;
 	}
+
 	
 	@RequestMapping("/compliteCheckout")
-	public String compliteCheckout() {
+	public String compliteCheckout(@RequestParam("checkout_complite")int complite) {
+		
+		
 		return "/compliteCheckout";
 	}
 }
