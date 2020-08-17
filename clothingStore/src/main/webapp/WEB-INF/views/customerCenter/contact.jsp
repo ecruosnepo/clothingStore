@@ -46,7 +46,7 @@
 </style>
 </head>
 <body>
-<div class="container-fluid center-container">
+<div class="container-fluid center-container px-0">
 	<div class="row center-row mx-0">
 		<div class="col-md-2 center-side">
 			<jsp:include page="sideNav.jsp" flush="false" />

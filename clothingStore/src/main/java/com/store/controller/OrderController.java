@@ -46,10 +46,17 @@ public class OrderController {
 		UserDto uDto = userService.sGetUserInfo(email);		
 		List<AddressDto> address_list = addressService.sGetAddressList(email);
 		List<CartListDto> cDto = cartService.cartListView(email);
+		AddressDto aDto = new AddressDto();
+		aDto.setAddress1(uDto.getMain_address1());
+		aDto.setAddress2(uDto.getMain_address2());
+		aDto.setAddress3(uDto.getMain_address3());
+		aDto.setAddress4(uDto.getMain_address4());
+		aDto.setR_name(uDto.getUser_name());
 		
 		model.addAttribute("cart_list", cDto);		
 		model.addAttribute("user", uDto);
 		model.addAttribute("address_list",address_list);
+		model.addAttribute("aDto", aDto);
 		
 		return "/checkoutForm";
 	}
@@ -59,6 +66,13 @@ public class OrderController {
 	public int checkout(Model model,OrderDetailDto odDto, OrderDto oDto, @RequestParam("imp_uid")String imp_uid) throws Exception {
 		String email = oDto.getUser_email();
 		List<CartDto> cDto = cartService.cartInfo(email);
+
+		for(CartDto cList:cDto) {
+			System.out.println(stockService.checkStock(cList.getPd_id(), cList.getPd_size()));
+			if(cList.getPd_quantity() > stockService.checkStock(cList.getPd_id(), cList.getPd_size())) {
+				return 0;
+			}			
+		}
 		
 		int price_sum = 0;
 		
@@ -78,9 +92,7 @@ public class OrderController {
 		
 		cartService.deleteOrderCart(email);
 		
-		int result = 1; 
-		
-		return result;
+		return 1;
 	}
 	
 	@RequestMapping("/getDeliveryAddress")
@@ -88,6 +100,7 @@ public class OrderController {
 		System.out.println("배송 주소 받기");
 		String email = (String)session.getAttribute("email");
 		AddressDto aDto = addressService.sGetAddressDto(email, address_index);
+		model.addAttribute("aDto",aDto);
 		
 		return aDto;
 	}

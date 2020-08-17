@@ -33,8 +33,8 @@
 		update stock set pd_stock=#{pd_stock} where pd_id=#{pd_id} and pd_size=#{pd_size};		
 	</update>
 	
-	<select id="checkStockDao" resultType="boolean">
-		select if(count(*)=1,1,0) from stock where pd_id=#{pd_id} and pd_size=#{pd_size};		
+	<select id="checkStockDao" resultType="int">
+		select pd_stock from stock where pd_id=#{pd_id} and pd_size=#{pd_size};		
 	</select>
 	
 	<select id="productStockDao" resultType="com.store.dto.StockDto" >

@@ -312,7 +312,10 @@
     	$(function(){
     		$("input:checkbox").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:checkbox[name='sizeview']:checked").val();
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
     			
     			$.ajax({
                     url: "/searchProduct?keyword="+"${keyword}",
@@ -329,7 +332,10 @@
     		});
     		$("input:radio").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:checkbox[name='sizeview']:checked").val();
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
     			
     			$.ajax({
                     url: "/searchProduct?keyword="+"${keyword}",
