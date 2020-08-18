@@ -131,23 +131,23 @@
 	    		<p>배송 주소 편집</p>    		
 	    	</div>
 	    		<div class="box-content address-content">
-			   		<form action="insertSubAddressForm" method="post">
+			   		<form action="/myPage/updateSubAddressForm" method="post">
 			   		<input type="hidden" name="address_index" value="${address.address_index}">
 			       		<div class="form-group has-success">
 					        <p class="headName required-field">이름</p>
-				          	<input type="text" class="form-control input-address rounded-0" id="inputSuccess1" value="${address.r_name}" name="dv_name">
+				          	<input type="text" class="form-control input-address rounded-0" id="inputSuccess1" value="${address.r_name}" name="r_name">
 			                <button type="button" onclick="DaumPostcode();" class="btn btn-lg rounded-0 address-btn text-white">주소 검색</button>    
 		                    <p class="headName required-field">우편번호</p>
-			             	<input type="text" class="form-control input-address rounded-0" id="postcode" placeholder="우편번호" value="${address.address1}" name="dv_address1">
+			             	<input type="text" class="form-control input-address rounded-0" id="postcode" placeholder="우편번호" value="${address.address1}" name="address1">
 				            <p id="id_1"></p> 
 				            <p class="headName required-field">주소</p>
-			             	<input type="text" class="form-control input-address rounded-0" id="address" placeholder="도로명 주소" value="${address.address2}" name="dv_address2">
+			             	<input type="text" class="form-control input-address rounded-0" id="address" placeholder="도로명 주소" value="${address.address2}" name="address2">
 				            <p class="headName">목록에서 해당 구를 찾을 수 없는 경우, '기타'를 선택하고 주소1 입력 칸에 직접 써넣으십시오. </p>
 				            <p class="headName">아파트 명/건물 명</p>
-			             	<input type="text" class="form-control input-address rounded-0" id="address-name" placeholder="지번 주소" value="${address.address3}" name="dv_address3">
+			             	<input type="text" class="form-control input-address rounded-0" id="address-name" placeholder="지번 주소" value="${address.address3}" name="address3">
 				            <p id="id_3"></p>
 				            <p class="headName">동 호수/층 수</p>
-			             	<input type="text" class="form-control input-address rounded-0" id="address-dong" placeholder="상세 주소" value="${address.address4}" name="dv_address4">
+			             	<input type="text" class="form-control input-address rounded-0" id="address-dong" placeholder="상세 주소" value="${address.address4}" name="address4">
 				            <p id="id_4"></p>
                  		</div>
                		<button type="submit" class="btn btn-lg rounded-0 address-btn address-btn-w" onclick="history.back();">취소</button>

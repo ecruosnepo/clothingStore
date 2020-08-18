@@ -73,6 +73,9 @@
         .color-list-box{
         	margin: 40px 0;
         }
+        .color-list{
+        	list-style-type:none;
+        }
         .color-carousel-item{
             text-align: center;
         }
@@ -87,6 +90,9 @@
         }
         .size-list:focus{
         	border:unset;
+        }
+        .size-list option{
+        	padding: 10px 15px;
         }
         .add-cart{
             width: 100%;
@@ -231,7 +237,7 @@
                     	<p class="color-label">${pd_dto.pd_color }</p>
 						<ul class="regular" style="padding-left:0px;">
 						<c:forEach items="${colorList }" var="colors">
-                   		<li class="">
+                   		<li class="color-list">
                        		<a href="/productpage/${colors.pd_id }">	                                 	
                    			<c:forTokens items="${colors.pd_img }" var="img" delims="," varStatus="status">
 		                    	<c:if test="${status.last == true}">
@@ -246,9 +252,9 @@
                     <div class="pd-select-buttons">
                         <select name="pd_size" class="form-control form-control-lg size-list rounded-0 shadow-none">
                         	<option selected>사이즈 선택</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
+                        	<c:forEach items="${stock_list }" var="stock">
+	                            <option value="${stock.pd_size }">${stock.pd_size }</option>
+                            </c:forEach>
                         </select>
                         <button class="btn add-cart rounded-0" onclick="addCart()">
                             <span>담기</span>

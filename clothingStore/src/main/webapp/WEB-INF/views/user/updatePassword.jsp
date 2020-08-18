@@ -92,14 +92,14 @@
 		            <form action="updatePasswordForm" method="post" name="delId">
 			            <label class="headName required-field">현재 비밀번호</label>			            
 			            <input type="password" class="form-control input-text rounded-0" id="getPassword" onkeyup="pwCheckFunction();" name="getPassword">
-			            <label class="headName required-field">새 비밀번호</label>			            
+			            <label class="headName  required-field">새 비밀번호</label>			            
 			            <input type="password" class="form-control input-text rounded-0" id="password" onkeyup="pwCheckFunction();" name="updatePassword1">
-		             	<p class="headName">8 characters1 lowercase1 uppercase1 number</p>
+		             	<p class="headName" >8 characters1 lowercase1 uppercase1 number</p>
 		            	<label class="headName required-field">새 비밀번호 확인</label>
 		           		<input type="password" class="form-control input-text rounded-0" id="password2" onkeyup="pwCheckFunction();" name="updatePassword2">
 		           		<p id="pwCheckMessage"></p>
              			<input type="button" onclick="update()" class="btn btn-lg rounded-0 btn-block address-btn text-white" value="비밀번호 변경"/>
-	               		<button type="submit" class="btn btn-lg rounded-0 btn-block address-btn address-btn-w" onclick="history.back();">취소</button>
+	               		<button type="button" class="btn btn-lg rounded-0 btn-block address-btn address-btn-w" onclick="history.back();">취소</button>
 		          	</form> 
 				</div>
 			</div>  
@@ -111,19 +111,31 @@
  function pwCheckFunction(){ // 비밀번호 확인
 	    var userPW1 = $('#password').val();
 	    var userPW2 = $('#password2').val();
-	    if(userPW1.length < 8) $('#pwCheckMessage').html('비밀번호는 8자리 수 이상이어야 합니다').css('color', 'red').css('font-size', '16px');
+	    var pattern1 = /[0-9]/;
+	    var pattern2 = /[a-zA-Z]/;
+	    var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; 
+	    if(userPW1.length < 8 || !pattern1.test(userPW1) || !pattern2.test(userPW1)) $('#pwCheckMessage').html('비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.').css('color', 'red').css('font-size', '16px');
 	    else if(userPW1 == "" || userPW2 == "") $('#pwCheckMessage').html('');
 	    else if(userPW1 != userPW2) $('#pwCheckMessage').html('비밀번호가 서로 일치하지 않습니다').css('color', 'red').css('font-size', '16px');
 	    else $('#pwCheckMessage').html('비밀번호가 서로 일치합니다').css('color','blue');
 	  }
 
  function update(){
-     if ( confirm("귀하의 비밀번호를 변경 하시겠습니까?") == true ) {
-	      document.delId.submit();
-	  }else{
-        location.href='MyPageSet';
-      }
+     if ( $.trim($('#getPassword').val()) == '') {
+    	 alert('비밀번호를 입력 해주새요.');
+    	 return;
+    }if ( $.trim($('#password').val()) == '') {
+    	     alert('비밀번호를 입력 해주새요.');
+	    	 return;
+    }if ( $.trim($('#password2').val()) == '') {
+	    	 alert('비밀번호를 입력 해주새요.');
+	    	 return;
+    } else if( confirm("귀하의 비밀번호를 변경 하시겠습니까?") == true){
+    	document.delId.submit();
+    } 
 };
+
+           
 </script> 
 </body> 
 </html>

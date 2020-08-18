@@ -24,6 +24,8 @@ import com.store.dto.OrderDto;
 import com.store.dto.StockDto;
 import com.store.service.AdminService;
 import com.store.service.OrderService;
+import com.store.service.ProductService;
+import com.store.service.StockService;
 
 @Controller
 public class AdminController {
@@ -34,7 +36,11 @@ public class AdminController {
 	OrderService orderService;
 	@Autowired
 	CategoryDao categoryDao;
-
+	@Autowired
+	ProductService productService;
+	@Autowired
+	StockService stockService;
+	
 	@RequestMapping("/admin")
 	public String cusCenter(Model model) {
 		return "redirect:adminProduct";
@@ -51,9 +57,15 @@ public class AdminController {
 	}
 
 	@GetMapping("/updateProductForm")
-	public String updateProductForm(Model model) {
+	public String updateProductForm(Model model, @RequestParam("pd_id")int pd_id) {
 		System.out.println("상품 수정 폼");
-
+		Gson gson = new Gson();
+		List<CategoryDto> allcat = categoryDao.getAllCatDao();
+		List<StockDto> pd_stock = stockService.productStock(pd_id);
+		model.addAttribute("allcat", gson.toJson(allcat));
+		model.addAttribute("pd_stock", gson.toJson(pd_stock));
+		model.addAttribute("pDto", productService.adminViewProduct(pd_id));
+		
 		return "/admin/updateProduct";
 	}
 
@@ -168,13 +180,7 @@ public class AdminController {
 
 		return result;
 	}
-
-	@RequestMapping("/adminPdUpdate")
-	public String adminPdUpdate(Model model) {
-		// 상품 업데이트 코드...
-		return "admin/updateProduct";
-	}
-
+	
 	@RequestMapping("/adminOrderList")
 	public String adOrderList(@RequestParam(defaultValue = "1") int page, Model model) {
 		Map<String, Object> map = service.adOrderListService(page);

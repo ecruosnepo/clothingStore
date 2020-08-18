@@ -28,18 +28,18 @@
         }
         a:hover{ 
             color: #d6001c;             
-        }        
-        #catDesc{
+        }
+        .cat-info{
             grid-area: description;
-            width:760px;            
+            width:760px;   
             padding: 0;
             overflow: hidden;
         }
-        #catDesc h1{
+        .cat-info h1{
         	margin-bottom:10px;
         	font-weight:600;
         }
-        #catDesc p{
+        .cat-info p{
         	margin:10px 0;
         	font-size:13px;
         	font-weight:bold;
@@ -148,6 +148,21 @@
         	box-shadow:none;
         	text-decoration:none;
         }
+        
+        .index-promotion{
+	      	text-align:center;
+	      	background-color:#FBEE6E;
+	      	font-weight:600 !important;
+	      	margin:0 auto;
+	      	padding: 20px 0;
+	      	margin-bottom: 30px;
+		}
+		.index-promotion p{
+    	  	font-weight:900 !important;
+	      	font-size:30px;
+	      	margin-bottom:0;
+	      	line-height:1.3;
+		}
 
     </style>
 </head>
@@ -171,13 +186,13 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">탱크탑</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">티셔츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">롱 슬리브</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -195,13 +210,10 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">후디</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
-	                </li>
-	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">스웨터셔츠</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -211,7 +223,7 @@
 	          <div class="card-header" id="headingThree">
 	            <h2 class="mb-0">
 	              <a class="btn btn-link btn-block text-left collapsed main-cat" href="" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-	                베이직
+	                팬츠
 	              </a>
 	            </h2>
 	          </div>
@@ -219,13 +231,13 @@
 	            <div class="card-body">
 	              <ul class="nav flex-column sub-cat-box">
 	                <li class="nav-item">
-	                  <a class="nav-link active sub-cat" href="#">Active</a>
+	                  <a class="nav-link active sub-cat" href="#">치노팬츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">조거팬츠</a>
 	                </li>
 	                <li class="nav-item">
-	                  <a class="nav-link sub-cat" href="#">Link</a>
+	                  <a class="nav-link sub-cat" href="#">리넨팬츠</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -236,9 +248,13 @@
 	
 	    <!-- 상품 목록 -->
 	    <div id="catDesc">
-	        <div>
+	    	<div class="index-promotion">
+				<p>H&M 카카오 채널 친구 추가시<br/>10% OFF 쿠폰 지급</p>
+				<span>2020-08-05부터 ~ 2020-08-19까지 지급 | 온라인 단독!</span>			 	
+			</div>
+	        <div class="cat-info">
 	            <h1>남성 티셔츠 & 베스트</h1>
-	            <p>H&M 온라인에서 남성 티셔츠와 베스트를 만나보세요. 여러분의 개성을 드러낼 수 있는 트렌디한 모티프와 패턴의 프린트 티셔츠로 일상 룩을 업그레이드해 보세요. 레귤러 핏과 슬림 핏의 다양한 클래식 컬러 코튼 티셔츠와 베스트로 기본 아이템을 준비하세요. 헬스클럽에 가는 길이신가요? H&M 스포츠 베스트의 쇼트 & 롱 슬리브 스타일로 완벽한 운동복을 준비해보세요.</p>
+	            <p>${cat.cat_desc }</p>
 	        </div>
 	    </div>    
 	    <article id="productsList">
@@ -271,48 +287,25 @@
 	                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">사이즈</a>
 	                    <div class="dropdown-menu pl-dropdown-menu">
 	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="sizeview" id="sizeview" value="S">
+	                            <input class="form-check-input" type="checkbox" name="sizeview" id="sizeview" value="S">
 	                            <label class="form-check-label" for="sizeview">
 	                                S
 	                            </label>
 	                        </div>
 	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="sizeview" id="sizeview" value="M">
+	                            <input class="form-check-input" type="checkbox" name="sizeview" id="sizeview" value="M">
 	                            <label class="form-check-label" for="sizeview">
 	                                M
 	                            </label>
 	                        </div>
 	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="sizeview" id="sizeview" value="L">
+	                            <input class="form-check-input" type="checkbox" name="sizeview" id="sizeview" value="L">
 	                            <label class="form-check-label" for="sizeview">
 	                                L
 	                            </label>
 	                        </div>
 	                    </div>
-	                </li>
-	                <li class="nav-item dropdown dropdown-title">
-	                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">컬러</a>
-	                    <div class="dropdown-menu pl-dropdown-menu">
-	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-	                            <label class="form-check-label" for="exampleRadios3">
-	                                빨강
-	                            </label>
-	                        </div>
-	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-	                            <label class="form-check-label" for="exampleRadios3">
-	                                노랑
-	                            </label>
-	                        </div>
-	                        <div class="form-check dropdown-item">
-	                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-	                            <label class="form-check-label" for="exampleRadios3">
-	                                초록
-	                            </label>
-	                        </div>
-	                    </div>
-	                </li>
+	                </li>	                
 	                <li class="nav-item ml-auto">
 	                    <button class="btn bigbtn">크게</button> 
 	                    <button class="btn smallbtn">작게</button>
@@ -325,8 +318,11 @@
 	                <div class="productInfo col">
 	                    <a class="productImg" href="/productpage/${pd_dto.pd_id }">
 	                    <c:forTokens items="${pd_dto.pd_img }" var="img" delims="," varStatus="status">
+	                    	<c:if test="${status.first == true }">
+	                    		<c:set var="firstimg" value="${img }"/>
+	                    	</c:if>
 		                    <c:if test="${status.last == true}">
-		                        <img src="/images/${img}" alt="">		                        
+		                        <img src="/images/${img}" onmouseover="this.src='/images/${firstimg}'" onmouseout="this.src='/images/${img}'" alt="">
 		                    </c:if>
 	                    </c:forTokens>              
 	                    </a>
@@ -356,10 +352,36 @@
     </script>
     <script>
     	$(function(){
+    		$("input:checkbox").change(function(){
+    			var sortby = $("input:radio[name='sortbyprice']:checked").val();
+    			var cate = ${cat.cat_id};
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
+
+    			console.log(size);
+    			$.ajax({
+                    url: "/productList/"+cate,
+                    type: 'GET',
+                    data: {
+                    	size : size,
+                    	sortby : sortby
+                    },
+                    success:function(pd_list){
+                    	var result = $(pd_list).find('.product-container');
+                    	$('.product-container').html(result);
+        			}
+                });
+    		});
+    		
     		$("input:radio").change(function(){
     			var sortby = $("input:radio[name='sortbyprice']:checked").val();
-    			var size = $("input:radio[name='sizeview']:checked").val();
-    			var cate = ${cat_id};
+    			var cate = ${cat.cat_id};
+    			var size = [];    			
+    			$("input:checkbox[name='sizeview']:checked").each(function(i){
+					size.push($(this).val());
+            	});
     			
     			$.ajax({
                     url: "/productList/"+cate,
@@ -376,5 +398,6 @@
     		});    		
     	});
     </script>
+<jsp:include page="../footer.jsp" flush="false" />
 </body>
 </html>

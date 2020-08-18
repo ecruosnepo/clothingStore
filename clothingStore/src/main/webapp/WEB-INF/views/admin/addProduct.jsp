@@ -13,10 +13,11 @@
  	 .addProduct-sideNav{
  	 	width:300px;	
  	 	position:absolute;
- 	 	left:0; 	 	
+ 	 	left:0;
  	 }
  	 .addProduct-row{
  	 	position:relative;
+ 	 	margin-bottom:50px !important;
  	 }
  	 .addProduct-content{
  	 	width: 70%;
@@ -26,12 +27,20 @@
          text-align: center;
      }
      .box{    
-        background-color: whitesmoke;
-        padding:5%; 
+        background-color: white;
      }
-     .size{
-       font-size: 24px;
-       text-align: center;
+     .form-header{
+     	width:100%;
+     	background-color:#F4E6E3;
+     }
+	 .form-header p{
+		font-size:15px;
+		padding:16px 24px;
+		font-weight:600;
+		margin-bottom:0;
+	 }
+     .form-content{
+     	padding:30px;
      }
      .head{
        font-size: 12px;
@@ -79,9 +88,10 @@
 			        <br/>
 		       </div>    
 		       <div class="box">
-					<label class="size">새 상품 등록하기</label>
-		         	<br/><br/><br/>
-		         	<div class="form-group has-success">
+			       <div class="form-header">
+						<p class="size">상품 등록</p>
+			       </div>
+		         	<div class="form-group has-success form-content">
 			        	<form action="/regProduct"  method="post" enctype="multipart/form-data">
 				            <label class="control-label" for="pd_name" style="color: black;">상품명</label>
 				            <input type="text" name="pd_name" class="form-control" id="pd_name">
@@ -129,6 +139,8 @@
 				            <br/>
 				            <label class="control-label" for="img">이미지</label><br/>
 				            <input multiple="multiple" type="file" name="img" id="img">
+				            <div class="select_img">
+							</div>
 				            <br/>
 				            <br/>
 				            <input type="submit" class="btn btn-lg btn-block" value="상품 등록" style="color: white; background-color: black;">
@@ -247,6 +259,21 @@
 				$(".input_l").attr("disabled",true);
 			}    	
 		});	
+	});
+	
+	$("#img").change(function(){
+		if(this.files && this.files[0]) {
+			var fileList = this.files;
+			for(var i = 0 ; i<fileList.length; i++){
+				var filereader = new FileReader;
+				let $img=jQuery.parseHTML("<img src='' style='width:130px;'>");
+	            filereader.onload = function(){
+	                $img[0].src=this.result;
+	            };
+	            filereader.readAsDataURL(this.files[i]);
+	            $(".select_img").append($img);
+			};
+		}
 	});
 </script>
 </body>

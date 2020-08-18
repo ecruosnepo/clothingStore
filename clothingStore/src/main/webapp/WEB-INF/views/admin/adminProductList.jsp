@@ -9,7 +9,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <style>
 .customerManage{
 		min-height:500px;
@@ -76,8 +75,8 @@
                 <c:forEach items="${ list }" var="dto" varStatus="idx" begin="${ page.startIdx }" end="${ page.endIdx }" >
                     <tr>
                     	<td><input type="checkbox" class="chBox" name="chBox" value="${ dto.pd_id }" data-cartNum="${ dto.pd_size }"></td>
-                        <td scope="row"><a href='adminPdUpdate?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }' id="id">${ dto.pd_id }</a></td>
-                        <td scope="row"><a href='adminPdUpdate?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }'>${ dto.pd_name }</a></td>
+                        <td scope="row"><a href='updateProductForm?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }' id="id">${ dto.pd_id }</a></td>
+                        <td scope="row"><a href='updateProductForm?pd_id=${ dto.pd_id }&pd_size=${ dto.pd_size }'>${ dto.pd_name }</a></td>
                         <td>${ dto.pd_color }</td>
                         <td id="size">${ dto.pd_size }</td>
                         <td>${ dto.pd_stock }</td>

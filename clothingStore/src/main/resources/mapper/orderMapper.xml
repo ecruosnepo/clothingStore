@@ -31,7 +31,7 @@
 	</insert>
 	
 	<insert id="addOrderDetailDao"> 
-		insert into order_detail (order_id, pd_id, pd_size, pd_quantity) select #{order_id}, pd_id, pd_size, pd_quantity from cart where email=#{user_email}; 
+		insert into order_detail (order_id, pd_id, pd_size, pd_quantity, price_sum) select #{order_id}, pd_id, pd_size, pd_quantity, #{price_sum} from cart where user_email=#{user_email}; 
 	</insert>
 	
 	<update id="adOrderUpdateDao">

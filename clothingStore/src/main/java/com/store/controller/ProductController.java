@@ -2,7 +2,6 @@ package com.store.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -48,49 +47,47 @@ public class ProductController {
 	@Autowired
 	private StockService stockService;
 	
-	@GetMapping("/test")
-	public String test() {
-		return "login";
-	}
-	
 	@GetMapping("/productpage/{pdId}")
 	public String productView(@PathVariable("pdId") int pd_id, HttpServletRequest req, Model model){
 		System.out.println("상세 페이지");
 		ProductDto pDto = productService.viewProduct(pd_id);
 		model.addAttribute("pd_dto", pDto);		
 		model.addAttribute("colorList",productService.getColorList(pDto.getPd_name()));
-		model.addAttribute("stock_list", stockService.getStock(pd_id));
+		model.addAttribute("stock_list", stockService.productStock(pd_id));
 		
 		return "products/productPage";
 	}
 	
 	@GetMapping("/productList/{catId}")	
-    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
-    	System.out.println(size); 	
-    	System.out.println(sortby); 	
+    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, 
+    								@RequestParam(value="size[]", required = false) List<String> size, 
+    								@RequestParam(value="sortby", required = false) String sortby) throws Exception {
+		System.out.println("size:" + size);
+    	System.out.println("sortby:" + sortby);
+    	CategoryDto cDto = categoryDao.getCatDao(cat);
     	
     	if(size==null && sortby==null) {
     		sortby = "pd_id";
     		model.addAttribute("pd_list", productService.listProduct(cat, sortby));    		
     	}else{
-    		if (sortby!=null && (size==null || size=="")) {
+    		if (sortby!=null && (size==null || size.get(0)=="")) {
 				model.addAttribute("pd_list", productService.listProduct(cat, sortby));
    			}else {
     			model.addAttribute("pd_list", productService.listProductSize(cat,size, sortby));
     		}    		
     	}
-    	model.addAttribute("cat_id", cat);
+    	model.addAttribute("cat", cDto);
     	return "products/productList";
 	}
 	
 	@GetMapping("/searchProduct")	
-    public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
+    public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size[]", required = false) List<String> size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
 		System.out.println("상품 검색");
 		
 		if(size==null && sortby==null) {
     		model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));    		
     	}else{
-    		if (sortby!=null && (size==null || size=="")) {
+    		if (sortby!=null && (size==null || size.get(0)=="")) {
 				model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
    			}else {
     			model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
@@ -115,7 +112,8 @@ public class ProductController {
 	}
 	
 	@PostMapping("/regProduct")
-	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, @RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
+	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, 
+							@RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
 		System.out.println("상품 등록");
 		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\pdImages");	
 		System.out.println(uploadPath);
@@ -171,6 +169,78 @@ public class ProductController {
 	    String referer = req.getHeader("Referer");
 	    return "redirect:"+ referer;
 	}
+	
+	@PostMapping("/updateProduct")
+	public String updateProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, @RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
+		System.out.println("상품 수정");
+		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\pdImages");
+		System.out.println(uploadPath);
+		SimpleDateFormat formatter;
+		String extension;
+		Calendar now;
+		File f;
+		String[] fileToString = new String[file.length];	    
+	    String fileMultiName = "";
+	    
+
+	    if(!file[0].isEmpty()) {
+	    	String[] preFileName = (String[])req.getParameter("preImg").split("\\,");
+	    	for(String pre:preFileName) {
+	    		System.out.println(pre);
+	    	}
+	    	for(int i=0; i<preFileName.length; i++) {
+	    		new File(uploadPath+"/"+preFileName[i]).delete();
+	    	}
+	    	
+	    	//멀티파트파일
+	    	for(int i=0; i<file.length; i++) {
+	    		fileToString[i] = file[i].getOriginalFilename();
+	    	}
+	    	
+	    	fileToString = FilenameSorting.solution(fileToString);
+	    	
+	    	for(int i=0; i<file.length; i++) {
+	    		formatter = new SimpleDateFormat("YYYYMMDD_HHMMSS_"+i);
+	    		now = Calendar.getInstance();
+	    		
+	    		//확장자명
+	    		extension = fileToString[i].split("\\.")[1];
+	    		
+	    		//fileOriginName에 날짜+.+확장자명으로 저장시킴.
+	    		fileToString[i] = formatter.format(now.getTime())+"."+extension;
+	    		System.out.println("변경된 파일명 : "+fileToString[i]);
+	    		
+	    		f = new File(uploadPath+"/"+fileToString[i]);
+	    		file[i].transferTo(f);
+	    		if(i==0) { fileMultiName += fileToString[i]; }
+	    		else{ fileMultiName += ","+fileToString[i]; }
+	    	}
+	    	
+	    	System.out.println("*"+fileMultiName);
+	    	pDto.setPd_img(fileMultiName);
+	    }else {
+	    	pDto.setPd_img(req.getParameter("preImg"));
+	    }
+	    
+	    productService.updateProduct(pDto);
+	    
+	    for(int i = 0; i < stock.length; i++) {
+	    	StockDto sDto = new StockDto();
+	    	sDto.setPd_id(pDto.getPd_id());
+	    	sDto.setPd_size(size[i]);
+	    	sDto.setPd_stock(stock[i]);
+	    	if(ObjectUtils.isEmpty(stockService.checkStock(pDto.getPd_id(), size[i]))) {
+	    		System.out.println(stockService.checkStock(pDto.getPd_id(), size[i]));
+	    		stockService.updateStock(sDto);
+	    	}else {
+	    		System.out.println(stockService.checkStock(pDto.getPd_id(), size[i]));
+	    		stockService.addStock(sDto);
+	    	}
+	    }
+	    
+	    String referer = req.getHeader("Referer");
+	    return "redirect:"+ referer;
+	}
 		
 	@PostMapping("/addCart")
 	@ResponseBody
@@ -206,7 +276,7 @@ public class ProductController {
 		} else {
 			model.addAttribute("cart_list", cartService.cartListView(email));
 			if(ObjectUtils.isEmpty(model.getAttribute("cart_list"))) {
-					model.addAttribute("result", "0");			
+					model.addAttribute("result", "0");
 			}
 		}
         return "products/cart";

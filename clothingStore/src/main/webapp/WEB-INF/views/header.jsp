@@ -83,6 +83,9 @@
         .header-dropdown-title{
         	padding-bottom:0;
         }
+        .dropdown-menu-box{
+        	font-size:13px;
+        }
         .header-wrap .dropdown-item,.nav-link{
           font-weight: bold;
         }
@@ -185,12 +188,38 @@
           background-repeat: no-repeat;
           margin: 0 5px;
         }
+        .dropdown-menu{
+        	z-index:1300 !important;
+        }
         .header-wrap .header-nav-item:hover > .dropdown-menu{
           display:block;
         }
         .header-wrap .btn-group:hover > .dropdown-menu{
           display: block;
         }
+        .header-login-btn{
+        	background-color:#222;
+        	font-weight:600;
+        	font-size:13px;
+        }
+        .dropdown-forgot{
+        	font-size:13px !important;
+        }
+        .dropdown-signup{
+        	font-size:11px !important;
+        }
+        .required-field{
+        	font-size:13px;
+        }
+        .required-field:after {
+		    content: "*";
+		    color: #d6001c;
+		    font-size:13px;
+		    margin-left:2px
+		}
+		.dropdown-menu-login{
+			font-weight: 600;
+		}
     </style>
   </head>
   <body>
@@ -230,34 +259,34 @@
 					}else{
 				%>    
                   <div class="btn-group">
-					<button class="btn dropdown-toggle login" href="login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="location.href='/login';">
+					<button class="btn dropdown-toggle login" href="/login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="location.href='/login';">
                     	로그인
                   	</button>
                   	
-                  	<div class="dropdown-menu dropdown-menu-right">
-                    <form class="px-4 py-3" action="loginForm" method="post">
+                  	<div class="dropdown-menu dropdown-menu-right rounded-0 border-0 shadow-sm dropdown-menu-login">
+                    <form class="px-4 py-3" action="/loginForm" method="post">
                       <div class="form-group">
-                        <label for="exampleDropdownFormEmail1">Email address</label>
-                        <input type="email" name="user_email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                        <label for="exampleDropdownFormEmail1" class="required-field">이메일</label>
+                        <input type="email" name="user_email" class="form-control rounded-0" id="exampleDropdownFormEmail1" placeholder="이메일">
                       </div>
                       <div class="form-group">
-                        <label for="exampleDropdownFormPassword1">Password</label>
-                        <input type="password" name="user_password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+                        <label for="exampleDropdownFormPassword1" class="required-field">비밀번호</label>
+                        <input type="password" name="user_password" class="form-control rounded-0" id="exampleDropdownFormPassword1" placeholder="비밀번호">
                       </div>
                       <div class="form-group">
                         <div class="form-check">
                           <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                          <label class="form-check-label" for="dropdownCheck">
-                            Remember me
+                          <label class="form-check-label" for="dropdownCheck" style="font-size:11px;">
+                            비밀번호 기억하기
                           </label>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-primary">Sign in</button>
+                      <button type="submit" class="btn text-white header-login-btn rounded-0 btn-block">로그인</button>
                     </form>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/login">New around here? Sign up</a>
-                    <a class="dropdown-item" href="/sendEmail">Forgot password?</a>
-                  </div>  
+                    <a class="dropdown-item dropdown-forgot" href="/sendEmail">비밀번호를 잊어버리셨나요?</a>
+                    <a class="dropdown-item dropdown-signup" href="/userSignUp">아직 계정이 없으세요? 여기서 가입하세요!</a>
+                  	</div>  
                  </div>
                 </div>
 				<%
@@ -282,7 +311,7 @@
                       <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         여성
                       </a>
-                      <div class="dropdown-menu dropdown-memu-box" aria-labelledby="navbarDropdown">
+                      <div class="dropdown-menu dropdown-menu-box" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/men/">셔츠&블라우스</a>
                         <a class="dropdown-item" href="#">드레스</a>                        
                         <a class="dropdown-item" href="#">탑&티셔츠</a>
@@ -292,7 +321,7 @@
                       <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         남성
                       </a>
-                      <div class="dropdown-menu dropdown-memu-box" aria-labelledby="navbarDropdown">
+                      <div class="dropdown-menu dropdown-menu-box" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/productList/202">티셔츠&탱크탑</a>
                         <a class="dropdown-item" href="#">후디&스웨트셔츠</a>
                         <a class="dropdown-item" href="#">셔츠</a>
@@ -302,7 +331,7 @@
                       <a class="nav-link dropdown-toggle header-dropdown-title" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         유아동
                       </a>
-                      <div class="dropdown-menu dropdown-memu-box" aria-labelledby="navbarDropdown">
+                      <div class="dropdown-menu dropdown-menu-box" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">신생아</a>
                         <a class="dropdown-item" href="#">여아</a>
                         <a class="dropdown-item" href="#">남아</a>

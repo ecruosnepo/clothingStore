@@ -48,7 +48,7 @@
     
     <c:when test="${result == '7' }">
 	  <script>
-		 alert('비밀번호는 8자리 이상입니다.');
+		 alert('비밀번호는 8자리 이상으로 설정 해주세요.');
 		 history.back();
 	  </script>
     </c:when>
@@ -61,30 +61,3 @@
    </c:otherwise>
 
 </c:choose>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

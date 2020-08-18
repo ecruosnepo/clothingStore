@@ -17,17 +17,12 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>옷가게</title>
     <style>
     	body{
     		background-color:#FAF9F8;
     		font-weight:600;
-    	}
-    	
-    	header{
-    		height:72px;
-    	}
-    	
+    	}    	
     	.sidebar{
 			overflow:hidden;
 			height:auto;	
@@ -106,9 +101,16 @@
         .info *{
           width: 100%;
         }
+        .readonly-content{
+        	font-size:13px;
+        	font-weight:600;
+        	line-height: 1.5;
+        	margin-bottom:4px;
+        }
         
         .selectedAddress{
         	text-align:left;
+        	padding: 0px 25px;
         }
         
         .deliveryMethodSelect{
@@ -130,6 +132,7 @@
         	height:100%;
         	display:flex;
         	align-items:center;
+        	position:relative;
         }
         .radioBox-inner label{
         	margin-left:15px;
@@ -146,6 +149,9 @@
         }
         .dv-select-price {
         	text-align:right;
+        	position:absolute;
+        	right:30px;
+        	top:28px;
         }
         input[type='radio']:checked {
         	background-color:#F4EDDD;
@@ -252,12 +258,10 @@
       <div class="row">
         <div class="col-md-7 info-group">
           <div class="row user-info info">
-            <header>
-              <h4>내 정보</h4>
-            </header>
+            <h4>내 정보</h4>
             <div class="user-readonly">
-              <p>이메일</p>
-              <p>${user.user_email }</p>
+              <p class="readonly-content">이메일</p>
+              <p class="readonly-content">${user.user_email }</p>
             </div>
             <form class="user-order-form" method="post">
               <input name="user_email" type="hidden" value="${user.user_email }"/>
@@ -304,14 +308,14 @@
           <div class="row address-info info">
             <h2 style="font-size:20px; padding-bottom:20px; margin:0; font-weight:600;">배송</h2>            
             <div class="address-readonly">
-				<p>배송 종류</p>
-				<p>일반 배송</p>
-				
-				<p>배송 주소</p>
-				<p>${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }</p>
-				
-				<p>배송 업데이트를 위한 전화번호</p>
-				<p>${user.user_phone }</p>
+				<p class="readonly-content">배송 종류</p>
+				<p class="readonly-content readonly-option">일반 배송</p>
+				<br>
+				<p class="readonly-content">배송 주소</p>
+				<p class="readonly-content readonly-address">${aDto.r_name} ${aDto.address1 } ${aDto.address2 } ${aDto.address3 } ${aDto.address4 }</p>
+				<br>
+				<p class="readonly-content">배송 업데이트를 위한 전화번호</p>
+				<p class="readonly-content readonly-phone">${user.user_phone }</p>
             </div>            
             <form class="address-order-form">
             	<p style="font-size:16px; padding-bottom:24px;">배송 방법 선택</p>
@@ -345,11 +349,11 @@
 				<div class="addressSelectBox">					
 					<!-- Button trigger modal -->
 					<button type="button" data-toggle="modal" data-target="#exampleModal" class="selectedAddress inputContents">
-					  	<span class="dv_name">${user.user_name }</span>,
-	        			<span class="dv_address1">${user.main_address1 }</span>,
-	        			<span class="dv_address2">${user.main_address2 }</span>,
-	        			<span class="dv_address3">${user.main_address3 }</span>,
-	        			<span class="dv_address4">${user.main_address4 }</span>
+					  	<span class="dv_name">${aDto.r_name }</span>,
+	        			<span class="dv_address1">${aDto.address1 }</span>,
+	        			<span class="dv_address2">${aDto.address2 }</span>,
+	        			<span class="dv_address3">${aDto.address3 }</span>,
+	        			<span class="dv_address4">${aDto.address4 }</span>
 					</button>
 					
 					<!-- Modal -->
@@ -359,7 +363,7 @@
 					      <div class="modal-body">
 					        <c:forEach items="${address_list }" var="aList">
        						 	<div class="addressList">
-					        		<button class="addressBtn" onclick="selectAddress(this)">
+					        		<button type="button" class="addressBtn" onclick="selectAddress(this)" data-addrid="${aList.address_index }">
 					        			<span class="selected_name">${aList.r_name }</span>,
 					        			<span class="selected_address1">${aList.address1 }</span>,
 					        			<span class="selected_address2">${aList.address2 }</span>,
@@ -471,11 +475,10 @@
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
     <script>
     	var total_price;
@@ -614,6 +617,11 @@
 	        					console.log("성공");
 	        					alert(msg);
 	        					window.location = "/compliteCheckout";
+	    					}else if(result == 0){
+		    					console.log("재고 없음");
+		    					var msg = '재고가 부족하여 결제에 실패했습니다.';
+		    					alert(msg);
+		    					window.location = "/cart";
 	    					}
 	        			}
 	                });
@@ -701,26 +709,42 @@
 		}
 		
   	    $(obj).hide();
+  	    if($('input[name="dv_option"]:checked').val() == "2500"){
+  	    	$('.readonly-option').text('일반 배송');
+  	  	}else{
+  	  		$('.readonly-option').text('익일 특급 배송');
+  	  	}
+  	  	$('.readonly-address').text($('.dv_address1').text() + " " + $('.dv_address2').text() + " " +$('.dv_address3').text() + " " +$('.dv_address4').text());
+  	  	$('.readonly-phone').text($('.dv_phone').val());
         $('.address-readonly').show();
         $('.address-info-btn').show();        
         $('.address-info').css("backgroundColor","white");
-        $('.address-info').css("padding","40px");     
+        $('.address-info').css("padding","40px 40px 0px 40px");     
         $('.address-order-form').hide();
 	  };
 
 	  function selectAddress(obj){
-		var name = $(this).children('.selected_name').text();
-		var address1 = $(this).children('.selected_address1').text();
-		var address2 = $(this).children('.selected_address2').text();
-		var address3 = $(this).children('.selected_address3').text();
-		var address4 = $(this).children('.selected_address4').text();
-
-		$('.r_name').text(name);
-		$('.dv_address1').text(address1);
-		$('.dv_address2').text(address2);
-		$('.dv_address3').text(address3);
-		$('.dv_address4').text(address4);
-      }
+		var addrid = $(obj).data("addrid");
+		console.log(addrid);
+		
+		$.ajax({
+            url: "/getDeliveryAddress", //cross-domain error가 발생하지 않도록 주의해주세요
+            type: 'POST',
+            data: {
+                address_index : addrid                
+            },
+            success:function(result){
+            	/* var addrInfo = $(result).find('.addressSelectBox');
+            	$('.addressSelectBox').html(addrInfo); */
+            	$('.r_name').text(result.r_name);
+        		$('.dv_address1').text(result.address1);
+        		$('.dv_address2').text(result.address2);
+        		$('.dv_address3').text(result.address3);
+        		$('.dv_address4').text(result.address4);
+            	$('#exampleModal').modal('hide');
+			}
+        });
+      };
     </script>
   </body>
 </html>

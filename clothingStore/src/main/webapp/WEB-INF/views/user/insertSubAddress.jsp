@@ -121,22 +121,22 @@
 	    		<p>배송 주소 추가</p>    		
 	    	</div>
 	    	<div class="box-content address-content">
-			   <form action="insertSubAddressForm" method="post">
+			   <form action="/myPage/insertSubAddressForm" method="post">
 			       <div class="form-group has-success">
 				        <p class="headName">이름</p>
-			          	<input type="text" class="form-control input-address rounded-0" id="inputSuccess1" name="dv_name">
+			          	<input type="text" class="form-control input-address rounded-0" id="inputSuccess1" name="r_name">
 		                <button type="button" onclick="DaumPostcode();" class="btn btn-lg rounded-0 address-btn text-white">주소 검색</button>    
 	                    <p class="headName">우편번호</p>
-		             	<input type="text" class="form-control input-address rounded-0" id="postcode" placeholder="우편번호" name="dv_address1">
+		             	<input type="text" class="form-control input-address rounded-0" id="postcode" placeholder="우편번호" name="address1">
 			            <p id="id_1"></p> 
 			            <p class="headName">주소</p>
-		             	<input type="text" class="form-control input-address rounded-0" id="address" placeholder="도로명 주소" name="dv_address2">
+		             	<input type="text" class="form-control input-address rounded-0" id="address" placeholder="도로명 주소" name="address2">
 			            <p id="id_2"></p>
 			            <p class="headName">아파트 명/건물 명</p>
-		             	<input type="text" class="form-control input-address rounded-0" id="address-name" placeholder="지번 주소" name="dv_address3">
+		             	<input type="text" class="form-control input-address rounded-0" id="address-name" placeholder="지번 주소" name="address3">
 			            <p id="id_3"></p>
 			            <p class="headName">동 호수/층 수</p>
-		             	<input type="text" class="form-control input-address rounded-0" id="address-dong" placeholder="상세 주소"  name="dv_address4">
+		             	<input type="text" class="form-control input-address rounded-0" id="address-dong" placeholder="상세 주소"  name="address4">
 			            <p id="id_4"></p>
                  	</div>
               		<button type="submit" class="btn btn-lg rounded-0 address-btn text-white" >세부 정보 저장</button> 
@@ -198,7 +198,5 @@
                 }
             }).open();
         }
-
-        
 	</script>
 </html>

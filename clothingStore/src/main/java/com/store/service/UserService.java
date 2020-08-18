@@ -29,20 +29,18 @@ public class UserService implements UserServiceImpl {
 	}                 	
 
 	// 로그인
-	@Override   // 20200804 UserEmail = UserLogin
+	@Override  
 	public int sUserLogin(String email, String password) throws Exception {
 		 result = dao.userLoginCheck(email, password);
-		
 		// 이메일 폼 체크
 		if(null == email || "".equals(email)) { 
 			return 2; 
 		}
 		
 		// 패스워드 폼 체크
-		if(null == password || "".equals(password)) {
+		if(null == password || "".equals(password)) {	
 			return 3;
-		}		
-		
+		}
 		// email 체크
 		int checkEmail = dao.UserEmail(email);
 		if(0 == checkEmail) {
@@ -57,12 +55,11 @@ public class UserService implements UserServiceImpl {
 			return 3;
 		}
 		UserDto dto = dao.getUserInfo(email);
-		if(( dto.getUser_email().equals("manager@1") || "manager@1".equals(dto.getUser_email()) ) && ( 1 == result ) ) {
+		if(( dto.getUser_email().equals("manager@1") || "manager@1".equals(dto.getUser_email()) ) ) {
 			return 4;
 		}
 		 
 		// login 체크
-		
 		if ( 0 == result ) {
 			return 5;
 		} 
@@ -72,7 +69,7 @@ public class UserService implements UserServiceImpl {
 		 
 	}
 
-	
+
 	// 내 상세정보 편집
 	@Override
 	public void sUserUpdate( String name, String birth, String phone, String gender, String email) throws Exception {
@@ -115,6 +112,11 @@ public class UserService implements UserServiceImpl {
 	@Override
 	public int sUserEmail(String user_email) throws Exception {
 		return dao.UserEmail(user_email);
+	}
+
+	@Override
+	public int sUserLoginCheck(String user_email, String user_password) throws Exception {
+		return dao.userLoginCheck(user_email, user_password);
 	}
 
 

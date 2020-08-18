@@ -42,17 +42,5 @@ public class FilenameSorting {
 			answer[i] = headNumTail[i][0];
 		}
 		return answer;
-	}/*
-		 * 
-		 * public static void main(String[] args) {
-		 * 
-		 * String[] answer = solution( new String[] { "img12.png", "img10.png",
-		 * "img02.png", "img1.png", "IMG01.GIF", "img2.JPG" });
-		 * 
-		 * for (int i = 0; i < answer.length; i++) { System.out.println(answer[i]); }
-		 * 
-		 * answer = solution( new String[] { "F-5 Freedom Fighter",
-		 * "B-50 Superfortress", "A-10 Thunderbolt II", "F-14 Tomcat" }); for (int i =
-		 * 0; i < answer.length; i++) { System.out.println(answer[i]); } }
-		 */
+	}
 }

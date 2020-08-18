@@ -13,7 +13,7 @@
 	<select id="listProductDao" resultType="com.store.dto.ProductDto">
 		select * from products
 		<if test="cat_id!=0">
-		where cat_id=#{cat_id}	
+		where cat_id=#{cat_id};
 		</if>
 		<choose>
 			<when test='sortby eq "low_price"'>
@@ -33,6 +33,11 @@
 		select * from products where pd_id=#{0};
 	</select>
 	
+	<!-- 상품 상세 + 카테고리 -->
+	<select id="adminViewProductDao" resultType="com.store.dto.ProductDto">
+		select * from products p join categorys c on c.cat_id=p.cat_id where pd_id=#{pd_id};
+	</select>
+	
 	<!-- 색상 목록 -->
 	<select id="getColorListDao" resultType="com.store.dto.ProductDto">
 		select pd_id, pd_name, pd_img, pd_color from products where pd_name=#{0};
@@ -45,7 +50,8 @@
 	
 	<!-- 상품 등록 -->
 	<insert id="regProductDao" parameterType="hashMap">
-		insert into products (pd_name, pd_price, pd_color, pd_desc, cat_id, discount, pd_img) values (#{pd_name}, #{pd_price}, #{pd_color}, #{pd_desc}, #{cat_id}, #{discount}, #{pd_img});
+		insert into products (pd_name, pd_price, pd_color, pd_desc, cat_id, discount, pd_img) 
+		values (#{pd_name}, #{pd_price}, #{pd_color}, #{pd_desc}, #{cat_id}, #{discount}, #{pd_img});
 	</insert>
 	
 	<!-- 상품 제거 -->
@@ -87,12 +93,17 @@
 
 	<!-- 상품 사이즈 목록 -->
 	<select id="listProductSizeDao" resultType="com.store.dto.ProductDto">
-		select * from products p join stock s on p.pd_id=s.pd_id
+		select *
+		from products p join stock s on p.pd_id=s.pd_id
 		<if test="cat_id != null">
-		where p.cat_id=#{cat_id}
+		where p.cat_id=#{cat_id};
 		</if>		
 		<if test='size != null'>
-			and s.pd_size = #{size}
+			and 
+			<foreach item="item" collection="size" separator="or">
+				s.pd_size = #{item}			
+			</foreach>
+			group by p.pd_id
 		</if>
 		<if test='sortby != null'>
 			<choose>
@@ -106,44 +117,34 @@
 					order by p.pd_id;
 				</when>
 			</choose>		
-		</if>
+		</if>		
 	</select>
 	
 	<!-- 상품 검색 목록 -->
 	<select id="listSearchProductDao" resultType="com.store.dto.ProductDto">
-		select * from 
-			<if test="size==null">
-				products 
-				where pd_name like CONCAT('%',#{keyword},'%') 
-				<choose>
-					<when test='sortby eq "low_price"'>
-						order by pd_price;
-					</when>
-					<when test='sortby eq "high_price"'>
-						order by pd_price desc;
-					</when>
-					<when test='sortby eq "new" or sortby eq null'>
-						order by pd_id desc;
-					</when>
-				</choose>
-			</if>
+		select * 
+		from products p join stock s on p.pd_id=s.pd_id
+		where p.pd_name like CONCAT('%',#{keyword},'%') 
 			<if test="size!=null">
-				products p join stock s on p.pd_id=s.pd_id
-				where pd_name like CONCAT('%',#{keyword},'%')		
-				and s.pd_size = #{size}
-				<choose>
-					<when test='sortby eq "low_price"'>
-						order by p.pd_price;
-					</when>
-					<when test='sortby eq "high_price"'>
-						order by p.pd_price desc;
-					</when>
-					<when test='sortby eq "new"'>
-						order by p.pd_id desc;
-					</when>
-				</choose>
-			</if>			
+				and 
+				<foreach item="item" collection="size" separator="or">
+					s.pd_size = #{item}
+				</foreach>
+			</if>
+				group by p.pd_id
+			<choose>
+				<when test='sortby eq "low_price"'>
+					order by p.pd_price;
+				</when>
+				<when test='sortby eq "high_price"'>
+					order by p.pd_price desc;
+				</when>
+				<when test='sortby eq "new" or sortby eq null'>
+					order by p.pd_id desc;
+				</when>
+			</choose>
 	</select>
+	
 	<select id="adPdMiniSearchDao" resultType="com.store.dto.ProductDto">
 		select pd_id, pd_name, pd_color,pd_price from products where pd_name like #{search} order by pd_id;
 	</select>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%int result = 0; %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -138,6 +139,7 @@
 		 	<h5><span style="font-weight:600;">배송 주소</span></h5>
 		 	<br>		 
 			<c:forEach var="add" items="${ address }"  begin="0" end="2" varStatus="status">
+			<% result++; out.println(result);%>
 			<div class="box" >
 		     	<div class="box-title">
 		    		<p>배송 주소 ${status.index+1 }</p>    		
@@ -168,7 +170,9 @@
 		    	</div>
 		 	</div>
 			</c:forEach>
-			<a href="/insertSubAddress"><button type="button" class="btn btn-lg text-white address-btn rounded-0">새 주소 추가</button></a>
+			<% if ( 3 > result ){ %>
+			<a href="/myPage/insertSubAddress"><button type="button" class="btn btn-lg text-white address-btn rounded-0">새 주소 추가</button></a>
+   		    <% } %>
    		</div>             
       </div>
      </div>

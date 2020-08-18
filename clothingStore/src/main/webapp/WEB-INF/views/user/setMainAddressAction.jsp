@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 
  <script>
-   location.href='MyPageSet';
+   location.href='/myPage/address';
  </script>
