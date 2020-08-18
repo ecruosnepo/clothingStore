@@ -32,7 +32,15 @@ public class UserService implements UserServiceImpl {
 	@Override  
 	public int sUserLogin(String email, String password) throws Exception {
 		 result = dao.userLoginCheck(email, password);
-				
+		// 이메일 폼 체크
+		if(null == email || "".equals(email)) { 
+			return 2; 
+		}
+		
+		// 패스워드 폼 체크
+		if(null == password || "".equals(password)) {	
+			return 3;
+		}
 		// email 체크
 		int checkEmail = dao.UserEmail(email);
 		if(0 == checkEmail) {
@@ -61,15 +69,7 @@ public class UserService implements UserServiceImpl {
 		 
 	}
 
-//	// 이메일 폼 체크
-//	if(null == email || "".equals(email)) { 
-//		return 2; 
-//	}
-//	
-//	// 패스워드 폼 체크
-//	if(null == password || "".equals(password)) {	
-//		return 3;
-//	}
+
 	// 내 상세정보 편집
 	@Override
 	public void sUserUpdate( String name, String birth, String phone, String gender, String email) throws Exception {
