@@ -50,10 +50,10 @@
           margin:0 auto;
           margin-bottom:30px;
       }
-      .card-body{
+      /* .card-body{
           position: absolute;
 		  bottom: 5%;
-      }
+      } */
       #main3 p, #main1 p{
       	color:black;
       }
@@ -83,25 +83,23 @@
           width:100%;
           background-color: #F4EDDD;
       }
-      
       .bottom-con{
-      	width: 60%;
       	margin:0 auto;
       	text-align:center;
       }
-      
       .bottom-img-group{
           width: 980px;
           margin: 0 auto;          
       }
-      
       .bottom-img-group .image{
           margin:0 auto;          
       }
-      
       .image{
           margin: 10px;
           width: 90%;
+      }
+      .bottom-inner{
+			margin:0 auto;
       }
       #main1{
          background-image: url('/mainImages/main_women.jpg');
@@ -130,6 +128,13 @@
 			 	<p>H&M 카카오 채널 친구 추가시<br/>10% OFF 쿠폰 지급</p>
 			 	<span>2020-08-05부터 ~ 2020-08-19까지 지급 | 온라인 단독!</span>			 	
 			 </div>
+			 <div class="jumbotron">
+			  <h1 class="display-4">Hello, world!</h1>
+			  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+			  <hr class="my-4">
+			  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+			  <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+			</div>
 		     <div id="main1" class="card text-center rounded-0 border-0">
 		         <div class="card-body">
 		             <p class="card-title">여성 의류</p>
@@ -161,39 +166,33 @@
 		</section>
 	</div>
 	<section id="adv">
-		<div class="bottom-con">
-	        <br><br><br>
-	        <h4><a href=#>지속가능성</a></h4>
-	        <div class="row mx-auto bottom-img-group">
-	            <div class="col-xs-4 col-md-4 img-box">
-	              <a href="#" class="thumbnail">
-	                <img class="image" src="/mainImages/story(1).jpg" >
-	                <br>
-	                <p style="margin: 10px"></p>
-	                <b>제목</b><br>
-	                Read The Story</p>
-	              </a>
-	            </div>
-	            <div class="col-xs-4 col-md-4 img-box">
-	               <a href="#" class="thumbnail">
-	                 <img class="image" src="/mainImages/story(2).jpg">
-	                 <br>
-	                 <p style="margin: 10px">
-	                 <b>제목</b><br>
-	                 Read The Story</p>
-	               </a>
-              	</div>
-              	<div class="col-xs-4 col-md-4 img-box">
-	                <a href="#" class="thumbnail">
-	                  <img class="image" src="/mainImages/story(3).jpg">
-	                  <br>
-	                  <p style="margin: 10px">
-	                  <b>제목</b><br>
-	                  Read The Story</p>
-	                </a>
-              	</div>
-	          </div>
-	        <br><br>
+		<div class="row bottom-con">
+			<div class="col-md-7 bottom-inner">
+		        <h4><a href=#>지속가능성</a></h4>
+		        <div class="card-deck">
+				  <div class="card">
+				    <img class="card-img-top" src="/mainImages/story(1).jpg" alt="Card image cap">
+				    <div class="card-body">
+				      <h5 class="card-title">Card title</h5>
+				      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+				    </div>
+				  </div>
+				  <div class="card">
+				    <img class="card-img-top" src="/mainImages/story(2).jpg" alt="Card image cap">
+				    <div class="card-body">
+				      <h5 class="card-title">Card title</h5>
+				      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+				    </div>
+				  </div>
+				  <div class="card">
+				    <img class="card-img-top" src="/mainImages/story(3).jpg" alt="Card image cap">
+				    <div class="card-body">
+				      <h5 class="card-title">Card title</h5>
+				      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+				    </div>
+				  </div>
+				</div>
+			</div>	        
 		</div>
     </section>
 	<jsp:include page="footer.jsp" flush="false" />   

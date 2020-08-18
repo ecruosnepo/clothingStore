@@ -309,13 +309,13 @@
             <h2 style="font-size:20px; padding-bottom:20px; margin:0; font-weight:600;">배송</h2>            
             <div class="address-readonly">
 				<p class="readonly-content">배송 종류</p>
-				<p class="readonly-content">일반 배송</p>
+				<p class="readonly-content readonly-option">일반 배송</p>
 				<br>
 				<p class="readonly-content">배송 주소</p>
-				<p class="readonly-content">${user.main_address1 } ${user.main_address2 } ${user.main_address3 } ${user.main_address4 }</p>
+				<p class="readonly-content readonly-address">${aDto.r_name} ${aDto.address1 } ${aDto.address2 } ${aDto.address3 } ${aDto.address4 }</p>
 				<br>
 				<p class="readonly-content">배송 업데이트를 위한 전화번호</p>
-				<p class="readonly-content">${user.user_phone }</p>
+				<p class="readonly-content readonly-phone">${user.user_phone }</p>
             </div>            
             <form class="address-order-form">
             	<p style="font-size:16px; padding-bottom:24px;">배송 방법 선택</p>
@@ -349,11 +349,11 @@
 				<div class="addressSelectBox">					
 					<!-- Button trigger modal -->
 					<button type="button" data-toggle="modal" data-target="#exampleModal" class="selectedAddress inputContents">
-					  	<span class="dv_name">${user.user_name }</span>,
-	        			<span class="dv_address1">${user.main_address1 }</span>,
-	        			<span class="dv_address2">${user.main_address2 }</span>,
-	        			<span class="dv_address3">${user.main_address3 }</span>,
-	        			<span class="dv_address4">${user.main_address4 }</span>
+					  	<span class="dv_name">${aDto.r_name }</span>,
+	        			<span class="dv_address1">${aDto.address1 }</span>,
+	        			<span class="dv_address2">${aDto.address2 }</span>,
+	        			<span class="dv_address3">${aDto.address3 }</span>,
+	        			<span class="dv_address4">${aDto.address4 }</span>
 					</button>
 					
 					<!-- Modal -->
@@ -617,6 +617,11 @@
 	        					console.log("성공");
 	        					alert(msg);
 	        					window.location = "/compliteCheckout";
+	    					}else if(result == 0){
+		    					console.log("재고 없음");
+		    					var msg = '재고가 부족하여 결제에 실패했습니다.';
+		    					alert(msg);
+		    					window.location = "/cart";
 	    					}
 	        			}
 	                });
@@ -704,10 +709,17 @@
 		}
 		
   	    $(obj).hide();
+  	    if($('input[name="dv_option"]:checked').val() == "2500"){
+  	    	$('.readonly-option').text('일반 배송');
+  	  	}else{
+  	  		$('.readonly-option').text('익일 특급 배송');
+  	  	}
+  	  	$('.readonly-address').text($('.dv_address1').text() + " " + $('.dv_address2').text() + " " +$('.dv_address3').text() + " " +$('.dv_address4').text());
+  	  	$('.readonly-phone').text($('.dv_phone').val());
         $('.address-readonly').show();
         $('.address-info-btn').show();        
         $('.address-info').css("backgroundColor","white");
-        $('.address-info').css("padding","40px");     
+        $('.address-info').css("padding","40px 40px 0px 40px");     
         $('.address-order-form').hide();
 	  };
 
@@ -722,12 +734,14 @@
                 address_index : addrid                
             },
             success:function(result){
-            	$('.dv_name').text(result.r_name);
+            	/* var addrInfo = $(result).find('.addressSelectBox');
+            	$('.addressSelectBox').html(addrInfo); */
+            	$('.r_name').text(result.r_name);
         		$('.dv_address1').text(result.address1);
         		$('.dv_address2').text(result.address2);
         		$('.dv_address3').text(result.address3);
         		$('.dv_address4').text(result.address4);
-            	$('#exampleModal').modal('hide');            	
+            	$('#exampleModal').modal('hide');
 			}
         });
       };

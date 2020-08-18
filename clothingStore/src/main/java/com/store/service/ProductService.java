@@ -14,6 +14,6 @@ public interface ProductService {
 	public int regProduct(ProductDto pDto);
 	public int deleteProduct(String id);
 	public int updateProduct(ProductDto pDto);
-	public List<ProductDto> listProductSize(int catId, String size, String sortby);
-	public List<ProductDto> listSearchProduct(String keyword, String size, String sortby);	
+	public List<ProductDto> listProductSize(int catId, List<String> size, String sortby);
+	public List<ProductDto> listSearchProduct(String keyword, List<String> size, String sortby);	
 }

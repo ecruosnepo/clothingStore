@@ -49,6 +49,7 @@
 	.content-title{
 		font-size:16px;
 		text-align:left;
+		margin-bottom:20px !important;
 	}
 	.panel-heading {		
 	}
@@ -229,11 +230,11 @@
 								  						</tr>
 								  						<tr>
 								  							<th style="font-size:16px !important;">합계:</th>
-								  							<td style="font-size:16px !important;">&#8361;${(mDto.price_sum + mDto.pd_price) * mDto.pd_quantity}</td>
+								  							<td style="font-size:16px !important;">&#8361;${mDto.price_sum}</td>
 								  						</tr>
 								  					</table>
 							  					</div>
-										        <c:set var="sum" value="${sum + ((mDto.price_sum + mDto.pd_price) * mDto.pd_quantity)}"/>
+										        <c:set var="sum" value="${sum + mDto.price_sum}"/>
 	        	 							</div>	 
 		     							</c:if> 
 		     						</c:forEach>
@@ -244,7 +245,7 @@
 										<p>${oDto.dv_address2}</p>
 										<p>${oDto.dv_address3} ${oDto.dv_address4}</p>
 		     						</div>
-				 					<div class="order-summary" >
+				 					<div class="order-summary">
 				 						<table>
 				 							<tr>
 				 								<th>합계:</th>
@@ -256,7 +257,7 @@
 				 							</tr>
 				 							<tr>
 				 								<th>총합:</th>
-				 								<td>&#8361;${sum + oDto.dv_option}</td>
+				 								<td>&#8361;${oDto.dv_option + sum}</td>
 				 							</tr>
 				 						</table>
 										<c:set var="sum" value="0"/>

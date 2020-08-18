@@ -73,6 +73,9 @@
         .color-list-box{
         	margin: 40px 0;
         }
+        .color-list{
+        	list-style-type:none;
+        }
         .color-carousel-item{
             text-align: center;
         }
@@ -234,7 +237,7 @@
                     	<p class="color-label">${pd_dto.pd_color }</p>
 						<ul class="regular" style="padding-left:0px;">
 						<c:forEach items="${colorList }" var="colors">
-                   		<li class="">
+                   		<li class="color-list">
                        		<a href="/productpage/${colors.pd_id }">	                                 	
                    			<c:forTokens items="${colors.pd_img }" var="img" delims="," varStatus="status">
 		                    	<c:if test="${status.last == true}">

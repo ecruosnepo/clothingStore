@@ -47,11 +47,6 @@ public class ProductController {
 	@Autowired
 	private StockService stockService;
 	
-	@GetMapping("/test")
-	public String test() {
-		return "login";
-	}
-	
 	@GetMapping("/productpage/{pdId}")
 	public String productView(@PathVariable("pdId") int pd_id, HttpServletRequest req, Model model){
 		System.out.println("상세 페이지");
@@ -64,32 +59,35 @@ public class ProductController {
 	}
 	
 	@GetMapping("/productList/{catId}")	
-    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
-    	System.out.println(size); 	
-    	System.out.println(sortby); 	
+    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, 
+    								@RequestParam(value="size[]", required = false) List<String> size, 
+    								@RequestParam(value="sortby", required = false) String sortby) throws Exception {
+		System.out.println("size:" + size);
+    	System.out.println("sortby:" + sortby);
+    	CategoryDto cDto = categoryDao.getCatDao(cat);
     	
     	if(size==null && sortby==null) {
     		sortby = "pd_id";
     		model.addAttribute("pd_list", productService.listProduct(cat, sortby));    		
     	}else{
-    		if (sortby!=null && (size==null || size=="")) {
+    		if (sortby!=null && (size==null || size.get(0)=="")) {
 				model.addAttribute("pd_list", productService.listProduct(cat, sortby));
    			}else {
     			model.addAttribute("pd_list", productService.listProductSize(cat,size, sortby));
     		}    		
     	}
-    	model.addAttribute("cat_id", cat);
+    	model.addAttribute("cat", cDto);
     	return "products/productList";
 	}
 	
 	@GetMapping("/searchProduct")	
-    public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size", required = false) String size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
+    public String searchProduct(HttpServletRequest req, Model model,@RequestParam("keyword")String keyword, @RequestParam(value="size[]", required = false) List<String> size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
 		System.out.println("상품 검색");
 		
 		if(size==null && sortby==null) {
     		model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));    		
     	}else{
-    		if (sortby!=null && (size==null || size=="")) {
+    		if (sortby!=null && (size==null || size.get(0)=="")) {
 				model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
    			}else {
     			model.addAttribute("pd_list", productService.listSearchProduct(keyword, size, sortby));
@@ -114,7 +112,8 @@ public class ProductController {
 	}
 	
 	@PostMapping("/regProduct")
-	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, @RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
+	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, 
+							@RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
 		System.out.println("상품 등록");
 		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\pdImages");	
 		System.out.println(uploadPath);
@@ -230,9 +229,11 @@ public class ProductController {
 	    	sDto.setPd_id(pDto.getPd_id());
 	    	sDto.setPd_size(size[i]);
 	    	sDto.setPd_stock(stock[i]);
-	    	if(stockService.checkStock(pDto.getPd_id(), size[i])==true) {
+	    	if(ObjectUtils.isEmpty(stockService.checkStock(pDto.getPd_id(), size[i]))) {
+	    		System.out.println(stockService.checkStock(pDto.getPd_id(), size[i]));
 	    		stockService.updateStock(sDto);
 	    	}else {
+	    		System.out.println(stockService.checkStock(pDto.getPd_id(), size[i]));
 	    		stockService.addStock(sDto);
 	    	}
 	    }

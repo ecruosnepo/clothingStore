@@ -9,7 +9,7 @@ import com.store.dto.StockDto;
 public interface StockService {
 	public List<StockDto> productStock(int pId);
 	public int addStock(StockDto sDto);
-	public int orderUpdateStock(@Param("pd_id")int pd_id, @Param("pd_size")String pd_size, @Param("pd_quantity")int pd_quantity, @Param("op") String op);
+	public int orderUpdateStock(int pd_id, String pd_size, int pd_quantity, String op);
 	public int updateStock(StockDto sDto);
-	public boolean checkStock(int pd_id, String pd_size);
+	public int checkStock(int pd_id, String pd_size);
 }
