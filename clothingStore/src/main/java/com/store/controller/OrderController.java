@@ -19,6 +19,7 @@ import com.store.dto.CartDto;
 import com.store.dto.CartListDto;
 import com.store.dto.OrderDetailDto;
 import com.store.dto.OrderDto;
+import com.store.dto.StockDto;
 import com.store.dto.UserDto;
 import com.store.service.AddressService;
 import com.store.service.CartService;
@@ -66,7 +67,7 @@ public class OrderController {
 	public int checkout(Model model,OrderDetailDto odDto, OrderDto oDto, @RequestParam("imp_uid")String imp_uid) throws Exception {
 		String email = oDto.getUser_email();
 		List<CartDto> cDto = cartService.cartInfo(email);
-
+		
 		for(CartDto cList:cDto) {
 			System.out.println(stockService.checkStock(cList.getPd_id(), cList.getPd_size()));
 			if(cList.getPd_quantity() > stockService.checkStock(cList.getPd_id(), cList.getPd_size())) {

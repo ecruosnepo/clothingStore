@@ -59,7 +59,9 @@ public class ProductController {
 	}
 	
 	@GetMapping("/productList/{catId}")	
-    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, @RequestParam(value="size[]", required = false) List<String> size, @RequestParam(value="sortby", required = false) String sortby) throws Exception {
+    public String productListView(HttpServletRequest req, @PathVariable("catId") int cat, Model model, 
+    								@RequestParam(value="size[]", required = false) List<String> size, 
+    								@RequestParam(value="sortby", required = false) String sortby) throws Exception {
 		System.out.println("size:" + size);
     	System.out.println("sortby:" + sortby);
     	CategoryDto cDto = categoryDao.getCatDao(cat);
@@ -110,7 +112,8 @@ public class ProductController {
 	}
 	
 	@PostMapping("/regProduct")
-	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, @RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
+	public String regProduct(MultipartHttpServletRequest req, ProductDto pDto, @RequestParam("size") String[] size, 
+							@RequestParam("stock") int[] stock , @RequestParam("img") MultipartFile[] file) throws Exception {
 		System.out.println("상품 등록");
 		String uploadPath = req.getSession().getServletContext().getRealPath("/").concat("resources\\pdImages");	
 		System.out.println(uploadPath);

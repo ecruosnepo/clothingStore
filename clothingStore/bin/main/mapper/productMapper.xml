@@ -13,7 +13,7 @@
 	<select id="listProductDao" resultType="com.store.dto.ProductDto">
 		select * from products
 		<if test="cat_id!=0">
-		where cat_id=#{cat_id}	
+		where cat_id=#{cat_id};
 		</if>
 		<choose>
 			<when test='sortby eq "low_price"'>
@@ -50,7 +50,8 @@
 	
 	<!-- 상품 등록 -->
 	<insert id="regProductDao" parameterType="hashMap">
-		insert into products (pd_name, pd_price, pd_color, pd_desc, cat_id, discount, pd_img) values (#{pd_name}, #{pd_price}, #{pd_color}, #{pd_desc}, #{cat_id}, #{discount}, #{pd_img});
+		insert into products (pd_name, pd_price, pd_color, pd_desc, cat_id, discount, pd_img) 
+		values (#{pd_name}, #{pd_price}, #{pd_color}, #{pd_desc}, #{cat_id}, #{discount}, #{pd_img});
 	</insert>
 	
 	<!-- 상품 제거 -->
@@ -60,7 +61,8 @@
 	
 	<!-- 상품 수정 -->
 	<update id="updateProductDao">
-		update products set pd_name=#{pd_name}, pd_price=#{pd_price}, pd_color=#{pd_color}, pd_desc=#{pd_desc}, cat_id=#{cat_id}, discount=#{discount}, pd_img=#{pd_img} where pd_id=#{pd_id};
+		update products set pd_name=#{pd_name}, pd_price=#{pd_price}, pd_color=#{pd_color}, pd_desc=#{pd_desc}, 
+		cat_id=#{cat_id}, discount=#{discount}, pd_img=#{pd_img} where pd_id=#{pd_id};
 	</update>
 
 	<select id="adminListProductDao" resultType="com.store.dto.ProductDto">
@@ -92,7 +94,7 @@
 		select *
 		from products p join stock s on p.pd_id=s.pd_id
 		<if test="cat_id != null">
-		where p.cat_id=#{cat_id} 
+		where p.cat_id=#{cat_id};
 		</if>		
 		<if test='size != null'>
 			and 
