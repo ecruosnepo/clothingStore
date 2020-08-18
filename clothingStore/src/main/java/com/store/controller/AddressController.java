@@ -18,14 +18,14 @@ public class AddressController {
 	    
 	  @Autowired
 	  private AddressService addressService;
-	
+	  
 	    // 회원 주소록 새 주소 추가
-		@RequestMapping(value="insertSubAddress", method = RequestMethod.GET)
+		@RequestMapping(value="/myPage/insertSubAddress", method = RequestMethod.GET)
 		public String insertsubAddress() throws Exception {
 		   return "/user/insertSubAddress";
 		}
 		// insert
-		@RequestMapping(value="insertSubAddressForm", method = RequestMethod.POST) 
+		@RequestMapping(value="/myPage/insertSubAddressForm", method = RequestMethod.POST) 
 		public String insertsubAddress(@RequestParam("r_name")String r_name,
 					                   @RequestParam("address1")String address1,
 					                   @RequestParam("address2")String address2,
@@ -41,7 +41,7 @@ public class AddressController {
 		}
 		
 		// 회원 주소록 새 주소 편집
-        @RequestMapping(value="/updateSubAddress", method = RequestMethod.GET)
+        @RequestMapping(value="/myPage/updateSubAddress", method = RequestMethod.GET)
         public String updateSubAddress(Model model,@RequestParam("address_index") int address_index, HttpSession session, AddressDto dto) throws Exception{   	
         	String email = (String)session.getAttribute("email");
         	AddressDto aDto = addressService.sGetAddressDto(email,address_index);
@@ -53,7 +53,7 @@ public class AddressController {
         	return "/user/updateSubAddress";
         } 
         // update
-        @RequestMapping(value="/updateSubAddressForm", method = RequestMethod.POST)
+        @RequestMapping(value="/myPage/updateSubAddressForm", method = RequestMethod.POST)
         public String updateSubAddressForm(@RequestParam("address_index")int address_index,
         		                           @RequestParam("r_name")String r_name,
         		                           @RequestParam("address1")String address1,

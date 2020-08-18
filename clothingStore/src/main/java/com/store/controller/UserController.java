@@ -28,9 +28,9 @@ import com.store.service.UserServiceImpl;
 
 @Controller
 public class UserController {
-	
+	// 조건 값
 	private int result; 
-	
+	// 레코드 확인 값 : 0실패, 1성공
 	private int selectCheck;
 	
 	@Autowired
@@ -39,7 +39,6 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 	
-
 	@Autowired
 	private OrderService orderService;
 	
@@ -66,7 +65,7 @@ public class UserController {
 	public String userSignUp() {
 		return "/user/userSignUp";
 	}	
-	
+    // 중복체크
 	@RequestMapping(value="/checkEmail", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String checkEmail(HttpServletRequest request) throws Exception {
@@ -74,11 +73,11 @@ public class UserController {
 		result = userService.sUserEmail(user_email);
 		return Integer.toString(result);
 	}
-	
+    // 회원가입 입력 폼
 	@RequestMapping(value = "/signUpForm", method = RequestMethod.POST)
 	public String SignUp(@RequestParam("user_email") String user_email, 
 			             @RequestParam("user_password") String user_password,
-			             @RequestParam("user_password2") String user_password2,               // 개인정보 동의 체크
+			             @RequestParam("user_password2") String user_password2,            // 개인정보 동의 체크
 			             @RequestParam(value="check2", required = false, defaultValue = "")String check2,
 			             Model model ) throws Exception {
 		    // 0: 레코드 없음,  1: 레코드 있음.
@@ -170,7 +169,6 @@ public class UserController {
 	@RequestMapping(value="/myPage", method = RequestMethod.GET)
 	public String MyPage(HttpSession session, HttpServletRequest request, Model model) throws Exception {
 		String user_email = (String)session.getAttribute("email");
-		
 		String user_name = (String)userService.sGetUserInfo(user_email).getUser_name();
 		List<OrderDto> oDto = orderService.selectOrderList(user_email);
 		List<MyPageDto> mDto = orderService.selectPdMyPage(user_email);
@@ -280,7 +278,7 @@ public class UserController {
 		if ( null != emails ) {
 			userService.sUpdateMainAddress(main_address1, main_address2, main_address3, main_address4, emails);
 			model.addAttribute("address", userService.sGetUserInfo(emails));
-		    return "/user/myPage/setMainAddressAction";
+		    return "/user/setMainAddressAction";
 		}
 		 return "/user/setMainAddressAction";
 	}
@@ -357,7 +355,4 @@ public class UserController {
 			return "/user/updatePasswordAction";	
 		}
 	}
-	
-
-
 }

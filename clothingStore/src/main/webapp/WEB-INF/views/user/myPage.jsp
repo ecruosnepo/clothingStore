@@ -164,12 +164,12 @@
 			       <p class="sidenav-userinfo">${email}</p>
 			       <div class="sidenav-cate">
 				       <p class="sidenav-title">내 계정</p>
-				       <P class="sidenav-sub"><a href="MyPageSet" class="button">내 설정</a></P> 
+				       <P class="sidenav-sub"><a href="/myPage/setting" class="button">내 설정</a></P> 
 			       </div>
 			       <div class="sidenav-cate">
 				       <P class="sidenav-title"><label>도움이 필요하세요?</label></P>
-				       <P class="sidenav-sub"><a href="#" class="button">문의하기</a></P> 
-				       <P class="sidenav-sub"><a href="#" class="button">로그아웃</a></P>  
+				       <P class="sidenav-sub"><a href="/customerQna" class="button">문의하기</a></P> 
+				       <P class="sidenav-sub"><a href="/logout" class="button">로그아웃</a></P>  
 			       </div>
       			</div> 
       		</div>
@@ -281,14 +281,3 @@
 	  });
  </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-

@@ -121,7 +121,7 @@
 	    		<p>배송 주소 추가</p>    		
 	    	</div>
 	    	<div class="box-content address-content">
-			   <form action="insertSubAddressForm" method="post">
+			   <form action="/myPage/insertSubAddressForm" method="post">
 			       <div class="form-group has-success">
 				        <p class="headName">이름</p>
 			          	<input type="text" class="form-control input-address rounded-0" id="inputSuccess1" name="r_name">
@@ -198,7 +198,5 @@
                 }
             }).open();
         }
-
-        
 	</script>
 </html>

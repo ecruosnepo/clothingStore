@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>옷가게</title>
 	<style>
 		body{
 			background-color:#FAF9F8;

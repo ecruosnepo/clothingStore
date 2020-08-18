@@ -9,9 +9,9 @@ import com.store.dto.AddressDto;
 
 @Mapper
 public interface AddressDao {
-	 public void updateDeliveryAddress(@Param("user_email")String email, @Param("r_name")String r_name,
-			 				   @Param("address1")String address1, @Param("address2")String address2,
-					           @Param("address3")String address3, @Param("address4")String address4)throws Exception;
+	 public void updateDeliveryAddress(@Param("user_email")String email,  @Param("r_name")String r_name,
+			 				           @Param("address1")String address1, @Param("address2")String address2,
+					                   @Param("address3")String address3, @Param("address4")String address4)throws Exception;
 
      public int insertSubAddress(@Param("user_email")String email,
     		                     @Param("r_name")String r_name,
