@@ -9,16 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<% 
-	if ( session.getAttribute("manager") != null ){
-%>
-	<script type="text/javascript">
-		alert("관리자만 이용 가능한 페이지 입니다.");
-	    history.back();
-	</script>
-<%
-	}
-%>
+
 <style>
 .customerManage{
 		min-height:500px;
@@ -113,41 +104,41 @@
     
 <script>
 	$(".selectDelete_btn").click(function(){
-	  var confirm_val = confirm("선택하신 회원을 삭제하시겠습니까?");
-	  
-	  if(confirm_val) {
-	   var checkArr = new Array();
-	   
-	   $("input[class='chBox']:checked").each(function(){
-	    checkArr.push($(this).attr("data-cartNum"));
-	   });
-	   console.log(checkArr);
-	    
-	   $.ajax({
-		    url : "/adminMemberDel",
-		    type : "post",
-		    data : { chbox : checkArr },
-		    dataType: "text",
-		    async : false,
-		    success : function(result){
-			    console.log("complete");
-			    console.log("result:"+result);
-		    	if(result > 0) {          
-		    	   alert(result+"명의 회원을 삭제했습니다.");
-		    	   document.location.href = "/adminMember";
-		    	} else {
-		    	   alert("삭제 실패했습니다.");
-		    	} 
-		    },
-
-          error : function(request, status, error) {
-        	  alert("삭제 실패했습니다.");
-        	  console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
-          }
-
-	   });
-	  } 
+		var checkArr = new Array();
+		$("input[class='chBox']:checked").each(function(){
+		    checkArr.push($(this).attr("data-cartNum"));
+		 });
+		 console.log(checkArr);
+		 
+		if(checkArr.length == 0){
+			  alert("삭제할 목록을 선택하세요.")
+		}else{
+		  var confirm_val = confirm("선택하신 회원을 삭제하시겠습니까?");
+		  if(confirm_val) {	    
+		   $.ajax({
+			    url : "/adminMemberDel",
+			    type : "post",
+			    data : { chbox : checkArr },
+			    dataType: "text",
+			    async : false,
+			    success : function(result){
+				    console.log("complete");
+				    console.log("result:"+result);
+			    	if(result > 0) {          
+			    	   alert(result+"명의 회원을 삭제했습니다.");
+			    	   document.location.href = "/adminMember";
+			    	} else {
+			    	   alert("삭제 실패했습니다.");
+			    	} 
+			    },
+	
+	          error : function(request, status, error) {
+	        	  alert("삭제 실패했습니다.");
+	        	  console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	          }
+		   });
+		  } 
+		}
 	 });
 </script>
 

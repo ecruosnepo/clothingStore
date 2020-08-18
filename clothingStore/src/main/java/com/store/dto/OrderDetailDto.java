@@ -2,11 +2,16 @@ package com.store.dto;
 
 
 
+import java.util.List;
+
 import lombok.Data;
 
 
 @Data
 public class OrderDetailDto {
+	
+	private List<OrderDetailDto> OrderDetailList;
+	
 	private String order_id;
 	private int pd_id;
 	private String pd_size;

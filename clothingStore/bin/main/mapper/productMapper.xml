@@ -55,7 +55,10 @@
 	
 	<!-- 상품 수정 -->
 	<update id="updateProductDao">
-		update products set pd_model=#{pd_model}, pd_name=#{pd_name}, pd_price=#{pd_price}, pd_size=#{pd_size}, pd_color=#{pd_color}, pd_desc=#{pd_desc}, cat_id=#{cat_id}, discount=#{discount}, pd_img=#{pd_img}, pd_stock=#{pd_stock} where pd_id=#{pd_id};
+		update products set 
+		pd_model=#{pd_model}, pd_name=#{pd_name}, pd_price=#{pd_price}, pd_size=#{pd_size}, pd_color=#{pd_color}, 
+		pd_desc=#{pd_desc}, cat_id=#{cat_id}, discount=#{discount}, pd_img=#{pd_img}, pd_stock=#{pd_stock} 
+		where pd_id=#{pd_id};
 	</update>
 
 	<select id="adminListProductDao" resultType="com.store.dto.ProductDto">

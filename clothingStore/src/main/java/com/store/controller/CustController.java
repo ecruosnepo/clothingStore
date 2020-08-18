@@ -52,8 +52,6 @@ public class CustController {
 	public String qnaMain(HttpSession session, @RequestParam(defaultValue="1") int page, Model model) {
 		
 		String userId = (String) session.getAttribute("email");
-		int checkLogin=0;
-		System.out.println(userId);
 		
 		//로그인 유무 확인
 		if(!(userId==null)) {
@@ -61,9 +59,7 @@ public class CustController {
 			Map<String, Object> map=service.boardListService(userId,page);
 			model.addAttribute("list", map.get("dto"));
 			model.addAttribute("page", map.get("page"));
-			checkLogin=1;
 		}
-		model.addAttribute("checkLogin", checkLogin);
 		
 		return "customerCenter/q_main"; 
 	}
@@ -81,9 +77,7 @@ public class CustController {
 	
 	@RequestMapping("/customerWrite")
 	public String qnaWrite(BoardDto bDto, HttpServletRequest req, HttpSession session, Model model) {
-		
 		String user_email = (String) session.getAttribute("email");
-		System.out.println(bDto.getTitle());
 		
 		//게시판 글쓰기 확인 값  1:제목미기재 2:분류미선택 10:글쓰기 성공
 		int result=10;

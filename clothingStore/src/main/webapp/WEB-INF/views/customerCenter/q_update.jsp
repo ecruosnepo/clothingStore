@@ -96,6 +96,7 @@ var boardId=getParameterByName('id');
 	                  	<c:forEach var="cat" items="${ list }">
 		                  	<c:choose> 
 							    <c:when test="${ cat==dto.boardCat }">
+							    	<!-- 선택된 boardcat 리스트 -->
 	                        		<option value="${ dto.boardCat }" selected>${ dto.boardCat }</option>
 							    </c:when> 
 							    <c:otherwise> 

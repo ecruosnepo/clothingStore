@@ -37,15 +37,14 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public Map<String, Object> boardListService(String userId, int page) {
-		
 		Map<String, Object> map=new HashMap<String, Object>(); 
 		pageBean=new PagingBean(page,dao.boardListCountDao(userId),5,3);
-		
 		map.put("dto", dao.boardListDao(userId));
 		map.put("page", pageBean);
 		
 		return map;
 	}
+	
 	@Override
 	public Map<String,Object> boardWriteFormService(String userId){
 		Map<String,Object> map=new HashMap<String, Object>();

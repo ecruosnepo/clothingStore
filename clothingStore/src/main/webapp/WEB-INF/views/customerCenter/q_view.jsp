@@ -52,6 +52,8 @@
 		margin-left: 10%;
 		max-width:70%;
 	}
+	h6 {
+    line-height: 0;}
 </style>
 </head>
 <body>
@@ -72,7 +74,7 @@
 		     	</h6><br>
 		     </c:if>
 		     <c:if test="${ dto.orderId!='' || dto.orderId!=null }">
-		     	<h6 style="float: right;"><a href=#>주문번호 : ${dto.orderId}</a></h6>
+		     	<h6 style="float: right;">주문번호 : <a href='/myPage'>${dto.orderId}</a></h6>
 		     </c:if>
 		     <p><c:out value="${dto.question}" /></p>
 		     <h4 id="fat">답변내용</h4>

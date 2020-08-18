@@ -50,15 +50,16 @@
 		   <h1>주문 상세보기</h1><br><br>
 		   <div id="sectionDiv" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
 		   	<form  action='adOrderUpdate' method="post" >
-			    <select id="inputState" name="boardCat" class="form-control" style="width: 200px;">
+			    <select id="inputState" name="order_state" class="form-control" style="width: 200px;">
 		                <option disabled selected>=== 상품현황 ===</option>
-		                <option value="배송">결제완료</option>
-		                <option value="결제">배송중</option>
-		                <option value="교환">배송완료</option>
+		                <option value="결제완료">결제완료</option>
+		                <option value="배송중">배송중</option>
+		                <option value="배송완료">배송완료</option>
 		                <option value="환불">환불</option>
-		                <option value="기타">교환</option>
-		          </select>
+		                <option value="교환">교환</option>
+	          	</select>
 			     <h4 id="fat">주문번호 : ${ order.order_id }</h4>
+			     <input type="hidden" value="${order.order_id }" name="order_id"/>
 			     <div id="detail">
 			     	<b>이메일</b><br>
 			     	<p>${ order.user_email }</p>
@@ -163,7 +164,7 @@
            <div class="modal-dialog">
              <div class="modal-content">
                <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">상품 검색</h5>
+                 <h5 class="modal-title" id="exampleModalLabel">주문 내역</h5>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
                  </button>
@@ -300,7 +301,7 @@
 		    	var stockList = JSON.parse(stock);
  				var html = "";
 				for(var i = 0; i < stockList.length; i ++) {
-					html += '<option value="${ '+stockList[i].pd_size+' }">'+stockList[i].pd_size+'</option>';
+					html += '<option value=" '+stockList[i].pd_size+' ">'+stockList[i].pd_size+'</option>';
 				}
  				$("#size"+id).append(html); 
  				
@@ -365,7 +366,6 @@
   		$('#totalPrice').text(changeTotalPrice);
   		$(obj).data('val', $(obj).val());
 	} */
-
 </script>
 </body>
 </html>
