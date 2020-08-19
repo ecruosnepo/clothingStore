@@ -69,7 +69,6 @@ public class UserService implements UserServiceImpl {
 		 
 	}
 
-
 	// 내 상세정보 편집
 	@Override
 	public void sUserUpdate( String name, String birth, String phone, String gender, String email) throws Exception {
