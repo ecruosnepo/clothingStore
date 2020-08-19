@@ -183,7 +183,7 @@ public class AdminServiceImpl implements AdminService {
 			int id = Integer.parseInt(pd_id.get(i));
 			delCount = stockDao.countStockDao(id);
 			if (delCount == 1) {
-				// 선택한 항목에 대한 재고의 칼럼이 1개일 경우
+				// 선택한 항목에 대한 사이즈가 1개일 경우
 				//이미지 삭제
 				String[] pd_img = productDao.adminImageDao(id).split(",");
 				System.out.println("pd_img"+pd_img);
@@ -199,12 +199,12 @@ public class AdminServiceImpl implements AdminService {
 				}
 				// 상품 삭제
 				productDao.adminDeletePdsDao(id);
-				// 재고칼럼 삭제
+				// 재고 삭제
 				result += stockDao.deleteStockDao(pd_size.get(i), id);
 
 			} else if (delCount > 1) {
-				// 해당항목에 대한 재고의 칼럼이 2개 이상일 경우
-				// 해당 재고칼럼만 삭제
+				// 해당항목에 대한 사이즈가 2개 이상일 경우
+				// 해당 재고레코드만 삭제
 				result += stockDao.deleteStockDao(pd_size.get(i), id);
 			}
 		}
@@ -226,20 +226,15 @@ public class AdminServiceImpl implements AdminService {
 		Map<String, Object> map=new HashMap<String, Object>();
 		List<OrderDetailDto> odDto=oDetailDao.orderDetailListDao(order_id);
 		Map<Integer, Object> sDto=new HashMap<Integer, Object>();
-		System.out.println(odDto);
 		
 		for (int i = 0; i < odDto.size(); i++) {
 			List<StockDto> sdto=stockDao.productStockDao(odDto.get(i).getPd_id());
 			sDto.put(odDto.get(i).getPd_id(), sdto );
-			System.out.println(odDto.get(i).getPd_id());
-			System.out.println(sdto);
 		}
 		
 		map.put("orderList", orderDao.adOrderViewDao(order_id));
 		map.put("detailList", odDto);
 		map.put("stockList", sDto);
-		System.out.println(sDto);
-		System.out.println(sDto.get(11));
 		return map;
 	}
 

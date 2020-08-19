@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <style>
   .customerManage{
 		min-height:500px;
@@ -55,8 +54,6 @@
       <section>
       	<div id="sectDiv">
           <h1>주문 관리</h1><br><br>
-
-
             <table class="table table-hover" >
                 <thead>
                 <tr>

@@ -34,15 +34,7 @@
     .sidenav a:hover {
     color: #d6001c;
     }
-    /* #title{
-         overflow: hidden;
-          text-overflow: ellipsis;
-    } */
-    
-/*     @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-    } */
+
 </style>
 <% 
 	if ( session.getAttribute("manager") == null ){

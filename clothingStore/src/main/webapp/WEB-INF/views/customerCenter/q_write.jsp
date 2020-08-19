@@ -109,23 +109,23 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                   <c:forEach items="${ orderList }" var="ods" varStatus="n">
-                	  <input type='checkbox' id="order${n.index}" name='orderId' value='${ ods.order_id }' onclick="doOpenCheck(this);"/>
-                      	<h5 style="display: inline;"><label for="order${n.index}" id="orderLabel"> 주문번호 : ${ ods.order_id }</label></h5><br>
-                      	주문 상태 : ${ ods.order_state }<br>
-                      	<c:choose>
-                      		<c:when test="${ orderCount.get(n.index) > 1 }">
-                      			<!-- 하나의 주문에 여러 상품을 구매했을 경우 -->
-                      			상품명 : ${ ods.pd_name } 외 ${ orderCount.get(n.index)-1 } <br>
-                      		</c:when>
-                      		<c:otherwise>
-                      			<!-- 하나의 주문에 한 상품만 구매했을 경우 -->
-                      			상품명 : ${ ods.pd_name } <br>
-                      		</c:otherwise>
-                      	</c:choose>
-                      	결제일 : ${ ods.payDate }
-                      <hr>
-                   </c:forEach>
+	                   <c:forEach items="${ orderList }" var="ods" varStatus="n">
+	                	  <input type='checkbox' id="order${n.index}" name='orderId' value='${ ods.order_id }' onclick="doOpenCheck(this);"/>
+	                      	<h5 style="display: inline;"><label for="order${n.index}" id="orderLabel"> 주문번호 : ${ ods.order_id }</label></h5><br>
+	                      	주문 상태 : ${ ods.order_state }<br>
+	                      	<c:choose>
+	                      		<c:when test="${ orderCount.get(n.index) > 1 }">
+	                      			<!-- 하나의 주문에 여러 상품을 구매했을 경우 -->
+	                      			상품명 : ${ ods.pd_name } 외 ${ orderCount.get(n.index)-1 } <br>
+	                      		</c:when>
+	                      		<c:otherwise>
+	                      			<!-- 하나의 주문에 한 상품만 구매했을 경우 -->
+	                      			상품명 : ${ ods.pd_name } <br>
+	                      		</c:otherwise>
+	                      	</c:choose>
+	                      	결제일 : ${ ods.payDate }
+	                      <hr>
+	                   </c:forEach>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-primary" data-dismiss="modal">선택</button>
@@ -189,11 +189,6 @@
         });
     }
     
-	var imgSrc= $('#img').attr('src');
-	/* 이미지파일이 아닐 경우 이미지 표시 안 함.  */
-	if(!(imgSrc.match(".jpg"))){
-		$("#img").hide();	
-	}
 </script>
 </body>
 </html>

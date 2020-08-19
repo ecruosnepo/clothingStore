@@ -81,53 +81,53 @@
                  <p><input type="text" placeholder="요청사항" name="dv_message" value="${ order.dv_message }"></p><br>
                  
                  <b>주문 상품</b><br>
-                 <table class="table table-hover" id="qna">
-                      <thead>
-                         <tr>
-                             <th scope="col">상품명</th>
-                             <th scope="col">색상</th>
-                             <th scope="col" >사이즈</th>
-                             <th scope="col" >상품가격</th>
-                             <th scope="col">수량</th>
-                             <th scope="col">재고</th>
-                             <th scope="col">삭제</th>
-                         </tr>
-                      </thead>
-                      <tbody>
-                         <c:forEach var="pd" items="${ detail }">
-                             <tr class="pd_row">
-                                 <td scope="row">
-                                    <input type="hidden" name="pd_id" value="${ pd.pd_id }">
-                                    ${ pd.pd_name }
-                                 </td>
-                                 <td>${ pd.pd_color }</td>
-                                 <td>
-                                    <select name="pd_size" class="form-control" >
-                                    <c:forEach var="stock" items="${stockList.get(pd.pd_id)}">
-                                       <c:choose>
-                                          <c:when test="${ pd.pd_size==stock.pd_size }">
-                                             <option value="${ stock.pd_size }" selected>${ stock.pd_size }</option>
-                                          </c:when>
-                                          <c:otherwise>
-                                             <option value="${ stock.pd_size }">${ stock.pd_size }</option>
-                                          </c:otherwise>
-                                       </c:choose>
-                                    </c:forEach>
-                                    </select>
-                                 </td>
-                                 <td class="price">${ pd.pd_price }</td>
-                                 <td><input class="pd_quantity" type="number" name="pd_quantity" value="${ pd.pd_quantity }"></td>
-                                 <td>
-                              <c:forEach var="stock" items="${stockList.get(pd.pd_id)}">
-                                 ${ stock.pd_size } : ${ stock.pd_stock }<br>
-                                    </c:forEach>
-                           </td>
-                                 <td><span class="btn" onclick="deleteLine(this);">삭제</span></td>
-                             </tr>
-                          </c:forEach>
-                       </tbody>
-                  </table>
-                 <div class="btn btn-dark" id="addTable"  data-toggle="modal" data-target="#exampleModal">추가</div>
+		     	<table class="table table-hover" id="qna">
+	                <thead>
+		                <tr>
+		                    <th scope="col">상품명</th>
+		                    <th scope="col">색상</th>
+		                    <th scope="col" >사이즈</th>
+		                    <th scope="col" >상품가격</th>
+		                    <th scope="col">수량</th>
+		                    <th scope="col">재고</th>
+		                    <th scope="col">삭제</th>
+		                </tr>
+	                </thead>
+	                <tbody>
+		                <c:forEach var="pd" items="${ detail }">
+	                    	<tr class="pd_row">
+		                        <td scope="row">
+			                        <input type="hidden" name="pd_id" value="${ pd.pd_id }">
+			                        ${ pd.pd_name }
+		                        </td>
+		                        <td>${ pd.pd_color }</td>
+		                        <td>
+		                        	<select name="pd_size" class="form-control" >
+		                        	<c:forEach var="stock" items="${stockList.get(pd.pd_id)}">
+			                        	<c:choose>
+			                        		<c:when test="${ pd.pd_size==stock.pd_size }">
+			                        			<option value="${ stock.pd_size }" selected>${ stock.pd_size }</option>
+			                        		</c:when>
+			                        		<c:otherwise>
+			                        			<option value="${ stock.pd_size }">${ stock.pd_size }</option>
+			                        		</c:otherwise>
+			                        	</c:choose>
+			                        </c:forEach>
+			                        </select>
+		                        </td>
+		                        <td class="price">${ pd.pd_price }</td>
+		                        <td><input class="pd_quantity" type="number" name="pd_quantity" value="${ pd.pd_quantity }"></td>
+		                        <td>
+									<c:forEach var="stock" items="${stockList.get(pd.pd_id)}">
+										${ stock.pd_size } : ${ stock.pd_stock }<br>
+			                        </c:forEach>
+								</td>
+		                        <td><span class="btn" onclick="deleteLine(this);">삭제</span></td>
+	                    	</tr>
+	                    </c:forEach>
+	                   </tbody>
+	            </table>
+		     	<div class="btn btn-dark" id="addTable"  data-toggle="modal" data-target="#exampleModal">추가</div>
                  
                  <b>배송료</b><br>
                  <div class="deliveryMethodSelect inputContents">
@@ -159,6 +159,7 @@
       </div>
    </section>
    <div class="form-row">
+>>>>>>> f13e05553ab31167ad1a89eb03f1927e1f5f62f1
          <!-- Modal -->
          <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
            <div class="modal-dialog">
@@ -290,6 +291,27 @@
                  '<td><button class="btn" onclick="deleteLine(this);">삭제</button></td> </tr>');
           $(".modal").attr("aria-hidden","true");
 
+<<<<<<< HEAD
+   	    
+ 	    $.ajax({
+		    url : "/adSelectStock",
+		    type : "GET",
+		    data : { pd_id : id },
+		    dataType: "text",
+		    async : false,
+		    success : function(stock){
+		    	var stockList = JSON.parse(stock);
+ 				var html = "";
+				for(var i = 0; i < stockList.length; i ++) {
+					html += '<option value=" '+stockList[i].pd_size+' ">'+stockList[i].pd_size+'</option>';
+				}
+ 				$("#size"+id).append(html); 
+ 				
+ 				var html = "";
+				for(var i = 0; i < stockList.length; i ++) {
+					html += stockList[i].pd_size+" : "+stockList[i].pd_stock+" <br>";
+				}
+=======
           
         $.ajax({
           url : "/adSelectStock",
@@ -309,6 +331,7 @@
             for(var i = 0; i < stockList.length; i ++) {
                html += stockList[i].pd_size+" : "+stockList[i].pd_stock+" <br>";
             }
+>>>>>>> f13e05553ab31167ad1a89eb03f1927e1f5f62f1
 
              $("#stock"+id).append(html); 
              
@@ -352,6 +375,23 @@
            $(this).data('val', $(this).val());
         });
    });
+<<<<<<< HEAD
+/*    function quantitySave(obj){
+		console.log("Saving value " + $(obj).val());
+    	$(obj).data('val', $(obj).val());
+   }
+
+	function quantityChange(obj){
+		var currentTotalPrice = $('#totalPrice').text();
+  		var prevQuantity = $(obj).data('val');
+  		var changeTotalPrice = 0;
+  		var thisPrice = $(obj).parents('.pd_row').children('.price').text();
+  		changeTotalPrice = (currentTotalPrice-(prevQuantity*thisPrice))+(thisPrice * $(obj).val());
+  		$('#totalPrice').text(changeTotalPrice);
+  		$(obj).data('val', $(obj).val());
+	} */
+=======
+>>>>>>> f13e05553ab31167ad1a89eb03f1927e1f5f62f1
 </script>
 </body>
 </html>

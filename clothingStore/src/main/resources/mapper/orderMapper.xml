@@ -6,7 +6,9 @@
  
 <mapper namespace="com.store.dao.OrderDao"> 
 	<select id="userOrderListDao" resultType="com.store.dto.OrderDto"> 
-		SELECT DISTINCT o.order_id, p.pd_name, o.order_state, o.payDate FROM shop.order AS o 
+		SELECT 
+			DISTINCT o.order_id, p.pd_name, o.order_state, o.payDate 
+		FROM shop.order AS o 
 		JOIN shop.order_detail AS od ON o.order_id=od.order_id
 		JOIN shop.products AS p ON p.pd_id=od.pd_id
 		WHERE o.user_email=#{user_email} ORDER BY o.payDate DESC;
